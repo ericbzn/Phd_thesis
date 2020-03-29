@@ -1,7 +1,13 @@
-% created on 2019-12-13
-% @author : bmazoyer
-\documentclass[a4paper, twoside]{report}
+% created on 2020-03-27
+% @author : ebazan
+\documentclass[a4paper, twoside, 11pt]{book}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{lipsum}
+\usepackage{psl-cover}
+\logopath{figures/couverture_figures/}
+
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{geometry}
@@ -15,7 +21,6 @@ bottom=30mm
 \definecolor{bordeau}{rgb}{0.3515625,0,0.234375}
 \usepackage[absolute,overlay]{textpos}
 \usepackage{graphicx}
-\usepackage{lipsum}
 \usepackage{array}
 \usepackage{caption}
 \usepackage{multicol}
@@ -40,7 +45,110 @@ bottom=30mm
 \newcommand{\PhDTitle}{Thesis title. It can extend over several lines (even 4 or 5)} 
 
 % Name
-\newcommand{\PhDname}{FirstName LastName} 
+\newcommand{\PhDname}{Eric Bazán} 
+
+\title{\PhDTitle}
+
+\author{\PhDname}
+
+\supervisor{Prénom Nom}
+% \doctoralschool{Sciences et Métiers de l'Ingénieur}{521}
+% \specialty{Mathématiques, Informatique Temps-Réel, Robotique}
+\date{JJ mois AAAA}
+
+\jury{
+  Mme Prénom Nom\\
+  Établissement, Président
+
+  M Prénom Nom\\
+  Établissement, Rapporteur
+
+  M Prénom Nom\\
+  Établissement, Rapporteur
+
+  M Prénom Nom\\
+  Établissement, Membre du jury
+
+  M Prénom Nom\\
+  Établissement, Membre du jury
+
+  M Prénom Nom\\
+  Établissement, Membre du jury
+
+  M Prénom Nom\\
+  Établissement, Membre du jury
+
+  M Prénom Nom\\
+  Établissement, Membre du jury
+}
+
+\frabstract{
+  Cuius acerbitati uxor grave accesserat incentivum,
+  germanitate Augusti turgida supra modum, quam Hannibaliano
+  regi fratris filio antehac Constantinus iunxerat pater,
+  Megaera quaedam mortalis, inflammatrix saevientis adsidua,
+  humani cruoris avida nihil mitius quam maritus; qui paulatim
+  eruditiores facti processu temporis ad nocendum per
+  clandestinos versutosque rumigerulos conpertis leviter
+  addere quaedam male suetos falsa et placentia sibi
+  discentes, adfectati regni vel artium nefandarum calumnias
+  insontibus adfligebant.
+
+  Saraceni tamen nec amici nobis umquam nec hostes optandi,
+  ultro citroque discursantes quicquid inveniri poterat
+  momento temporis parvi vastabant milvorum rapacium similes,
+  qui si praedam dispexerint celsius, volatu rapiunt celeri,
+  aut nisi impetraverint, non inmorantur.
+
+  Vita est illis semper in fuga uxoresque mercenariae
+  conductae ad tempus ex pacto atque, ut sit species
+  matrimonii, dotis nomine futura coniunx hastam et
+  tabernaculum offert marito, post statum diem si id elegerit
+  discessura, et incredibile est quo ardore apud eos in
+  venerem uterque solvitur sexus.
+
+  Sed tamen haec cum ita tutius observentur, quidam vigore artuum
+  inminuto rogati ad nuptias ubi aurum dextris manibus cavatis
+  offertur, inpigre vel usque Spoletium pergunt.\ haec nobilium sunt
+  instituta.
+}
+
+\enabstract{
+  Verum ad istam omnem orationem brevis est defensio. Nam
+  quoad aetas M. Caeli dare potuit isti suspicioni locum, fuit
+  primum ipsius pudore, deinde etiam patris diligentia
+  disciplinaque munita. Qui ut huic virilem togam deditšnihil
+  dicam hoc loco de me; tantum sit, quantum vos existimatis;
+  hoc dicam, hunc a patre continuo ad me esse deductum; nemo
+  hunc M. Caelium in illo aetatis flore vidit nisi aut cum
+  patre aut mecum aut in M. Crassi castissima domo, cum
+  artibus honestissimis erudiretur.
+
+  Et eodem impetu Domitianum praecipitem per scalas itidem
+  funibus constrinxerunt, eosque coniunctos per ampla spatia
+  civitatis acri raptavere discursu.\ iamque artuum et
+  membrorum divulsa conpage superscandentes corpora mortuorum
+  ad ultimam truncata deformitatem velut exsaturati mox
+  abiecerunt in flumen.
+
+  Erat autem diritatis eius hoc quoque indicium nec obscurum
+  nec latens, quod ludicris cruentis delectabatur et in circo
+  sex vel septem aliquotiens vetitis certaminibus pugilum
+  vicissim se concidentium perfusorumque sanguine specie ut
+  lucratus ingentia laetabatur.
+
+  Ego vero sic intellego, Patres conscripti, nos hoc tempore in
+  provinciis decernendis perpetuae pacis habere oportere rationem. Nam
+  quis hoc non sentit omnia alia esse nobis vacua ab omni periculo
+  atque etiam suspicione belli?
+}
+
+\frkeywords{ Caesar licentia post honoratis haec adhibens urbium
+  honoratis nullum Caesar.}
+\enkeywords{ Delatus delatus nominatus
+  onere aut trahebatur quod tenus et bonorum.}
+
+
 
 % Change this variable if you add or remove chapters
 \newcommand*{\NumOfChapters}{5}
@@ -50,17 +158,17 @@ bottom=30mm
 
 % PDF metadata
 \hypersetup{
-	pdfauthor={\PhDname},
+	pdfauthor={Eric Bazan},
 	pdfsubject={Manuscrit de thèse de doctorat},
-	pdftitle={\PhDTitle}
+	pdftitle={Title}
 }
 
-
 \begin{document}
-	\doublespacing
-	
-    \input{layout/firstpage.tex}
-    
+
+	\maketitle{}
+
+	\doublespacing    
+
     \input{layout/dedication.tex}
     \cleardoublepage
     
@@ -74,7 +182,7 @@ bottom=30mm
     
 
     \foreach \i in {1,2,...,\NumOfChapters}{
-        \input{\i}
+        \input{chapters/\i}
         \cleardoublepage
     }
     
@@ -87,5 +195,4 @@ bottom=30mm
     \bibliography{bibliography.bib}
     \pagebreak
     
-    \input{layout/lastpage.tex}
 \end{document}

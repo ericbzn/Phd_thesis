@@ -1,2 +1,2 @@
 
-Copyright (C) 2020 Eric
+Copyright (C) 2020 Eric Bazán
