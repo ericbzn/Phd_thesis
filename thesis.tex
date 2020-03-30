@@ -1,4 +1,4 @@
-% created on 2020-03-27
+% created on 27-03-2020
 % @author : ebazan
 \documentclass[a4paper, twoside, 11pt]{book}
 \usepackage[T1]{fontenc}
@@ -6,7 +6,7 @@
 \usepackage{lmodern}
 \usepackage{lipsum}
 \usepackage{psl-cover}
-\logopath{figures/couverture_figures/}
+\logopath{figures/front_cover}
 
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
@@ -158,9 +158,9 @@ bottom=30mm
 
 % PDF metadata
 \hypersetup{
-	pdfauthor={Eric Bazan},
+	pdfauthor={\PhDname},
 	pdfsubject={Manuscrit de thèse de doctorat},
-	pdftitle={Title}
+	pdftitle={\PhDTitle}
 }
 
 \begin{document}
@@ -192,7 +192,7 @@ bottom=30mm
         \cleardoublepage
     }
     
-    \bibliography{bibliography.bib}
+    \bibliography{bibliography}
     \pagebreak
     
 \end{document}
