@@ -17,7 +17,18 @@ top=30mm,
 right=16mm,
 bottom=30mm
 }
+
 \usepackage{amsmath}
+\usepackage[%
+    font={small,sf},
+    labelfont=bf,
+    format=hang,    
+    format=plain,
+    margin=0pt,
+    width=0.8\textwidth,
+]{caption}
+\usepackage[list=true]{subcaption}
+
 \usepackage{xcolor}
 \usepackage[absolute,overlay]{textpos}
 \usepackage{graphicx}
@@ -165,7 +176,8 @@ bottom=30mm
 }
 
 \begin{document}
-
+% % gives the width of the current document in pts. For this document width = 506.45908
+%\showthe\textwidth 
 	\maketitle{}
 
 	\doublespacing    
