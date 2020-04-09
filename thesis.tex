@@ -17,7 +17,7 @@ top=30mm,
 right=16mm,
 bottom=30mm
 }
-
+%%%
 \usepackage{amsmath}
 \usepackage[%
     font={small,sf},
@@ -28,7 +28,9 @@ bottom=30mm
     width=0.8\textwidth,
 ]{caption}
 \usepackage[list=true]{subcaption}
-
+\usepackage{nomencl}
+\makenomenclature
+%%%
 \usepackage{xcolor}
 \usepackage[absolute,overlay]{textpos}
 \usepackage{graphicx}
@@ -188,6 +190,10 @@ bottom=30mm
     \input{layout/acknowledgements.tex}
     \cleardoublepage
     
+    \input{layout/nomenclature.tex}
+    \cleardoublepage
+    
+    
     \pagenumbering{arabic}
     \tableofcontents
     \listoffigures
@@ -207,5 +213,5 @@ bottom=30mm
     
     \bibliography{bibliography}
     \pagebreak
-    
+   	
 \end{document}
