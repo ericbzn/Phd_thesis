@@ -3,10 +3,15 @@
 
 \chapter{Image spectral decomposition}
 
-
-
 \section{The Heisenberg uncertainty principle in signal and image
 processing}\label{the-heisenberg-uncertainty-principle-in-signal-and-image-processing}
+
+\begin{equation}\label{eq:fourier_transforms}
+    \begin{gathered}
+        H(f) = \mathcal{F}\{h(t)\} = \int_{-\infty}^{\infty} h(t) e^{-j2\pi f t} dt \\
+        h(t) = \mathcal{F}^{-1}\{H(f)\} = \int_{-\infty}^{\infty} H(f) e^{j2\pi f t} df \\
+    \end{gathered}
+\end{equation}
 
 The uncertainty principle is one of the most famous ideas in quantum mechanics. An early incarnation of the uncertainty principle appeared in a 1927 paper by the German physicist Heisenberg. The uncertainty principle says that we cannot measure the position $(x)$ and the momentum $(p)$ of a particle with absolute precision. The more accurately we know one of these values, the less accurately we know the other. 
 
