@@ -12,14 +12,18 @@ The uncertainty principle is one of the most famous ideas in quantum mechanics. 
 
 However, the uncertainty principle in the field of quantum mechanics is just a particular case of a more general compromise that appears in many cases of everyday life involving waves. The central idea is connected with the interrelation between frequency and duration. For example, in the case of sound waves, if we want to identify the frequency of a musical note, the shorter the sound lasts in time, the less certain we can be about the exact frequency of the sound; to find a more defined frequency, it would be necessary to listen to the sound for a longer time. In the language of signal processing, we can say that a short signal correlates highly with a wide range of frequencies and only wide signals correlate with a short range of frequencies. Formally this is expressed as
 
-\begin{equation}\label{eq:uncertainty_principle}
-	(\Delta t)^2(\Delta \omega)^2 \geq \frac{1}{4}
+\begin{equation}\label{eq:uncertainty_principle_rad}
+	\Delta t\Delta \omega \geq \frac{1}{2}
 \end{equation}
 
-where $\Delta t$ is the duration of the signal in the time domain and $\Delta \omega$ is the bandwidth of the signal in the frequency domain (CITE). The uncertainty principle then says: the product of the spectral bandwidth multiplied with the time duration of the signal cannot be less than a certain minimum value.
+where $\Delta t$ is the duration of the signal in the time domain and $\Delta \omega$ is the bandwidth of the signal in the frequency domain (CITE). The uncertainty principle then says: the product of the spectral bandwidth multiplied with the time duration of the signal cannot be less than a certain minimum value. Considering the bandwidth of the signal in terms of frequency as $\Delta f$ where $\omega = 2\pi f$, the uncertainty principle is stated as 
+
+\begin{equation}\label{eq:uncertainty_principle_freq}
+	\Delta t\Delta f \geq \frac{1}{4\pi}
+\end{equation}
 
 
-The Heisenberg uncertainty principle in the field of signal processing and image processing can be mathematically proved by \textbf{Parseval's theorem}
+The Heisenberg uncertainty principle in the field of signal processing and image processing can be mathematically proved by the \textbf{Parseval's theorem}
 
 \begin{equation}\label{eq:parseval_theorem}
 	\int_{-\infty}^{\infty} f(t)^2 dt = \frac{1}{2 \pi} \int_{-\infty}^{\infty} |F(\omega)|^2 d\omega
@@ -109,6 +113,23 @@ If we use this into $\eqref{eq:schwartz_inequality}$ and then into $\eqref{eq:ti
 \end{equation}
 
 This is the mathematical statement of the uncertainty principle in signal processing.
+
+The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
+
+\begin{equation}\label{eq:uncertainty_principle2}
+    h(t) = f(t)w(t-t_0)
+\end{equation}
+
+
+
+Due to the shifting property of the Fourier transform, the Fourier transform of the window is $e^{-j\omega t_0}W(\omega)$. Since the window multiplies the signal, the Fourier transform of the window is convolved with the Fourier transform of the signal. Therefore, the Fourier transform of what we observe is given by:
+
+\begin{equation}\label{eq:short_time_fourier_transform}
+    H(\omega) = \int_{\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
+\end{equation}
+
+
+In general $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
 
 \subsection{Examples}
 
