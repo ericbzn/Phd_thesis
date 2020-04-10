@@ -1,17 +1,34 @@
 % created on 2019-12-13
 % @author : bmazoyer
 
-\chapter{Image spectral decomposition}
+\chapter{Image Spectral Decomposition}
 
-\section{The Heisenberg uncertainty principle in signal and image
-processing}\label{the-heisenberg-uncertainty-principle-in-signal-and-image-processing}
+In this chapter we present a reminder of signal theory applied to image processing for feature extraction and object detection. First, we show what are the reasons for restricting signal analysis in two predefined domains: time and frequency in one dimension and space and frequency in two dimensions. We especially recall Gabor's filter theory and properties by showing how these filters are related to Heisneberg's uncertainty principle.
 
-\begin{equation}\label{eq:fourier_transforms}
+\section{Signals in two domains}
+
+In the area of signal and image processing it is well known that there are two alternative methods for describing signals (one-dimensional (1-d) or two-dimensional (2-d)). The first one is to represent the signal as a function of time while the second is to represent the signal as a function of frequency. These two representations are of special interest because we can go from one to the other via the Fourier transform (or the inverse Fourier transform); therefore, these two representations carry the same signal information but in different ways. In this thesis the following Fourier transforms pairs are used
+
+\begin{equation}\label{eq:fourier_transforms_1d}
     \begin{gathered}
         H(f) = \mathcal{F}\{h(t)\} = \int_{-\infty}^{\infty} h(t) e^{-j2\pi f t} dt \\
-        h(t) = \mathcal{F}^{-1}\{H(f)\} = \int_{-\infty}^{\infty} H(f) e^{j2\pi f t} df \\
+        h(t) = \mathcal{F}^{-1}\{H(f)\} = \int_{-\infty}^{\infty} H(f) e^{j2\pi f t} df 
     \end{gathered}
 \end{equation}
+
+for a 1-d space and 
+
+\begin{equation}\label{eq:fourier_transforms_2d}
+    \begin{gathered}
+        H(u, v) = \mathcal{F}\{h(x, y)\} = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} h(x, y) e^{-j2\pi (ux + vy)} dx dy \\
+        h(x, y) = \mathcal{F}^{-1}\{H(u, v)\} = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}  H(u, v) e^{j2\pi (ux + vy)} du dv 
+    \end{gathered}
+\end{equation}
+
+for a 2-d space. Both representations of the signal are somewhat ideal, since the first operates at defined instants of time while the second operates on an infinite series of successive waves at defined frequencies \cite{Gabor:JIEE:1946a}. 
+
+\section{The Heisenberg uncertainty principle in signal and image
+processing}
 
 The uncertainty principle is one of the most famous ideas in quantum mechanics. An early incarnation of the uncertainty principle appeared in a 1927 paper by the German physicist Heisenberg. The uncertainty principle says that we cannot measure the position $(x)$ and the momentum $(p)$ of a particle with absolute precision. The more accurately we know one of these values, the less accurately we know the other. 
 
@@ -27,94 +44,92 @@ where $\Delta t$ is the duration of the signal in the time domain and $\Delta \o
 	\Delta t\Delta f \geq \frac{1}{4\pi}
 \end{equation}
 
-
 The Heisenberg uncertainty principle in the field of signal processing and image processing can be mathematically proved by the \textbf{Parseval's theorem}
 
 \begin{equation}\label{eq:parseval_theorem}
-	\int_{-\infty}^{\infty} f(t)^2 dt = \frac{1}{2 \pi} \int_{-\infty}^{\infty} |F(\omega)|^2 d\omega
+	\int_{-\infty}^{\infty} h(t)^2 dt =  \int_{-\infty}^{\infty} |H(f)|^2 df
 \end{equation}
 
-where $f(t)$ is a function and $F(\omega)$ its the Fourier transform. 
+where $h(t)$ is a function and $H(f)$ its the Fourier transform. 
 
-The \textbf{energy content} of the signal described by $f(t)$ is defined as:
+The \textbf{energy content} of the signal described by $h(t)$ is defined as:
 
 \begin{equation}\label{eq:energy_content_time}
-    E_{\infty} \equiv \int_{-\infty}^{\infty}  f(t)^2 dt
+    E_{\infty} \equiv \int_{-\infty}^{\infty}  h(t)^2 dt
 \end{equation}
 
 
 From the Parseval's identity this may be written as:
 
 \begin{equation}\label{eq:energy_content_frequency}
-    E_{\infty} = \frac{1}{2 \pi} \int_{-\infty}^{\infty} |F(\omega)|^2 d\omega
+    E_{\infty} =  \int_{-\infty}^{\infty} |H(f)|^2 df
 \end{equation}
 
 The \textbf{time dispersion} of the signal is given by
 
 \begin{equation}\label{eq:time_dispersion_no_centered}
-    (\Delta t)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (t-\bar{t})^2 f(t)^2 dt
+    (\Delta t)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (t-t_{0})^2 h(t)^2 dt
 \end{equation}
 
-
-where if we shift the \textbf{center of gravity} of the signal to the origin $\bar{t}=0$, then
+where if we shift the \textbf{center of gravity} of the signal to the origin $t_{0}=0$, then
 
 \begin{equation}\label{eq:time_dispersion}
-    (\Delta t)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} t^2 f(t)^2 dt
+    (\Delta t)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} t^2 h(t)^2 dt
 \end{equation}
 
 In an analogous way, the \textbf{spectral bandwidth} of the signal is given by
 
 \begin{equation}\label{eq:spectral_bandwidth_no_centered}
-    (\Delta \omega)^2 \equiv \frac{1}{2 \pi E_{\infty}} \int_{-\infty}^{\infty} (\omega-\bar{\omega})^2 |F(\omega)|^2 d\omega
+    (\Delta f)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (f-f_{0})^2 |H(f)|^2 df
 \end{equation}
 
-where if we consider an \textbf{spectral center of gravity}, $\bar{\omega}=0$
+where if we consider an \textbf{spectral center of gravity}, $f_{0}=0$
 
 \begin{equation}\label{eq:spectral_bandwidth}
-    (\Delta \omega)^2 = \frac{1}{2 \pi E_{\infty}} \int_{-\infty}^{\infty} \omega^2 |F(\omega)|^2 d\omega 
+    (\Delta f)^2 = \frac{1}{2 \pi E_{\infty}} \int_{-\infty}^{\infty} f^2 |H(f)|^2 df 
 \end{equation}
 
-If $f'(t)$ is the derivative of the function, its Fourier transform is $j\omega F(\omega)$. By applying the Parseval's theorem to the Fourier pair $f'(t)\longleftrightarrow j\omega F(\omega)$ we obtain:
+If $h'(t)$ is the derivative of the function, its Fourier transform is $j2\pi f H(f)$. By applying the Parseval's theorem to the Fourier pair $h'(t)\longleftrightarrow j2\pi f H(f)$ we obtain:
 
 \begin{equation}\label{eq:applyed_parseval_theorem}
-    \int_{-\infty}^{\infty} \omega^2 |F(\omega)|^2 d\omega = 2 \pi \int_{-\infty}^{\infty} f'(t)^2 dt
+    2 \pi \int_{-\infty}^{\infty} f^2 |H(f)|^2 df =  \int_{-\infty}^{\infty} h'(t)^2 dt
 \end{equation}
 
 By substituting in equation $(\eqref{eq:spectral_bandwidth})$, we have:
 
 \begin{equation}\label{eq:spectral_bandwidth2}
-    (\Delta \omega)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} f'(t)^2 dt
+    (\Delta f)^2 = \frac{1}{4 \pi^{2} E_{\infty}} \int_{-\infty}^{\infty} h'(t)^2 dt
 \end{equation}
 
 We use equations $(\eqref{eq:time_dispersion})$ and $\eqref{eq:spectral_bandwidth2}$ to calculate:
 
 \begin{equation}\label{eq:time_bandwidth_disp}
-    (\Delta t)^2(\Delta \omega)^2 = \frac{1}{E_{\infty}^{2}} \int_{-\infty}^{\infty} t^2f(t)^2 dt \int_{-\infty}^{\infty}f'(t)^2 dt
+    (\Delta t)^2(\Delta f)^2 = \frac{1}{4 \pi^{2} E_{\infty}^{2}} \int_{-\infty}^{\infty} t^2f(t)^2 dt \int_{-\infty}^{\infty}f'(t)^2 dt
 \end{equation}
 
 Applying the Schwartz's inequality for the integrals on the right-hand side of $\eqref{eq:time_bandwidth_disp}$:
 
 \begin{equation}\label{eq:schwartz_inequality}
-    \int_{-\infty}^{\infty}tf(t)^2 dt \int_{-\infty}^{\infty}f'(t)^2 dt  \geq \biggr\rvert \int_{-\infty}^{\infty}tf(t)f'(t)^2 dt \biggr\rvert^{2}
+    \int_{-\infty}^{\infty}t h(t)^2 dt \int_{-\infty}^{\infty}h'(t)^2 dt  \geq \biggr\rvert \int_{-\infty}^{\infty}t h(t)h'(t)^2 dt \biggr\rvert^{2}
 \end{equation}
 
 
 We may integrate by parts the integral on the right-hand side of $\eqref{eq:schwartz_inequality}$
 
 \begin{equation}\label{eq:integr_by_parts}
-    \int_{-\infty}^{\infty}tf(t)f'(t)^2 dt =  \frac{1}{2}tf(t)^2 \biggr\rvert_{\infty}^{\infty} - \frac{1}{2} \int_{-\infty}^{\infty}f(t)^2 dt
+    \int_{-\infty}^{\infty}t h(t) h'(t)^2 dt =  \frac{1}{2}t h(t)^2 \biggr\rvert_{-\infty}^{\infty} - \frac{1}{2} \int_{-\infty}^{\infty}h(t)^2 dt
 \end{equation}
 
-If $\lim_{t\rightarrow \infty} tf(t)^2=0$, the first term on the right-hand side of $\eqref{eq:integr_by_parts}$ vanishes and from equation $\eqref{eq:energy_content_time}$ we have
+If $\lim_{t\rightarrow \infty} t h(t)^2=0$, the first term on the right-hand side of $\eqref{eq:integr_by_parts}$ vanishes and from equation $\eqref{eq:energy_content_time}$ we have
 
 \begin{equation}\label{eq:energy_content_developped}
-    \int_{\infty}^{\infty} tf(t)f'(t) dt = -\frac{1}{2} E_{\infty}
+    \int_{-\infty}^{\infty} t h(t)h'(t) dt = -\frac{1}{2} E_{\infty}
 \end{equation}
 
 If we use this into $\eqref{eq:schwartz_inequality}$ and then into $\eqref{eq:time_bandwidth_disp}$ we obtain:
 
 \begin{equation}\label{eq:}
-   (\Delta t)^2(\Delta \omega)^2 \geq \frac{1}{4} 
+   (\Delta t)^2(\Delta f)^2 \geq \frac{1}{16\pi^{2}} 
 \end{equation}
 
 This is the mathematical statement of the uncertainty principle in signal processing.
@@ -126,17 +141,14 @@ The uncertainty principle shows that the size, the shape and the shift of the wi
 \end{equation}
 
 
-
 Due to the shifting property of the Fourier transform, the Fourier transform of the window is $e^{-j\omega t_0}W(\omega)$. Since the window multiplies the signal, the Fourier transform of the window is convolved with the Fourier transform of the signal. Therefore, the Fourier transform of what we observe is given by:
 
 \begin{equation}\label{eq:short_time_fourier_transform}
-    H(\omega) = \int_{\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
+    H(\omega) = \int_{-\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
 \end{equation}
 
 
 In general $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
-
-\subsection{Examples}
 
 The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
 
