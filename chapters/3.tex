@@ -1,7 +1,7 @@
-% created on 2019-12-13
-% @author : bmazoyer
+% created on 31/03/2020
+% @author : ebazan
 
-\chapter{Image Spectral Decomposition}
+\chapter{Color Image Spectral Decomposition}
 
 In this chapter we present a reminder of signal theory applied to image processing for feature extraction and object detection. First, we show what are the reasons for restricting signal analysis in two predefined domains: time and frequency in one dimension and space and frequency in two dimensions. We especially recall Gabor's filter theory and properties by showing how these filters are related to Heisneberg's uncertainty principle.
 
@@ -27,12 +27,13 @@ for a 1-d space and
 
 for a 2-d space. Both representations of the signal are somewhat ideal, since the first operates at defined instants of time while the second operates on an infinite series of successive waves at defined frequencies \cite{Gabor:JIEE:1946a}. 
 
-\section{The Heisenberg uncertainty principle in signal and image
-processing}
+It is evident that the function $h(t)$ is located in both domains, however, it is also well known that no signal with compact support cannot have a finite Fourier transform and vice versa \cite{Bracewell:FourierBook:1999}, there is a certain uncertainty in the time and frequency locations of $h(t)$.
+
+\section{The Heisenberg uncertainty principle }
 
 The uncertainty principle is one of the most famous ideas in quantum mechanics. An early incarnation of the uncertainty principle appeared in a 1927 paper by the German physicist Heisenberg. The uncertainty principle says that we cannot measure the position $(x)$ and the momentum $(p)$ of a particle with absolute precision. The more accurately we know one of these values, the less accurately we know the other. 
 
-However, the uncertainty principle in the field of quantum mechanics is just a particular case of a more general compromise that appears in many cases of everyday life involving waves. The central idea is connected with the interrelation between frequency and duration. For example, in the case of sound waves, if we want to identify the frequency of a musical note, the shorter the sound lasts in time, the less certain we can be about the exact frequency of the sound; to find a more defined frequency, it would be necessary to listen to the sound for a longer time. In the language of signal processing, we can say that a short signal correlates highly with a wide range of frequencies and only wide signals correlate with a short range of frequencies. Formally this is expressed as
+However, the uncertainty principle in the field of quantum mechanics is just a particular case of a more general compromise that appears in simple phenomena of everyday life involving waves. The central idea is connected with the interrelation between frequency and duration. For example, in the case of sound waves, if we want to identify the frequency of a musical note, the shorter the sound lasts in time, the less certain we can be about the exact frequency of the sound; to find a more defined frequency, it would be necessary to listen to the sound for a longer time. In the language of signal processing, we can say that a short signal correlates highly with a wide range of frequencies and only wide signals correlate with a short range of frequencies. Formally this is expressed as
 
 \begin{equation}\label{eq:uncertainty_principle_rad}
 	\Delta t\Delta \omega \geq \frac{1}{2}
@@ -47,7 +48,7 @@ where $\Delta t$ is the duration of the signal in the time domain and $\Delta \o
 The Heisenberg uncertainty principle in the field of signal processing and image processing can be mathematically proved by the \textbf{Parseval's theorem}
 
 \begin{equation}\label{eq:parseval_theorem}
-	\int_{-\infty}^{\infty} h(t)^2 dt =  \int_{-\infty}^{\infty} |H(f)|^2 df
+	\int_{-\infty}^{\infty} h(t)^2 dt =  \frac{1}{2 \pi} \int_{-\infty}^{\infty} |H(\omega)|^2 d\omega =  \int_{-\infty}^{\infty} |H(f)|^2 df
 \end{equation}
 
 where $h(t)$ is a function and $H(f)$ its the Fourier transform. 
@@ -71,7 +72,13 @@ The \textbf{time dispersion} of the signal is given by
     (\Delta t)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (t-t_{0})^2 h(t)^2 dt
 \end{equation}
 
-where if we shift the \textbf{center of gravity} of the signal to the origin $t_{0}=0$, then
+where $t_0$ is the \textbf{center of gravity} of the signal defined by:
+
+\begin{equation}\label{eq:center_of_gravity}
+    t_0 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} t h(t)^2 dt
+\end{equation}
+
+and where if we shift the origin of $t$ so that $t_{0}=0$, then
 
 \begin{equation}\label{eq:time_dispersion}
     (\Delta t)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} t^2 h(t)^2 dt
@@ -83,16 +90,22 @@ In an analogous way, the \textbf{spectral bandwidth} of the signal is given by
     (\Delta f)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (f-f_{0})^2 |H(f)|^2 df
 \end{equation}
 
-where if we consider an \textbf{spectral center of gravity}, $f_{0}=0$
+where $f_{0}$ is the \textbf{spectral center of gravity} of the signal defined by:
+
+\begin{equation}\label{eq:spectral_center_of_gravity}
+    f_0 \equiv  \frac{2 \pi}{E_{\infty}} \int_{-\infty}^{\infty} f |H(f)|^2 df
+\end{equation}
+
+if we consider $f_{0}=0$:
 
 \begin{equation}\label{eq:spectral_bandwidth}
-    (\Delta f)^2 = \frac{1}{2 \pi E_{\infty}} \int_{-\infty}^{\infty} f^2 |H(f)|^2 df 
+    (\Delta f)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} f^2 |H(f)|^2 df 
 \end{equation}
 
 If $h'(t)$ is the derivative of the function, its Fourier transform is $j2\pi f H(f)$. By applying the Parseval's theorem to the Fourier pair $h'(t)\longleftrightarrow j2\pi f H(f)$ we obtain:
 
 \begin{equation}\label{eq:applyed_parseval_theorem}
-    2 \pi \int_{-\infty}^{\infty} f^2 |H(f)|^2 df =  \int_{-\infty}^{\infty} h'(t)^2 dt
+    4 \pi^{2} \int_{-\infty}^{\infty} f^2 |H(f)|^2 df =  \int_{-\infty}^{\infty} h'(t)^2 dt
 \end{equation}
 
 By substituting in equation $(\eqref{eq:spectral_bandwidth})$, we have:
@@ -113,7 +126,6 @@ Applying the Schwartz's inequality for the integrals on the right-hand side of $
     \int_{-\infty}^{\infty}t h(t)^2 dt \int_{-\infty}^{\infty}h'(t)^2 dt  \geq \biggr\rvert \int_{-\infty}^{\infty}t h(t)h'(t)^2 dt \biggr\rvert^{2}
 \end{equation}
 
-
 We may integrate by parts the integral on the right-hand side of $\eqref{eq:schwartz_inequality}$
 
 \begin{equation}\label{eq:integr_by_parts}
@@ -128,11 +140,99 @@ If $\lim_{t\rightarrow \infty} t h(t)^2=0$, the first term on the right-hand sid
 
 If we use this into $\eqref{eq:schwartz_inequality}$ and then into $\eqref{eq:time_bandwidth_disp}$ we obtain:
 
-\begin{equation}\label{eq:}
+\begin{equation}\label{eq:uncertainty_principle_freq_square}
    (\Delta t)^2(\Delta f)^2 \geq \frac{1}{16\pi^{2}} 
 \end{equation}
 
 This is the mathematical statement of the uncertainty principle in signal processing.
+
+\section{Gabor filters}
+
+The uncertainty principle shows that time and frequency are two fundamental domains and physically measurable quantities, but still idealizations if one is considered from the other's perspective.
+Frequency is a simple waveform in the time domain, but to be sharply defined in the frequency domain it must be infinite in the time domain; a waveform always existed and remains forever. In everyday life it is very difficult to find phenomena with these characteristics, it is more common to find signals that have properties from both domains; certainly they have some frequency characteristics, but they also have a starting point and after some time these signals begin to fade away. This was the motivation of Dennis Gabor to represent signals simultaneously in time and frequency through the Gabor Elementary Function (GEF) \cite{Gabor:JIEE:1946a}. The function represents the minimal quantum of information, that is, it occupies the minimal area, a rectangle, in the time-frequency plane; the minimal amount of simultaneous information in time and frequency.  
+
+The Gabor function is derived form the uncertainty principle, therefore, it has shape for which the product $\Delta t \Delta f$ assumes the smallest possible value, i.e., for which the inequality in \eqref{eq:uncertainty_principle_freq} turns into an equality ($\Delta t \Delta f = \frac{1}{4 \pi}$). This is the modulation product of a harmonic oscillation of any frequency with pulse of the form of a probability function \cite{Gabor:JIEE:1946a}
+%\frac{1}{\sqrt{2\pi}\sigma} 
+%\begin{equation}\label{eq:gabor_function_1d_time}
+%    g(t) =  e ^{-\frac{1}{2 \sigma^{2}}(t-t_0)^2} e ^{j 2 \pi f_0 t + \phi}
+%\end{equation}
+
+\begin{equation}\label{eq:gabor_function_1d_time}
+    g(t) =  e ^{-\alpha(t-t_0)^2} e ^{j 2 \pi f_0 t + \phi}
+\end{equation}
+
+where $\alpha$ express the \textit{spread} and $t_0$ denotes the centroid of the Gaussian function, $f_0$ is the frequency of the harmonic oscillations, and $\phi$ defines the phase shift of the oscillation. The representation of the Gabor function in the frequency domain is defined by the Fourier transform of \eqref{eq:gabor_function_1d_time} $G(f) = \mathcal{F}\{g(t)\}$ and has the analytical form
+
+%\begin{equation}\label{eq:gabor_function_1d_freq}
+%    G(f) =   e ^{-2 \pi^{2} (f-f_0)^2} e ^{j 2 \pi t_0 (f-%f_0) + \phi}
+%\end{equation}
+
+\begin{equation}\label{eq:gabor_function_1d_freq}
+    G(f) =  \sqrt{\frac{\pi}{\alpha^2}} e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (f-f_0)^2} e ^{j 2 \pi t_0 (f-f_0) + \phi}
+\end{equation}
+
+The equations \eqref{eq:gabor_function_1d_time} and \eqref{eq:gabor_function_1d_freq} show straightforward that the center of gravity $t_0$ is equal to \eqref{eq:center_of_gravity} and the spectral center of gravity $f_0$ is equal to \eqref{eq:spectral_center_of_gravity}, i.e., the Gabor functions follow the Heisenberg's uncertainty principle.  
+
+\begin{figure}
+	\centering
+	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_time_1d}}
+	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_freq_1d}}					
+\caption{Gabor filter in 1-d, $f =1/4$, $\alpha=0.5$ in the time domain (a) and, the frequency domain (b).}\label{fig:Gabor_filter_time_freq}
+\end{figure}
+
+THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq} IS PENDING.
+
+\subsection{Filter normalization}
+
+The Gabor filter can be more appropriately defined by taking the following justifications. First, we must remember that we use the Gabor function as a linear filter to analyze a signal. Under this condition, the temporal analysis of the signal is carried out using the convolution operator. Considering that the Gabor function is concentrated near the time instant $t_0$ and that a convolution centered at the origin is preferable, then $t_0 = 0$. Another parameter that we can omit is the phase shift $\phi$. There is no evidence that any specific phase would be more beneficial than any other. Moreover, for the functions to be similar at all locations, the phase shift should depend on the location $t_0$, and thus, the phase shift can be removed from the origin centered filter ($\phi$ = 0). The Gabor filter function in its compact form is defined as 
+
+\begin{equation}\label{eq:gabor_function_1d_time_compact}
+    g(t) =  e ^{-\alpha t^2} e ^{j 2 \pi f_0 t }
+\end{equation}
+
+The Gabor filter defined by the equation \eqref{eq:gabor_function_1d_time_compact} has a spread that only depends on the parameter $\alpha$, regardless of the center frequency $f_0$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all the filters of the bank will have the same duration. The fact that the bank filters have the same width at all frequencies is not a problem nor is it a requirement to analyze a signal with the Gabor function, however, making the filter width dependent on its frequency implies a multi-resolution analysis, since the filters behave like a scaled version of each other. To accomplish this, remember that the envelope of a Gabor function is defined by a Gaussian window 
+
+\begin{equation}\label{eq:1d_gaussian_function}
+    w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
+\end{equation}
+
+A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation $\sigma$, which in this context defines the width of the Gaussian function and therefore, affects the spread of the Gabor filter. From equations  \eqref{eq:gabor_function_1d_time} and \eqref{eq:1d_gaussian_function} it is noted that 
+
+\begin{equation}\label{eq:gabor_spread_1d}
+    \alpha^2 = \frac{1}{2 \sigma^{2} }
+\end{equation}
+
+Knowing that the Gabor filter is a function that is representable in the time and frequency domain, we can normalize it according to the application and following the next conditions \cite{Boukerroui.Noble.ea:JMIV:2004}.
+
+\begin{enumerate}
+    \item Maximum condition:
+        \begin{equation}\label{eq:maximun_condition}
+            \max_t{|G(f)|} = 1
+        \end{equation}
+    \item Constant spectra condition:
+        \begin{equation}\label{eq:constant_energy_condition}
+            \int_{-\infty}^{\infty} |g(t)| df = 1
+        \end{equation}        
+\end{enumerate}
+
+From the equation \eqref{eq:gabor_function_1d_freq}, it is evident that the maximum response of the Gabor filter in the frequency domain is a function of $\sqrt{\pi/\alpha^2}$, therefore, its inverse
+
+\begin{equation}\label{eq:normalization_factor}
+    \sqrt{\frac{\alpha^2}{\pi}}
+\end{equation}
+
+can be used as the Gabor filter normalization factor in the time domain and fulfill the two conditions mentioned above. 
+
+\begin{figure}
+	\centering
+	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_time_1d_norm}}
+	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_freq_1d_norm}}				
+\caption{Gabor filter in 1-d, $f =1/4$, $\alpha=0.5$ in the time domain (a) and, the frequency domain (b).}\label{fig:Gabor_filter_time_freq_norm}
+\end{figure}
+
+THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq_norm} IS PENDING.
+
+\section{Examples: This section needs to be reconstructed}
 
 The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
 
