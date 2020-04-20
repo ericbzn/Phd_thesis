@@ -11,8 +11,8 @@ In the area of signal and image processing it is well known that there are two a
 
 \begin{equation}\label{eq:fourier_transforms_1d}
     \begin{gathered}
-        H(f) = \mathcal{F}\{h(t)\} = \int_{-\infty}^{\infty} h(t) e^{-j2\pi f t} dt \\
-        h(t) = \mathcal{F}^{-1}\{H(f)\} = \int_{-\infty}^{\infty} H(f) e^{j2\pi f t} df 
+        H(\upsilon) = \mathcal{F}\{h(t)\} = \int_{-\infty}^{\infty} h(t) e^{-j2\pi f t} dt \\
+        h(t) = \mathcal{F}^{-1}\{H(\upsilon)\} = \int_{-\infty}^{\infty} H(\upsilon) e^{j2\pi f t} df 
     \end{gathered}
 \end{equation}
 
@@ -39,19 +39,19 @@ However, the uncertainty principle in the field of quantum mechanics is just a p
 	\Delta t\Delta \omega \geq \frac{1}{2}
 \end{equation}
 
-where $\Delta t$ is the duration of the signal in the time domain and $\Delta \omega$ is the bandwidth of the signal in the frequency domain (CITE). The uncertainty principle then says: the product of the spectral bandwidth multiplied with the time duration of the signal cannot be less than a certain minimum value. Considering the bandwidth of the signal in terms of frequency as $\Delta f$ where $\omega = 2\pi f$, the uncertainty principle is stated as 
+where $\Delta t$ is the duration of the signal in the time domain and $\Delta \omega$ is the bandwidth of the signal in the frequency domain (CITE). The uncertainty principle then says: the product of the spectral bandwidth multiplied with the time duration of the signal cannot be less than a certain minimum value. Considering the bandwidth of the signal in terms of frequency as $\Delta \upsilon$ where $\omega = 2\pi \upsilon$, the uncertainty principle is stated as 
 
 \begin{equation}\label{eq:uncertainty_principle_freq}
-	\Delta t\Delta f \geq \frac{1}{4\pi}
+	\Delta t\Delta \upsilon \geq \frac{1}{4\pi}
 \end{equation}
 
 The Heisenberg uncertainty principle in the field of signal processing and image processing can be mathematically proved by the \textbf{Parseval's theorem}
 
 \begin{equation}\label{eq:parseval_theorem}
-	\int_{-\infty}^{\infty} h(t)^2 dt =  \frac{1}{2 \pi} \int_{-\infty}^{\infty} |H(\omega)|^2 d\omega =  \int_{-\infty}^{\infty} |H(f)|^2 df
+	\int_{-\infty}^{\infty} h(t)^2 dt =  \frac{1}{2 \pi} \int_{-\infty}^{\infty} |H(\omega)|^2 d\omega =  \int_{-\infty}^{\infty} |H(\upsilon)|^2 d\upsilon
 \end{equation}
 
-where $h(t)$ is a function and $H(f)$ its the Fourier transform. 
+where $h(t)$ is a function and $H(\upsilon)$ its the Fourier transform. 
 
 The \textbf{energy content} of the signal described by $h(t)$ is defined as:
 
@@ -63,7 +63,7 @@ The \textbf{energy content} of the signal described by $h(t)$ is defined as:
 From the Parseval's identity this may be written as:
 
 \begin{equation}\label{eq:energy_content_frequency}
-    E_{\infty} =  \int_{-\infty}^{\infty} |H(f)|^2 df
+    E_{\infty} =  \int_{-\infty}^{\infty} |H(\upsilon)|^2 d\upsilon
 \end{equation}
 
 The \textbf{time dispersion} of the signal is given by
@@ -87,37 +87,37 @@ and where if we shift the origin of $t$ so that $t_{0}=0$, then
 In an analogous way, the \textbf{spectral bandwidth} of the signal is given by
 
 \begin{equation}\label{eq:spectral_bandwidth_no_centered}
-    (\Delta f)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (f-f_{0})^2 |H(f)|^2 df
+    (\Delta \upsilon)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (\upsilon-f)^2 |H(\upsilon)|^2 d\upsilon
 \end{equation}
 
-where $f_{0}$ is the \textbf{spectral center of gravity} of the signal defined by:
+where $f$ is the \textbf{spectral center of gravity} of the signal defined by:
 
 \begin{equation}\label{eq:spectral_center_of_gravity}
-    f_0 \equiv  \frac{2 \pi}{E_{\infty}} \int_{-\infty}^{\infty} f |H(f)|^2 df
+    f \equiv  \frac{2 \pi}{E_{\infty}} \int_{-\infty}^{\infty} f |H(\upsilon)|^2 d\upsilon
 \end{equation}
 
-if we consider $f_{0}=0$:
+if we consider $f=0$:
 
 \begin{equation}\label{eq:spectral_bandwidth}
-    (\Delta f)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} f^2 |H(f)|^2 df 
+    (\Delta \upsilon)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} f^2 |H(\upsilon)|^2 d\upsilon 
 \end{equation}
 
-If $h'(t)$ is the derivative of the function, its Fourier transform is $j2\pi f H(f)$. By applying the Parseval's theorem to the Fourier pair $h'(t)\longleftrightarrow j2\pi f H(f)$ we obtain:
+If $h'(t)$ is the derivative of the function, its Fourier transform is $j2\pi f H(\upsilon)$. By applying the Parseval's theorem to the Fourier pair $h'(t)\longleftrightarrow j2\pi f H(\upsilon)$ we obtain:
 
 \begin{equation}\label{eq:applyed_parseval_theorem}
-    4 \pi^{2} \int_{-\infty}^{\infty} f^2 |H(f)|^2 df =  \int_{-\infty}^{\infty} h'(t)^2 dt
+    4 \pi^{2} \int_{-\infty}^{\infty} f^2 |H(\upsilon)|^2 d\upsilon =  \int_{-\infty}^{\infty} h'(t)^2 dt
 \end{equation}
 
 By substituting in equation $(\eqref{eq:spectral_bandwidth})$, we have:
 
 \begin{equation}\label{eq:spectral_bandwidth2}
-    (\Delta f)^2 = \frac{1}{4 \pi^{2} E_{\infty}} \int_{-\infty}^{\infty} h'(t)^2 dt
+    (\Delta \upsilon)^2 = \frac{1}{4 \pi^{2} E_{\infty}} \int_{-\infty}^{\infty} h'(t)^2 dt
 \end{equation}
 
 We use equations $(\eqref{eq:time_dispersion})$ and $\eqref{eq:spectral_bandwidth2}$ to calculate:
 
 \begin{equation}\label{eq:time_bandwidth_disp}
-    (\Delta t)^2(\Delta f)^2 = \frac{1}{4 \pi^{2} E_{\infty}^{2}} \int_{-\infty}^{\infty} t^2f(t)^2 dt \int_{-\infty}^{\infty}f'(t)^2 dt
+    (\Delta t)^2(\Delta \upsilon)^2 = \frac{1}{4 \pi^{2} E_{\infty}^{2}} \int_{-\infty}^{\infty} t^2f(t)^2 dt \int_{-\infty}^{\infty}f'(t)^2 dt
 \end{equation}
 
 Applying the Schwartz's inequality for the integrals on the right-hand side of $\eqref{eq:time_bandwidth_disp}$:
@@ -141,7 +141,7 @@ If $\lim_{t\rightarrow \infty} t h(t)^2=0$, the first term on the right-hand sid
 If we use this into $\eqref{eq:schwartz_inequality}$ and then into $\eqref{eq:time_bandwidth_disp}$ we obtain:
 
 \begin{equation}\label{eq:uncertainty_principle_freq_square}
-   (\Delta t)^2(\Delta f)^2 \geq \frac{1}{16\pi^{2}} 
+   (\Delta t)^2(\Delta \upsilon)^2 \geq \frac{1}{16\pi^{2}} 
 \end{equation}
 
 This is the mathematical statement of the uncertainty principle in signal processing.
@@ -151,27 +151,27 @@ This is the mathematical statement of the uncertainty principle in signal proces
 The uncertainty principle shows that time and frequency are two fundamental domains and physically measurable quantities, but still idealizations if one is considered from the other's perspective.
 Frequency is a simple waveform in the time domain, but to be sharply defined in the frequency domain it must be infinite in the time domain; a waveform always existed and remains forever. In everyday life it is very difficult to find phenomena with these characteristics, it is more common to find signals that have properties from both domains; certainly they have some frequency characteristics, but they also have a starting point and after some time these signals begin to fade away. This was the motivation of Dennis Gabor to represent signals simultaneously in time and frequency through the Gabor Elementary Function (GEF) \cite{Gabor:JIEE:1946a}. The function represents the minimal quantum of information, that is, it occupies the minimal area, a rectangle, in the time-frequency plane; the minimal amount of simultaneous information in time and frequency.  
 
-The Gabor function is derived form the uncertainty principle, therefore, it has shape for which the product $\Delta t \Delta f$ assumes the smallest possible value, i.e., for which the inequality in \eqref{eq:uncertainty_principle_freq} turns into an equality ($\Delta t \Delta f = \frac{1}{4 \pi}$). This is the modulation product of a harmonic oscillation of any frequency with pulse of the form of a probability function \cite{Gabor:JIEE:1946a}
+The Gabor function is derived form the uncertainty principle, therefore, it has shape for which the product $\Delta t \Delta \upsilon$ assumes the smallest possible value, i.e., for which the inequality in \eqref{eq:uncertainty_principle_freq} turns into an equality ($\Delta t \Delta \upsilon = \frac{1}{4 \pi}$). This is the modulation product of a harmonic oscillation of any frequency with pulse of the form of a probability function \cite{Gabor:JIEE:1946a}
 %\frac{1}{\sqrt{2\pi}\sigma} 
 %\begin{equation}\label{eq:gabor_function_1d_time}
-%    g(t) =  e ^{-\frac{1}{2 \sigma^{2}}(t-t_0)^2} e ^{j 2 \pi f_0 t + \phi}
+%    g(t) =  e ^{-\frac{1}{2 \sigma^{2}}(t-t_0)^2} e ^{j 2 \pi f t + \phi}
 %\end{equation}
 
 \begin{equation}\label{eq:gabor_function_1d_time}
-    g(t) =  e ^{-\alpha(t-t_0)^2} e ^{j 2 \pi f_0 t + \phi}
+    g(t) =  e ^{-\alpha(t-t_0)^2} e ^{j 2 \pi f t + \phi}
 \end{equation}
 
-where $\alpha$ express the \textit{spread} and $t_0$ denotes the centroid of the Gaussian function, $f_0$ is the frequency of the harmonic oscillations, and $\phi$ defines the phase shift of the oscillation. The representation of the Gabor function in the frequency domain is defined by the Fourier transform of \eqref{eq:gabor_function_1d_time} $G(f) = \mathcal{F}\{g(t)\}$ and has the analytical form
+where $\alpha$ express the \textit{spread} and $t_0$ denotes the centroid of the Gaussian function, $f$ is the frequency of the harmonic oscillations, and $\phi$ defines the phase shift of the oscillation. The representation of the Gabor function in the frequency domain is defined by the Fourier transform of \eqref{eq:gabor_function_1d_time} $G(\upsilon) = \mathcal{F}\{g(t)\}$ and has the analytical form
 
 %\begin{equation}\label{eq:gabor_function_1d_freq}
-%    G(f) =   e ^{-2 \pi^{2} (f-f_0)^2} e ^{j 2 \pi t_0 (f-%f_0) + \phi}
+%    G(\upsilon) =   e ^{-2 \pi^{2} (\upsilon-f)^2} e ^{j 2 \pi t_0 (f-%f) + \phi}
 %\end{equation}
 
 \begin{equation}\label{eq:gabor_function_1d_freq}
-    G(f) =  \sqrt{\frac{\pi}{\alpha^2}} e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (f-f_0)^2} e ^{j 2 \pi t_0 (f-f_0) + \phi}
+    G(\upsilon) =  \sqrt{\frac{\pi}{\alpha^2}} e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2} e ^{j 2 \pi t_0 (\upsilon-f) + \phi}
 \end{equation}
 
-The equations \eqref{eq:gabor_function_1d_time} and \eqref{eq:gabor_function_1d_freq} show straightforward that the center of gravity $t_0$ is equal to \eqref{eq:center_of_gravity} and the spectral center of gravity $f_0$ is equal to \eqref{eq:spectral_center_of_gravity}, i.e., the Gabor functions follow the Heisenberg's uncertainty principle.  
+The equations \eqref{eq:gabor_function_1d_time} and \eqref{eq:gabor_function_1d_freq} show straightforward that the center of gravity $t_0$ is equal to \eqref{eq:center_of_gravity} and the spectral center of gravity $f$ is equal to \eqref{eq:spectral_center_of_gravity}, i.e., the Gabor functions follow the Heisenberg's uncertainty principle.  
 
 \begin{figure}
 	\centering
@@ -187,10 +187,10 @@ THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq} IS PENDING.
 The Gabor filter can be more appropriately defined by taking the following justifications. First, we must remember that we use the Gabor function as a linear filter to analyze a signal. Under this condition, the temporal analysis of the signal is carried out using the convolution operator. Considering that the Gabor function is concentrated near the time instant $t_0$ and that a convolution centered at the origin is preferable, then $t_0 = 0$. Another parameter that we can omit is the phase shift $\phi$. There is no evidence that any specific phase would be more beneficial than any other. Moreover, for the functions to be similar at all locations, the phase shift should depend on the location $t_0$, and thus, the phase shift can be removed from the origin centered filter ($\phi$ = 0). The Gabor filter function in its compact form is defined as 
 
 \begin{equation}\label{eq:gabor_function_1d_time_compact}
-    g(t) =  e ^{-\alpha t^2} e ^{j 2 \pi f_0 t }
+    g(t) =  e ^{-\alpha t^2} e ^{j 2 \pi f t }
 \end{equation}
 
-The Gabor filter defined by the equation \eqref{eq:gabor_function_1d_time_compact} has a spread that only depends on the parameter $\alpha$, regardless of the center frequency $f_0$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all the filters of the bank will have the same duration. The fact that the bank filters have the same width at all frequencies is not a problem nor is it a requirement to analyze a signal with the Gabor function, however, making the filter width dependent on its frequency implies a multi-resolution analysis, since the filters behave like a scaled version of each other. To accomplish this, remember that the envelope of a Gabor function is defined by a Gaussian window 
+The Gabor filter defined by the equation \eqref{eq:gabor_function_1d_time_compact} has a spread that only depends on the parameter $\alpha$, regardless of the center frequency $f$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all the filters of the bank will have the same duration. The fact that the bank filters have the same width at all frequencies is not a problem nor is it a requirement to analyze a signal with the Gabor function, however, making the filter width dependent on its frequency implies a multi-resolution analysis, since the filters behave like a scaled version of each other. To accomplish this, remember that the envelope of a Gabor function is defined by a Gaussian window 
 
 \begin{equation}\label{eq:1d_gaussian_function}
     w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
@@ -207,11 +207,11 @@ Knowing that the Gabor filter is a function that is representable in the time an
 \begin{enumerate}
     \item Maximum condition:
         \begin{equation}\label{eq:maximun_condition}
-            \max_t{|G(f)|} = 1
+            \max_t{|G(\upsilon)|} = 1
         \end{equation}
     \item Constant spectra condition:
         \begin{equation}\label{eq:constant_energy_condition}
-            \int_{-\infty}^{\infty} |g(t)| df = 1
+            \int_{-\infty}^{\infty} |g(t)| d\upsilon = 1
         \end{equation}        
 \end{enumerate}
 
