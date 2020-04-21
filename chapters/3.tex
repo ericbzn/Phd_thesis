@@ -168,19 +168,19 @@ where $\alpha$ express the \textit{spread} and $t_0$ denotes the centroid of the
 %\end{equation}
 
 \begin{equation}\label{eq:gabor_function_1d_freq}
-    G(\upsilon) =  \sqrt{\frac{\pi}{\alpha^2}} e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2} e ^{j 2 \pi t_0 (\upsilon-f) + \phi}
+    G(\upsilon) =  \sqrt{\frac{\pi}{\alpha^2}} e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2} e ^{-j 2 \pi t_0 (\upsilon-f) + \phi}
 \end{equation}
 
 The equations \eqref{eq:gabor_function_1d_time} and \eqref{eq:gabor_function_1d_freq} show straightforward that the center of gravity $t_0$ is equal to \eqref{eq:center_of_gravity} and the spectral center of gravity $f$ is equal to \eqref{eq:spectral_center_of_gravity}, i.e., the Gabor functions follow the Heisenberg's uncertainty principle.  
 
-\begin{figure}
-	\centering
-	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_time_1d}}
-	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_freq_1d}}					
-\caption{Gabor filter in 1-d, $f =1/4$, $\alpha=0.5$ in the time domain (a) and, the frequency domain (b).}\label{fig:Gabor_filter_time_freq}
-\end{figure}
+%\begin{figure}
+%	\centering
+%	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_time_1d}}
+%	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_freq_1d}}					
+%\caption{Gabor filter in 1-d, $f =1/4$, $\alpha=0.5$ in the time domain (a) and, the frequency domain (b).}\label{fig:Gabor_filter_time_freq}
+%\end{figure}
 
-THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq} IS PENDING.
+%THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq} IS PENDING.
 
 \subsection{Filter normalization}
 
@@ -221,16 +221,63 @@ From the equation \eqref{eq:gabor_function_1d_freq}, it is evident that the maxi
     \sqrt{\frac{\alpha^2}{\pi}}
 \end{equation}
 
-can be used as the Gabor filter normalization factor in the time domain and fulfill the two conditions mentioned above. 
+can be used as the Gabor filter normalization factor in the time domain and fulfill the two conditions mentioned above. In summary, the function of the normalized Gabor filter can be defined as
+
+\begin{equation}\label{eq:gabor_function_1d_timefreq_normalized}
+    \begin{gathered}
+         g(t) =  \sqrt{\frac{\alpha^2}{\pi}} e ^{-\alpha t^2} e ^{j 2 \pi f t } \\
+         G(\upsilon) =  e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2}
+     \end{gathered}
+\end{equation}
+
+%\begin{figure}
+%	\centering
+%	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_time_1d_norm}}
+%	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_freq_1d_norm}}				
+%\caption{Gabor filter in 1-d, $f =1/4$, $\alpha=0.5$ in the time domain (a) and, the frequency domain (b).}\label{fig:Gabor_filter_time_freq_norm}
+%\end{figure}
+%
+%THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq_norm} IS PENDING.
 
 \begin{figure}
-	\centering
-	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_time_1d_norm}}
-	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_freq_1d_norm}}				
-\caption{Gabor filter in 1-d, $f =1/4$, $\alpha=0.5$ in the time domain (a) and, the frequency domain (b).}\label{fig:Gabor_filter_time_freq_norm}
+\centering
+\includegraphics{GaborFilter_timefreq_1d_norm_efect.pdf}
+\caption{1-d Gabor filter in the time domain (first column) and in the frequency domain (second  column). From top to bottom: no normalized filter and normalized Gabor filter with $[f =1/4,\alpha=0.5, t_0=0]$.}\label{fig:GaborFilter_timefreq_norm_efect}
 \end{figure}
 
-THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq_norm} IS PENDING.
+THE DESCRIPTION OF FIGURE \ref{fig:GaborFilter_timefreq_norm_efect} IS PENDING.
+
+\subsection{Filter spacing}
+
+The Gabor filter defined by the equations \eqref{eq:gabor_function_1d_timefreq_normalized} has a spread that only depends on the parameter $\alpha$, regardless of the center frequency $f$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all the filters of the bank will have the same duration. The fact that the bank filters have the same width at all frequencies is not a problem nor is it a requirement to analyze a signal with the Gabor function, however, making the filter width dependent on its frequency implies a multi-resolution analysis, since the filters behave like a scaled version of each other. To accomplish this, we remember that the envelope of a Gabor function is defined by a Gaussian window such as
+
+\begin{equation}\label{eq:1d_gaussian_function}
+    w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
+\end{equation}
+
+A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation $\sigma$, which in this context defines the width of the Gaussian function and therefore, affects the spread of the Gabor filter. From equations  \eqref{eq:gabor_function_1d_time} and \eqref{eq:1d_gaussian_function} it is noted that 
+
+\begin{equation}\label{eq:gabor_spread_1d}
+    \alpha^2 = \frac{1}{2 \sigma^{2} }
+\end{equation}
+
+Gabor's filters have many properties, such as the octave spacing between two different frequencies $f_1 < f_2$ \cite{Granlund:CGIP:1978}
+
+\begin{equation}\label{eq:octave_spacing}
+    b = \log_2 \left( \frac{f_2}{f_1} \right)
+\end{equation}
+
+where $b$ is the half-response spatial frequency bandwidth in octaves. Considering that  the product $\sigma f$ also determines the spatial frequency bandwidth of the Gabor fuction and thus the number of parallel stripe zones \cite{Petkov:FGCS:1995}, the bandwidth and the product $\sigma f$ are related as follows:
+
+\begin{equation}\label{eq:octave_spacing_sigma}
+    \begin{gathered}
+        b = \log_2 \left(  \frac{ \sigma f \pi + \sqrt{\frac{\ln{2}}{2}} }{ \sigma f \pi - \sqrt{\frac{\ln{2}}{2}} }\right) \\
+        \sigma f = \frac{1}{\pi} \sqrt{\frac{\ln{2}}{2}} \frac{k+1}{k-1}
+    \end{gathered}
+\end{equation}
+
+where $k=2^{b}$ 
+
 
 \section{Examples: This section needs to be reconstructed}
 
