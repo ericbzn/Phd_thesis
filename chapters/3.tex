@@ -1,7 +1,7 @@
 % created on 31/03/2020
 % @author : ebazan
 
-\chapter{Color Image Spectral Decomposition}
+\chapter{The Gabor's filter as a measurement tool}
 
 In this chapter we present a reminder of signal theory applied to image processing for feature extraction and object detection. First, we show what are the reasons for restricting signal analysis in two predefined domains: time and frequency in one dimension and space and frequency in two dimensions. We especially recall Gabor's filter theory and properties by showing how these filters are related to Heisneberg's uncertainty principle.
 
@@ -152,20 +152,12 @@ The uncertainty principle shows that time and frequency are two fundamental doma
 Frequency is a simple waveform in the time domain, but to be sharply defined in the frequency domain it must be infinite in the time domain; a waveform always existed and remains forever. In everyday life it is very difficult to find phenomena with these characteristics, it is more common to find signals that have properties from both domains; certainly they have some frequency characteristics, but they also have a starting point and after some time these signals begin to fade away. This was the motivation of Dennis Gabor to represent signals simultaneously in time and frequency through the Gabor Elementary Function (GEF) \cite{Gabor:JIEE:1946a}. The function represents the minimal quantum of information, that is, it occupies the minimal area, a rectangle, in the time-frequency plane; the minimal amount of simultaneous information in time and frequency.  
 
 The Gabor function is derived form the uncertainty principle, therefore, it has shape for which the product $\Delta t \Delta \upsilon$ assumes the smallest possible value, i.e., for which the inequality in \eqref{eq:uncertainty_principle_freq} turns into an equality ($\Delta t \Delta \upsilon = \frac{1}{4 \pi}$). This is the modulation product of a harmonic oscillation of any frequency with pulse of the form of a probability function \cite{Gabor:JIEE:1946a}
-%\frac{1}{\sqrt{2\pi}\sigma} 
-%\begin{equation}\label{eq:gabor_function_1d_time}
-%    g(t) =  e ^{-\frac{1}{2 \sigma^{2}}(t-t_0)^2} e ^{j 2 \pi f t + \phi}
-%\end{equation}
 
 \begin{equation}\label{eq:gabor_function_1d_time}
-    g(t) =  e ^{-\alpha(t-t_0)^2} e ^{j 2 \pi f t + \phi}
+    g(t) =  e ^{-\alpha^2(t-t_0)^2} e ^{j 2 \pi f t + \phi}
 \end{equation}
 
 where $\alpha$ express the \textit{spread} and $t_0$ denotes the centroid of the Gaussian function, $f$ is the frequency of the harmonic oscillations, and $\phi$ defines the phase shift of the oscillation. The representation of the Gabor function in the frequency domain is defined by the Fourier transform of \eqref{eq:gabor_function_1d_time} $G(\upsilon) = \mathcal{F}\{g(t)\}$ and has the analytical form
-
-%\begin{equation}\label{eq:gabor_function_1d_freq}
-%    G(\upsilon) =   e ^{-2 \pi^{2} (\upsilon-f)^2} e ^{j 2 \pi t_0 (f-%f) + \phi}
-%\end{equation}
 
 \begin{equation}\label{eq:gabor_function_1d_freq}
     G(\upsilon) =  \sqrt{\frac{\pi}{\alpha^2}} e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2} e ^{-j 2 \pi t_0 (\upsilon-f) + \phi}
@@ -186,23 +178,14 @@ The equations \eqref{eq:gabor_function_1d_time} and \eqref{eq:gabor_function_1d_
 
 The Gabor filter can be more appropriately defined by taking the following justifications. First, we must remember that we use the Gabor function as a linear filter to analyze a signal. Under this condition, the temporal analysis of the signal is carried out using the convolution operator. Considering that the Gabor function is concentrated near the time instant $t_0$ and that a convolution centered at the origin is preferable, then $t_0 = 0$. Another parameter that we can omit is the phase shift $\phi$. There is no evidence that any specific phase would be more beneficial than any other. Moreover, for the functions to be similar at all locations, the phase shift should depend on the location $t_0$, and thus, the phase shift can be removed from the origin centered filter ($\phi$ = 0). The Gabor filter function in its compact form is defined as 
 
-\begin{equation}\label{eq:gabor_function_1d_time_compact}
-    g(t) =  e ^{-\alpha t^2} e ^{j 2 \pi f t }
+\begin{equation}\label{eq:gabor_function_1d_timefreq_compact}
+    \begin{gathered}
+         g(t) =  e ^{-\alpha^2 t^2} e ^{j 2 \pi f t } \\
+         G(\upsilon) =  \sqrt{\frac{\pi}{\alpha^2}} e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2} 
+     \end{gathered}
 \end{equation}
 
-The Gabor filter defined by the equation \eqref{eq:gabor_function_1d_time_compact} has a spread that only depends on the parameter $\alpha$, regardless of the center frequency $f$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all the filters of the bank will have the same duration. The fact that the bank filters have the same width at all frequencies is not a problem nor is it a requirement to analyze a signal with the Gabor function, however, making the filter width dependent on its frequency implies a multi-resolution analysis, since the filters behave like a scaled version of each other. To accomplish this, remember that the envelope of a Gabor function is defined by a Gaussian window 
-
-\begin{equation}\label{eq:1d_gaussian_function}
-    w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
-\end{equation}
-
-A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation $\sigma$, which in this context defines the width of the Gaussian function and therefore, affects the spread of the Gabor filter. From equations  \eqref{eq:gabor_function_1d_time} and \eqref{eq:1d_gaussian_function} it is noted that 
-
-\begin{equation}\label{eq:gabor_spread_1d}
-    \alpha^2 = \frac{1}{2 \sigma^{2} }
-\end{equation}
-
-Knowing that the Gabor filter is a function that is representable in the time and frequency domain, we can normalize it according to the application and following the next conditions \cite{Boukerroui.Noble.ea:JMIV:2004}.
+The normalization of the Gabor filter can be performed taking into account the application in which it will be used. However, in this thesis we use the general normalization which is based on the multi domain representation property of the function and following the next conditions \cite{Boukerroui.Noble.ea:JMIV:2004}:
 
 \begin{enumerate}
     \item Maximum condition:
@@ -211,7 +194,7 @@ Knowing that the Gabor filter is a function that is representable in the time an
         \end{equation}
     \item Constant spectra condition:
         \begin{equation}\label{eq:constant_energy_condition}
-            \int_{-\infty}^{\infty} |g(t)| d\upsilon = 1
+            \int_{-\infty}^{\infty} |g(t)| dt = 1
         \end{equation}        
 \end{enumerate}
 
@@ -225,19 +208,10 @@ can be used as the Gabor filter normalization factor in the time domain and fulf
 
 \begin{equation}\label{eq:gabor_function_1d_timefreq_normalized}
     \begin{gathered}
-         g(t) =  \sqrt{\frac{\alpha^2}{\pi}} e ^{-\alpha t^2} e ^{j 2 \pi f t } \\
-         G(\upsilon) =  e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2}
+         g(t) =  \sqrt{\frac{\alpha^2}{\pi}} e ^{-\alpha^2 t^2} e ^{j 2 \pi f t } \\
+         G(\upsilon) =  e ^{-\left(\frac{\pi}{\alpha}\right) ^2 (\upsilon-f)^2}
      \end{gathered}
 \end{equation}
-
-%\begin{figure}
-%	\centering
-%	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_time_1d_norm}}
-%	\subcaptionbox{}{\includegraphics[width=0.45\textwidth]{GaborFilter_freq_1d_norm}}				
-%\caption{Gabor filter in 1-d, $f =1/4$, $\alpha=0.5$ in the time domain (a) and, the frequency domain (b).}\label{fig:Gabor_filter_time_freq_norm}
-%\end{figure}
-%
-%THE DESCRIPTION OF FIGURE \ref{fig:Gabor_filter_time_freq_norm} IS PENDING.
 
 \begin{figure}
 \centering
@@ -249,105 +223,81 @@ THE DESCRIPTION OF FIGURE \ref{fig:GaborFilter_timefreq_norm_efect} IS PENDING.
 
 \subsection{Filter spacing}
 
-The Gabor filter defined by the equations \eqref{eq:gabor_function_1d_timefreq_normalized} has a spread that only depends on the parameter $\alpha$, regardless of the center frequency $f$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all the filters of the bank will have the same duration. The fact that the bank filters have the same width at all frequencies is not a problem nor is it a requirement to analyze a signal with the Gabor function, however, making the filter width dependent on its frequency implies a multi-resolution analysis, since the filters behave like a scaled version of each other. To accomplish this, we remember that the envelope of a Gabor function is defined by a Gaussian window such as
-
-\begin{equation}\label{eq:1d_gaussian_function}
-    w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
-\end{equation}
-
-A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation $\sigma$, which in this context defines the width of the Gaussian function and therefore, affects the spread of the Gabor filter. From equations  \eqref{eq:gabor_function_1d_time} and \eqref{eq:1d_gaussian_function} it is noted that 
-
-\begin{equation}\label{eq:gabor_spread_1d}
-    \alpha^2 = \frac{1}{2 \sigma^{2} }
-\end{equation}
-
-Gabor's filters have many properties, such as the octave spacing between two different frequencies $f_1 < f_2$ \cite{Granlund:CGIP:1978}
+Our main interest in Gabor filters is multispectral analysis of a function. To accomplish this, we can generate a bank containing different Gabor functions that work at different frequencies $f$. We can define the separation of the filters in octaves by means of the half-response spatial frequency bandwidth $B_f$ measured between two center frequencies $f_2 < f_1$ \cite{Granlund:CGIP:1978} belonging to a filter bank such that 
 
 \begin{equation}\label{eq:octave_spacing}
-    b = \log_2 \left( \frac{f_2}{f_1} \right)
+    B_f = \log_2 \left( \frac{f_1}{f_2} \right)
 \end{equation}
 
-where $b$ is the half-response spatial frequency bandwidth in octaves. Considering that  the product $\sigma f$ also determines the spatial frequency bandwidth of the Gabor fuction and thus the number of parallel stripe zones \cite{Petkov:FGCS:1995}, the bandwidth and the product $\sigma f$ are related as follows:
-
-\begin{equation}\label{eq:octave_spacing_sigma}
-    \begin{gathered}
-        b = \log_2 \left(  \frac{ \sigma f \pi + \sqrt{\frac{\ln{2}}{2}} }{ \sigma f \pi - \sqrt{\frac{\ln{2}}{2}} }\right) \\
-        \sigma f = \frac{1}{\pi} \sqrt{\frac{\ln{2}}{2}} \frac{k+1}{k-1}
-    \end{gathered}
-\end{equation}
-
-where $k=2^{b}$ 
+The octave spacing between two different two different frequencies is an interesting property of the Gabor filters, however, the filters denoted by the equations \eqref{eq:gabor_function_1d_timefreq_normalized} have a spread that only depends on the parameter $\alpha$, regardless of the center frequency $f$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all the filters of the bank will have the same duration. We can see this effect in Figure (FIGURE WITH A BANK OF FILTERS WITH INDEPENDENT SPREAD) where we show a filter bank with an adjacent filter's spacing of one octave, that is, $B_f = 1$. 
 
 
-\section{Examples: This section needs to be reconstructed}
+\subsubsection{Frequency crossing point}
 
-The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
+The fact that the bank filters have the same width at all frequencies is not a problem nor is it a requirement to analyze a signal with the Gabor function, however, making the filter width dependent on its frequency implies a multi-resolution analysis, since the filters behave like a scaled version of each other. One way to accomplish this, is to have the same relative window size in relation to the central frequency $f$. We must remember that window size of a Gabor function is denoted by the effective width of a Gaussian function, which in the time domain has a form of
 
-\begin{equation}\label{eq:uncertainty_principle2}
-    h(t) = f(t)w(t-t_0)
-\end{equation}
-
-
-Due to the shifting property of the Fourier transform, the Fourier transform of the window is $e^{-j\omega t_0}W(\omega)$. Since the window multiplies the signal, the Fourier transform of the window is convolved with the Fourier transform of the signal. Therefore, the Fourier transform of what we observe is given by:
-
-\begin{equation}\label{eq:short_time_fourier_transform}
-    H(\omega) = \int_{-\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
-\end{equation}
-
-
-In general $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
-
-The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
-
-\begin{equation}\label{eq:uncertainty_principle2}
-    h(t) = f(t)w(t-t_0)
-\end{equation}
-
-
-Due to the shifting property of the Fourier transform, the Fourier transform of the window is $e^{-j\omega t_0}W(\omega)$. Since the window multiplies the signal, the Fourier transform of the window is convolved with the Fourier transform of the signal. Therefore, the Fourier transform of what we observe is given by:
-
-\begin{equation}\label{eq:short_time_fourier_transform}
-    H(\omega) = \int_{\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
-\end{equation}
-
-
-In general $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
-
-To see this behavior, consider a signal $f(t)=A \sin \omega_{0} t$, where $A$ is a positive constant, and a window $w(t)$ defined by a Gaussian function. 
-
-\begin{equation}\label{eq:1d_gaussian_function}
+\begin{equation}\label{eq:1d_gaussian_function_time}
     w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
 \end{equation}
-A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation, which in this context is also called \textit{spread} and is denoted by $\sigma$. 
+
+A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation $\sigma$, which in this context is implicit in the parameter $\alpha$ of th Gabor fuction, therefore, $\alpha^2 = 1 / 2 \sigma^2$. 
+A peculiarity of the Gabor filter is that its analytical form in the frequency domain is completely defined by the fourier transform of the normalized Gaussian function.
+
+\begin{equation}\label{eq:1d_gaussian_function_freq}
+    G(\upsilon) = w(\upsilon) = e ^{-\left(\frac{\pi}{\alpha}\right) ^{2} (\upsilon-f)^2}
+\end{equation}
+
+Since the center frequencies of the bank filters are chosen to have a constant separation between them and the effective width of the window is a function of this central frequency, there is a point on the frequency axis where two adjacent functions intersect. In a filter bank with two functions with central frequencies $f_1$ and $f_2$, the low cut-off frequency of the function at $f_1$ coincides with the high cut-off frequency of the function at $f_2$. Normally in the literature this crossing point $c_1$, corresponds to the points where the Gabor function has decreased half of its maximum value, i.e., $c_1= 1/2=0.5$ \cite{Granlund:CGIP:1978}. However, we can obtain this crossing point $c_1$ by defining a frequency interval $\Delta f$ that represents the distance between the points where the function $G(\upsilon)$ begins to decrease, therefore, evaluating Eq. \eqref{eq:1d_gaussian_function_freq} at $\upsilon = f + \frac{\Delta f}{2}$:
+
+\begin{equation}\label{eq:constant_crossing_point}
+    G\left(f + \frac{\Delta f}{2}\right) = e^{-\left(\frac{\pi}{\alpha}\right)^2 \left(\frac{\Delta f}{2}\right)^2} = c_1 G(f) 
+\end{equation}
+
+we obtain the expression of the half-frequency interval 
+
+\begin{equation}\label{eq:frequency_interval_crossing_point}
+    \Delta f = \frac{2 \alpha}{\pi}\sqrt{\ln \left(\frac{1}{c_1}\right)}
+\end{equation}
+
+from which we obtain the crossing point defined as
+
+\begin{equation}\label{eq:crossing_point}
+    c_1 = e^{-\left(\frac{\alpha}{\pi} \right)^2 \left(\frac{\Delta f}{2}\right)^2 }
+\end{equation}
+
+Then, we know that for a filter whose center frequency is $f$ and whose cut-off frequencies interval is $\Delta f$, the full bandwidth expressed in octaves, $B_f$, is defined as \cite{Daugman:JOSA:1985a}
+
+\begin{equation}\label{eq:frequency_bandwidth_interval}
+    B_f = \log_2 \left( \frac{f + \frac{\Delta f}{2} }{f - \frac{\Delta f}{2}} \right)
+\end{equation}
+
+It is clear that using expression \eqref{eq:frequency_interval_crossing_point} in equation \eqref{eq:frequency_bandwidth_interval}, we find the expression that relates the frequency bandwidth to the central frequency and the effective width of the Gaussian window.
+
+\begin{equation}\label{eq:frequency_bandwidth}
+    B_f = \log_2 \left( \frac{ \frac{f}{\alpha} \pi + \sqrt{\ln \left(\frac{1}{c_1}\right)} }{ \frac{f}{\alpha} \pi - \sqrt{\ln \left(\frac{1}{c_1}\right)} } \right)
+\end{equation}
+
+
+The above analysis allows us to rewrite the expression of a Gabor filter in 1-d that belongs to a bank of filters spaced from each other by a bandwidth Bf and a center frequency f as follows. 
+
+\begin{equation}\label{eq:gabor_function_1d_timefreq_bank}
+    \begin{gathered}
+         g(t) =  \frac{f}{\gamma \sqrt{\pi}} e ^{-\left(\frac{f}{\gamma}\right)^2 t^2} e ^{j 2 \pi f t } \\
+         G(\upsilon) =  e ^{-\left(\frac{\gamma \pi}{f}\right) ^2 (\upsilon-f)^2}
+     \end{gathered}
+\end{equation}
+
+where now the effective bandwidth $\alpha$ of each filter in the bank will be determined based on the ratio $\gamma = \frac{f}{\alpha}$ and crossing point between adjacent filters $c_1$.
+
 
 \begin{figure}
 \centering
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{sin_signal}\label{fig:sin_signal}}%
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{real_sin_signal}}%\label{fig:sin_signal_real}
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{imag_sin_signal}}\\%\label{fig:sin_signal_imag}
-\hspace{0.33\textwidth}
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{mag_sin_signal}}%\label{fig:sin_signal_mag}
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{phase_sin_signal}}%\label{fig:sin_signal_phase}
-\caption{A continous fuction (a), and the real part (b), imaginary part (c), magnitude (d) and phase (e) of its Fourier transform.}\label{fig:sin_signal_fourier_comp}
+\subcaptionbox{}{\includegraphics[width=\textwidth]{GaborFilterbank_freq_1d_octave_spacing}\label{fig:sin_signal}} \\%
+\subcaptionbox{}{\includegraphics[width=\textwidth]{GaborFilterbank_freq_1d_half_crossingpoint}}\\%\label{fig:sin_signal_real}
+\subcaptionbox{}{\includegraphics[width=\textwidth]{GaborFilterbank_freq_1d_new_crossingpoint}}
+\caption{The bandwidth of a filter bank and the crossing point. The frequency banA continous fuction (a), and the real part (b), imaginary part (c), magnitude (d) and phase (e) of its Fourier transform.}\label{fig:sin_signal_fourier_comp}
 \end{figure}
 
-Figures demonstrate the result for a signal with $\omega_0=5$ and $A=2$. Figure  shows the continuous signal and  the real and imaginary parts and the magnitude and phase of its Fourier transform.  Figure  shows various windowed parts of the signal ($h(t)$) and the real and imaginary parts of their corresponding Fourier transforms.  Figure is the same as figure , but it shows the magnitude and phase of each Fourier transform. These Fourier transforms should be compared with their counterparts in figure  in order to appreciate the effect of both the size of the window and the locality of the window (Gaussian function). In all cases the main peaks of the Fourier transform's magnitude, which correspond to delta function impulses at $\omega=\pm 5$ in the continuous case, are preserved, but they become less sharp and the recovered value starts to move away from the real value as soon as the size of the window decreases. 
-
-For the analysis of discrete signals it is possible to estimate the uncertainty principle. The easiest way is to consider signal segments and calculate the discrete Fourier transform (DFT) of each segment. This is the so-called Short Time Fourier Transform (STFT). If we consider an odd-sized window and associate the DFT that we calculate within it with the sample in the center of the window, we will be associating each sample of the signal with a ``small'' Fourier transform. In this context, how ``small'' the DTF is depends on the size of the window.
-
-
-
-\begin{figure}
-\centering
-\includegraphics{sin_gauss_real_imag.pdf}
-\caption{The effect of Gaussian window. Sinusoidal signal bounded by a Gaussian window (first column) and the real and imaginary part of its corresponding Fourier transform (second and third columns). From top to bottom: $[\sigma=1, t_0=0]$, $[\sigma=1, t_0=1.6]$, $[\sigma=1.5, t_0=0]$, $[\sigma=1.5, t_0=1.6]$, $[\sigma=2.5, t_0=0]$, $[\sigma=2.5, t_0=1.6]$.}\label{fig:gaussian_window_real_imag}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics{sin_gauss_mag_phase.pdf}
-\caption{The effect of Gaussian window. Sinusoidal signal bounded by a Gaussian window (first column) and the magnitude and phase of its corresponding Fourier transform (second and third columns). From top to bottom: $[\sigma=1, t_0=0]$, $[\sigma=1, t_0=1.6]$, $[\sigma=1.5, t_0=0]$, $[\sigma=1.5, t_0=1.6]$, $[\sigma=2.5, t_0=0]$, $[\sigma=2.5, t_0=1.6]$.}\label{fig:gaussian_window_mag_phase}
-\end{figure}
 
 
 
