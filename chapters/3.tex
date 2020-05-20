@@ -1,9 +1,11 @@
 % created on 31/03/2020
 % @author : ebazan
 
-\chapter{The Gabor filter as a measurement tool}
+\chapter{The Gabor filter as a measurement tool}\label{ch:gabor_filter_description}
 
 In this chapter we present a reminder of the signal theory applied to image processing for feature extraction and object detection. First, we show what are the reasons for restricting signal analysis in two predefined domains: time and frequency in one dimension and space and frequency in two dimensions. We especially recall Gabor's filter theory and properties by showing how these filters are related to Heisneberg's uncertainty principle.
+
+As we mentioned before, we use Gabor filters as a tool to measure the information that characterizes a signal. Since the signal information can relevant information at different points and scales (either in the spatial or space-frequency domain), a well-known strategy used in the literature is to create a filter bank that covers most of the spectrum to be able to reconstruct the original signal.
 
 \section{Signals in two domains}
 
@@ -215,10 +217,10 @@ The figure \ref{fig:GaborFilter_timefreq_norm_efect} shows a Gabor filter in the
 
 \subsection{Frequency filter spacing} \label{subsec:frequency_filter_spacing}
 
-Our main interest in Gabor filters is multispectral analysis of a function. To accomplish this, we can generate a bank containing different Gabor functions that work at different frequencies $f$. We can define the separation of the filters in octaves by means of the half-response spatial frequency bandwidth $B_f$ measured between two central frequencies $f_2 < f_1$ \cite{Granlund:CGIP:1978}  
+Our main interest in Gabor filters is multispectral analysis of a function. To accomplish this, we can generate a bank containing different Gabor functions that work at different frequencies $f$. We can define the separation of the filters in octaves by means of the half-response spatial frequency bandwidth $B_f$ measured between two central frequencies $f_1 < f_2$ \cite{Granlund:CGIP:1978}  
 
 \begin{equation}\label{eq:octave_spacing}
-    B_f = \log_2 \left( \frac{f_1}{f_2} \right)
+    B_f = \log_2 \left( \frac{f_2}{f_1} \right)
 \end{equation}
 
 The octave spacing between two different two adjacent filters is an interesting property of the Gabor filters, however, the filters denoted by the equations \eqref{eq:gabor_function_1d_timefreq_normalized} have a spread that only depends on the parameter $\alpha$, regardless of its central frequency $f$. This means that when implementing the Gabor function in a filter bank at different frequencies to obtain a multi-spectral decomposition of a signal, all of the filters will have the same duration. We can see this effect in Figure \ref{fig:filterbnk_octave_spacing}, where we show a filter bank with an adjacent filter's spacing of one octave, that is, $B_f = 1$. 
@@ -371,11 +373,11 @@ Taking the above relationships permits to write the 2-d GEF to use it into a ban
 \end{equation}
 where now the length $\alpha$ of each filter in the bank will be determined based on the ratio $\gamma = \frac{f}{\alpha}$ and crossing point between adjacent filters $c_1$; and the length $\beta$ will be determined based on the ratio $\eta = \frac{f}{\beta}$ and crossing point between adjacent filters $c_2$.
 
-The figure \ref{fig:2d_filterbank_spacing} shows the octave spacing and the orientation bandwidth for a bank of filters in the frequency domain. Particulary, the figure \ref{fig:2d_filterbank_octave_spacing} shows a bank without the relationship between the effective width and the central frequency of the filter, whereas the figures \ref{fig:2d_filterbank_half_crossingpoint} show the interdependence between $\alpha$, $\beta$, $B_f$, $B_{\theta}$, $f$ and the crossing points $c_1$, $c_2$.
+The figure \ref{fig:2d_filterbank_spacing} shows the octave spacing and the orientation bandwidth for a bank of filters in the frequency domain. Particulary, the figure \ref{fig:2d_filterbank_octave_spacing} shows a bank without the relationship between the effective width and the central frequency of the filter, whereas the figures \ref{fig:filterbank_half_crossingpoint} show the interdependence between $\alpha$, $\beta$, $B_f$, $B_{\theta}$, $f$ and the crossing points $c_1$, $c_2$.
 
 \begin{figure}
 \centering
-    \subcaptionbox{\label{fig:2d_filterbank_octave_spacing}}{\includegraphics[width=0.45\textwidth]{GaborFilterbank_freq_2d_octave_spacing.pdf}} 
+    \subcaptionbox{\label{fig:2d_filterbank_octave_spacing}}{\includegraphics[width=0.45\textwidth]{GaborFilterbank_freq_2d_octave_spacing.pdf}}
     \subcaptionbox{\label{fig:2d_filterbank_half_crossingpoint}}{\includegraphics[width=0.45\textwidth]{GaborFilterbank_freq_2d_half_crossingpoint.pdf}}    
 \caption{Filter spacing and crossing point effect represented on a bank of filters in the frequency domain: (a) Separation of 2-d filters without crossing points between adjacent filters $[B_f=1, B_{\theta} = 45^{\circ}, \alpha=\beta=0.1, c_1=c_2=-]$, (b) High and low cut-off frequency points given by $\Delta f$ and $\Delta \theta$ $[B_f=1, B_{\theta} = 45^{\circ}, \alpha=f/\gamma, \beta=f/\eta, c_1=c_2=0.5]$.}\label{fig:2d_filterbank_spacing}
 \end{figure}
