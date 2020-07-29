@@ -265,3 +265,7 @@ TSWLatexianTemp*
 *.sta
 
 .~lock.phd_writing_template.odt#
+
+*.swp
+
+*.odt

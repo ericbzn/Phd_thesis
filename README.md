@@ -4,6 +4,7 @@ Template based on the Paris Saclay thesis format.
 
 README FOR THE FRONT COVER FILES:
 #######################################################################################
+
 Couverture LaTeX de thèse PSL
 =============================
 
@@ -204,7 +205,7 @@ l'espère, saura se montrer compréhensible et exhaustive.
 
 Que toutes et tous en soient remerciés.
 
-README FOR THE REST OF THE THESIS DOCUMENT:
+# README FOR THE REST OF THE THESIS DOCUMENT:
 #######################################################################################
 Please check on the 
 [university website](https://www.universite-paris-saclay.fr/fr/documents-de-reference-relatifs-a-la-soutenance-de-la-these) 
