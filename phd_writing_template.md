@@ -152,7 +152,24 @@ Convolutionary neural networks not only became the choice of many researchers to
 
 <u>Applications and Taks</u>
 
-*Situation:* 
-*Problem/Question:* 
+*Situation:* El avance de las tecnicas de Vision por Computadora ha favorecido su utilizacion en un rango amplio de aplicaciones. El desarrollo ha sido sobresaliente en areas de aplicacion ya tradicionales como la multimedia, robotica o la medicina. Sin embargo, nuevas areas de aplicacion siguen surgiendo como la realidad aumentada, la conduccion automatica, el internet de las cosas y la industria 4.0, la interaccion hombre-computadora y la vision para ciegos. Algunas areas menos tradicionales donde la Vision por Computadora esta cada vez ma presente son la astronomia, la nanotecnología, las nuevas tecnicas de imagenes del cerebro, entre otra mas.
+
+Si bien la vision por computadora ha sobre pasado las capacidades de la vision humana, las computadoras no han remplazado por completo al personal humano. Por ejemplo,  en el caso de las tareas de los sistemas de vision industrial,  digamos inspeccionar botellas o tarjetas de circuitos en una linea de produccion, la vision por computadora supera a los humanos. Sin embargo, en areas como la imagen medica, los sistemas de vision por computadora solo se encargan de complementar ciertos diagnosticos de rutina que requieren mucho tiempo y experiencia de los medicos humanos. En gran medida esto esta relacionado con la complejidad de la tarea y de las condiciones donde se lleva a cabo la aplicacion.  En el caso de los sistemas de vision para maquinas, generalmente las condiciones de trabajo son controladas, mientras que en areas coma la medicina, cada imagen de paciente es distinta a pesar de que el sistema de adquicicion sea el mismo. 
+
+Independientemente de la aplicacion, los sistemas de vision por computador deben llevar a cabo una serie de tareas para lograr su fin. De manera general, estas tareas incluyen los metodos para la adquisicion, procesamiento, analisis y comprehension de imagenes digitales y, la extraccion de datos del mundo real para producir informacion simbolica, por ejemplo, en forma de decisiones.  Dependiendo del contexto, entender las imagenes puede signficar la transformarción la imagenes visuales (la entrada del sensor) en descripciones del mundo que pueden intereactuar con otros procesos y provocar la accion adecuada. Esta compresion puede verse como el desmenuzado de la informacion simbolica de la imagen utilizando modelos geometricos, fisicos, estadisticos o de la teoría del aprendizaje.
+
+De manera mas particular, las tareas de la vision por computadora pueden agruparse en cuatro mas o menos bien difinidos problemas de procesamiento: El reconociemiento, problema clásico de la vision por computadora el cual se encarga de determinar si una imagen contine algún objeto, carateristica o acitividad. Algunas variantes de este problema son la clasificacion, la identificacion y la deteccion de objetos de las cuales se desprenden muchas tareas especializadas, por ejemplo, la busqueda de images basadas en el contenido, la estimacion de pose, el reconocimiento optico de carateres, lectura de codigos 2D, el reconicimiento facial, el reconocimiento de formas, entre otros.
+
+El analisis de movimieto, en el cual una secuancia de imagenes es procesada para producir una estimacion de la velocidad de uno o varios puntos de interes dentro de una imagen o una escena 3D. Algunos ejemplos de esta tarea son el egomotion, el traqueo de objetos y el flujo óptico.
+
+La reconstruccion de escenas, tarea realacionada con el computo de un modelo 3D a partir de una o varias imagenes de una escena.
+
+La restauracion de images, cuyo objetivo es el de remover aquellas imperfecciones de una imagen generado por perturbaciones tales como el ruido del sensor o el desenforque por movimiento. Generalmente esta tarea es llevada cabo en el pre procesamiento de la images antes de pasarla a un algoritmo de vison mas complejo. Un ejemplo en el cual se aplica esta tarea es el inpainting
+
+
+
+ 
+
+*Problem/Question:* Tales aplicaciones abarcan el campo de la medicina, donde los algoritmos ayudan al diagnostico de enfermedades mediante la identificacion patrones en imagenes medicales. En el sector industrial, el control de las condiciones de trabajo favorece la implentacion de algoritmos deteccion o supervision que superan las capacidades humanas.   
 *Solution/Answer::*
 
