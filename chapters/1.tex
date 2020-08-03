@@ -2,27 +2,52 @@
 % @author : ebazan
 \chapter{Introduction}
 \section{Background and Motivation}
+Computer Vision (CV) is about making machines capable of seeing and perceiving the world as humans do.
+
+Replicating the behavior of human vision on machines is a difficult task. The tasks that human vision performs  quite effortlessly and effectively, for a machine could represent a complex task.
+
+There have been a large number of studies to date which have tried to understad what is the nature of computation involved in visual tasks. Researchers from various fields of study such as biology, neuroscience and computer science have attempted to answer the question of how we might build the machines to be able to see and understand the world as we do.
+
+
+\subsubsection{Computer Vision Milestone Works and History}
+Computer vison is a rapidly evolving field. The three lines of research with which computer vision was born in the 1950s are replication of the eye, replication of the visual cortex, and replication of the rest of the brain. The joint work between psychologists and computer scientists led to the development of the Perceptron machine in 1957, the same year that marked the birth of the pixel.
+
+By the 1960s, the problems of computer vision were linked to the representation of solid objects in 3D using simpler 2D figures. Such problems, along with other ideas such as connecting a camera to a computer to describe what he saw, motivated the creation of the MIT Artificial Intelligence Laboratory; After more than 50 years, this is an idea that continues to work.
+
+Many of the vision algorithms that we know today, such as image edge extraction, line labialization, modeling, and object representation such as interconnections of smaller structures, optical flow, and motion estimation, were created in the 1970s. All of them driven by the first commercial applications of computer vision such as optical character recognition (OCR) and by the appearance of the first commercial camera.
+
+The 80's can be characterized by the appearance of studies based on more rigorous mathematical analysis and on quantitative aspects. Many non-linear image analysis algorithms such as mathematical morphology were generalized for grayscale and image functions.
+
+Investigation of 3D reconstructions from projections or scenes from multiple images as well as camera calibration came in the 1990s. Along with this, there were advances in the field of stereo imaging and stereo multi-view techniques. In addition, variations of graph cutting algorithms were used for image segmentation thus enabling high-level interpretation of the coherent regions of an image.
+
+By the 2000s, there was a vast range of applications and fields related to computer vision. Some of the most relevant topics from that time are face detection, brought to fame by Viola and Jones, Lowe's Invariant Scale Features Transform (SIFT) developed as well as the appearance of Neural Networks, which gave way to learning methods. This decade marked a breakthrough for computer vision thanks to the large number of annotated data sets that were accessible on the internet. With them, it was possible to propose increasingly complex challenges, which allowed comparing and quantifying computer vision techniques.
+
+Techniques based on learning methods have become popular in the last decade. A milestone of this time is the large ImageNet visual database, created in 2009 for research on visual object recognition software. Since 2010, the project has organized an annual software competition, the ImageNet Large Scale Visual Recognition Challenge (ILSVRC), where software competes to correctly classify objects and scenes in the database. Until 2012, no program had been as relevant as AlexNet, a deep convolutional neural network which surpassed the state of the art works of that time. The results of this competition undoubtedly marked the history of computer vision. In recent years, the study of CNNs has been exponential, giving way to novel systems such as GANs, which seek to make CNNs more robust.
+
+Convolutionary neural networks not only became the choice of many researchers to carry out computer vision applications, large companies such as Google, Amazon, Facebook and Apple (GAFA) have promoted research and development in this field. A remarkable example is the DeepFace algorithm for facial recognition. The algorithm proposed by the Facebook researchers is capable of correctly identifying faces 97$\%$ of the time, this result being comparable to the detection that a human can do.
+
+\subsubsection{Applications and Tasks}
+
+The advancement of Computer Vision techniques has favored its use in a wide range of applications. The development has been outstanding in already traditional application areas such as multimedia, robotics or medicine. However, new areas of application continue to emerge such as augmented reality, automated driving, the Internet of Things and Industry 4.0, human-computer interaction and vision for the blind. Some less traditional areas where Computer Vision is increasingly present are astronomy, nanotechnology, new brain imaging techniques, among others.
+
+While computer vision has outstripped the capabilities of human vision, computers have not completely replaced human personnel. For example, in the case of industrial vision systems tasks, say inspecting bottles or circuit boards on a production line, computer vision surpasses humans. However, in areas such as medical imaging, computer vision systems are only responsible for supplementing certain routine diagnoses that require a lot of time and experience from human doctors. This is largely related to the complexity of the task and the conditions under which the application is carried out. In the case of machine vision systems, working conditions are generally controlled, while in areas such as medicine, each patient image is different despite the fact that the acquisition system is the same.
+
+Regardless of the application, computer vision systems must perform a number of tasks to achieve their end. Generally, these tasks include methods for acquiring, processing, analyzing, and understanding digital images, and extracting real-world data to produce symbolic information, for example, in the form of decisions. Depending on the context, understanding images can mean transforming visual images (the sensor input) into descriptions of the world that can interact with other processes and provoke appropriate action. This compression can be seen as the crumbling of the symbolic information in the image using geometric, physical, statistical or theory of learning models.
+
+More particularly, the tasks of computer vision can be grouped into four more or less well-defined processing problems: Recognition, a classic problem of computer vision which is responsible for determining whether an image contains any object, characteristic or exercise. Some variants of this problem are the classification, identification and detection of objects from which many specialized tasks emerge, for example, content-based image search, pose estimation, optical character recognition, reading of 2D codes, facial recognition, shape recognition, among others.
+
+Motion analysis, in which a sequence of images is processed to produce an estimate of the speed of one or more points of interest within a 3D image or scene. Some examples of this task are egomotion, object tracking, and optical flow.
+
+The reconstruction of scenes, which is a task related to the computation of a 3D model from one or more images of a scene.
+
+The restoration of images, whose objective is to remove those imperfections of an image generated by disturbances such as sensor noise or motion blur. Generally this task is carried out in the pre-processing of the image before passing it to a more complex mink algorithm. An example in which this task is applied is inpainting.
+
+Today is an exciting time to work on computer vision. Thanks to free access databases on the internet, novel computer vision algorithms and increased computing power, machines can perform vision tasks faster and more efficiently than a human. In addition, access to these technologies has led to the development of novel applications, which favor not only the advancement of computer vision, but also favor society. Computer vision has become an integral technology in our daily life.
+
 \section{Scope of the Thesis}
-\section{Problem Statement}
-\section{Objectives of the Thesis}
-\section{General Literature Review}
-\section{Organization of the Document}
 
-Drones are devices that are increasingly present in our lives
-Leaving a drone in the hands of an inexperienced person has an extremely short life span
 
-This document presents the advances and results obtained in the first year of the Ph.D. thesis Vision Methods for Unmanned Aerial Vehicles Navigation\footnote{The Ph.D. thesis is partially supported by the Mexican National Council for Science and Technology (CONACYT) through the CONACYT-French government scholarship N$^{\circ}$ 290257-471692.} at the Center for Mathematical Morphology (CMM). In our context, a UAV (Unmanned Aerial vehicle or drone) is a flying robot formed by complex subsystems which allows it to perform certain tasks autonomously. Today, the intensive automatization in the production, transport, construction, and security sectors, demands more autonomous UAVs \cite{ASTechWeb}. 
 
-Computer vision and the need to perform tasks in more complex environments with non-controlled conditions plays an important role in the evolution of these systems. We can delimit the use of vision systems in UAVs into two purposes: \textbf{i)} applications (e.g., freight delivery, monitoring \cite{Gaszczak.Breckon.ea:IRCV:2011}, inspection \cite{Rodriguez.Castiblanco.ea:ICUAS:2014} and surveillance \cite{Saif.Prabuwono.ea:IROS:2013}) and \textbf{ii)} aid to control and operation  \cite{Granlund.Nordberg.ea:ITCE:2000}. 
-
-%     \cite{Kaaniche.Champion.ea:ICRA:2005} 
-In the work of thesis, we will focus on the second purpose to develop a new vision framework able to provide aid in the automated decision chain of UAVs in complex scenarios.
-
-\section{Background and motivation}\label{sec:background & motivation}
-
-A UAV mission involves three principal moments: take-off, navigation, and landing. Commonly, the UAV  control in these phases is achieved with the use of conventional sensors, such as inertial sensors (IMUs) for orientation, and GPS for position. The drawback with the IMU is that suffers from bias error propagation due to the integral drift, while with the GPS signal is not always guaranteed. In urban or indoor environments, the satellite signal is low or unexisting. A recurrent technique to enhance the position accuracy implies the data fusion of pressure, ultrasonic, radars and laser range-finders sensors \cite{Tomic.Schmid.ea:IRAM:2012}. The fusion of data can provide the advantages of each sensor; however, the use of multiple sensors on board becomes expensive and impractical, taking into account the drone has a maximum payload capacity and the flight time depends on that. Contrariwise, visual sensors are passive, lightweight and can acquire valuable information about the surrounding structures, including color and textures, and UAV self-motion. 
-
-Today one can use different visual sensors; such as monocular cameras \cite{Padhy.Xia.ea:TSC:2018}, stereo cameras \cite{Seitz.Curless.ea:CVPR:2006}, RGB-D cameras \cite{Huang.Bachrach.ea:RobR:2017}, fish-eye cameras \cite{Hrabar.Sukhatme:IROS:2004}, thermal \cite{Gaszczak.Breckon.ea:IRCV:2011}, among others. This wide range of sensors offers more options and flexibility to deal with the problems mentioned above. Based on the three moments in a UAV mission, we present a brief review of developed works to improve the controllability of a UAV. 
 
 \subsection{UAV Navigation}
 Vision-based techniques for UAV navigation are classified into two groups according to the intention and its consequence result in i) localization and mapping, ii) obstacle avoidance.
@@ -50,6 +75,30 @@ Visual methods for avoidance of obstacles can be classified into two groups. The
 The second group is the flow-based methods which historically, were inspired by the navigation of insects such as bees \cite{Srinivasan.Gregory:PTBS:1992} or flies \cite{Franceschini.Ruffier.ea:InTech:2012}. Many insects in the wild identify obstacles through the intensity of light. During the flight, their eyes produce an optical flow that provides accurate spatial information. Currently, there are also works inspired by the behavior of the human eye \cite{Al-Kaff.Meng.ea:IVS:2016}. The technique measures the object size from the idea that objects in the robot's field of vision are larger as the obstacle is closer.\\
 
 The techniques for obstacle detection and avoidance present interesting characteristics and ideas; however, its implementation is strongly linked to an application under certain conditions. Their use would involve a recalibration or readjustment of parameters and, given the conditions in which a drone can operate, it is necessary to have more general and non-supervised methods.
+
+
+\section{Problem Statement}
+\section{Objectives of the Thesis}
+\section{General Literature Review}
+\section{Organization of the Document}
+
+Drones are devices that are increasingly present in our lives
+Leaving a drone in the hands of an inexperienced person has an extremely short life span
+
+This document presents the advances and results obtained in the first year of the Ph.D. thesis Vision Methods for Unmanned Aerial Vehicles Navigation\footnote{The Ph.D. thesis is partially supported by the Mexican National Council for Science and Technology (CONACYT) through the CONACYT-French government scholarship N$^{\circ}$ 290257-471692.} at the Center for Mathematical Morphology (CMM). In our context, a UAV (Unmanned Aerial vehicle or drone) is a flying robot formed by complex subsystems which allows it to perform certain tasks autonomously. Today, the intensive automatization in the production, transport, construction, and security sectors, demands more autonomous UAVs \cite{ASTechWeb}. 
+
+Computer vision and the need to perform tasks in more complex environments with non-controlled conditions plays an important role in the evolution of these systems. We can delimit the use of vision systems in UAVs into two purposes: \textbf{i)} applications (e.g., freight delivery, monitoring \cite{Gaszczak.Breckon.ea:IRCV:2011}, inspection \cite{Rodriguez.Castiblanco.ea:ICUAS:2014} and surveillance \cite{Saif.Prabuwono.ea:IROS:2013}) and \textbf{ii)} aid to control and operation  \cite{Granlund.Nordberg.ea:ITCE:2000}. 
+
+%     \cite{Kaaniche.Champion.ea:ICRA:2005} 
+In the work of thesis, we will focus on the second purpose to develop a new vision framework able to provide aid in the automated decision chain of UAVs in complex scenarios.
+
+\section{Background and motivation}\label{sec:background & motivation}
+
+A UAV mission involves three principal moments: take-off, navigation, and landing. Commonly, the UAV  control in these phases is achieved with the use of conventional sensors, such as inertial sensors (IMUs) for orientation, and GPS for position. The drawback with the IMU is that suffers from bias error propagation due to the integral drift, while with the GPS signal is not always guaranteed. In urban or indoor environments, the satellite signal is low or unexisting. A recurrent technique to enhance the position accuracy implies the data fusion of pressure, ultrasonic, radars and laser range-finders sensors \cite{Tomic.Schmid.ea:IRAM:2012}. The fusion of data can provide the advantages of each sensor; however, the use of multiple sensors on board becomes expensive and impractical, taking into account the drone has a maximum payload capacity and the flight time depends on that. Contrariwise, visual sensors are passive, lightweight and can acquire valuable information about the surrounding structures, including color and textures, and UAV self-motion. 
+
+Today one can use different visual sensors; such as monocular cameras \cite{Padhy.Xia.ea:TSC:2018}, stereo cameras \cite{Seitz.Curless.ea:CVPR:2006}, RGB-D cameras \cite{Huang.Bachrach.ea:RobR:2017}, fish-eye cameras \cite{Hrabar.Sukhatme:IROS:2004}, thermal \cite{Gaszczak.Breckon.ea:IRCV:2011}, among others. This wide range of sensors offers more options and flexibility to deal with the problems mentioned above. Based on the three moments in a UAV mission, we present a brief review of developed works to improve the controllability of a UAV. 
+
+
  
 \section{Objectives of the thesis}\label{sec:thesis_objectives}
 
