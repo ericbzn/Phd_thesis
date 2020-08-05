@@ -46,8 +46,19 @@ Today is an exciting time to work on computer vision. Thanks to free access data
 
 \section{Scope of the Thesis}
 
+Unmanned aerial vehicles (UAVs) or drones are these flying machines that are increasingly present in our lives. The combination of different sensors of the inertial power station, the GPS and the flight computer allow the drones to remain stable in the air. However, the capabilities of a drone are extended when some type of visual sensor is integrated. Whether in entertainment activities used as toys, or in commercial activities used as work tools, drones allow us to see the world and obtain information from another perspective, literally.
 
+However, a major limitation of these complex systems is the autonomy time. This parameter is mainly linked to the weight of the vehicle, given by the different components on board the aircraft and the capacity of the battery, which also influences the final weight of the equipment. In this sense, it is important to privilege those sensors that provide information from the outside world for navigation but also light and low energy consumption.
 
+Taking this into account and remembering the areas of application and tasks of computer vision mentioned in the previous section, this thesis work will focus on those related to drones and object detection and scene comprehension tasks. Regarding the techniques and methods of the developed vision algorithms, this thesis exploits the now called traditional methods of computer vision, that is, those algorithms not based on neural network architectures and mainly on unsupervised methods.
+
+\section{Problem Statement}
+
+While drones are useful in a wide variety of applications, whether commercial, civil or military, in most cases an expert pilot is required to control the aircraft. The addition of external sensors to perceive the environment has been a recurring strategy that has made these aerial robots more manipulable, safer and even in some cases autonomous, that is, a drone is capable of performing a task without the need for a human intervention. For this, the drone must be able to move without getting lost but above all, it must be able to avoid potential obstacles on the way.
+
+In general, we can consider that each drone application is a mission that involves three main moments: take-off, navigation, and landing. Commonly, the UAV  control in these phases is achieved with the use of conventional sensors, such as inertial sensors (IMUs) for orientation, and GPS for position. The drawback with the IMU is that suffers from bias error propagation due to the integral drift, while with the GPS signal is not always guaranteed. In urban or indoor environments, the satellite signal is low or unexisting. A recurrent technique to enhance the position accuracy implies the data fusion of pressure, ultrasonic, radars and laser range-finders sensors \cite{Tomic.Schmid.ea:IRAM:2012}. The fusion of data can provide the advantages of each sensor; however, the use of multiple sensors on board becomes expensive and impractical, taking into account the drone has a maximum payload capacity and the flight time depends on that. Contrariwise, visual sensors are passive, lightweight and can acquire valuable information about the surrounding structures, including color and textures, and UAV self-motion. 
+
+Today one can use different visual sensors; such as monocular cameras \cite{Padhy.Xia.ea:TSC:2018}, stereo cameras \cite{Seitz.Curless.ea:CVPR:2006}, RGB-D cameras \cite{Huang.Bachrach.ea:RobR:2017}, fish-eye cameras \cite{Hrabar.Sukhatme:IROS:2004}, thermal \cite{Gaszczak.Breckon.ea:IRCV:2011}, among others. This wide range of sensors offers more options and flexibility to deal with the problems mentioned above. Based on the three moments in a UAV mission, we present a brief review of developed works to improve the controllability of a UAV. 
 
 \subsection{UAV Navigation}
 Vision-based techniques for UAV navigation are classified into two groups according to the intention and its consequence result in i) localization and mapping, ii) obstacle avoidance.
@@ -67,7 +78,6 @@ Some of the first direct approaches \cite{Jin.Favaro.ea:VC:2003}, \cite{Molton.D
 The use of SLAM techniques for UAV navigation presents remarkable advantages. Feature-based methods can use a wide variety of feature detectors which counts typically with an optimization stage that allows having fast algorithms. Direct-based methods have the advantage to be robust to images degradations; they can lead better with images with texture and blurred zones; besides, the map produced is of an acceptable resolution. An interesting fact is that the strengths of the first group of methods are the weak points of the second and vice versa. A method that tries to gather the benefits of both approaches is the Semi-direct Visual Odometry \cite{Forster.Pizzoli.ea:ICRA:2014}; however, in general, the SLAM methods works in indoor environments, where the illumination conditions are static or controlled.\\
 
 \subsubsection{Obstacle Avoidance}
-
 An indispensable feature to increase the autonomy of the UAV navigation is the detection and avoidance of obstacles. This capability is of great importance for achieving free collisions missions in both, indoor and outdoor environments. A recurrent solution, as we early mentioned, is the multi-sensor data fusion. In \cite{Gageik.Benz.ea:ACCESS:2015} present a platform using low-cost ultrasound and IR sensors; however, despite the obtained results, it utilizes several sensors to recovers environment information and yet, it does not get a perceptual representation of the scene due to the low resolution and perceptive capacity of the sensors. On the other hand, vision-based techniques for obstacle avoidance could identify obstacles and in some cases classify the found object \cite{Li.Ye.ea:IROS:2016}. 
 
 Visual methods for avoidance of obstacles can be classified into two groups. The first, SLAM-based techniques, make use of the principles described in the last subsection. The 3D reconstruction provides accurate and sophisticated maps and allows the air vehicle to travel with more information about the environment. In \cite{Moreno-Armendariz.Calvo:ICMEAE:2014}, takes this advantage to develop an obstacle avoidance approach for static and dynamic obstacles. 
@@ -75,52 +85,15 @@ Visual methods for avoidance of obstacles can be classified into two groups. The
 The second group is the flow-based methods which historically, were inspired by the navigation of insects such as bees \cite{Srinivasan.Gregory:PTBS:1992} or flies \cite{Franceschini.Ruffier.ea:InTech:2012}. Many insects in the wild identify obstacles through the intensity of light. During the flight, their eyes produce an optical flow that provides accurate spatial information. Currently, there are also works inspired by the behavior of the human eye \cite{Al-Kaff.Meng.ea:IVS:2016}. The technique measures the object size from the idea that objects in the robot's field of vision are larger as the obstacle is closer.\\
 
 The techniques for obstacle detection and avoidance present interesting characteristics and ideas; however, its implementation is strongly linked to an application under certain conditions. Their use would involve a recalibration or readjustment of parameters and, given the conditions in which a drone can operate, it is necessary to have more general and non-supervised methods.
+ 
 
-
-\section{Problem Statement}
 \section{Objectives of the Thesis}
+
 \section{General Literature Review}
+
 \section{Organization of the Document}
 
-Drones are devices that are increasingly present in our lives
-Leaving a drone in the hands of an inexperienced person has an extremely short life span
 
-This document presents the advances and results obtained in the first year of the Ph.D. thesis Vision Methods for Unmanned Aerial Vehicles Navigation\footnote{The Ph.D. thesis is partially supported by the Mexican National Council for Science and Technology (CONACYT) through the CONACYT-French government scholarship N$^{\circ}$ 290257-471692.} at the Center for Mathematical Morphology (CMM). In our context, a UAV (Unmanned Aerial vehicle or drone) is a flying robot formed by complex subsystems which allows it to perform certain tasks autonomously. Today, the intensive automatization in the production, transport, construction, and security sectors, demands more autonomous UAVs \cite{ASTechWeb}. 
-
-Computer vision and the need to perform tasks in more complex environments with non-controlled conditions plays an important role in the evolution of these systems. We can delimit the use of vision systems in UAVs into two purposes: \textbf{i)} applications (e.g., freight delivery, monitoring \cite{Gaszczak.Breckon.ea:IRCV:2011}, inspection \cite{Rodriguez.Castiblanco.ea:ICUAS:2014} and surveillance \cite{Saif.Prabuwono.ea:IROS:2013}) and \textbf{ii)} aid to control and operation  \cite{Granlund.Nordberg.ea:ITCE:2000}. 
-
-%     \cite{Kaaniche.Champion.ea:ICRA:2005} 
-In the work of thesis, we will focus on the second purpose to develop a new vision framework able to provide aid in the automated decision chain of UAVs in complex scenarios.
-
-\section{Background and motivation}\label{sec:background & motivation}
-
-A UAV mission involves three principal moments: take-off, navigation, and landing. Commonly, the UAV  control in these phases is achieved with the use of conventional sensors, such as inertial sensors (IMUs) for orientation, and GPS for position. The drawback with the IMU is that suffers from bias error propagation due to the integral drift, while with the GPS signal is not always guaranteed. In urban or indoor environments, the satellite signal is low or unexisting. A recurrent technique to enhance the position accuracy implies the data fusion of pressure, ultrasonic, radars and laser range-finders sensors \cite{Tomic.Schmid.ea:IRAM:2012}. The fusion of data can provide the advantages of each sensor; however, the use of multiple sensors on board becomes expensive and impractical, taking into account the drone has a maximum payload capacity and the flight time depends on that. Contrariwise, visual sensors are passive, lightweight and can acquire valuable information about the surrounding structures, including color and textures, and UAV self-motion. 
-
-Today one can use different visual sensors; such as monocular cameras \cite{Padhy.Xia.ea:TSC:2018}, stereo cameras \cite{Seitz.Curless.ea:CVPR:2006}, RGB-D cameras \cite{Huang.Bachrach.ea:RobR:2017}, fish-eye cameras \cite{Hrabar.Sukhatme:IROS:2004}, thermal \cite{Gaszczak.Breckon.ea:IRCV:2011}, among others. This wide range of sensors offers more options and flexibility to deal with the problems mentioned above. Based on the three moments in a UAV mission, we present a brief review of developed works to improve the controllability of a UAV. 
-
-
- 
-\section{Objectives of the thesis}\label{sec:thesis_objectives}
-
-In this Ph.D. thesis, we aim at developing vision methods for navigation of UAVs. In that context, the primary objective is to propose a new methodological framework capable of providing aid for control and decision taking in UAV navigation. The framework must be robust in environments with non-controlled conditions. 
-
-During the thesis, several specific tasks are considered, such as i) environment awareness, ii) obstacle detection and avoidance, iii) target identification and following. Given these tasks, the work also focuses on the scene understanding problem. 
-
-Finally, this work includes:  
-
-\begin{itemize}
- \item \textbf{Framework implementation.} Referring in a first stage to the implementation in simulated and off-board environments. In a second moment, to the implementation in a real platform. The latter requires the search for a portable platform capable of real-time operation.
- 
- \item \textbf{Framework functional evaluation.} Comparison of the obtained results w.r.t. the approaches of state of the art.
- 
- \item \textbf{Framework validation.} Real test deployment taking into account the constraints of portability and real-time on the industrial scale.
- 
-\end{itemize}
-
-\section{Organization of the thesis}
-In this report, we present the conducted work and scientific procedure to tackle the UAV landing phase. The proposed methodology seeks the detection \footnote{\textbf{Detection} refers to find a landing target among other objects.} and recognition \footnote{\textbf{Recognition} refers to differentiate a landing target among others landing targets.} of a particular a landing target. 
-
-A general organization of the document is as follows. Chapter \ref{ch:conducted_work} contains the landing target detection algorithm developed. We compare some thresholding methods for contour detection, and we show the perception framework. Chapter \ref{ch:furute_work} enlist the perspectives for the thesis and chapter \ref{ch:portfolio} shows the curricular content taken from the beginning of the thesis. Finally, the appendix \ref{ch:target_description} describes the landing target design as well as the encoding and decoding techniques needed for its detection.
 
 KEY PHRASE: \textbf{Perceptual image information for object detection and segmentation}
 
