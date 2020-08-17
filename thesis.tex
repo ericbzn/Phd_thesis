@@ -106,11 +106,9 @@
 }
 
 \begin{document}
-% % gives the width of the current document in pts. For this document width = 506.45908
-%\showthe\textwidth 
+%\showthe\textwidth  % gives the width of the current document in pts. For this document width = 506.45908 (command usefull for matplotlib images)
+	\pagenumbering{roman}
 	\maketitle{}
-
-%	\doublespacing    
 
     \input{layout/dedication.tex}
     \cleardoublepage
@@ -128,13 +126,14 @@
     \pagenumbering{arabic}   
 
     \foreach \i in {1,2,...,\NumOfChapters}{
-        \input{chapters/\i}
+        % \input{chapters/\i}
+        \includefrom{chapters/\i/}{chapter\i}
         \cleardoublepage
     }
     
     \appendix
     \foreach \i in {1,2,...,\NumOfAppendices}{
-        \input{appendices/\i}
+        \includefrom{appendices/\i/}{appendix\i}
         \cleardoublepage
     }
     
