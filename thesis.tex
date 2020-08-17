@@ -1,83 +1,85 @@
 % created on 27-03-2020
 % @author : ebazan
 \documentclass[a4paper, twoside, 12pt]{book}
-
-\usepackage[Sonny]{fncychap}
-\ChNameVar{\centering\Large\it}
-\ChNumVar{\huge\it} 
-\ChNameAsIs
-\ChTitleVar{\centering\Huge\rm\bfseries}
-\ChRuleWidth{1pt}
-
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage{lipsum}
-\usepackage{psl-cover}
-\pslassetspath{figures/front_cover}
-\usepackage{booktabs}
-\usepackage{multirow}
-
-%\usepackage{helvet}
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage{geometry}
-\geometry{
-left=25mm,
-top=30mm,
-right=16mm,
-bottom=25mm
-}
-%%%
-
-\usepackage{fancyhdr}
-\setlength{\headheight}{15pt}
-
-\pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{ \markboth{\thechapter.\ #1}{}}
-
-\fancyhf{}
-\fancyfoot[LE,RO]{\thepage} 
-\fancyhead[LE]{\thechapter}
-\fancyhead[LE]{\textsc{\leftmark}}
-\fancyhead[RO]{\nouppercase{\rightmark}}
-
-\usepackage{amsmath}
-\usepackage[%
-    font={small,sf},
-    labelfont=bf,
-    format=hang,    
-    format=plain,
-    margin=0pt,
-    width=0.8\textwidth,
-]{caption}
-\usepackage[list=true]{subcaption}
-\usepackage{nomencl}
-\makenomenclature
-%%%
-\usepackage{xcolor}
-\usepackage[absolute,overlay]{textpos}
-\usepackage{graphicx}
-\graphicspath{{figures/}}
-\usepackage{array}
-\usepackage{caption}
-\usepackage{multicol}
-\usepackage{hyperref}
-\usepackage{afterpage}
-\usepackage{setspace}
-\onehalfspacing
-\usepackage{pgffor}
-\setlength{\columnseprule}{0pt}
-\setlength\columnsep{10pt}
-
-\newcommand\blankpage{%
-    \null
-    \thispagestyle{empty}%
-    \addtocounter{page}{-1}%
-    \newpage}
-
-%Bibliography style
-\usepackage[square, numbers]{natbib}
-\bibliographystyle{abbrvnat}
+\input{preamble}
+%\usepackage[Sonny]{fncychap}
+%\ChNameVar{\centering\Large\it}
+%\ChNumVar{\huge\it} 
+%\ChNameAsIs
+%\ChTitleVar{\centering\Huge\rm\bfseries}
+%\ChRuleWidth{1pt}
+%
+%%\usepackage[T1]{fontenc}
+%%\usepackage[utf8]{inputenc}
+%%\usepackage{lmodern}
+%%\usepackage{lipsum}
+%\usepackage{psl-cover}
+%\pslassetspath{figures/front_cover}
+%%\usepackage{booktabs}
+%%\usepackage{multirow}
+%
+%%\usepackage{helvet}
+%%\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{geometry}
+%\geometry{
+%left=25mm,
+%top=30mm,
+%right=16mm,
+%bottom=25mm
+%}
+%%%%
+%
+%\usepackage{fancyhdr}
+%\setlength{\headheight}{15pt}
+%
+%\pagestyle{fancy}
+%\renewcommand{\chaptermark}[1]{ \markboth{\thechapter.\ #1}{}}
+%
+%\fancyhf{}
+%\fancyfoot[LE,RO]{\thepage} 
+%\fancyhead[LE]{\thechapter}
+%\fancyhead[LE]{\textsc{\leftmark}}
+%\fancyhead[RO]{\nouppercase{\rightmark}}
+%
+%\usepackage{amsmath}
+%\usepackage[%
+%    font={small,sf},
+%    labelfont=bf,
+%    format=hang,    
+%    format=plain,
+%    margin=0pt,
+%    width=0.8\textwidth,
+%]{caption}
+%\usepackage[list=true]{subcaption}
+%
+%\usepackage{nomencl}
+%\makenomenclature
+%
+%%%%
+%\usepackage{xcolor}
+%\usepackage[absolute,overlay]{textpos}
+%\usepackage{graphicx}
+%\graphicspath{{figures/}}
+%\usepackage{array}
+%\usepackage{caption}
+%\usepackage{multicol}
+%\usepackage{hyperref}
+%\usepackage{afterpage}
+%\usepackage{setspace}
+%\onehalfspacing
+%\usepackage{pgffor}
+%\setlength{\columnseprule}{0pt}
+%\setlength\columnsep{10pt}
+%
+%\newcommand\blankpage{%
+%    \null
+%    \thispagestyle{empty}%
+%    \addtocounter{page}{-1}%
+%    \newpage}
+%
+%%Bibliography style
+%\usepackage[square, numbers]{natbib}
+%\bibliographystyle{abbrvnat}
 
 % Thesis title
 \newcommand{\PhDTitle}{Vision Methods for Navigation of Unmanned Aerial Vehicles (UAVs)} 
@@ -195,8 +197,6 @@ bottom=25mm
   honoratis nullum Caesar.}
 \enkeywords{ Delatus delatus nominatus
   onere aut trahebatur quod tenus et bonorum.}
-
-
 
 % Change this variable if you add or remove chapters
 \newcommand*{\NumOfChapters}{7}

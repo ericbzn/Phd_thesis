@@ -1,0 +1,162 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           List of packages         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% False text, just for demo
+\usepackage{blindtext}
+\usepackage{lipsum}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Font and typography settings    
+\usepackage[utf8]{inputenc}		% LaTeX, comprend les accents !
+\usepackage[T1]{fontenc}
+
+\usepackage[authoryear,round,semicolon,sort&compress,sectionbib]{natbib}		% Doit être chargé avant babel
+\bibliographystyle{abbrvnat}%abbrvnat %plainnat $square
+
+%\usepackage{chapterbib}
+%	\renewcommand{\bibsection}{\section{Références}}		% Met les références biblio dans un \section (au lieu de \section*)
+		
+\usepackage{lmodern}
+\usepackage{ae,aecompl}										% Utilisation des fontes vectorielles modernes
+\usepackage[upright]{fourier}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Allure générale du document
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage[section]{placeins}	% Place un FloatBarrier à chaque nouvelle section
+\usepackage{epigraph}
+\usepackage[%
+    font={small,sf},
+    labelfont=bf,
+    format=hang,    
+    format=plain,
+    margin=0pt,
+    width=0.8\textwidth,
+]{caption}
+
+\usepackage[nohints]{minitoc}		% Mini table des matières, en français
+	\setcounter{minitocdepth}{2}	% Mini-toc détaillées (sections/sous-sections)
+\usepackage[notbib]{tocbibind}		% Ajoute les Tables	des Matières/Figures/Tableaux à la table des matières
+
+
+\usepackage{afterpage}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{pgffor}
+\setlength{\columnseprule}{0pt}
+\setlength\columnsep{10pt}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Maths                         
+\usepackage{amsmath}			% Permet de taper des formules mathématiques
+\usepackage{amssymb}			% Permet d'utiliser des symboles mathématiques
+\usepackage{amsfonts}			% Permet d'utiliser des polices mathématiques
+\usepackage{nicefrac}			% Fractions 'inline'
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Tableaux
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{threeparttable}
+\usepackage{multicol}
+\usepackage{etoolbox}
+%	\appto\TPTnoteSettings{\footnotesize}
+%\addto\captionsfrench{\def\tablename{{\textsc{Tableau}}}}	% Renome 'table' en 'tableau'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Eléments graphiques                    
+\usepackage{xcolor}
+\usepackage{graphicx}			% Permet l'inclusion d'images
+\graphicspath{{figures/}}
+
+\usepackage[list=true]{subcaption}
+\usepackage{pdfpages}
+\usepackage{rotating}
+\usepackage{pgfplots}
+	\usepgfplotslibrary{groupplots}
+\usepackage{eso-pic}
+\usepackage{import}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Mise en forme du texte        
+\usepackage{xspace}
+%\usepackage[load-configurations = abbreviations]{siunitx}
+%	\DeclareSIUnit{\MPa}{\mega\pascal}
+%	\DeclareSIUnit{\micron}{\micro\meter}
+%	\DeclareSIUnit{\tr}{tr}
+%	\DeclareSIPostPower\totheM{m}
+%	\sisetup{
+%	locale = FR,
+%	  inter-unit-separator=$\cdot$,
+%	  range-phrase=~\`{a}~,     	% Utilise le tiret court pour dire "de... à"
+%	  range-units=single,  		% Cache l'unité sur la première borne
+%	  }
+
+%\usepackage[version=3]{mhchem}	% Equations chimiques
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage{hyphenat}
+\usepackage[absolute,overlay]{textpos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Navigation dans le document
+\usepackage[pdftex,pdfborder={0 0 0},
+			colorlinks=true,
+			linkcolor=blue,
+			citecolor=red,
+			pagebackref=true,
+			]{hyperref}	% Créera automatiquement les liens internes au PDF
+					% Doit être chargé en dernier (Sauf exceptions ci-dessous)
+			
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Packages qui doivent être chargés APRES hyperref	             
+\usepackage[top=2.5cm, bottom=2cm, left=3cm, right=2.5cm,
+			headheight=15pt]{geometry}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{ \markboth{\thechapter.\ #1}{}}
+
+\fancyhf{}
+\fancyfoot[LE,RO]{\thepage} 
+\fancyhead[LE]{\thechapter}
+\fancyhead[LE]{\textsc{\leftmark}}
+\fancyhead[RO]{\nouppercase{\rightmark}}
+	
+\usepackage[Sonny]{fncychap}
+\ChNameVar{\centering\Large\it}
+\ChNumVar{\huge\it} 
+\ChNameAsIs
+\ChTitleVar{\centering\Huge\rm\bfseries}
+\ChRuleWidth{1pt}
+%\usepackage[acronym,xindy,toc,numberedsection,ucmark]{glossaries}
+%	\newglossary[nlg]{notation}{not}{ntn}{Notation} % Création d'un type de glossaire 'notation'
+%	\makeglossaries
+%	\loadglsentries{Glossaire}			% Utilisation d'un fichier externe pour la définition des entrées (Glossaire.tex)				
+
+\usepackage{nomencl}
+\makenomenclature
+
+\usepackage{psl-cover}
+\pslassetspath{figures/front_cover}
