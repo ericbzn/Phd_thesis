@@ -27,70 +27,28 @@
 \jurymember{8}{Eva Dokládalová}{Titre, établissement}{Directrice de thèse}
 
 \frabstract{
-  Cuius acerbitati uxor grave accesserat incentivum,
-  germanitate Augusti turgida supra modum, quam Hannibaliano
-  regi fratris filio antehac Constantinus iunxerat pater,
-  Megaera quaedam mortalis, inflammatrix saevientis adsidua,
-  humani cruoris avida nihil mitius quam maritus; qui paulatim
-  eruditiores facti processu temporis ad nocendum per
-  clandestinos versutosque rumigerulos conpertis leviter
-  addere quaedam male suetos falsa et placentia sibi
-  discentes, adfectati regni vel artium nefandarum calumnias
-  insontibus adfligebant.
-
-  Saraceni tamen nec amici nobis umquam nec hostes optandi,
-  ultro citroque discursantes quicquid inveniri poterat
-  momento temporis parvi vastabant milvorum rapacium similes,
-  qui si praedam dispexerint celsius, volatu rapiunt celeri,
-  aut nisi impetraverint, non inmorantur.
-
-  Vita est illis semper in fuga uxoresque mercenariae
-  conductae ad tempus ex pacto atque, ut sit species
-  matrimonii, dotis nomine futura coniunx hastam et
-  tabernaculum offert marito, post statum diem si id elegerit
-  discessura, et incredibile est quo ardore apud eos in
-  venerem uterque solvitur sexus.
-
-  Sed tamen haec cum ita tutius observentur, quidam vigore artuum
-  inminuto rogati ad nuptias ubi aurum dextris manibus cavatis
-  offertur, inpigre vel usque Spoletium pergunt.\ haec nobilium sunt
-  instituta.
+  Ce travail de thèse traite de l'extraction de caractéristiques dans les images à partir de primitives de bas niveau pour la compréhension de scènes à partir de la détection et de la segmentation d'objets. Ce travail est divisé en trois parties.
+  
+  La première partie explore l'utilisation des contours d'image en combinaison avec certains concepts de la perception humaine tels que le principe de Helmholtz et les lois de la Gestalt. Ces méthodes sont ensuite appliquées à la tâche de détection des cibles pour l'atterrissage des drones. Nous présentons un cadre non supervisé robuste aux perturbations les plus courantes présentes dans les tâches de ce type.
+  
+  La deuxième partie explore les informations globales de couleur et de texture contenues dans les images. Nous présentons une analyse quantitative des différentes mesures de similarité existantes pour la mesure des distributions de couleur et d'énergie (signatures de texture) des images. Nous validons ces concepts dans un système de recherche d'images basé sur la similarité.
+  
+  La troisième et dernière partie de cette thèse aborde la relation entre les informations locales de couleur et la texture d'une image. Nous introduisons un cadre non supervisé pour obtenir des limites perceptuelles d'objets à partir de la décomposition spectrale d'une image. De plus, nous montrons une série de méthodes de segmentation à partir du groupe de caractéristiques calculées dans cet espace perceptif de couleur et de texture.
 }
 
 \enabstract{
-  Verum ad istam omnem orationem brevis est defensio. Nam
-  quoad aetas M. Caeli dare potuit isti suspicioni locum, fuit
-  primum ipsius pudore, deinde etiam patris diligentia
-  disciplinaque munita. Qui ut huic virilem togam deditšnihil
-  dicam hoc loco de me; tantum sit, quantum vos existimatis;
-  hoc dicam, hunc a patre continuo ad me esse deductum; nemo
-  hunc M. Caelium in illo aetatis flore vidit nisi aut cum
-  patre aut mecum aut in M. Crassi castissima domo, cum
-  artibus honestissimis erudiretur.
-
-  Et eodem impetu Domitianum praecipitem per scalas itidem
-  funibus constrinxerunt, eosque coniunctos per ampla spatia
-  civitatis acri raptavere discursu.\ iamque artuum et
-  membrorum divulsa conpage superscandentes corpora mortuorum
-  ad ultimam truncata deformitatem velut exsaturati mox
-  abiecerunt in flumen.
-
-  Erat autem diritatis eius hoc quoque indicium nec obscurum
-  nec latens, quod ludicris cruentis delectabatur et in circo
-  sex vel septem aliquotiens vetitis certaminibus pugilum
-  vicissim se concidentium perfusorumque sanguine specie ut
-  lucratus ingentia laetabatur.
-
-  Ego vero sic intellego, Patres conscripti, nos hoc tempore in
-  provinciis decernendis perpetuae pacis habere oportere rationem. Nam
-  quis hoc non sentit omnia alia esse nobis vacua ab omni periculo
-  atque etiam suspicione belli?
+  This thesis work deals with the extraction of features in images from low-level primitives for the understanding of scenes through the detection and segmentation of objects. Likewise, this work is divided into three parts.
+  
+  The first part explores the use of image contours in combination with some concepts of human perception such as the Helmholtz principle and the laws of Gestalt. These methods are then applied to the task of detecting targets for landing drones. We present an unsupervised framework robust to the most common disturbances present in tasks of this type.
+  
+  The second part explores the global color and texture information contained in the images. We present a quantitative analysis of the different existing similarity measures for the measurement of color and energy distributions (texture signatures) of images. We validate these concepts in a similarity-based image retrieval system.
+  
+  The third and last part of this thesis addresses the relationship between the local information of color and texture of an image. We introduce an unsupervised framework for obtaining perceptual boundaries of objects from the spectral decomposition of an image. In addition, we show a series of segmentation methods from the group of features calculated in this perceptual space of color and texture.
+  
 }
 
-\frkeywords{ Caesar licentia post honoratis haec adhibens urbium
-  honoratis nullum Caesar.}
-\enkeywords{ Delatus delatus nominatus
-  onere aut trahebatur quod tenus et bonorum.}
+\frkeywords{Traitement d'image, Primitives de bas niveau, Détection, Segmentation, Compréhension de Scène, Apprentissage Automatique, Drone.}
+\enkeywords{Image Processing, Low-level Primitives, Detection, Segmentation, Scene Understanding, Machine Learning, UAV.}
 
 % Change this variable if you add or remove chapters
 \newcommand*{\NumOfChapters}{7}
@@ -108,34 +66,54 @@
 \begin{document}
 %\showthe\textwidth  % gives the width of the current document in pts. For this document width = 506.45908 (command usefull for matplotlib images)
 	\pagenumbering{roman}
+	
 	\maketitle{}
-
+	
     \input{layout/dedication.tex}
-    \cleardoublepage
+%    \afterpage{\blankpage}
+	\cleardoublepage
     
     \input{layout/acknowledgements.tex}
-    \cleardoublepage
+    % \afterpage{\blankpage}
+   	\cleardoublepage
+    
+    \input{layout/abstract.tex}
+%    \afterpage{\blankpage}
+	\cleardoublepage
+    
+    \input{layout/resume.tex}
+%    \afterpage{\blankpage}
+	\cleardoublepage
     
     \input{layout/nomenclature.tex}
-    \cleardoublepage
-    
+%    \afterpage{\blankpage}
+	\cleardoublepage
+
     \tableofcontents
-    \listoffigures
-    \listoftables
-    
+%    \listoffigures
+%    \listoftables
+
+%    \afterpage{\blankpage}
+    \cleardoublepage
+
     \pagenumbering{arabic}   
 
-    \foreach \i in {1,2,...,\NumOfChapters}{
-        % \input{chapters/\i}
-        \includefrom{chapters/\i/}{chapter\i}
-        \cleardoublepage
-    }
-    
-    \appendix
-    \foreach \i in {1,2,...,\NumOfAppendices}{
-        \includefrom{appendices/\i/}{appendix\i}
-        \cleardoublepage
-    }
+%    \foreach \i in {1,2, ...,\NumOfChapters}{
+%        % \input{chapters/\i}
+%        \includefrom{chapters/\i/}{chapter\i}
+%        %\afterpage{\blankpage}
+%        \cleardoublepage
+%    }
+%    
+%    \appendix
+%    \foreach \i in {1,2,...,\NumOfAppendices}{
+%        \includefrom{appendices/\i/}{appendix\i}
+%        %\afterpage{\blankpage}
+%        \cleardoublepage
+%    }
+	\includefrom{chapters/2/}{chapter2}
+    %\afterpage{\blankpage}
+    \cleardoublepage
     
     \bibliography{biblio}
     \pagebreak
