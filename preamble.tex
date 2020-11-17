@@ -60,6 +60,7 @@
     \addtocounter{page}{-1}%
     \newpage}
     
+\usepackage{indentfirst}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Maths                         
 \usepackage{amsmath}			% Allows to write mathematical equations
@@ -67,9 +68,12 @@
 \usepackage{amsfonts}			% Allows to use mathematical fonts
 \usepackage{nicefrac}			% Allows to use 'inline' fractions 
 
-\usepackage{commath}            % Allow to use the \abs math command
+\usepackage{commath}			% Allows to use the \abs math command
+
+\usepackage[framed,amsmath,thmmarks]{ntheorem}			% Allows to use theorems
+\usepackage[ruled]{algorithm2e}				% Allows to use algorithms
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Tableaux
+%% Tables
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{colortbl}
@@ -125,18 +129,26 @@
 \usepackage{array}
 \usepackage{hyphenat}
 \usepackage[absolute,overlay]{textpos}
-
+\hyphenation{ex-am-ple hy-phen-a-tion short}
+\hyphenation{long la-tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Navigation dans le document
-\usepackage[pdftex,pdfborder={0 0 0},
-			colorlinks=true,
-			linkcolor=blue,
-			citecolor=blue,
-			pagebackref=true,
-			]{hyperref}	% Créera automatiquement les liens internes au PDF
-					% Doit être chargé en dernier (Sauf exceptions ci-dessous)
-			
+%% Hyperlinks - Navigation dans le document
 
+\usepackage{hyperref}
+\hypersetup{%
+	pdfborder={0 0 0},
+	plainpages=false,%
+	pdfauthor={Author(s)},%
+	pdftitle={Title},%
+	pdfsubject={Subject},%
+	bookmarksnumbered=true,%
+	colorlinks=false,%
+	citecolor=blue,%
+	filecolor=blue,%
+	linkcolor=blue,% you should probably change this to black before printing
+	urlcolor=blue,%
+	pdfstartview=FitH%
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Packages qui doivent être chargés APRES hyperref	             
 \usepackage[top=2.5cm, bottom=2cm, left=3cm, right=2.5cm,
@@ -178,3 +190,5 @@
 
 \usepackage{psl-cover}
 \pslassetspath{figures/front_cover}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pdfcompresslevel0 %Accelerate the pdf compilation
