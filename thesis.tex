@@ -97,23 +97,25 @@
     \cleardoublepage
 
     \pagenumbering{arabic}   
+    
+    \input{chapters/introduction.tex}
+%    \afterpage{\blankpage}
+	\cleardoublepage
 
-%    \foreach \i in {1,2, ...,\NumOfChapters}{
-%        % \input{chapters/\i}
+    \foreach \i in {1,2, ...,\NumOfChapters}{
+        \input{chapters/chapter\i.tex}
 %        \includefrom{chapters/\i/}{chapter\i}
-%        %\afterpage{\blankpage}
-%        \cleardoublepage
-%    }
-%    
-%    \appendix
-%    \foreach \i in {1,2,...,\NumOfAppendices}{
-%        \includefrom{appendices/\i/}{appendix\i}
-%        %\afterpage{\blankpage}
-%        \cleardoublepage
-%    }
-	\includefrom{chapters/2/}{chapter2}
-    %\afterpage{\blankpage}
-    \cleardoublepage
+        %\afterpage{\blankpage}
+        \cleardoublepage
+    }
+    
+    \appendix
+    \foreach \i in {1,2,...,\NumOfAppendices}{
+        \includefrom{appendices/\i/}{appendix\i}
+        %\afterpage{\blankpage}
+        \cleardoublepage
+    }
+
     
     \bibliography{biblio}
     \pagebreak
