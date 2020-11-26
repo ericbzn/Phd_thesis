@@ -3,9 +3,12 @@
 \part{Global Color and Texture}%Image Global Color and Texture
 
 \section*{Introduction}
-In part \ref{part:image_contours}, we have introduced a method that uses only the contours of the image. We represent some concepts of human perception, e.g. the Gestalt laws of grouping, using exogenous contour feautues for the unsupervised detection of objects. In particular we apply this framework in the task of automatic precision landing of UAVs. This framework can be extended by adding different features present in an image.
+In part \ref{part:image_contours}, we show that the image boundary features provide useful perceptual information that can be used to solve complex problems. We show a framework that uses the concepts of human perception and contour information for the unsupervised detection of landing targets. The framework is able to identify the marker under degraded operating conditions using only exogenous features from the contours identified in gray-level images. This framework can be improved by adding other features that provide perceptual information of a scene.
 
-In this part of the thesis, we will review two more low-level features of the image: color and texture. In the first moment, we review the the global characterization of the features, as well as their relationship with human perception and their properties and applications in th computer vision field. Later, we take interest at the comparison of distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and its application in the field of computer vision.
+In this part of the thesis we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans and their study can be very extensive. The objective of this part of the thesis is to explore the features of color and texture for their future integration into a general framework for the object detection.
+Particularly, we are interested in the global distribution of color and texture information of an image. For this purpose, we start the study of texture using images with homogeneous grayscale textures.
+
+In the chapter that opens this part, we recall the definition of color and texture in the field of computer vision and review different approaches to color representation as well as different strategies for characterizing texture features. Later, we take interest at the comparison of distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and its application in the field of computer vision.
 
 
 The main contributions of this part are:

@@ -1,8 +1,35 @@
 % created on 30/03/2020
 % @author : ebazan
-\part{Local Texture and Color of the Textures}
+\part{Color of the Textures}
+
+\section*{Introduction}
+We dedicate part two of this thesis to the study of the representations of the distribution of color and texture. In the case of color, we emphasize the importance of choosing a perceptual color space, while for texture, we show that Gabor filters satisfactorily characterize the properties of homogeneous textures. In addition, we show the aforementioned through two image retrieval systems that use color and texture information in conjunction with EMD to retrieve the most similar images. We also show that EMD is a metric that reflects the similarity between distributions in a perceptual way.
+
+However, the understanding of scenes (in a general way but particulary in the context of UAVs), is a more complex problem compared to the image retrieval systems presented in the previous part.
+First, the distribution of color and texture information in natural images is more complex. Since we are dealing with non-homogeneous images, it is very possible that an image has objects with different colors and / or textures. In addition, it is possible that one feature generates or is implicit in the other. For example, a repetitive variation between two colors seen very closely can be perceived as two objects, however, the same variation seen at a longer distance can be perceived as the texture of a more complex object.
+
+In this final part of the thesis, we explore the spectral decomposition of an image in a complex color space. With this strategy we recover the local texture information of the objects in an image taking into account the luminance and chrominance information of the scene.
+
+This technique generates a space of balanced fetaures that allows to recover the perceptual contours of the objects in an image and consequently their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is totally unsupervised, we show that it is also useful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
+
+The main contributions of this part are:
+
+\begin{enumerate}
+	\item Review of the state of the art of global color representations and texture characterizations.
+	\item Review of the state of the art of similarity measures, particulary the interpretation of the OT in computer vision: the Earth Mover's Distance (EMD).
+	\item Qualitative and quantitative study between the most popular measures in the comparison of distributions and the EMD. 
+	\item An unsupervised image retrieval system based on global color/texture information.
+\end{enumerate}
+
 \chapter{Spectral Descomposition of an Image}
-\section{Texure Imformation in Image Analysis}
+
+\section*{Résumé}
+\noindent 
+
+\section*{Abstract}
+\noindent 
+
+\section{Introduction}
 
 \section{The Gabor filter as a measurement tool}\label{ch:gabor_filter_description}
 
@@ -385,5 +412,4 @@ The figure \ref{fig:2d_filterbank_spacing} shows the octave spacing and the orie
 \caption{Filter spacing and crossing point effect represented on a bank of filters in the frequency domain: (a) Separation of 2-d filters without crossing points between adjacent filters $[B_f=1, B_{\theta} = 45^{\circ}, \alpha=\beta=0.1, c_1=c_2=-]$, (b) High and low cut-off frequency points given by $\Delta f$ and $\Delta \theta$ $[B_f=1, B_{\theta} = 45^{\circ}, \alpha=f/\gamma, \beta=f/\eta, c_1=c_2=0.5]$.}\label{fig:2d_filterbank_spacing}
 \end{figure}
 
-\section{Similarity Measure Apply on Texure Distribution}
-\section{Partial Conclusions}
+\section{Conclusions}
