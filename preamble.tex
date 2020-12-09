@@ -10,21 +10,41 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Font and typography settings    
-\usepackage[utf8]{inputenc}		% LaTeX, comprend les accents !
+\usepackage[utf8]{inputenc}							% LaTeX, comprend les accents !
 \usepackage[T1]{fontenc}
+
+\usepackage{amsmath}								% Allows to write mathematical equations
+
+\usepackage[framed,amsmath,thmmarks]{ntheorem}		% Allows to use theorems
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\usepackage[ruled]{algorithm2e}						% Allows to use algorithms
+\usepackage{nicefrac}			% Allows to use 'inline' fractions 
+\usepackage{commath}			% Allows to use the \abs math command
+\DeclareMathOperator{\Res}{Res}
+
+
+%\usepackage{libertine,libertinust1math}				% Use Libertine ubuntu font for text and math see: https://tex.stackexchange.com/questions/59702/suggest-a-nice-font-family-for-my-basic-latex-template-text-and-math
+		
+
+%\usepackage{ae,aecompl}										% Utilisation des fontes vectorielles modernes
+%\usepackage[upright]{fourier}
+%\usepackage[]{utopia}
+
+\usepackage{lmodern}
+%% Maths                         
+\usepackage{amsmath}			
+\usepackage{amssymb}			% Allows to use mathematical symbols 
+\usepackage{amsfonts}			% Allows to use mathematical fonts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliography style
 
 \usepackage[authoryear,square,semicolon,sort&compress,sectionbib]{natbib}		% Doit être chargé avant babel
 \bibliographystyle{abbrvnat}%abbrvnat %plainnat $square
 
 %\usepackage{chapterbib}
 %	\renewcommand{\bibsection}{\section{Références}}		% Met les références biblio dans un \section (au lieu de \section*)
-		
-\usepackage{lmodern}%
-\usepackage{ae,aecompl}										% Utilisation des fontes vectorielles modernes
-\usepackage[upright]{fourier}
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Allure générale du document
 \usepackage{enumerate}
@@ -61,17 +81,6 @@
     \newpage}
     
 %\usepackage{indentfirst}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Maths                         
-\usepackage{amsmath}			% Allows to write mathematical equations
-\usepackage{amssymb}			% Allows to use mathematical symbols 
-\usepackage{amsfonts}			% Allows to use mathematical fonts
-\usepackage{nicefrac}			% Allows to use 'inline' fractions 
-
-\usepackage{commath}			% Allows to use the \abs math command
-
-\usepackage[framed,amsmath,thmmarks]{ntheorem}			% Allows to use theorems
-\usepackage[ruled]{algorithm2e}				% Allows to use algorithms
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Tables
 \usepackage{multirow}

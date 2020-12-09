@@ -418,7 +418,7 @@ where $\mu_{Z}=[\mathrm{E}[z_{1}], \ldots, \mathrm{E}[z_{N}]]^T$ is the  observa
 With the previous strategy we preserve the anomalous contours having a value of mean gradient and circularity deviating from the principal mode of the distribution in the set $\widetilde{\mathcal{L}}=\{L_{i}\mid y_{i}>\chi^{2}_{Q}(\varphi)\}$. $\chi^{2}_{Q}(\varphi)$ is the value of the cumulative distribution at the confidence level $\varphi$ and $\widetilde{\mathcal{L}} \subset \mathcal{L}$. It is essential to mention the importance of multi-scale contour detection of section \ref{subsec:multispace}; because it increases the number of samples in Z, allowing to build a richer multi-variable space.
 
 In the set $\widetilde{\mathcal{L}}$ some contours make not part of a landing target. For example, in the figure \ref{fig:rx_cnts}, we can see that the paper sheet contours remain because they have a high value of circularity. The same occurs with the contours of those objects with an important value of mean gradient, as the number 4 at the top-left of the sheet or the rock textures of the background.
-\begin{figure}[h]
+\begin{figure}[!ht]
     \centering
     \frame{\includegraphics[width=0.35\linewidth]{rx_cnts_tar4}}
     \caption{The contours from Fig. \ref{fig:all_cnts} that behave as outliers in the multi-feature space $Z$ with a confidence value of $\varphi=99.9\%$}
@@ -564,4 +564,4 @@ With this framework, we tackle one of the specific tasks proposed in section \re
 In the next part of this thesis we will explore the global color and texture feautures of an image. The main idea is to retrieve the largest possible number of image primitives and features to build a multivariable space $Z$ (similar to section \ref{subsec:multispace}) that represent the objects in an image. We have already obtained some contour features that were used for the target detection. The proposition now is to use the distribution of color and texture to feed the multivariable space. 
 
 
-\textbf{AI offers solutions but no answers, and we need both!!}
+%\textbf{AI offers solutions but no answers, and we need both!!}
