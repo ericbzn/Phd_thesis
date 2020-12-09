@@ -1,11 +1,128 @@
 % created on 27/04/2020
 % @author : ebazan
 
-\chapter{The uncertainty princple in the Gabor functions: This section needs to be reconstructed}
+\chapter{The uncertainty princple and its implications in image processing}\label{ch:uncertainty_principle}
 
+The uncertainty principle is one of the most famous ideas in quantum mechanics. An early incarnation of the uncertainty principle appeared in a 1927 paper by the German physicist Heisenberg. The uncertainty principle says that we cannot measure the position $(x)$ and the momentum $(p)$ of a particle with absolute precision. The more accurately we know one of these values, the less accurately we know the other. 
+
+However, the uncertainty principle in the field of quantum mechanics is just a particular case of a more general compromise that appears in simple phenomena of everyday life involving waves. The central idea is connected with the interrelation between frequency and duration. For example, in the case of sound waves, if we want to identify the frequency of a musical note, the shorter the sound lasts in time, the less certain we can be about the exact frequency of the sound; to find a more defined frequency, it would be necessary to listen to the sound for a longer time. In the language of signal processing, we can say that a short signal correlates highly with a wide range of frequencies and only wide signals correlate with a short range of frequencies. Formally this is expressed as
+
+\begin{equation}\label{eq:uncertainty_principle_rad}
+	\Delta t\Delta \omega \geq \frac{1}{2}
+\end{equation}
+
+where $\Delta t$ is the duration of the signal in the time domain and $\Delta \omega$ is the bandwidth of the signal in the frequency domain (CITE). The uncertainty principle then says: the product of the spectral bandwidth multiplied with the time duration of the signal cannot be less than a certain minimum value. Considering the bandwidth of the signal in terms of frequency as $\Delta \upsilon$ where $\omega = 2\pi \upsilon$, the uncertainty principle is stated as 
+
+\begin{equation}\label{eq:uncertainty_principle_freq}
+	\Delta t\Delta \upsilon \geq \frac{1}{4\pi}
+\end{equation}
+
+The Heisenberg uncertainty principle in the field of signal processing and image processing can be mathematically proved by the \textbf{Parseval's theorem}
+
+\begin{equation}\label{eq:parseval_theorem}
+	\int_{-\infty}^{\infty} h(t)^2 dt =  \frac{1}{2 \pi} \int_{-\infty}^{\infty} |H(\omega)|^2 d\omega =  \int_{-\infty}^{\infty} |H(\upsilon)|^2 d\upsilon
+\end{equation}
+
+where $h(t)$ is a function and $H(\upsilon)$ its the Fourier transform. 
+
+The \textbf{energy content} of the signal described by $h(t)$ is defined as:
+
+\begin{equation}\label{eq:energy_content_time}
+    E_{\infty} \equiv \int_{-\infty}^{\infty}  h(t)^2 dt
+\end{equation}
+
+
+From the Parseval's identity this may be written as:
+
+\begin{equation}\label{eq:energy_content_frequency}
+    E_{\infty} =  \int_{-\infty}^{\infty} |H(\upsilon)|^2 d\upsilon
+\end{equation}
+
+The \textbf{time dispersion} of the signal is given by
+
+\begin{equation}\label{eq:time_dispersion_no_centered}
+    (\Delta t)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (t-t_{0})^2 h(t)^2 dt
+\end{equation}
+
+where $t_0$ is the \textbf{center of gravity} of the signal defined by:
+
+\begin{equation}\label{eq:center_of_gravity}
+    t_0 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} t h(t)^2 dt
+\end{equation}
+
+and where if we shift the origin of $t$ so that $t_{0}=0$, then
+
+\begin{equation}\label{eq:time_dispersion}
+    (\Delta t)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} t^2 h(t)^2 dt
+\end{equation}
+
+In an analogous way, the \textbf{spectral bandwidth} of the signal is given by
+
+\begin{equation}\label{eq:spectral_bandwidth_no_centered}
+    (\Delta \upsilon)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (\upsilon-f)^2 |H(\upsilon)|^2 d\upsilon
+\end{equation}
+
+where $f$ is the \textbf{spectral center of gravity} of the signal defined by:
+
+\begin{equation}\label{eq:spectral_center_of_gravity}
+    f \equiv  \frac{2 \pi}{E_{\infty}} \int_{-\infty}^{\infty} f |H(\upsilon)|^2 d\upsilon
+\end{equation}
+
+if we consider $f=0$:
+
+\begin{equation}\label{eq:spectral_bandwidth}
+    (\Delta \upsilon)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} f^2 |H(\upsilon)|^2 d\upsilon 
+\end{equation}
+
+If $h'(t)$ is the derivative of the function, its Fourier transform is $j2\pi f H(\upsilon)$. By applying the Parseval's theorem to the Fourier pair $h'(t)\longleftrightarrow j2\pi f H(\upsilon)$ we obtain:
+
+\begin{equation}\label{eq:applyed_parseval_theorem}
+    4 \pi^{2} \int_{-\infty}^{\infty} f^2 |H(\upsilon)|^2 d\upsilon =  \int_{-\infty}^{\infty} h'(t)^2 dt
+\end{equation}
+
+By substituting in equation $(\eqref{eq:spectral_bandwidth})$, we have:
+
+\begin{equation}\label{eq:spectral_bandwidth2}
+    (\Delta \upsilon)^2 = \frac{1}{4 \pi^{2} E_{\infty}} \int_{-\infty}^{\infty} h'(t)^2 dt
+\end{equation}
+
+We use equations $(\eqref{eq:time_dispersion})$ and $\eqref{eq:spectral_bandwidth2}$ to calculate:
+
+\begin{equation}\label{eq:time_bandwidth_disp}
+    (\Delta t)^2(\Delta \upsilon)^2 = \frac{1}{4 \pi^{2} E_{\infty}^{2}} \int_{-\infty}^{\infty} t^2h(t)^2 dt \int_{-\infty}^{\infty}h'(t)^2 dt
+\end{equation}
+
+Applying the Schwartz's inequality for the integrals on the right-hand side of $\eqref{eq:time_bandwidth_disp}$:
+
+\begin{equation}\label{eq:schwartz_inequality}
+    \int_{-\infty}^{\infty}t h(t)^2 dt \int_{-\infty}^{\infty}h'(t)^2 dt  \geq \biggr\rvert \int_{-\infty}^{\infty}t h(t)h'(t)^2 dt \biggr\rvert^{2}
+\end{equation}
+
+We may integrate by parts the integral on the right-hand side of $\eqref{eq:schwartz_inequality}$
+
+\begin{equation}\label{eq:integr_by_parts}
+    \int_{-\infty}^{\infty}t h(t) h'(t)^2 dt =  \frac{1}{2}t h(t)^2 \biggr\rvert_{-\infty}^{\infty} - \frac{1}{2} \int_{-\infty}^{\infty}h(t)^2 dt
+\end{equation}
+
+If $\lim_{t\rightarrow \infty} t h(t)^2=0$, the first term on the right-hand side of $\eqref{eq:integr_by_parts}$ vanishes and from equation $\eqref{eq:energy_content_time}$ we have
+
+\begin{equation}\label{eq:energy_content_developped}
+    \int_{-\infty}^{\infty} t h(t)h'(t) dt = -\frac{1}{2} E_{\infty}
+\end{equation}
+
+If we use this into $\eqref{eq:schwartz_inequality}$ and then into $\eqref{eq:time_bandwidth_disp}$ we obtain:
+
+\begin{equation}\label{eq:uncertainty_principle_freq_square}
+   (\Delta t)^2(\Delta \upsilon)^2 \geq \frac{1}{16\pi^{2}} 
+\end{equation}
+
+This is the mathematical statement of the uncertainty principle in signal processing.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
 
-\begin{equation}\label{eq:uncertainty_principle2}
+\begin{equation}\label{eq:windowed_function}
     h(t) = f(t)w(t-t_0)
 \end{equation}
 
@@ -15,23 +132,6 @@ Due to the shifting property of the Fourier transform, the Fourier transform of 
 \begin{equation}\label{eq:short_time_fourier_transform}
     H(\omega) = \int_{-\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
 \end{equation}
-
-
-In general $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
-
-The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
-
-\begin{equation}\label{eq:uncertainty_principle2}
-    h(t) = f(t)w(t-t_0)
-\end{equation}
-
-
-Due to the shifting property of the Fourier transform, the Fourier transform of the window is $e^{-j\omega t_0}W(\omega)$. Since the window multiplies the signal, the Fourier transform of the window is convolved with the Fourier transform of the signal. Therefore, the Fourier transform of what we observe is given by:
-
-\begin{equation}\label{eq:short_time_fourier_transform}
-    H(\omega) = \int_{\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
-\end{equation}
-
 
 In general $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
 
@@ -56,8 +156,6 @@ A Gaussian window is infinite in extent, so it is characterized by its locality 
 Figures demonstrate the result for a signal with $\omega_0=5$ and $A=2$. Figure  shows the continuous signal and  the real and imaginary parts and the magnitude and phase of its Fourier transform.  Figure  shows various windowed parts of the signal ($h(t)$) and the real and imaginary parts of their corresponding Fourier transforms.  Figure is the same as figure , but it shows the magnitude and phase of each Fourier transform. These Fourier transforms should be compared with their counterparts in figure  in order to appreciate the effect of both the size of the window and the locality of the window (Gaussian function). In all cases the main peaks of the Fourier transform's magnitude, which correspond to delta function impulses at $\omega=\pm 5$ in the continuous case, are preserved, but they become less sharp and the recovered value starts to move away from the real value as soon as the size of the window decreases. 
 
 For the analysis of discrete signals it is possible to estimate the uncertainty principle. The easiest way is to consider signal segments and calculate the discrete Fourier transform (DFT) of each segment. This is the so-called Short Time Fourier Transform (STFT). If we consider an odd-sized window and associate the DFT that we calculate within it with the sample in the center of the window, we will be associating each sample of the signal with a ``small'' Fourier transform. In this context, how ``small'' the DTF is depends on the size of the window.
-
-
 
 \begin{figure}
 \centering
