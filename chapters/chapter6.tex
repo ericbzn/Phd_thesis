@@ -10,6 +10,11 @@
 \noindent 
 
 \section{Introduction}
+In Chapters \ref{ch:spectral_image_decomposition} and \ref{ch:complex_spectral_image_decomposition} we have introduced the theoretical aspects of gabor filters and their use in a complex color space. Using the family of filters as a measurement tool, we created a feature space that exploits the color and texture information of the images and the relationship between them. This feature space can be seen as the complex spectral decomposition of an image.
+
+In this chapter we propose a workflow to use in the image segmentation task. We have seen that it is possible to obtain unsupervised segmentation using some clustering method on the proposed feature space (see section). However, clustering methods have the limitation of needing some kind of a priori information, for example the number of clusters or objects in the image. The objective of the proposed framework is to obtain a coherent segmentation of the image using the fewest possible parameters.
+
+The present framework obtains the segmentation of an image from the perceptual gradient of the objects. The overall idea of our framework can be seen in the diagram of figure \ref{fig:pipeline_gabor_image_segmentation}. First, we represent the image as a graph (which can be pixel-based or region-based). Next, we calculate the graph's edge's weight using the concept of optimal transport through the EMD (see section \ref{subsec:EMD}), which is a measure that reflects the true distance between two distributions. Finally, the representation of the image as an edge-weighted graph allows to straightforward apply various graph-based segmentation techniques or, to recover the perceptual boundaries of the image in the form of a gradient image, on which we can apply some gradient-based segmentation techniques.
 
 
 \begin{figure}[!ht]
@@ -18,12 +23,60 @@
 	\caption{General pipeline for extraction of perceptual imagen boundaties and unsupervised image segmentation.}\label{fig:pipeline_gabor_image_segmentation}
 \end{figure}
 
+\section{Related work}
+Edge detection is a fundamental problem of computer vision that has been intensively studied since the early 1970s \citep{Hueckel:JACM:1971, Fram.Deutsch:TC:1975}. The main idea behind traditional approaches to contour extraction is to model edges as discontinuities in the brightness channel of an image. This idea gave way to the creation of mask-based operators such as Sobel \citep{Maitre:Book:2003}, Roberts \citep{Roberts:Thesis:1963}, Gradient \citep{Maitre:Book:2003} and Prewitt \citep{Prewitt:PPP:1970}, which quantify the presence of an edge through the convolution of a gray level image with local derivative filters. Other techniques, such as Marr and Hildreth \citep{Marr.Hildreth:PRS:1980}, define edges as the zero crossings of the Laplacian of a Gaussian (LoG). Within traditional methods, the Canny \citep{Canny:PAMI:1986} operator is one of the most popular approaches to this day. This operator follows the same principle of operation of the previous methods, adding a non-maximum suppression stage and a hysteresis thresholding.
+
+Despite their efficiency in controlled environments or in synthetic images, traditional methods suffer when it comes to identifying contours in natural images. The edges of natural images can be present at different scales, and the colors and textures of the scene can generate edges that are perceptually significant to the human eye. Ideally, a contour detection method is intended to simultaneously exploit the brightness, color and texture properties of an image in such a way that it can handle the boundary perimeters defined by the brightness steps and the regions with constant color and / or texture.
+
+One of the relatively recent strategies for identifying perceptual contours is to use the local energy response of an image. The principle of operation is simple: generate features from the responses of an image produced by a family of filters at different scales and orientations. The idea has been exploited from different points of view. For example, the use of the  Difference of Gaussians (DoG) and its HIlbert transform \citep{Morrone.Owens:PR:1987, Morrone.Burr.ea:RSL:1988} for the generation of a family of filters. Inspired by Gabor's work, this group of filters comply with the Parseval principle; in addition to generating an exact quadrature pair (even and odd symmetry cells).
+
+The \textit{Probability-of-boundary} (Pb) detector \citep{Malik.Belongie.ea:IJCV:2001} is one of the major exponents of the use of a filter bank formed by the DoG and its Hilbert transform. The contour detector only uses the brightness and texture information to obtain the Pb. The brightness information is processed following the intervening contour framework \citep{Leung.Malik:ECCV:1998} which consists in obtaining the quadrature energy of the image, also called oriented energy (OE). The texture information is analyzed using so-called textons \citep{Malik.Belongie.ea:ICCV:1999}. Since each cue (brightness and texture) has a domain of applicability, hence different units of magnitude, they introduce a gating operator based on the texturedness of a neighborhood at a pixel. The operator give as a result a local measure which indicates how much two nearby pixels are to belong to the same region. Later in that work, they use spectral graph theory (normalized cut algorithm \citep{JianboShi.Malik:PAMI:2000}) to segment the image into regions of coherent texture and brightness.
+
+This contemporary method, developed by the UC Berkeley research group, was the basis for many other techniques for contour detection and segmentation of natural images widely used today. Most of these works bring substantial improvements to the Pb detector. For example, the seminal papers \citep{Martin.Fowlkes.ea:NIPS:2002} and \citep{Martin.Fowlkes.ea:PAMI:2004} bring together previous works related to Pb and obtain a feature space of four image characteristics: localized OE, Brightness Gradient (BG), Color Gradient (CG) and localized Texture Gradient (TG). To cope with the problem of the difference in units of magnitude of the cues, they use a logistic regression classifier to combine oriented energy, brightness, color and texture. The proposed supervised method optimizes the weights of each feature formulating it as a two-class classification problem, where they learn the rules for combining cues from the groundtruth data of the Berkeley Segmentation Dataset (BSDS) \citep{Martin.Fowlkes.ea:ICCV:2001}.
+
+On the other hand, \cite{Ren:ECCV:2008} showed that the Pb detector improves when using features of the image calculated at different scales. However, a better version of the Pb detector, which has dominated the state of the art scores for several years, is obtained by combining local and global contours \citep{Maire.Arbelaez.ea:CVPR:2008}. The local contours are represented by the multiscale oriented signal mPb, while the global contours are represented by the oriented signal from the spectral partition sPb. The final detector that combines both signals is the globalized Probability-of-boundary gPb, which learns the weights of the local and global part by means of an ascending gradient, taking as reference the BSDS evaluation score.
+
+The Berkeley research group laid the foundation for contour detection and natural image segmentation, providing tools for quantitative comparison of methods. However, there are other methods in the literature that use different strategies to calculate image features and detect contours. Such methods can use fully supervised approaches, avoiding the careful hand-drawing of texture and gloss gradients. However, we can also find semi-supervised methods that replace the Pb detector to later apply a preprocessing chain similar to that applied in the Berkeley group methods.
+
+The Berkeley research group laid the foundation for contour detection and natural image segmentation, providing the database and tools for the comparison and quantitative evaluation of the different approaches. Furthermore, Pb has motivated the development of state-of-the-art methods that use totally different strategies to obtain image features and contour detection. Such methods can use fully supervised approaches, avoiding careful filter design, computation of texture and brightness gradients, and hand-crafted features. We can also find semi-supervised methods, which generally replace the Pb detector with a supervised detector to later apply a preprocessing chain similar to that applied in the Berkeley group methods to refine the detection.
+
+The set of the most popular supervised methods for contour detection, led by researchers from the University of Pasadena California and colleagues, is based on the calculation of features on channels of integrals of the image \citep{Dollar.Tu.ea:BMVC:2009}. Some examples of these integral channels are: image color and gray channels, image responses to linear filters (e.g. Gabor filters, DoG), non-linear image transformations (e.g. Canny edges, gradient magnitude, hysteresis threshold), among others. The calculation of features on the integral channels follow the object detection framework of \cite{Viola.Jones:IJCV:2004}, obtaining first-order and higher-order features such as Haar-like features. Following this principle, a pool of features is obtained by randomly choosing both the integral channel and a rectangle on which the features are calculated, which allows the acceleration of the computation of features and the application of boosting techniques for learning.
+
+Some of the supervised edge detectors that use the integral channel features as input are the Boosted Energy Learning (BEL) \citep{Dollar.ZhuowenTu.ea:CVPR:2006}, which attempts to learn an edge classifier in the form of a probabilistic boosting tree from the thousands of simple features calculated in image patches. On the other hand, Sketch tokens \citep{Lim.Zitnick.ea:CVPR:2013} uses the same features as input to a random forest classifier. The peculiarity of this second method is that the classes of the classifier are the so-called sketch tokens; mid-level information patches that represent complex shapes such as joints, corners, vertical and horizontal edges, etc., calculated from the contours of the groundtruth. The Structural Edge (SE) detector \citep{Dollar.Zitnick:ICCV:2013} and its different versions \citep{Dollar.Zitnick:PAMI:2015} take these strategies to another level, learning not only the integral input features but also the output space, using structured-output decision forests. The Oriented Edge Forest (OEF) detector \citep{Hallman.Fowlkes:CVPR:2015} outperforms existing supervised methods by using a decision forest that analyzes local patches and outputs probability distributions over the space of oriented edges passing through the patch. Finally, the detector based on a Deep Neural Network (DeepNet) architecture \citep{Kivinen.Williams.ea:PMLR:2014}, is a fully supervised method that does not use the integral features framework, instead, it calculates complex-cell like covariance features from multiple scales and semantic levels, which depend on the squared response of a filter to the input image.
+
+Another group of approaches to contour detection are those based on local sparse coding. Such techniques are said semi-supervised because they contain two main stages, one unsupervised and the other supervised. The first stage consists of obtaining a generic representation (without information of the contours) from the information of the image in an unsupervised way. The second stage consists of transforming the sparse representation of the image into a specific labeling task, where in the case of contours detection is a two-classes supervised problem, which that lables the pixels as contour or no contour. Some renowned works under this approach are the detector proposed by \cite{Mairal.Leordeanu.ea:ECCV:2008} and the Sparse Code Gradients (SCG) detector \citep{Ren.Bo:NIPS:2012}. Both works use K-SVD as a dictionary learning algorithm and Orthogonal Matching Pursuit for efficient optimization and sparse coding of each pixel. At the end of the process, they use SVM as linear classifier on the feature vectors resulting from the reconstruction error with each dictionary for pixel classification. The main difference between these detectors is that the SCG adopts the same scheme as the Pb detector, replacing the brightness, color and texture gradients with sparse code gradients. Finally, the Sparse Code Transfer (SCT) detector \citep{Maire.Yu.ea:ACCV:2014} improves on the detector of \cite{Mairal.Leordeanu.ea:ECCV:2008} using a greater number of dictionaries at different scales and layers in addition to the multipath sparse coding technique, which rectifies the initial sparse codes to reconstruct the contours with an extra transfer dictionary. The main disadvantage of these semi-supervised methods is the computational time of both processes, dictionary calculation and learning.
+
+There is a fine line between the contour detection and image segmentation. In this sense, the Pb contour detector has also had an influence on image segmentation. The Ultrametric Contour Maps (UCM) \citep{Arbelaez.Maire.ea:PR:2009} uses the gPb to define a measure of dissimilarity (ultrametric distance) between pairs of adjacent regions defined by a hierarchical segmentation operator (HSO). This technique is refined by adding a supplementary preprocessing stage using the oriented watershed transform (OWT), giving rise to the gPb-owt-ucm hierarchical segmentation method \citep{Arbelaez.Maire.ea:PR:2009}. The extensive qualitative and quantitative comparison of these techniques can be consulted in \citep{Arbelaez.Maire.ea:PAMI:2011}.
+
+The Pb contour detector has driven (directly or indirectly) 50 years of research work around the detection of perceptual contours in natural images their segmentation. Like the Canny operator, the Pb operator has become the reference work. The importance of this method is that it provides a good basis that takes into account the principles of human perception, using operators that have a physical sense.
+
+
+\begin{table}[]
+\begin{tabular}{c|c|c|c}
+\textbf{Edge detector} & \textbf{Input features}                                                                           & \textbf{Main approach}                                           & \textbf{\begin{tabular}[c]{@{}c@{}}Segmentation \\ technique\end{tabular}} \\ \hline
+Pb                      & BG, TG                                                                                            & Gradients dissimilarity                                          & Normalized cuts                                                            \\
+PMI                     & LUV color channels                                                                                & Pixel mutual information                                         & -                                                                          \\ \hline
+SCG                     & \begin{tabular}[c]{@{}c@{}}Gray, color, and \\ depth channels\end{tabular}                        & \begin{tabular}[c]{@{}c@{}}Sparse coding\\ +\\ SVM\end{tabular}  & -                                                                          \\
+SCT                     & RGB color channels                                                                                & \begin{tabular}[c]{@{}c@{}}Sparse coding\\  +\\ SVM\end{tabular} & -                                                                          \\ \hline
+$\widehat{\text{Pb}}$   & BG, TG                                                                                            & Logistic regression                                              & Normalized cuts                                                            \\
+gPb                     & $\widehat{\text{OE}}$, BG, CG, $\widehat{\text{TG}}$                                              & Logistic regression                                              & UCM + OWT                                                                  \\
+BEL                     & Integral channel features                                                                         & Gradient boosting                                                & -                                                                          \\
+Sketch tokens           & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
+SE                      & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
+OEF                     & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
+DeepNet                  & Covariance-like features                                                                          & Deep NN                                                          & -                                                                          \\
+ISCRA                   & \begin{tabular}[c]{@{}c@{}}BG, CG, TG, SIFT,\\  shape features, \\ boundary features\end{tabular} & Cascading classifier                                             & Region merging                                                             \\
+COB                     & $\widehat{\text{OE}}$, BG, CG, $\widehat{\text{TG}}$                                              & Convolutional NN                                                 & -                                                                       
+\end{tabular}
+\end{table}
 
 \section{Image as a graph}
 
 Graphs are historical mathematical structures that have been applied to almost all fields of engineering. Historically, Euler made use of these structures to solve a problem related to the optimal crossing of people across bridges. The success of these structures in fields such as electricity and chemistry, contributed to the creation of a standard nomenclature, giving way to the Graph theory.
 
 Fundamentally, a graph is an useful structure for modeling pairwise relations between objects. In the field of image processing we can find several approaches that make use of graphs. Generally these methods solve a minimization problem. For example, the \textit{minimun spanning tree} approach that aims to find for each pair of nodes, the path with the least weight edges. On the other hand, the \textit{max-flow min-cut} approach aims to maximize flow with the minimum number of cuts in the graph. Both strategies have been successfully applied to the image segmentation problem. Another application example involves the algebraic theory of graphs that studies the spectrum of matrices that represent graphs.
+
+
 
 \subsection{Graph notations and definitions}
 
@@ -45,6 +98,10 @@ In this section we introduce some important definitions that will be used throug
 
 \end{definition}
 
+\begin{definition}[Node-weighted graph]
+
+\end{definition}
+
 \begin{definition}[Adjacency]
 
 \end{definition}
@@ -53,9 +110,7 @@ In this section we introduce some important definitions that will be used throug
 
 \end{definition}
 
-\begin{definition}[Node-weighted graph]
 
-\end{definition}
 
 \subsection{Pixel-based representation}
 
@@ -207,6 +262,49 @@ Therefore, to evaluate the learning of the importance of color and texture and t
 
 \section{Comparison with the state of the art}
 \subsection{Scores}
+
+\begin{table}[]
+\centering
+\begin{tabular}{c|c|c|c||c|c|c|}
+\cline{2-7}
+                                  & \multicolumn{3}{c||}{\textbf{BSDS300}} & \multicolumn{3}{c|}{\textbf{BSDS500}} \\ \cline{2-7} 
+                                  & ODS         & OIS        & AP         & ODS         & OIS        & AP         \\ \hline
+\multicolumn{1}{|c|}{Human}       & 0.79        & 0.79       & -          & 0.80        & 0.80       & -          \\ \hline
+\multicolumn{1}{|c|}{Ours}        & 0.65        & 0.67       & 0.62       & 0.66        & 0.68       & 0.62       \\
+\multicolumn{1}{|c|}{Mean Shift}  & 0.63        & 0.66       & 0.54       & 0.64        & 0.68       & 0.56       \\
+\multicolumn{1}{|c|}{Felz-Hutt}   & 0.58        & 0.62       & 0.53       & 0.61        & 0.64       & 0.56       \\
+\multicolumn{1}{|c|}{NCuts}       & 0.62        & 0.66       & 0.43       & 0.64        & 0.68       & 0.45       \\
+\multicolumn{1}{|c|}{Canny}       & 0.58        & 0.62       & 0.58       & 0.60        & 0.63       & 0.58       \\
+\multicolumn{1}{|c|}{Pb}          & 0.65        & -          & -          & -           & -          & -          \\ \hline
+\multicolumn{1}{|c|}{mPb}         & 0.67        & -          & -          & -           & -          & -          \\
+\multicolumn{1}{|c|}{sPb}         & 0.68        & -          & -          & -           & -          & -          \\
+\multicolumn{1}{|c|}{gPb}         & 0.70        & 0.72       & 0.66       & 0.71        & 0.74       & 0.65       \\
+\multicolumn{1}{|c|}{gPb-owt-ucm} & 0.73        & 0.76       & 0.73       & 0.73        & 0.76       & 0.73       \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[]
+\centering
+\begin{tabular}{c|c|c|c||c|c||c|c|}
+\cline{2-8}
+                                  & \multicolumn{7}{c|}{\textbf{BSDS500}}                                                                                       \\ \cline{2-8} 
+                                  & \multicolumn{3}{c||}{Covering $(\uparrow)$} & \multicolumn{2}{c||}{PRI $(\uparrow)$} & \multicolumn{2}{c|}{VI $(\downarrow)$} \\ \cline{2-8} 
+                                  & ODS          & OIS          & Best         & ODS               & OIS               & ODS                & OIS               \\ \hline
+\multicolumn{1}{|c|}{Human}       & 0.72         & 0.72         & -            & 0.88              & 0.88              & 1.17               & 1.17              \\ \hline
+\multicolumn{1}{|c|}{Ours}        & 0.56         & 0.60         & 0.67         & 0.81              & 0.83              & 1.79               & 1.57              \\ \hline
+\multicolumn{1}{|c|}{gPb-owt-ucm} & 0.59         & 0.65         & 0.74         & 0.83              & 0.86              & 1.69               & 1.48              \\ \hline
+\multicolumn{1}{|c|}{Mean Shift}  & 0.54         & 0.58         & 0.66         & 0.79              & 0.81              & 1.85               & 1.64              \\ \hline
+\multicolumn{1}{|c|}{Felz-Hutt}   & 0.52         & 0.57         & 0.69         & 0.80              & 0.82              & 2.21               & 1.87              \\ \hline
+\multicolumn{1}{|c|}{Ncuts}       & 0.45         & 0.53         & 0.67         & 0.78              & 0.80              & 2.23               & 1.89              \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pr_curves_mymethod}
+	\caption{Precision-recall plot of different contour detectors.}\label{fig:pipeline_gabor_image_segmentation}
+\end{figure}
 \subsection{Results}
 
 

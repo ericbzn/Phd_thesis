@@ -1,7 +1,7 @@
 % created on 12/05/2020
 % @author : ebazan
 
-\chapter{Color image texture analysis based on Gabor features}
+\chapter{Color image texture analysis based on Gabor features}\label{ch:complex_spectral_image_decomposition}
 \section*{Résumé}
 \noindent Dans ce chapitre, nous présentons la décomposition spectrale d'une image couleur avec l'aide du filtre de Gabor. Nous utilisons la théorie sur les fonctions de Gabor développée dans le Chapitre \ref{ch:image_spectral_decomposition} pour extraire les caractéristiques de texture locale d'une image en couleurs. La stratégie principale consiste à transformer l'image d'entrée d'un espace couleur réel à trois canaux en une représentation couleur complexe à deux canaux. Ensuite, nous utilisons une banque de filtres Gabor sur chaque canal de l'image pour extraire les informations de texture générées par les variations de couleur et d'illumination de l'image.
 
@@ -112,6 +112,33 @@ The representation in two channels, one real and the other complex, of a color i
 \caption{Synthetic color textured image.}\label{fig:synthetic_color_texture_image}
 \end{figure}
 
+\begin{table}[h!]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|ccccccc}
+                    & \multicolumn{7}{c}{\textbf{Region}}                                                                                                                                                                          \\ \hline
+\textbf{}           & 1                  & 2                   & 3                   & 4                   & 5                   & 6                   & 7                                                              \\ \hline
+\textbf{Color 1}    &                    &                     &                     &                     &                     &                     &                                                                \\
+\textit{Name}       & Yellow             & Purple              & Red                 & Red                 & Blue                & Green               & Black                                                          \\
+\textit{RGB values} & {[}255, 255, 0{]}  & {[}128, 0, 255{]}   & {[}255, 0, 0{]}     & {[}255, 0, 0{]}     & {[}0, 0, 255{]}     & {[}0, 255, 0{]}     & {[}0, 0, 0{]}                                                  \\
+\textit{HSV values} & {[}60, 100, 100{]} & {[}270, 100, 100{]} & {[}0, 100, 100{]}   & {[}0, 100, 100{]}   & {[}240, 100, 100{]} & {[}120, 100, 100{]} & {[}0, 0, 0{]}                                                  \\ \hline
+\textbf{Color 2}    &                    &                     &                     &                     &                     &                     &                                                                \\
+\textit{Name}       & -                  & Green lime          & Cyan                & Blue                & Green               & Red                 & White                                                          \\
+\textit{RGB values} & -                  & {[}128, 255, 0{]}   & {[}0, 255, 255{]}   & {[}0, 0, 255{]}     & {[}0, 255, 0{]}     & {[}255, 0, 0{]}     & {[}255, 255, 255{]}                                            \\
+\textit{HSV values} & -                  & {[}90, 100, 100{]}  & {[}180, 100, 100{]} & {[}240, 100, 100{]} & {[}120, 100, 100{]} & {[}0, 100, 100{]}   & {[}0, 0, 100{]}                                                \\ \hline
+\textbf{Texture}    &                    &                     &                     &                     &                     &                     &                                                                \\
+\textit{Freq.}      & -                  & $1/64$              & $1/32$              & $1/16$              & $1/8$               & $1/4$               & \begin{tabular}[c]{@{}c@{}}$1/8$\\ $1/32$\end{tabular}         \\
+\textit{Angle}      & -                  & $90^\circ$          & $90^\circ$          & $90^\circ$          & $90^\circ$          & $90^\circ$          & \begin{tabular}[c]{@{}c@{}}$0^\circ$\\ $90^\circ$\end{tabular}
+\end{tabular}}
+\caption{Specifications of color and texture of the areas of the synthetic study image.}\label{tab:synthetic_image_components}
+\end{table}
+
+\begin{figure}[h!]
+	\centering
+    \includegraphics{color_complex_plane.pdf}
+\caption{Two-channel color complex plane.}\label{fig:color_complex_plane}
+\end{figure}
+
+
 \subsection{Synthetic image description}
 
 The textures of the image are formed by 2-d sinusoidal modulations at a certain frequency. These modulations change the colors of the regions generating a texture of oriented lines. The regions of the synthetic image have the following color and texture characteristics.
@@ -139,33 +166,29 @@ This region contains two textures, both of them formed by the variations between
 
 The colors and frequency of each zone are summarized in Table \ref{tab:synthetic_image_components}. In it, we expose the $RGB$ and $HSV$ values of the texture-forming colors as well as the frequency and orientation of each section.
 
-\begin{table}[h!]
-\begin{tabular}{c|c|c|c|c|c|c|c|c|}
-\cline{2-9}
-\textbf{}                                & \multicolumn{6}{c|}{\textbf{Colors}}                                                                                                                                        & \multicolumn{2}{c|}{\multirow{2}{*}{\textbf{Texture}}} \\ \cline{2-7}
-                                         & \multicolumn{3}{c|}{\textbf{Color 1}}                                            & \multicolumn{3}{c|}{\textbf{Color 2}}                                                    & \multicolumn{2}{c|}{}                                  \\ \hline
-\multicolumn{1}{|c|}{\textbf{Zone}}      & \textbf{Name}          & \textbf{$RGB$ values}      & \textbf{$HSV$ values}      & \textbf{Name}          & \textbf{$RGB$ values}            & \textbf{$HSV$ values}        & \textbf{Freq.}             & \textbf{Angle}            \\ \hline
-\multicolumn{1}{|c|}{1}                  & Yellow                 & $[255,255,0]$              & $[60,100,100]$             & n/a                    & n/a                              & n/a                          & n/a                        & $90^\circ$                \\ \hline
-\multicolumn{1}{|c|}{2}                  & Purple                 & $[128, 0, 255]$            & $[270,100,100]$            & Green lime             & $[128, 255, 0]$                  & $[90,100,100]$               & $\frac{1}{64}$             & $90^\circ$                \\ \hline
-\multicolumn{1}{|c|}{3}                  & Red                    & $[255,0,0]$                & $[0,100,100]$              & Cyan                   & $[0,255,255]$                    & $[180,100,100]$              & $\frac{1}{32}$             & $90^\circ$                \\ \hline
-\multicolumn{1}{|c|}{4}                  & Red                    & $[255,0,0]$                & $[0,100,100]$              & Blue                   & $[0,0,255]$                      & $[240,100,100]$              & $\frac{1}{16}$             & $90^\circ$                \\ \hline
-\multicolumn{1}{|c|}{5}                  & Blue                   & $[0,0,255]$                & $[240,100,100]$            & Green                  & $[0,255,0]$                      & $[120,100,100]$              & $\frac{1}{8}$              & $90^\circ$                \\ \hline
-\multicolumn{1}{|c|}{6}                  & Green                  & $[0,255,0]$                & $[120,100,100]$            & Red                    & $[255,0,0]$                      & $[0,100,100]$                & $\frac{1}{4}$              & $90^\circ$                \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{7}} & \multirow{2}{*}{Black} & \multirow{2}{*}{$[0,0,0]$} & \multirow{2}{*}{$[0,0,0]$} & \multirow{2}{*}{White} & \multirow{2}{*}{$[255,255,255]$} & \multirow{2}{*}{$[0,0,100]$} & $\frac{1}{4}$              & $90^\circ$                \\ \cline{8-9} 
-\multicolumn{1}{|c|}{}                   &                        &                            &                            &                        &                                  &                              & $\frac{1}{32}$             & $0^\circ$                 \\ \hline
-\end{tabular}
-\caption{Specifications of color and texture of the areas of the synthetic study image.}\label{tab:synthetic_image_components}
-\end{table}
+%\begin{table}[h!]
+%\resizebox{\textwidth}{!}{%
+%\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+%\cline{2-9}
+%\textbf{}                                & \multicolumn{6}{c|}{\textbf{Colors}}                                                                                                                                        & \multicolumn{2}{c|}{\multirow{2}{*}{\textbf{Texture}}} \\ \cline{2-7}
+%                                         & \multicolumn{3}{c|}{\textbf{Color 1}}                                            & \multicolumn{3}{c|}{\textbf{Color 2}}                                                    & \multicolumn{2}{c|}{}                                  \\ \hline
+%\multicolumn{1}{|c|}{\textbf{Zone}}      & \textbf{Name}          & \textbf{$RGB$ values}      & \textbf{$HSV$ values}      & \textbf{Name}          & \textbf{$RGB$ values}            & \textbf{$HSV$ values}        & \textbf{Freq.}             & \textbf{Angle}            \\ \hline
+%\multicolumn{1}{|c|}{1}                  & Yellow                 & $[255,255,0]$              & $[60,100,100]$             & n/a                    & n/a                              & n/a                          & n/a                        & $90^\circ$                \\ \hline
+%\multicolumn{1}{|c|}{2}                  & Purple                 & $[128, 0, 255]$            & $[270,100,100]$            & Green lime             & $[128, 255, 0]$                  & $[90,100,100]$               & $\frac{1}{64}$             & $90^\circ$                \\ \hline
+%\multicolumn{1}{|c|}{3}                  & Red                    & $[255,0,0]$                & $[0,100,100]$              & Cyan                   & $[0,255,255]$                    & $[180,100,100]$              & $\frac{1}{32}$             & $90^\circ$                \\ \hline
+%\multicolumn{1}{|c|}{4}                  & Red                    & $[255,0,0]$                & $[0,100,100]$              & Blue                   & $[0,0,255]$                      & $[240,100,100]$              & $\frac{1}{16}$             & $90^\circ$                \\ \hline
+%\multicolumn{1}{|c|}{5}                  & Blue                   & $[0,0,255]$                & $[240,100,100]$            & Green                  & $[0,255,0]$                      & $[120,100,100]$              & $\frac{1}{8}$              & $90^\circ$                \\ \hline
+%\multicolumn{1}{|c|}{6}                  & Green                  & $[0,255,0]$                & $[120,100,100]$            & Red                    & $[255,0,0]$                      & $[0,100,100]$                & $\frac{1}{4}$              & $90^\circ$                \\ \hline
+%\multicolumn{1}{|c|}{\multirow{2}{*}{7}} & \multirow{2}{*}{Black} & \multirow{2}{*}{$[0,0,0]$} & \multirow{2}{*}{$[0,0,0]$} & \multirow{2}{*}{White} & \multirow{2}{*}{$[255,255,255]$} & \multirow{2}{*}{$[0,0,100]$} & $\frac{1}{4}$              & $90^\circ$                \\ \cline{8-9} 
+%\multicolumn{1}{|c|}{}                   &                        &                            &                            &                        &                                  &                              & $\frac{1}{32}$             & $0^\circ$                 \\ \hline
+%\end{tabular}}
+%\caption{Specifications of color and texture of the areas of the synthetic study image.}\label{tab:synthetic_image_components}
+%\end{table}
 
 The choice of texture forming colors comes from the interest in visualizing the color spectrum of the image in a more representative way. Throughout this work, we will use the representation of color in two-complex channels from the $HSV$ color space given by Eq. \eqref{eq:chrominance_hsv}.
 
 Considering that the colors of the input image are initially expressed in spectral light primaries $RGB$, if we look at the colors in the $HSV$ space on the complex plane (see Fig. \ref{fig:color_complex_plane}), a pure value of hue ($H$) equivalent to a full saturation corresponds to the ratio of the dominant wavelength to other wavelengths in color. The saturation ($S$) or chroma defines the brilliance and intensity of a color; it refers to the dominance of hue in the color. Finally, the value ($V$) refers to the lightness or darkness of a color; it indicates the quantity of light reflected.
 
-\begin{figure}
-	\centering
-    \includegraphics{color_complex_plane.pdf}
-\caption{Two-channel color complex plane.}\label{fig:color_complex_plane}
-\end{figure}
 
 Since for the representation in two complex channels the value $V$ of each pixel is not necessary, we can plot the pixel values of hue $H$ (in degrees) and saturation $S$ (normalized between $0$ and $255$) in the complex 2-d plane shown in the Figure \ref{fig:color_complex_plane}. This representation completes the description of our synthetic test image showing the variation between colors that generate textures. We can see in Figure \ref{fig:color_complex_plane} the transition between the $RGB$ primary colors at $0^\circ$, $120^\circ$ and $240^\circ$ respectively; the transition between purple and lime green on the imaginary axis with a hue of $90^\circ$ and $270^\circ$ respectively; the transition between red at $0^\circ$ and cyan at $180^\circ$ passing through the real axis of the plane and finally the yellow color with a hue value of $60^\circ$ in the chroma circle.
 
