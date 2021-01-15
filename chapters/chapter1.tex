@@ -5,19 +5,19 @@
 \section*{Introduction}
 The general objective of this thesis is to propose a vision-based framework for the navigation aid of UAVs. We consider that the understanding of scenes is an important aspect for the elaboration of this framework. The proposal then is to build a framework that obtains perceptual information using low-level primitives and low-level features of the image. 
 
-In this first part of the thesis, we focus only on the study of the contours of an image and its properties. We review some concepts of human perception, such as Helmholtz's principle, and interpret them with the properties of contours. More specifically, we use the image contour information in an \textit{a contrario} approach and some of the grouping laws of Gestalt theory to perform the detection and identification of landing targets.
+In this first part of the thesis, we focus only on the study of the contours of an image and its properties. We review some concepts of human perception, such as Helmholtz's principle, and we interpret them and apply them to the contours extracted from the image. More specifically, we use the image contour information in an \textit{a contrario} approach and some of the grouping laws from the Gestalt theory to perform the detection and identification of objects. We use this algorithm for the autonomous drone landing task. The objects to be identified are a series of landing targets specifically designed for this problem.
 
 The main contributions of this first part are:
 
 \begin{enumerate}
-	\item Study and comparison of different approaches to obtain the contours of an image.
-	\item A methodology for finding and interpreting perceptual information using the a contrario method and Gestalt theory.
+	\item Study and comparison of different classical approaches to image's contours detection.
+	\item A new methodology for searching and interpreting perceptual information using the a contrario method and Gestalt theory.
 	\item A framework for fully unsupervised landing target detection robust to the image degradations present in the autonomous landing task.
 	\item An algorithm for the generation of coded landing targets.
 \end{enumerate}
 
 
-\chapter{Unsupervised Object Detection for UAV Autonomous Landing task} \label{ch:landing_target_detection}
+\chapter{Unsupervised Object Detection for UAV Autonomous Landing Task} \label{ch:landing_target_detection}
 
 Associated publications: \vspace{-2mm}
 
@@ -34,28 +34,26 @@ Associated publications: \vspace{-2mm}
 
 
 \section{Introduction}\label{sec:introduction_ch1}
+Nowadays, the target detection for the autonomous landing of UAVs is a recurring subject in the industrial sector. This task is crucial so that applications such as air parcel delivery can be developed. Some strategies to address this problem is the creation of landing stations; infrastructures that could contain external elements, such as GPS, infrared markers or telecommunication sensors, which serve to locate and differentiate the landing zone from other areas. This option may be feasible for small-scale applications, however, in applications that require multiple landing points, this becomes impractical.
 
-The detection of a target for the UAV autonomous landing nowadays is a recurring subject in the industrial sector. This task is crucial so that applications such as parcel delivery with drones can be carried out. Some strategies to address this problem is the creation of landing stations, which are infrastructures that contain external elements, such as GPS, infrared markers or telecommunication sensors, which serve to locate the position of the landing zone. This option may be feasible for small-scale applications, however, in applications that require multiple landing points, this becomes impractical.
-
-We propose a vision-based system for the detection and identification of personalized landing targets. The idea for autonomous landing is simple; when a drone reaches a certain horizontal / vertical distance from a possible landing target, it analyzes the target; if the drone recognizes the marker as a landing target and the ID is correct, the drone lands (see Fig. \ref{fig:visionbased_landing_problem_sketch}). This option provides advantages such as the independence of special on-board sensors for the detection of infrared markers or continuous operation in areas with low or no GPS coverage. 
+Instead, we propose a monocular vision-based system for the detection and identification of custom landing targets. For this we imagine the situation when a drone is ready to land as follows: first, the drone reaches a certain horizontal/vertical distance from a possible landing target, then it activates the visual system and analyzes the scene where there may be a target; if the drone recognizes a pattern as a landing target and the ID is correct, the drone lands. The figure \ref{fig:visionbased_landing_problem_sketch} represents the actions that a drone must perform to land at the correct point. The use of vision systems for the target detection provides advantages such as the independence of special on-board sensors for the detection of infrared markers and the  continuous operation in areas with low or no GPS coverage. 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.4\textwidth]{problem_statement}        
+    \includegraphics[width=0.45\textwidth]{problem_statement}        
     \caption{Graphic representation of the two stages involved in vision-based autonomous landing: 1. Approach to the landing zone; 2. Detection and recognition of the landing target.}\label{fig:visionbased_landing_problem_sketch}
 \end{figure}
 
-Notwithstanding, in outdoor environments, many variables affect the vision-based landing target detection. 
-The main problems to face are: the non-controlled light changes that generate shadowing, reflectance and saturation on the surfaces; the perspective and distance of the camera that deforms the objects; the motions and vibrations that blur the images and; the noise generation by a low-quality sensor.
-
+Notwithstanding, the use of visual systems in outdoor environments presents challenges as there are many uncontrolled variables that affect and impair the task of detecting objects. The main problems to face in the aerial landing target detection task are: the non-controlled light changes that generate shadowing, reflectance and saturation on the surfaces; the perspective and distance of the camera that deforms the objects; the motions and vibrations that blur the images and; the noise generation by a low-quality sensor.
 
 The detection of the landing target can be viewed as an image segmentation problem, where there is a wide range of developed methods. The variational framework \citep{Mumford.Shah:CPAM:1989}, offers an optimal general method for image segmentation; however, its mathematical complexity and the constant selection of fidelity and a regularization parameters makes its use complex. Also, the number of iterations needed to find the optimal solution avoid having results in real-time. Conversely, threshold-based methods have been used for the detection of landing targets \citep{Lacroix.Caballero:IROS:2006}, \citep{Lange.Sunderhauf.ea:SIMPAR:2008} for its ease of use. However, for a good detection, its use is limited to indoor spaces, where the light conditions are controlled \citep{Araar.Aouf.ea:IROS:2017}. 
 
 Recently, convolutional neural networks (CNN) techniques offer the possibility of detecting an object from a large set of classes with a high-reliability \citep{Carrio.Sampedro.ea:JS:2017}. Nevertheless, these methods must have been trained with a database containing the object classes in a wide range of situations and, in case of changes in the object or the scene, the database must be rebuilt \citep{Yao.Yu.ea:CCC:2017}, \citep{Furukawa:TechRep:2018}. Besides, in some cases, the computation is carried out off-board the drone, which implies the need for network infrastructure and limitation of autonomy \citep{Lee.Wang.ea:IRC:2017}.
 
-\subsection{Conceptual Framework}
+In our case, for the detection of landing targets we chose to use the contours of the image as input information and build a feature space using concepts of human perception. With these elements we detect the targets in an unsupervised way. Such concepts and the different proven approaches to contour extraction and target identification are described below.
 
-Humans can carry out the process of perception in a natural way \citep{Petitot:Neurogeometrie:2008}. We identify meaningful features and exciting events in a scene (such as points, lines, edges, textures, colors, movement) and with the help of our memory and the learning capacity we can recognize and classify objects. The  identification of primitives is a consequence of their non-accidental apparition, i.e., they are not generated randomly \citep{Attneave:PR:1954}. This is roughly Helmholtz's principle, which states that we do not perceive any structure in a uniform random image. However, whenever some deviation from randomness occurs, it is possible to find a structure. In other words, events that could not happen by chance are immediately perceived. This principle is represented in the figure \ref{fig:helmholtz_principle}.
+\subsection{Conceptual Framework}
+Humans can carry out the process of perception in a natural way \citep{Petitot:Neurogeometrie:2008}. We, as humans, identify meaningful features and exciting events in a scene (such as points, lines, edges, textures, colors, movement) and with the help of our memory and the learning capacity we can recognize and classify objects. The  identification of primitives is a consequence of their non-accidental apparition, i.e., they are not generated randomly \citep{Attneave:PR:1954}. This is roughly the Helmholtz principle, which states that we do not perceive any structure in a uniform random image. However, whenever some deviation from randomness occurs, it is possible to find a structure. In other words, events that could not happen by chance are immediately perceived. This principle is represented in the figure \ref{fig:helmholtz_principle}.
 
 
 \begin{figure}[!ht]
@@ -80,15 +78,15 @@ The Gestalt theory \citep{Wertheimer:Psycologische:1923} states that we can buil
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.6\textwidth]{gestalt_laws}        
-    \caption{Representation of the Gestalt's law of grouping.}\label{fig:gestalt_laws}
+    \caption{Graphic representation of the Gestalt's law of grouping.}\label{fig:gestalt_laws}
 \end{figure}
 
-In this work, we explore the above ideas and propose a novel approach to detect a landing target in the same way as humans do, imitating the human perception process. To achieve this, we use the image contours retrieved at different scales. From this set of contours, we obtain the most perceptual contours, that is, those that were not generated by chance using an a contrario approach. After this, we take advantage of the predefined form of the targets to propose some measures that represent the laws of grouping of similarity and proximity of the Gestalt. Finally, we do the decoding and correction of target identification errors using Hamming's code. The diagram shown in the figure \ref{fig:target_detection_pipeline} groups the stages of our method for the perceptual detection of landing targets.
+In this work, we explore the above ideas and propose a novel approach to detect a landing target in the same way as humans do, imitating the human perception process. To achieve this, we use the image contours retrieved at different scales. From this set of contours, we obtain the most perceptual contours, that is, those that were not generated by chance using an a contrario approach. After this, we take advantage of the predefined form of the targets to propose some measures that represent the laws of grouping of similarity and proximity of the Gestalt. Finally, we do the decoding and correction of target identification errors using Hamming's code. The diagram shown in figure \ref{fig:target_detection_pipeline} groups the stages of our method for the perceptual detection of landing targets.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{target_detection_pipeline}        
-    \caption{Diagram of the phases for the landing target detection and recognition}\label{fig:target_detection_pipeline}
+    \caption{Diagram of the phases involved in the landing target detection and recognition task.}\label{fig:target_detection_pipeline}
 \end{figure}
 
 The following sections are devoted to detailing the framework for the detection of landing targets. In section \ref{sec:hierarchical_target_detection} we evaluate different threshold-based methods for obtaining contours in an algorithm that uses the hierarchy of contours for the detection of landing targets. After that, we develop our perception model in section \ref{sec:unsupervised_perception_model}. Specifically, subsection \ref{subsec:Helmholtz} describes how to retrieve image contours as meaningful primitives and subsection \ref{subsec:Gestalt} describes how to group the contours to detect a landing target perceptually.  Later, in section \ref{sec:validation_and_test} we present the implementation of our methodology and some tests with both, synthetic and real-life images. We also present some conclusion and perspectives in section \ref{sec:conclusions_landing_target}. Finally, the appendix \ref{ch:target_description} contains the description of the landing target as well as the strategy used for its generation.
@@ -96,10 +94,10 @@ The following sections are devoted to detailing the framework for the detection 
 
 \section{Hierarchical Countours for Target Detection}\label{sec:hierarchical_target_detection}
 
-Originally, the idea of landing targets detection is inspired by the needs of the Internest company \citep{InternestWeb}. The objective is to design a landing marker and an algorithm for its detection; all of this in the context of the UAV's autonomous precision landing task. 
-A first approach, developed during during the traineeship period of a master student \citep{BaquedanoA.:ESIEE:2017}, seeks to solve the task straightforwardly using highly studied techniques. The algorithm is based on finding the contours of a binary image generated by the threshold method proposed by Otsu \citep{Otsu:SMC:1979}. Since the landing target they propose is composed of nested concentric circles, they heuristically use the hierarchy of the found contours to detect a landing target. Their methodology consists in discriminating the contours that are not nested through conditional evaluations at each hierarchy level. The conditions are hierarchically dependent which means that the landing target detection is frustrated if the conditions are not strictly enforced.
+Originally, the idea of landing targets detection is inspired by the needs of the \cite{Internest:WebPage:} company. The objective is to design a landing marker and an algorithm for its detection; all of this in the context of the UAV's autonomous precision landing task. 
+A first approach, developed during the traineeship period of a master student \citep{BaquedanoA.:ESIEE:2017}, seeks to solve the task straightforwardly using highly studied techniques. The algorithm is based on finding the contours of a binary image generated by the threshold method proposed by \cite{Otsu:SMC:1979}. Since the landing target they propose is composed of nested concentric circles, they heuristically use the hierarchy of the found contours to detect a landing target. Their methodology consists in discriminating the contours that are not nested through conditional evaluations at each hierarchy level. The conditions are hierarchically dependent which means that the landing target detection is frustrated if the conditions are not strictly enforced.
 
-This idea was tested, however, similarly to some other works mentioned in section \ref{sec:introduction_ch1}, the algorithm works well only under certain circumstances. The tests show that the algorithm fails mainly because it is not able to find all the target contours. This generally occurs when the landing target is exposed to conditions that degrade the quality of the image. Given the nature of the aerial object detection task, factors such as the change in height and orientation of the UAV, modify the perception of an object introducing disturbances such as noise, changes in lighting and contrast, deformation of objects, etc., that complicate the operation of threshold-based and consequently the contour detection. We classify the disturbances suffered by landing targets into four types: 
+This idea was tested, however, similarly to some other works mentioned in section \ref{sec:introduction_ch1}, the algorithm works well only under certain circumstances. The tests show that the algorithm fails mainly because it is not able to find all the target contours, what compromises the hierarchical condition fro detection. This generally occurs when the landing target is exposed to conditions that degrade the quality of the image. Given the nature of the aerial object detection task, factors such as the change in height and orientation of the UAV, modify the perception of an object introducing disturbances such as noise, changes in lighting and contrast, deformation of objects, etc.. Such image degrataions complicate the operation of threshold-based and consequently the contour detection. We classify the disturbances suffered by landing targets into four types: 
 
 \begin{enumerate}
 	\item Change in size w.r.t. the scene.
@@ -107,8 +105,7 @@ This idea was tested, however, similarly to some other works mentioned in sectio
 	\item Presence of shadows.
 	\item Deformation due to perspective.
 \end{enumerate}
-
-Figure \ref{fig:tar_degradations} shows a the landing target affected by the aforementioned disturbances.
+Figure \ref{fig:tar_degradations} shows a landing target affected by the aforementioned disturbances.
   
 \begin{figure}[!ht]
     \centering
@@ -141,8 +138,9 @@ Figure \ref{fig:tar_degradations} shows a the landing target affected by the afo
     \caption{ Landing target degradations: \textbf{(a)} Noise, \textbf{(b)} Shadow, \textbf{(c)} Change of size and \textbf{(d)} Perspectice deformation}\label{fig:tar_degradations}
 \end{figure}
 
-One of the main disadvantages of the hierarchy method for the detection of landing targets is that its effectiveness lies with the Otsu contour detector, which does not work well in images with high contrast or severe changes in lighting. However, there are other threshold-based methods for contour detection that could better face the image degradations showed in figure \ref{fig:tar_degradations}. Following the taxonomy for threshold-based methods proposed in \citep{Sezgin.Sankur:EI:2010}, there are clustering-based methods such as Otsu \citep{Otsu:SMC:1979} and the Riddler \citep{Ridler.Calvard:TSMC:1978}; the entropy-based such as Yen\citep{Yen.Chang.ea:TIP:1995} and Li\citep{Li.Lee:ICPR:1993}; local methods such as Niblack \citep{Niblack:ImageProcc:1986} and Sauvla \citep{Sauvola.Pietikainen:ICPR:2000}; the adaptive method proposed by Bradley \citep{Bradley.Roth:ACM:2007} and finally, the mean and Gaussian pixel distribution as spacial methods. 
-We use these nine representative threshold-based methods to obtain a binary image, localize the image contours and evaluate which is the best facing image degradations showed in figure \ref{fig:tar_degradations}.
+
+One of the main disadvantages of the hierarchy method for the landing targets detection is that its effectiveness lies with the Otsu contour detector, which does not work well in images with high contrast or severe changes in lighting. However, there are other threshold-based methods for contour detection that could better face the image degradations showed in figure \ref{fig:tar_degradations}. Following the taxonomy for threshold-based methods proposed in \citep{Sezgin.Sankur:EI:2010}, there are clustering-based methods such as \cite{Otsu:SMC:1979} and \cite{Ridler.Calvard:TSMC:1978} edge detectors; entropy-based methods such as \cite{Yen.Chang.ea:TIP:1995} and \cite{Li.Lee:ICPR:1993} detectors; local methods such as \cite{Niblack:ImageProcc:1986} and \cite{Sauvola.Pietikainen:ICPR:2000} operators; the adaptive method proposed by \cite{Bradley.Roth:ACM:2007} and finally, the mean and Gaussian pixel distribution as spacial methods. 
+We use these nine representative threshold-based methods to obtain a binary image, localize the image contours and evaluate which is the best approach facing the image degradations showed in figure \ref{fig:tar_degradations}.
 
 
 \begin{figure}[htbp]
@@ -252,16 +250,15 @@ We use these nine representative threshold-based methods to obtain a binary imag
 \caption{threshold-based methods result illustrations on synthetic images: \textbf{(a)} Noise, \textbf{(b)} Shadow, \textbf{(c)} Size and \textbf{(d)} Deformation degradations}\label{fig:thr_synth_comparison}
 \end{figure}
 
-The contours obtained applying each threshold-based method are depicted in figure \ref{fig:thr_synth_comparison}. In this figure is appreciable that, depending on the situation the result is better or worse. However, at first glance, there is not one that works correctly in a general way.
+The contours obtained applying each threshold-based method are depicted in figure \ref{fig:thr_synth_comparison}. In this figure is appreciable that, depending on the situation, the result is better or worse. For example, we can see that the Otsu, Riddler, Yen and Li methods react appropriately to the target scale change, but none of these four methods except the Yen operator work correctly in the presence of shadows. This results from the comparison of four methods under two disturbances, however, of the nine methods there are none that works correctly for all perturbations.
 
 \subsection{Thershold-based Method's Evaluation}
-
-
 We run the hierarchical algorithm proposed in \citep{BaquedanoA.:ESIEE:2017} on a database of synthetic images. The database contains the sixteen different landing targets perturbed by the image degradations of figure \ref{fig:tar_degradations}. 
-The noise degradation is simulated by adding Gaussian noise with a mean of zero and a variable standard deviation from 0.02 to 0.2 where 0.02 is the minimum noise addition. The shadow perturbation is simulated shading the left-half of the image; the variation of the shadow is done between 0 and 1 where 0 indicates a darker left-half image. The last two degradations are related with the perspective and distance of the viewer (the camera). First, the change of scale is done scaling the landing target circles on a $640\times480$p image in an interval from 0 to 1, where 1 indicates real scale. Lastly, the perspective degradation is achieved by augmenting the proportion of one axis in an interval between 1 and 2, where to indicates the maximum deformation. We apply the maximum value degradation for the test.
- 
-We use the F1-score as metric to evaluate the accuracy of each threshold-based method under different degradations. This metric has values between 0 and 1, where 1 is the best score and 0 the worst. Figure \ref{fig:degradations_graphs} shows the F1-score of the threshold-based methods under the image degradations. The graphs show the behavior of the algorithm without an error-correction (gray bars) and with the use of the error-correction (black bars) described in appendix \ref{ch:target_description}.
-\begin{figure}[h!]
+The noise degradation is simulated by adding a Gaussian noise with mean of zero and a standard deviation variable from 0.02 to 0.2 where 0.02 is the minimum noise addition. The shadow perturbation is simulated shading the left-half of the image; the variation of the shadow is done between 0 and 1 where 0 indicates a darker left-half image. The last two degradations are related with the perspective and distance of the viewer (the camera). First, we change the size of the landing target by scaling forming circles on a $640\times480$p image.  The range of the scale is from 0 to 1, where 1 indicates real scale. Lastly, to achieve the perspective degradation we consider that the circular target behaves like an ellipse when it is not seen from the perpendicular axis of the center. Therefore, we deform the target synthetically by augmenting the proportion of one axis (major and minor) of the ellipse in an interval between 1 and 2, where 2 indicates the maximum deformation. 
+
+For the test of the different contour detectors, we apply the maximum value of each degradation. We use the F1-score as metric to evaluate the accuracy of each threshold-based method under the different degradations. This metric has values between 0 and 1, where 1 is the best score and 0 the worst. Figure \ref{fig:degradations_graphs} shows the performance of all nine detectors on each disturbance separately in the form of bar plots. The graphs show the F1-score of the hierarchical detection algorithm without the Hamming error-correction (gray bars) and with the use of the Hamming error-correction (black bars) described in appendix \ref{ch:target_description}.
+
+\begin{figure}[!ht]
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{noise_comparison}
@@ -280,7 +277,7 @@ We use the F1-score as metric to evaluate the accuracy of each threshold-based m
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{resolution_comparison}
         \caption{}
-        \label{fig:esolution_graph}
+        \label{fig:resolution_graph}
     \end{subfigure}
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
@@ -292,7 +289,7 @@ We use the F1-score as metric to evaluate the accuracy of each threshold-based m
     \caption{F1-score bar graphs: \textbf{(a)} Noise, \textbf{(b)} Shadow, \textbf{(c)} Change of size and \textbf{(d)} Perspectice deformation}\label{fig:degradations_graphs}
 \end{figure}
 
-The figure \ref{fig:thresholding_comp} and the F1-score graphs (Fig. \ref{fig:degradations_graphs}) shows that given the conditions where a landing target can be found, no threshold-based method was robust to the set of perturbations. It is necessary to adjust parameters according to the condition to have acceptable results. Besides, we aim to recognize the landing targets in natural images where none, one or more landing targets can be present and the degradations are not isolated. The figure \ref{fig:input_image} shows a landing target in an outdoor environment where the four degradations depicted in figure \ref{fig:tar_degradations} are present. We also show his histogram to highlight the saturation levels of the scene and the contours obtained with a representative method of each class of the taxonomy in \citep{Sezgin.Sankur:EI:2010}: clustering-based (Fig. \ref{fig:otsu_th}), entropy-based (Fig. \ref{fig:li_th}), spacial (Fig. \ref{fig:gauss_th}) and local (Fig. \ref{fig:sauvola_th}) threshold-based methods.
+Although the experiments use the highest values of target deformation, they do not consider the combination of two or more degradations, which is closer to reality. Figure \ref{fig:input_image} shows one of our targets (target ID 4) under real lighting conditions, i.e., in an outdoor environment where the four degradations of the experiment are present. We also show his histogram to highlight the saturation levels of the scene and the contours obtained with a representative method of each class of the taxonomy in \citep{Sezgin.Sankur:EI:2010}: clustering-based (Fig. \ref{fig:otsu_th}), entropy-based (Fig. \ref{fig:li_th}), spacial (Fig. \ref{fig:gauss_th}) and local (Fig. \ref{fig:sauvola_th}) threshold-based methods. 
 
 \begin{figure}[!ht]
     \centering
@@ -346,6 +343,7 @@ The figure \ref{fig:thresholding_comp} and the F1-score graphs (Fig. \ref{fig:de
     \caption{Landing target under non-controlled illumination conditions and the controus obtained with some threshold-based methods}\label{fig:thresholding_comp}
 \end{figure}
 
+The F1-score bar plots (figure \ref{fig:degradations_graphs}) and figure \ref{fig:thresholding_comp} show that given the conditions where a landing target can be found, no threshold-based method was robust to the set of perturbations. It is necessary to adjust parameters according to the condition to have acceptable results. Besides, we aim to recognize the landing targets in natural images where none, one or more landing targets can be present and the degradations are not isolated. 
 
 \section{Unsupervised Perception Model}\label{sec:unsupervised_perception_model}
 %
@@ -355,17 +353,17 @@ The figure \ref{fig:thresholding_comp} and the F1-score graphs (Fig. \ref{fig:de
 
 After the development of a first algorithm by \citep{BaquedanoA.:ESIEE:2017}, we take some elements of this work to develop a more general approach that explores the principles of human perception. Precisely, we keep the concept of concentric circle patterns for the generation of landing target (see appendix \ref{ch:target_description} for the description of the landing targets generation) and the use of images contours as input data.
 
-Instead of using a threshold-based method, we obtain the image without fixing any parameter. The use of the Marr-Hildreth \citep{Marr.Hildreth:PRS:1980} operator guarantees to find continuous and closed contours eliminating the possible noise in the image, while the contours of objects remain unchanged in the presence of shadows. This technique convolves the intensity image $f$ with the 2-D Laplacian of Gaussian operator $\nabla^{2} G(x, y,\sigma)$ and generates an image, 
+Instead of using a threshold-based method, we obtain the image without fixing any parameter using the \cite{Marr.Hildreth:PRS:1980} operator. The use of the Marr-Hildreth operator guarantees to find continuous and closed contours eliminating the possible noise in the image, while the contours of objects remain unchanged in the presence of shadows. This technique convolves the intensity image $f$ with the 2-d Laplacian of Gaussian (LoG) operator $\nabla^{2} G(x, y,\sigma)$ and generates an image, 
 \begin{eqnarray}\label{eq:LoG}
 l_\sigma =  \nabla^{2} G(\sigma)\ast f
 \end{eqnarray}
-in which we localize the zero-crossings. 
+in which we localize the zero-crossings. Such zero-crossings define the contours of the image.
 
-The parameter $\sigma$ in eq. (\ref{eq:LoG}) permits to control the amount of image smoothing, but also acts as scale parameter, that when varies, it generates different scale-space images. Since no single filter can be optimal simultaneously at all scales \citep{Marr.Hildreth:PRS:1980}, we use a multi-scale analysis \citep{Witkin:ICASSP:1984} to detect the zero-crossings in $l_\sigma$ at different scale-spaces to minimize the risk that some contour of interest is not detected. The image $l_\sigma$ from eq. (\ref{eq:LoG}) contains a set of contours $\mathcal{L}_{\sigma}=\{L_{i}^{\sigma}, \enspace i=0, 1, \ldots, N\}$ for a given scale $\sigma$. Then, 
+The parameter $\sigma$ in eq. \eqref{eq:LoG} permits to control the amount of image smoothing, but also acts as scale parameter, that when varies, it generates different scale-space images. Since no single filter can be optimal simultaneously at all scales \citep{Marr.Hildreth:PRS:1980}, we use a multi-scale analysis \citep{Witkin:ICASSP:1984} to detect the zero-crossings in $l_\sigma$ at different scale-spaces to minimize the risk that some contour of interest is not detected. The image $l_\sigma$ from eq. (\ref{eq:LoG}) contains a set of contours $\mathcal{L}_{\sigma}=\{L_{i}^{\sigma}, \enspace i=0, 1, \ldots, N\}$ for a given scale $\sigma$. Then, 
 \begin{eqnarray}\label{eq:all_ctns_set}
 \mathcal{L}=\bigcup\limits_{\sigma}  L_{\sigma}
 \end{eqnarray}
-represents all the contours of an image obtained at different scale-spaces. Figure \ref{fig:all_cnts} shows the set of contours $\mathcal{L}$ found for $\sigma=[1,2,3]$. Besides, it is also appreciated that at a fine scale (Fig. \ref{fig:cnts_scale1}) we can see more characteristics of the objects, i.e., there are more contours. Conversely, in coarse scales (Fig. \ref{fig:cnts_scale3}), due to the smoothing, there is a spatial distortion, and fewer contours appear. However, those contours that had already appeared at a coarse scale, will not disappear. Then, exist the probability that those contours that spatially coincide on two or more scales belong to a change of intensity generated by the border of an object. 
+represents all the contours of an image obtained at different scale-spaces. Figure \ref{fig:all_cnts} shows the set of contours $\mathcal{L}$ found for $\sigma=[1,2,3]$. We can also appreciate in th figure that at a fine scale (Fig. \ref{fig:cnts_scale1}) we can see more characteristics of the objects, i.e., there are more contours. Conversely, in coarse scales (Fig. \ref{fig:cnts_scale3}), due to the smoothing, there is a spatial distortion, and fewer contours appear. However, those contours that had already appeared at a coarse scale, will not disappear. Then, exist the probability that those contours that spatially coincide on two or more scales belong to a change of intensity generated by the border of an object. 
 
 \begin{figure}[!ht]
     \centering
