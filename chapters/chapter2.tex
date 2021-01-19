@@ -3,7 +3,7 @@
 \part{Global Color and Texture}\label{part:global_color_texture}%Image Global Color and Texture
 
 \section*{Introduction}
-In part \ref{part:image_contours}, we show that the image boundary features provide useful perceptual information that can be used to solve complex problems. We show a framework that uses the concepts of human perception and contour information for the unsupervised detection of landing targets. The framework is able to identify the marker under degraded operating conditions using only exogenous features from the contours identified in gray-level images. This framework can be improved by adding other features that provide perceptual information of a scene.
+In part \ref{part:image_contours}, we show that the contour features provide useful perceptual information that can be used to solve complex problems. We showed a framework that uses the concepts of human perception and contour information for the unsupervised detection of landing targets. The framework is able to identify the marker under degraded operating conditions using only exogenous features from the contours identified in gray-level images. This framework can be improved by adding other features that provide perceptual information of a scene.
 
 In this part of the thesis we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans and their study can be very extensive. The objective of this part of the thesis is to explore the features of color and texture for their future integration into a general framework for the object detection.
 Particularly, we are interested in the global distribution of color and texture information of an image. For this purpose, we start the study of texture using images with homogeneous grayscale textures.
@@ -26,14 +26,18 @@ The main contributions of this part are:
 
 \section*{Résumé}
 \noindent 
-
+Ce chapitre présente une compilation des différentes manières de représenter les informations de couleur et de texture présentes dans une image. En ce qui concerne les informations de couleur, nous introduisons certains types d'espaces colorimétriques et leurs origines. De plus, nous présentons quelques techniques pour synthétiser ces informations. Dans le cas de la texture, nous présentons les différentes méthodologies pour son étude, en mettant en évidence les avantages et les inconvénients de chaque méthode.
 \section*{Abstract}
 \noindent 
+This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces.
+used as well as their origins and relationship to human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the different methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
 
 \section{Introduction}
+The color and texture of an image is very valuable information. This is why for decades several vision algorithms have sought to exploit this information. On the one hand, physically the color information of an image is linked to the measurement of the wavelength of visible light.
+This chapter shows a compilation of the various ways to represent the color and texture information present in an image. As far as color information is concerned, we introduce some of the most used color spaces as well as their origins and their relationship with human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the various methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
+
 
 \section{Color Feature Representation}
-The study and interpretation of color information in images has important implications in the problem of understanding scenes. Color itself is a psychophysical phenomenon of perception. Thus, the study of the appearance of color has tried to reflect our visual experience. In that sense, the study of this feature has been based to some degree on the form and function of the human visual system.
 
 The representation of color in computer vision has evolved over time, developing theories, such as the trichromatic theory or the opponent-colors theory \citep{Fairchild:Book:2005}, that attempt to explain the function of color vision. From these theories, abstract mathematical models were developed that serve to represent colors as vectors of numbers, which can be organized in different ways. These particular organizations are known as color spaces. One of the main contributors in the creation of color spaces is the International Lighting Commission (CIE for its acronym in French) \citep{Wright:BookCh2:2007}.
 
@@ -51,6 +55,12 @@ The advantages of this representation is that they are invariant to the rotation
 
 
 \section{Texture Feature Characterizations}
+There is a disagreement in the definition of texture in the field of computer vision. It is possible to give a mathematical definition based on its statistical properties, however, these properties are very imprecise and/or restrictive to adapt to the diversity of existing textures.
+
+The definition that we support is based on an experimental finding: a texture is a field of the image that appears as a coherent and homogeneous domain, that is, it forms a whole for an observer. In fact, it is this property of coherence of the texture placed in the context of being perceived as a homogeneous whole for the human eye that is most often sought for image processing, either with the aim of isolating textures, to segment the image or for the recognition of regions.
+
+Some examples of natural textures are shown in the figure. These images come from the reference work Brodatz and show the possible variety of textures that are commonly used to test different algorithms and methods of vision.
+
 The perception of textures is a key property of human vision. Although there is still no generalized definition, we can define texture as a measure of coarseness, contrast, directionality, line similarity, regularity and roughness. Therefore, the features that chracterize texture attempt to capture the granularity and repetition of perceptually similar patterns of surfaces within a region of the image, such that a human observer perceives the region as homogeneous.
 Unlike color, texture information is not a purely pixel-level property. Texture implies the notion of spatial extent, that is, that the spatial variation of intensities of a group of pixels generate textures in the images.
 
@@ -107,5 +117,5 @@ Other approaches to obtaining textons are based on discriminative modeling. In t
 Models based on deep learning use Convolutional Neural Networks (CNNs) for the extraction and representation of image features. CNNs consist of multiple locally connected layers which covolve kernels over the entire image. These approaches analyze the information of a group of images to generate a model. The characteristics of the learned model are a function of the input images, which in the case of the study of texture, is expected to generalize the properties of granularity, frequency, orientation, etc. of patterns in the training dataset.
 
 
-\section{Conclusions}
+%\section{Conclusions}
 

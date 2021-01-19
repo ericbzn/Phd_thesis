@@ -55,12 +55,33 @@ In our case, for the detection of landing targets we chose to use the contours o
 \subsection{Conceptual Framework}
 Humans can carry out the process of perception in a natural way \citep{Petitot:Neurogeometrie:2008}. We, as humans, identify meaningful features and exciting events in a scene (such as points, lines, edges, textures, colors, movement) and with the help of our memory and the learning capacity we can recognize and classify objects. The  identification of primitives is a consequence of their non-accidental apparition, i.e., they are not generated randomly \citep{Attneave:PR:1954}. This is roughly the Helmholtz principle, which states that we do not perceive any structure in a uniform random image. However, whenever some deviation from randomness occurs, it is possible to find a structure. In other words, events that could not happen by chance are immediately perceived. This principle is represented in the figure \ref{fig:helmholtz_principle}.
 
-
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.6\textwidth]{helmholtz_principle}        
-    \caption{Representation of the Helmholtz's principle: a) Uniform random imagen where no structure can be found. A group of five aligned dots exist in both images b) and c), but this structure can hardly be seen in the central image. Otherwise, in the right-most image the alignment stands out as an important deviation from randomness that cannot happen by chance and is therefore perceived.}\label{fig:helmholtz_principle}
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{helmholtz_noise}
+        \caption{}
+        \label{fig:helmholtz_noise}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{helmholtz_dots}
+        \caption{}
+        \label{fig:helmholtz_dots}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{helmholtz_line}
+        \caption{}
+        \label{fig:helmholtz_line}
+    \end{subfigure}
+        
+    \caption{Representation of the Helmholtz's principle: \textbf{(a)} Uniform random imagen where no structure can be found. A group of ten aligned dots exist in both images \textbf{(b)} and \textbf{(c)}, but this structure can hardly be seen in the central image. Otherwise, in the right-most image the alignment stands out as an important deviation from randomness that cannot happen by chance and is therefore perceived.}\label{fig:helmholtz_principle}
 \end{figure}
+
+
+
 
 
 The Gestalt theory \citep{Wertheimer:Psycologische:1923} states that we can build a whole (gestalt) through the grouping of non-accidental detected primitives. That is, the human mind recognizes objects as a whole before examining their individual parts and the information that is not related in size, shape, orientation, etc., is perceived by the observer as chaotic and disorganized. The grouping of individual elements in a whole follows a set of laws defined by the Gestalt theory; some of them are (see Fig. \ref{fig:gestalt_laws}):
@@ -75,9 +96,48 @@ The Gestalt theory \citep{Wertheimer:Psycologische:1923} states that we can buil
 	
 \end{itemize}
 
+
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.6\textwidth]{gestalt_laws}        
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{gestalt_proximity}
+        \caption{Proximity}
+        \label{fig:gestalt_proximity}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{gestalt_similarity}
+        \caption{Similarity}
+        \label{fig:gestalt_similarity}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{gestalt_figure_ground}
+        \caption{Figure-ground}
+        \label{fig:gestalt_figure_ground}
+    \end{subfigure} \\
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{gestalt_continuity}
+        \caption{Continuity}
+        \label{fig:gestalt_continuity}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{gestalt_closure}
+        \caption{Closure}
+        \label{fig:gestalt_closure}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{gestalt_connectedness}
+        \caption{Connectedness}
+        \label{fig:gestalt_connectedness}
+    \end{subfigure}
+    
     \caption{Graphic representation of the Gestalt's law of grouping.}\label{fig:gestalt_laws}
 \end{figure}
 
@@ -367,33 +427,33 @@ represents all the contours of an image obtained at different scale-spaces. Figu
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \frame{\includegraphics[width=\textwidth]{cnts_sig1_tar4}}
         \caption{$\mathcal{L}_{\sigma}$ for $\sigma=1$}
         \label{fig:cnts_scale1}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \frame{\includegraphics[width=\textwidth]{cnts_sig3_tar4}}
         \caption{$\mathcal{L}_{\sigma}$ for $\sigma=2$}
         \label{fig:cnts_scale2}
     \end{subfigure}\\
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \frame{\includegraphics[width=\textwidth]{cnts_sig3_tar4}}
         \caption{$\mathcal{L}_{\sigma}$ for $\sigma=3$}
         \label{fig:cnts_scale3}
     \end{subfigure}
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \frame{\includegraphics[width=\textwidth]{all_cnts_tar4}}
         \caption{Set $\mathcal{L}$ for $\sigma=[1, 2 ,3]$}
         \label{fig:all_cnts}
     \end{subfigure}
-    \caption{The image contours found at three different scales joined in the set $\mathcal{L}$}\label{fig:multiscale_cnts}
+    \caption{Image contours found at three different scales: \textbf{(a)} $\sigma=1$, \textbf{(b)} $\sigma=2$, \textbf{(c)} $\sigma=3$ and, \textbf{(d)} joined in the set $\mathcal{L}$.}\label{fig:multiscale_cnts}
 \end{figure}
 
 \subsubsection{Multi-feature Space}\label{subsec:multispace}
@@ -411,11 +471,11 @@ The RX anomaly detector \citep{Reed.Yu:TASSP:1990} is commonly used to detect ou
 \begin{eqnarray}\label{eq:RX_detector}
 y_{i}= (z_{i}-\mu_{Z})^{T}\Sigma^{-1}_{Z}(z_{i}-\mu_{Z})
 \end{eqnarray}
-where $\mu_{Z}=[\mathrm{E}[z_{1}], \ldots, \mathrm{E}[z_{N}]]^T$ is the meaans' observations' vector and $\Sigma^{-1}_{Z}$ the $N\times Q$ covariance matrix of the data. If the data have normal random distribution, then the score vector $Y=[y_{i}, \ldots, y_{N}]$ follows a chi-square distribution $\chi^{2}_{Q}(\varphi)$ with $Q$ degrees of freedom, where $\varphi$ is a confidence level \citep{Lu.Chen.ea:IJAIT:2004}. The value of $\chi^{2}_{Q}(\varphi)$ with a confidence value $\varphi=99.9\%$ operates as a threshold to identify all contours that behave as outliers in the multi-variable distribution. In our case, the contours belonging to a landing target appear as outliers in the vast majority of random contours belonging to the background.
+where $\mu_{Z}=[\mathrm{E}[z_{1}], \ldots, \mathrm{E}[z_{N}]]^T$ is the means observations vector and $\Sigma^{-1}_{Z}$ the $N\times Q$ covariance matrix of the data. If the data have normal random distribution, then the score vector $Y=[y_{i}, \ldots, y_{N}]$ follows a chi-square distribution $\chi^{2}_{Q}(\varphi)$ with $Q$ degrees of freedom, where $\varphi$ is a confidence level \citep{Lu.Chen.ea:IJAIT:2004}. The value of $\chi^{2}_{Q}(\varphi)$ with a confidence value $\varphi=99.9\%$ operates as a threshold to identify all contours that behave as outliers in the multi-variable distribution. In our case, the contours belonging to a landing target appear as outliers in the vast majority of random contours belonging to the background.
 
 With the previous strategy we preserve the anomalous contours having a value of mean gradient and circularity deviating from the principal mode of the distribution in the set $\widetilde{\mathcal{L}}=\{L_{i}\mid y_{i}>\chi^{2}_{Q}(\varphi)\}$. $\chi^{2}_{Q}(\varphi)$ is the value of the cumulative distribution at the confidence level $\varphi$ and $\widetilde{\mathcal{L}} \subset \mathcal{L}$. At this point, it is essential to mention the importance of multi-scale contour detection of section \ref{subsec:multispace}; because it increases the number of samples in $Z$, allowing to build a richer multi-variable space.
 
-In the set $\widetilde{\mathcal{L}}$, some contours make not part of a landing target. For example, in the figure \ref{fig:rx_cnts}, we can see that the paper sheet contours remain because they have a high value of circularity. The same occurs with the contours of those objects with an important value of mean gradient, as the number 4 at the top-left of the sheet, which indicates the ID of our target, or the rock textures of the background.
+In the set $\widetilde{\mathcal{L}}$, some contours make not part of a landing target. For example, in the figure \ref{fig:rx_cnts}, we can see that the paper sheet contours remain because they have a high value of circularity. The same occurs with the contours of those objects with an important value of mean gradient (brightness step), as the number 4 at the top-left of the sheet, which indicates the ID of our target, or the rock textures of the background.
 
 \begin{figure}[!ht]
     \centering
@@ -425,21 +485,21 @@ In the set $\widetilde{\mathcal{L}}$, some contours make not part of a landing t
 \end{figure}
 
 \subsection{Gestalt Laws of Grouping}\label{subsec:Gestalt}
-We use the Gestalt theory \citep{Wertheimer:Psycologische:1923} to group the meaningful contours $L_{i}\in \widetilde{\mathcal{L}}$ and detect landing targets.
+We use the Gestalt theory \citep{Wertheimer:Psycologische:1923} to group the meaningful contours $L_{i}\in \widetilde{\mathcal{L}}$ and detect landing targets. We especially use two grouping laws, that of similarity (represented by the goodness of shape) and that of proximity (represented by the affinity clustering), which we will detail below.
 
 \subsubsection{Goodness of Shape}\label{subsec:similarity}
 Since the landing targets have only circular contours, we evaluate the resemblance with an ellipse (to deal with the perspective deformation) of all contours. Considering an ellipse $e_{i}$ that fits one gray contour $L_{i}$ in figure \ref{fig:affinity}, we recover the centroid $C_{i}$, the rotational angle $\rho$, the semi-major axis $\alpha_i$, the semi-minor axis $\beta_{i}$ and the coordinates $F_{i}$ and $F_{i}'$ of the ellipse's foci. Then, the sum of the distances from any point of ellipse $x_{j}\in e_{i}$ to the foci is $\overline{x_{j}F_{i}}+\overline{x_{j}F_{i}'}=2\alpha_{i}$. If the contour $L_{i}$ is an ellipse, the value $d_{i}=\abs{(\overline{x_{j}F_{i}}+\overline{x_{j}F_{i}'})-2\alpha_{i} }$ must be zero or negligible $\forall x_{j}\in L_{i}$. 
 
 \begin{figure}[h]
     \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{affinity_ellipse}
         \caption{Affinity of a fit $\omega_{i}$}
         \label{fig:affinity}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.5\textwidth}
         \includegraphics[width=\textwidth]{DoA_ellipse}
         \caption{Difference of area $\Delta_{A_{i}}$}
         \label{fig:DoA}
@@ -453,7 +513,7 @@ Based on the form of the landing target we estimate the the similarity using two
 \Delta_{A_{i}}&=& 1-\frac{\abs{ A_{e_{i}}-A_{i}}}{\max(A_{e_{i}},A_{i})} \enspace \mbox{the difference of area.}\label{eq:DoA}
 \end{eqnarray}
 
-The affinity $\omega_{i}\rightarrow 1$ for contours closed to an ellipsoidal shape. However, if the contour $L_{i}$ is a croissant shape (as in fig. \ref{fig:DoA}) then, the eq. \eqref{eq:GoE} also has a high value (near to 1) but the contour is from being an ellipse. The variable in eq. \eqref{eq:DoA} complements the affinity $\omega_{i}$ taking into account the area of the ellipse $A_{e_{i}}$ and the area of the contour $A_{i}$. To calculate the similarity to an ellipse, we use the harmonic mean of both. 
+The affinity $\omega_{i}\rightarrow 1$ for contours closed to an ellipsoidal shape. However, if the contour $L_{i}$ is a croissant shape (as in fig. \ref{fig:DoA}) then, the eq. \eqref{eq:GoE} also has a high value (near to 1) but the contour is far from being an ellipse. The variable in eq. \eqref{eq:DoA} complements the affinity $\omega_{i}$ taking into account the area of the ellipse $A_{e_{i}}$ and the area of the contour $A_{i}$. To calculate the similarity to an ellipse, we use the harmonic mean of both. 
 \begin{eqnarray}
 \kappa_{i}&=&\mathcal{H}(\omega_{i}, \Delta_{A_{i}}), \enspace \kappa_{i}\in (0,1)\label{eq:similarity}
 \end{eqnarray}
@@ -463,42 +523,42 @@ where $\kappa_{i}\rightarrow 1$ for contours ressembling to an ellipse and $\kap
 The Gestalt law of proximity states that we group those meaningful elements if they are spatially close to each other. In the case of contours, we take the coordinates of their centers $C_{i}$ to measure their spatial proximity.
 
 \subsubsection{Affinity Clustering}\label{subsec:clustering}
-The normalized coordinates of the centroid $C_i$ and the ellipse similarity $\kappa_i$ map the contour $L_i\in \widetilde{\mathcal{L}}$ into the 3-D space $(0,1) \in \mathbb{R}^3$. We use the affinity propagation clustering method \citep{Frey.Dueck:SCIENCE:2017} to group the contours using the matrix $X=[C_{i}, \kappa_{i}]$. This technique yields a set of clusters $\mathcal{C}_{K}\in \mathcal{C}(X)$. Because the landing target has ten different contours (see apendix \ref{ch:target_description}), the clusters with $card(\mathcal{C}_{K})\geq 10$ and an important similarity value $\mathcal{H}(\kappa_{i})\geq 0.8$, represent the candidate contours of a landing target.
+The normalized coordinates of the centroid $C_i$ and the ellipse similarity $\kappa_i$ map the contour $L_i\in \widetilde{\mathcal{L}}$ into the 3-d space $(0,1) \in \mathbb{R}^3$. We use the affinity propagation clustering method \citep{Frey.Dueck:SCIENCE:2017} to group the contours using the matrix $X=[C_{i}, \kappa_{i}]$. This technique yields a set of clusters $\mathcal{C}_{K}\in \mathcal{C}(X)$. Because the landing target has ten different contours (see apendix \ref{ch:target_description}), the clusters with $card(\mathcal{C}_{K})\geq 10$ and an important similarity value $\mathcal{H}(\kappa_{i})\geq 0.8$, represent the candidate contours of a landing target.
 
 \begin{figure}[h]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{3dplot_tar4}
-        \caption{Clusters obtained by affinity propagation}
-        \label{fig:3dplot}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{2dplot_xy_tar4}
-        \caption{ Clusters projected on the image domain}
+        \caption{Clusters projected on the image domain}
         \label{fig:2dplot}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{3dplot_tar4}
+        \caption{Clusters projected on a 3-d space}
+        \label{fig:3dplot}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{2dplot_candidate_tar4}
         \caption{Target candidate cluster}
         \label{fig:candidate}
     \end{subfigure}
-   \caption{Clusters of contour from Fig. \ref{fig:rx_cnts}}\label{fig:grouping_process}
+   \caption{Clusters obtained by affinity propagation of contour from Fig. \ref{fig:rx_cnts}.}\label{fig:grouping_process}
 \end{figure}
 
-The affinity propagation technique groups in $K=12$ clusters the image contours from figure \ref{fig:rx_cnts}. In a 3D plot (fig. \ref{fig:3dplot}), we see the influence of $\kappa_{i}$ at clustering process. Projecting the clusters in a 2-D plane (fig. \ref{fig:2dplot}), we notice that even if the contours are nearby, it can form a new cluster if there is a distant $\kappa$. A clear example is the clusters 0 and 4 (blue and purple, respectively) that correspond to the contour centers of the landing target and the center of the sheet of paper, they are close to each other but the similarity not. Applying the threshold values $card(\mathcal{C}_{K})\geq 10$ and $\mathcal{H}(\kappa_{i})\geq 0.8$ we obtain the candidate clusters to form a landing target (see fig.~\ref{fig:candidate}). 
+To illustrate the use of affinity clustering, let's take as an example the contours resulting from the RX anomaly detector of figure \ref{fig:rx_cnts}. The affinity propagation technique groups the contours into $K=12$ clusters. Projecting these clusters in a 2-d plane (fig. \ref{fig:2dplot}) we note that there are clusters relatively close to each other in the image domain (for example cluster 3 and 10), however the respective contours of these clusters are differentiated and separated by the algorithm. This separation is due particularly to the influence of $\kappa_{i}$ in the clustering process. The influence of ellipse similarity is best noted on a 3-d plot, where the z-axis represents this measure (see fig. \ref{fig:3dplot}). We notice that even if the contours are nearby, it can form a new cluster if there is a distant $\kappa$. A clear example is the clusters 0 and 4 (blue and purple, respectively) that correspond to the contour centers of the landing target and the center of the sheet of paper, they are close to each other but the similarity not. Applying the threshold values $card(\mathcal{C}_{K})\geq 10$ and $\mathcal{H}(\kappa_{i})\geq 0.8$ we obtain the candidate clusters to form a landing target (see fig.~\ref{fig:candidate}). 
 
-Heretofore, we have built a model based on perceptual characteristics for the landing target detection. However, there could be false detections if there are round objects with concentric borders in the image. We code an ID number in the target design to differentiate a landing target from an object with concentric circular edges. The coding of information allows discriminating between several landing targets and circular objects. The following section describes the landing target design as well as the coding and decoding technique. 
+Heretofore, we have built a model based on perceptual characteristics for the landing target detection. However, there could be false detections if there are round objects with concentric borders in the image. We code an ID number in the target design to differentiate a landing target from an object with concentric circular edges. Information regarding the coding of landing targets and the generated image base can be consulted in the appendix \ref{ch:target_description}, particularly in the figure \ref{fig:landing_target_database}. The coding of information allows discriminating between several landing targets and circular objects. The following section shows some tests we carry out for the validation of our model as well as some results of target landing detection and indentification. 
 
 \section{Model Vadilation and Test}\label{sec:validation_and_test}
-The presented strategy was validated on landing target images under simulated and real situations. We tested the algorithm in a synthetic image database which simulates four image degradations: noise, shadows, target deformation and change of size. For the real situations, we carried out several tests in indoor and outdoor scenarios. Figure \ref{fig:validation} shows three interesting experiments and the output image of each stage of section \ref{sec:perception_model}. 
+We validate the methodology presented in this chapter on landing target images under simulated and real situations. First, we tested the algorithm in a synthetic image database which simulates the four image degradations reviewed in this chapter: noise, shadows, target deformation and change of size. Secondly, for the real situations, we perform a series of tests in indoor and outdoor scenarios. Figure \ref{fig:validation} collect some of the target detection and identification results, together with the output images of each of the stages of our target detection algorithm. 
 
 \begin{figure}[h!]
 \centering
-\begin{subfigure}[t]{\dimexpr0.30\textwidth+20pt\relax}
+\begin{subfigure}[t]{\dimexpr0.315\textwidth+20pt\relax}
     \makebox[20pt]{\raisebox{40pt}{\rotatebox[origin=c]{90}{Set $\mathcal{L}$}}}%
     \frame{\includegraphics[width=\dimexpr\linewidth-20pt\relax]
     {all_cnts_synthetic_tar14}}
@@ -513,7 +573,7 @@ The presented strategy was validated on landing target images under simulated an
     {synthetic_tar14}}
     \caption{} \label{fig:synthetic_result}
 \end{subfigure}\hfill
-\begin{subfigure}[t]{0.30\textwidth}
+\begin{subfigure}[t]{0.315\textwidth}
     \frame{\includegraphics[width=\textwidth]
     {all_cnts_16tar}}
     \frame{\includegraphics[width=\textwidth]
@@ -524,7 +584,7 @@ The presented strategy was validated on landing target images under simulated an
     {16tar}}
     \caption{} \label{fig:indoor_result}
 \end{subfigure}\hfill
-\begin{subfigure}[t]{0.30\textwidth}
+\begin{subfigure}[t]{0.315\textwidth}
     \frame{\includegraphics[width=\textwidth]
     {all_cnts_5tar2}}
     \frame{\includegraphics[width=\textwidth]
@@ -535,12 +595,12 @@ The presented strategy was validated on landing target images under simulated an
     {5tar2}}
     \caption{}  \label{fig:outdoor_result}
 \end{subfigure}
-\caption{Algorithm validation: (a) Target under simulated degradations, (b) The 16 targets in an indoor environment, (c) Five targets in an outdoor scenario under non-controlled image degradations}\label{fig:validation}
+\caption{Algorithm validation: \textbf{(a)} Synthetic image target under simulated degradations, \textbf{(b)} The 16 targets in an indoor environment, \textbf{(c)} Five of our targets in an outdoor scenario under non-controlled image degradations}\label{fig:validation}
 \end{figure}
 
-The first experiment (Fig. \ref{fig:synthetic_result}) shows the four synthetic degradations together on landing target ID 14. In this context, the synthetic image represents the values of degradation maximum that the algorithm supports. The second experiment (Fig. \ref{fig:indoor_result}) was done in an indoor space to show the sixteen possible landing targets. In the scene, there are no other objects. Finally, the last experiment (Fig. \ref{fig:outdoor_result}) shows five landing targets in a more complex outdoor environment. Notice the presence of other objects, different background textures,  irregular shadows and perspective deformation and change of scale of the landing targets. 
+The first experiment (figure \ref{fig:synthetic_result}) consists of combining the the four synthetic degradations together on landing target ID 14. For the experiment, we subjected the target to the maximum degradation value that the algorithm is capable of handling. The second experiment (figure \ref{fig:indoor_result}) was done in an indoor space to show the sixteen possible landing targets. In the scene, there are no other objects, however the lighting level is low and constant with respect to the outside environment. Finally, the last experiment (figure \ref{fig:outdoor_result}) shows five landing targets in a more complex outdoor environment. Notice the presence of other objects, different background textures,  irregular shadows and perspective deformation and change of scale of the landing targets. 
 
-In the three experiments, i) the non-accidentalness estimation stage eliminates the contours generated by noise with low circularity and mean gradient values; ii) the grouping stage filters random contours generated by intensity changes like shadows to keep contours with an important value of similarity and proximity. The compilation of the experiments carried out under real conditions can be seen in \url{https://youtu.be/igsQc7VEF2c}.
+In the three experiments, i) multiscale analysis generates a rich family of contours (first column of figure \ref{fig:validation}); ii) the non-accidentalness estimation stage eliminates the contours generated by noise with low circularity and mean gradient values (second column of figure \ref{fig:validation}); ii) the grouping stage filters random contours generated by intensity changes like shadows to keep contours with an important value of similarity and proximity (third column of figure \ref{fig:validation}). The compilation of the experiments performed under real conditions can be seen in \url{https://youtu.be/igsQc7VEF2c}.
 
 \section{Conclusion}\label{sec:conclusions_landing_target}
 In this chapter we have described two procedure for the landing target detection and recognition. The first one, in section \ref{sec:hierarchical_target_detection}, using a straightforward hierarchical method and the second one, in section \ref{sec:unsupervised_perception_model}, based on a perception model. The second algorithm is based on the Helmholtz non-accidentalness principle and the Gestalt theory. The non-accidentalness estimation is performed in a multi-feature object space built from the image contours at different scales. This approach allows us to obtain scene information avoiding the loss of information because of the objects' change of size or the presence of shadows and noise and the change of perspective. We have used the similarity and proximity Gestalt laws to group the contours and build a perceptual object and the Hamming error codes to perform the landing target recognition. The experiments show that the proposed methodology for the detection of landing targets is robust to uncontrolled light conditions and other images degradations existing in complex environments.
@@ -557,10 +617,9 @@ With this framework, we tackle one of the specific tasks proposed in section \re
 %Point              & position                                                                                                                                                & \begin{tabular}[c]{@{}c@{}}intensity\\ gradient\end{tabular}                                                    \\ \hline
 %Segment            & \begin{tabular}[c]{@{}c@{}}position\\ orientation\\ length\\ curvature\end{tabular}                                                                     & \begin{tabular}[c]{@{}c@{}}intensity\\ gradient\end{tabular}                                                    \\ \hline
 %Contour/Region     & \begin{tabular}[c]{@{}c@{}}position\\ orientation\\ length\\ curvature\\ compactness\\ moments\\ surface area\\ perimeter\\ Feret diameter\end{tabular} & \begin{tabular}[c]{@{}c@{}}intensity\\ gradient\\ entropy\\ color\\ texture \end{tabular} \\ \hline
-%\end{tabular}\caption{Principal image primitives and its internal and external features}\label{tab:primitives_features}
+%\end{tabular}\caption{Principal image primitives and its internal and external features}\label{tab:primicarried outtives_features}
 %\end{table}
 
 In the next part of this thesis we will explore the global color and texture feautures of an image. The main idea is to retrieve the largest possible number of image primitives and features to build a multivariable space $Z$ (similar to section \ref{subsec:multispace}) that represent the objects in an image. We have already obtained some contour features that were used for the target detection. The proposition now is to use the distribution of color and texture to feed the multivariable space. 
 
 
-%\textbf{AI offers solutions but no answers, and we need both!!}
