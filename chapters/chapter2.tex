@@ -34,6 +34,8 @@ used as well as their origins and relationship to human perception. In addition,
 
 \section{Introduction}
 The color and texture of an image is very valuable information. This is why for decades several vision algorithms have sought to exploit this information. On the one hand, physically the color information of an image is linked to the measurement of the wavelength of visible light.
+
+
 This chapter shows a compilation of the various ways to represent the color and texture information present in an image. As far as color information is concerned, we introduce some of the most used color spaces as well as their origins and their relationship with human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the various methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
 
 
@@ -41,20 +43,350 @@ This chapter shows a compilation of the various ways to represent the color and 
 
 The representation of color in computer vision has evolved over time, developing theories, such as the trichromatic theory or the opponent-colors theory \citep{Fairchild:Book:2005}, that attempt to explain the function of color vision. From these theories, abstract mathematical models were developed that serve to represent colors as vectors of numbers, which can be organized in different ways. These particular organizations are known as color spaces. One of the main contributors in the creation of color spaces is the International Lighting Commission (CIE for its acronym in French) \citep{Wright:BookCh2:2007}.
 
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.24\textwidth}
+        \includegraphics[width=\textwidth]{tempo}
+        \caption{}
+        \label{fig:tempo}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.24\textwidth}
+        \includegraphics[width=\textwidth]{mountain}
+        \caption{}
+        \label{fig:parrots}
+    \end{subfigure} 
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)    
+    \begin{subfigure}[b]{0.24\textwidth}
+        \includegraphics[width=\textwidth]{clownfish}
+        \caption{}
+        \label{fig:clownfish}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.24\textwidth}
+        \includegraphics[width=\textwidth]{araras}
+        \caption{}
+        \label{fig:mountains}
+    \end{subfigure}
+                  
+    \caption{Some examples of color images: One synthetic image {\small \textsf{\textbf{(a)}}} and three natural images {\small \textsf{\textbf{(b) (c) (d)}}}.}\label{fig:color_images}    
+\end{figure}
+
 In this thesis, we focus on the most used color spaces in computer vision:
 \begin{itemize}
+
 	\item \textbf{RBG (Red-Green-Blue)} A color space that maps the amount of red, green and blue light perceived to reproduce the visible color gamut.
 	\item \textbf{HSV (Hue-Saturation-Value) and HSL (Hue-Saturation-Lightness)} Alternative representations to the RGB color space that more closely aligns with the way human vision perceives color-creating attributes.
 	\item \textbf{Lab (CIEL*a*b*) / Luv (CIEL*u*v*).} A color space where L compenent represents luminance and a* and b* (resp. u* v*) components represent chroma. This representation was created to reflect the high sensitivity of humans to changes in luminance in the perception of color.
 \end{itemize}
 
 
+\begin{figure}[!ht]
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras}
+    \end{subfigure} \\    
+     
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{RGB channels}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_R}
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_G}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_B}
+    \end{subfigure} \vspace{5pt}      
+    
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV channels}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_H}
+    \end{subfigure}     
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_S}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_V}
+    \end{subfigure} \vspace{5pt}  
+        
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Lab channels}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_L}
+    \end{subfigure}    
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_a}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_b}
+    \end{subfigure} 
+
+	\caption{Color channels of an image in different color spaces in a grayscale}\label{fig:images_color_space}    
+\end{figure}
+
 The overall distribution of color within an image is a useful clue that contributes to the description of the content of an image. For example, we can characterize images that contain landscapes with mountains, jungles, urban environments, deserts or other scenes with different elements by their color distribution. The global color distribution can be represented by means of a color image histogram, which is a discrete function that associates to each intensity value (per color channel) the number of pixels that belong to this value.
 
 The advantages of this representation is that they are invariant to the rotation or translation of the image, as well as, to a lesser extent, to changes of point of view and changes of scale. In addition, we can compact the image color information by reducing the count intervals, that is, by selecting a small number of bins.
 
+\subsection{Single-channel Color Histogram}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{araras}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{araras_single_histogram}
+    \end{subfigure} 
+    
+    \caption{}\label{fig:single_channel_histogram}    
+\end{figure}
+    
+    
+\subsection{3-d Color Histogram}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{araras}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{araras_3d_distribution}
+        \includegraphics[width=\textwidth]{araras_3d_histogram}
+    \end{subfigure} 
+    
+    \caption{}\label{fig:single_channel_histogram}    
+\end{figure}
+
+
+\subsection{Color Signature}
+
+\begin{figure}[!ht]
+    \centering
+    
+    
+    \begin{subfigure}[b]{0.4\textwidth}
+    	\includegraphics[width=\textwidth]{araras_color_clusters}
+        \includegraphics[width=\textwidth]{araras_bar_signature}
+    \end{subfigure}
+    	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{araras_3d_signature}
+    \end{subfigure} 
+    	    
+    \caption{}\label{fig:color_signature}    
+\end{figure}
+
+
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(a)}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo}
+    \end{subfigure}~ 
+%    \begin{subfigure}[b]{0.32\textwidth}
+%        \includegraphics[width=\textwidth]{araras}
+%    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain}
+    \end{subfigure}\vspace{10pt}
+    
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(b)}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_single_histogram}
+    \end{subfigure}~     
+%    \begin{subfigure}[b]{0.32\textwidth}
+%        \includegraphics[width=\textwidth]{araras_single_histogram}
+%    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish_single_histogram}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain_single_histogram}
+    \end{subfigure}\vspace{10pt}
+    
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(c)}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_distribution}
+    \end{subfigure}~ 
+%    \begin{subfigure}[b]{0.32\textwidth}
+%        \includegraphics[width=\textwidth]{araras_3d_distribution}
+%    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish_3d_distribution}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain_3d_distribution}
+    \end{subfigure}\vspace{10pt}
+    
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(d)}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_histogram}
+    \end{subfigure}~ 
+%    \begin{subfigure}[b]{0.32\textwidth}
+%        \includegraphics[width=\textwidth]{araras_3d_histogram}
+%    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish_3d_histogram}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain_3d_histogram}
+    \end{subfigure}\vspace{10pt}
+    
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(e)}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_signature}
+    \end{subfigure}~ 
+%    \begin{subfigure}[b]{0.32\textwidth}
+%        \includegraphics[width=\textwidth]{araras_3d_signature}
+%    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish_3d_signature}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain_3d_signature}
+    \end{subfigure}\vspace{10pt}
+    
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(f)}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_color_clusters}
+    \end{subfigure}~ 
+%    \begin{subfigure}[b]{0.32\textwidth}
+%        \includegraphics[width=\textwidth]{araras_color_clusters}
+%    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish_color_clusters}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain_color_clusters}
+    \end{subfigure}\vspace{-5pt}
+    
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{}}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_bar_signature}
+    \end{subfigure}~ 
+%    \begin{subfigure}[b]{0.32\textwidth}
+%        \includegraphics[width=\textwidth]{araras_bar_signature}
+%    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish_bar_signature}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain_bar_signature}
+    \end{subfigure}
+                    
+	\caption{Different representations of color information. Input color image {\small \textsf{\textbf{(a)}}}, single-channel color histogram {\small \textsf{\textbf{(b)}}}, 3-d color distribution {\small \textsf{\textbf{(c)}}}, 3-d color histogram {\small \textsf{\textbf{(d)}}}, 3-d color signature {\small \textsf{\textbf{(e)}}}, color signature clusters {\small \textsf{\textbf{(f)}}}.}\label{fig:color_image_representations}    
+\end{figure}
+
 
 \section{Texture Feature Characterizations}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_skin}
+        \caption{}
+        \label{fig:tempo}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_three}
+        \caption{}
+        \label{fig:parrots}
+    \end{subfigure} 
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)    
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_wall}
+        \caption{}
+        \label{fig:clownfish}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_vlines}
+        \caption{}
+        \label{fig:mountains}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_sponge}
+        \caption{}
+        \label{fig:mountains}
+    \end{subfigure}\\
+    
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_tissue}
+        \caption{}
+        \label{fig:tempo}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_cafe}
+        \caption{}
+        \label{fig:parrots}
+    \end{subfigure} 
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)    
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_crystal}
+        \caption{}
+        \label{fig:clownfish}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_flowers}
+        \caption{}
+        \label{fig:mountains}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.19\textwidth}
+        \includegraphics[width=\textwidth]{brodatz_paint}
+        \caption{}
+        \label{fig:mountains}
+    \end{subfigure}
+    
+                  
+    \caption{ Examples of texture images and its classification. Nautural textures {\small \textsf{\textbf{(a) (b) (e) (h)}}}, man-made textures {\small \textsf{\textbf{(c) (d) (f) (g) (i) (j)}}}, regular textures {\small \textsf{\textbf{(c) (d)}}}, stochastic textures {\small \textsf{\textbf{(g) (h)}}}, homogeneous {\small \textsf{\textbf{(c) (d)}}}, weakly-homogeneous {\small \textsf{\textbf{(a) (b) (f) (g) (h)}}}, inhomogeneous {\small \textsf{\textbf{(i) (j)}}}.}\label{fig:texture_images}    
+\end{figure}
+
+
+\begin{itemize}
+	\item Natural and artificial 
+	\item Regular, stochastic
+	\item Homogeneous, non-homogeneous, in-homogeneous
+\end{itemize}
+
+
+
 There is a disagreement in the definition of texture in the field of computer vision. It is possible to give a mathematical definition based on its statistical properties, however, these properties are very imprecise and/or restrictive to adapt to the diversity of existing textures.
 
 The definition that we support is based on an experimental finding: a texture is a field of the image that appears as a coherent and homogeneous domain, that is, it forms a whole for an observer. In fact, it is this property of coherence of the texture placed in the context of being perceived as a homogeneous whole for the human eye that is most often sought for image processing, either with the aim of isolating textures, to segment the image or for the recognition of regions.
