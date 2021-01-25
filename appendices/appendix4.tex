@@ -1,0 +1,109 @@
+% created on 21/01/2021
+% @author : ebazan
+
+\chapter{High-level Gabor texture features}\label{ch:high_level_features}
+
+\subsection*{High-level texture features}
+Throughout this chapter we have addressed the methodology for the extraction of local texture features. To do this, we base the study of textures of an image on Gabor filters. To recover local characteristics, we first designed a family of 2-d Gabor filters; then we obtain an energetic decomposition of the image through the convolution of each filter in the bank and the image. Such decomposition of the image allows us to obtain the following high-level features.
+
+\begin{itemize}
+	\item Fundamental frequency
+	\item Dominant orientation
+	\item Maximal Energy
+	\item Entropy
+	\item Orientability
+	\item Texturality 
+	\item Perceptual window and principal colors
+\end{itemize}
+
+\subsubsection{Fundamental frecuency}
+We define the fundamental frequency $f_{f}(x,y)$ as the frequency within the Gabor filter bank's frequencies $F=\lbrace f_i \rbrace$ that allows to recover the greatest amount of energy from the original image $I(x,y)$ after covolution. 
+
+\begin{equation}
+	f_{f}(x,y) =  \underset{f_{i}}{\arg\max} ~ E = \lbrace f_{i} \in F ~|~ e_{i,j}(x,y) = \max(E)\rbrace  \label{eq:fundamental_freq}
+\end{equation}
+
+Conceptually this concept of fundamental frequency comes from the field of acoustic and speach analysis, where it is a measure of how high or low the frequency of a person's voice sounds.
+
+\subsubsection{Dominant orientation}
+The max orientation angle follows the same principle of the fundamental frequency, i.e., it denotes the angle within the Gabor filter bank's orientations $\Theta=\lbrace \theta_j \rbrace$ that allows to recover the greatest amount of energy from the image $I(x, y)$ after covolution.
+
+\begin{equation}
+	\theta_{max}(x,y) = \underset{\theta_{j}}{\arg\max} ~ E = \lbrace \theta_{j} \in \Theta ~|~ e_{i,j}(x, y) = \max(E)\rbrace 
+\end{equation}
+
+\subsubsection{Maximal energy}
+This feature is related with the energy decomposition $E$ and it is a direct result of the fundamental frequency $f_f(x,y)$. Since the fundamental frequency is that frequency at which a Gabor filter recovers the greatest amount of energy, the maximal energy $e_{f}(x,y)$ reflects the amount of energy that is recovered with the Gabor filter at the fundamental frequency.
+
+\begin{equation}
+	e_{max}(x,y) = \lbrace e_{i,j}(x,y) \in E ~|~ i = f_{f}(x,y) \rbrace \label{eq:max_energy}
+\end{equation}
+
+This feature indicates the textureless zones in the image (zones with low energy) and the zones with sudden dynamic changes.
+\subsubsection{Entropy}
+The concept of entropy, originally is a measure from Physics adapted to the information theory to calculate the amount of information stored in a particular signal. In our case, this measure calculates the randomness of the energy distribution along the different orientation and frequency axes of the filter bank.
+
+The entropy measure is obtained by multiplying a normalized probability vector by its logarithm. Each value of the vector indicates the probability that the energy recovered by the Gabor filter corresponds to a given orientation or frequency. If the values of the vector are of similar magnitude, it means that the vector has no orientation or defined frequency, that the energy is likely to come from any filter, that is, that the area to which that analysis pixel corresponds belongs to a isotropic zone (random orientation or random frequency). Under these conditions, the value of entropy is high. On the other hand, if the values of the probability vector are unequal, it means that the energy of the analyzed pixel is very likely to belong to a zone with a well-defined orientation or frequency texture (anisotropic texture). In this case the value of entropy is low.
+
+Since we know the size of the vectors to calculate the entropy with respect to the orientation and frequency axes of the filter bank, we can obtain the maximum entropy for each axis. The maximum entropy value is obtained when the normalized energy vector has exact values for each frequency / orientation angle (i.e. the orientation / frequency of the texture is completely random).
+
+\begin{gather}
+    h_{max_{\theta}}(x,y) = -\log\left(\frac{1}{n}\right) \label{eq:max_entropy_orient} \\
+    h_{max_f}(x,y) = -\log\left(\frac{1}{m}\right) \label{eq:max_entropy_freq}
+\end{gather}
+
+We use thee values later to normalize the entropy values between $0$ and $1$. Then, we can calculate the entropy of a pixel with respect to orientation and frequency in two different ways. The first is to use all the responses of the image energy decomposition matrix $E = \lbrace  e_{i,j}(x,y) \rbrace$ of the image by performing a sum over one axis of the energy decomposition matrix to obtain a vector that represents the probability for the orientation and the frequency. The second method consists in taking only the vector of energy values given by the index of the fundamental frequency $f_f(x,y)$ and maximum orientation $\theta_{max}$ previously calculated for each pixel.
+
+Texture entropy for orientation axis using all responses:
+\begin{gather}
+    \hat{e}_{j}(x,y) = \frac{\sum_{j} e_{i,j}(x,y)}{ \sum_{i,j} e_{i,j}(x,y)}\\	
+    h_{\theta}(x,y) = -\sum_{j=0}^{n-1} \hat{e}_{j}(x,y)  \log (\hat{e}_{j}(x,y)) \label{eq:entropy_orient}
+\end{gather}
+
+
+Texture entropy for orientation axis using fundamental frequency's energies
+\begin{gather}
+    \hat{e}_{f_{f}}(x,y) = \frac{e_{i,j}(x,y)}{ \sum_{i,j} e_{i,j}(x,y)} ~|~ i = f_{f}\\	
+    \underset{f_{f}}{h_{\theta}(x,y)} = -\sum_{j=0}^{n-1} \hat{e}_{f_{f}}(x,y)  \log (\hat{e}_{f_{f}}(x,y))  \label{eq:entropy_fund_freq}
+\end{gather}
+
+Texture entropy for frequency axis using all responses:
+\begin{gather}
+    \hat{e}_{i}(x,y) = \frac{\sum_{i} e_{i,j}(x,y)}{ \sum_{i,j} e_{i,j}(x,y)}\\	
+    h_f(x,y) = -\sum_{j=0}^{n-1} \hat{e}_{i}(x,y)  \log (\hat{e}_{i}(x,y))  \label{eq:entropy_freq}
+\end{gather}
+
+Texture entropy for frequency axis using maximum angle's energies:
+\begin{gather}
+    \hat{e}_{\theta _{max}}(x,y) = \frac{e_{i,j}(x,y)}{ \sum_{i,j} e_{i,j}(x,y)} ~|~ j = \theta _{max}\\	
+    \underset{\theta_{max}}{h_{f}(x,y)} = -\sum_{j=0}^{n-1} \hat{e}_{\theta _{max}}(x,y)  \log (\hat{e}_{\theta _{max}}(x,y))  \label{eq:entropy_ang_max}
+\end{gather}
+
+\subsubsection{Orientability}
+Since we are interested in anisotropic textures rather than random ones, we compute the orientability of the textures. This combined feature allows us to enhance those texture zones with a well-defined orientation angle.
+We obtain this composite feature by weighing the value of the maximum angle of orientation $\theta_{max}$ by one of the entropies for orientation calculated above ($h_{\theta}(x,y)$ or $\underset{f_{f}}{h_{\theta}(x,y)}$).
+
+This feature is composed of three values, $Hue$, $Saturation$ and $Value$. The $Hue$ is a mapping of the maximum orientation $\theta_{max}$ that lives on the HSV color space. These angles are weighted by the $Saturation$ velues taken form the opposite of entropy for orientation ($h_{\theta}(x,y)$ or $\underset{f_{f}}{h_{\theta}(x,y)}$). Finally, the $Value$ variable is given by the gray level value of the input image $I(x,y)$.
+
+\begin{gather}
+    Hue = \theta_{max}(x,y) \times Saturation \\
+    Saturation = 1 - h_{\theta} (x,y) \\
+    Value = I(x,y) \\
+\end{gather}
+
+\subsubsection{Texturality}
+In the same way as with the orientability, we use the entropy for frequency ($h_{f}(x,y)$ or $\underset{\theta_{max}}{h_{f}(x,y)}$) to highlight the fundamental frequency feature $f_f(x,y)$ of textured zones and degrade the fundamental frequency value of the areas without or with low texture.
+
+Since we are interested in anisotropic textures rather than random ones, we compute the orientability of the textures. This combined feature allows us to enhance those texture zones with a well-defined orientation angle.
+We obtain this composite feature by weighing the value of the maximum angle of orientation $\theta_{max}$ by one of the entropies for orientation calculated above ($h_{\theta}(x,y)$ or $\underset{f_{f}}{h_{\theta}(x,y)}$).
+
+This feature is composed of three values, $Hue$, $Saturation$ and $Value$. The $Hue$ is a mapping of the fundamental frequency $f_f(x,y)$ that lives on the \textit{hot \& cold} color space. These frequencies are weighted by the $Saturation$ values taken form the opposite of entropy for frequency ($h_{f}(x,y)$ or $\underset{\theta_{max}}{h_{f}(x,y)}$). Finally, the $Value$ variable is given by the gray level value of the input image $I(x,y)$.
+
+\begin{gather}
+    Hue = f_f(x,y) \times Saturation \\
+    Saturation = 1 - h_{f} (x,y) \\
+    Value = I(x,y) \\
+\end{gather}
+
+\subsubsection{Perceptual window and mean and principal colors}
+The design of the Gabor family of filters designed in the previous chapter includes the estimation of an adataptavite envelope as a function of the central frequency of the Gabor function. We state thatthe filter support  $\kappa_{i,j}$ of the fundamental frequency contains the most representative information about the period of the texture of each pixel in the image. Since we know the fundamental frequency of each pixel, we can recover their perceptual texture window. 
