@@ -20,7 +20,7 @@ In both aforementioned cases of use, we take advantage of the Gabor function's d
     r_{f, \theta}(x,y) = I(x, y) \ast g_{f, \theta}(x,y)
 \end{equation}
 
-As we know, due to the complex form of Gabor's filters \ref{eq:gabor_function_2d_spacefreq_bank} defined in Chapter \ref{ch:image_spectral_decomposition}, the response of the filter $r_{f,\theta}(x, y)$ will have, in the same way as the filter, a real part and an imaginary part, here denoted as $\Re{(\cdot)}$ and $\Im{(\cdot)}$, respectively.
+As we know, due to the complex form of Gabor's filters \ref{eq:gabor_function_2d_spacefreq_bank} defined in Chapter \ref{ch:image_spectral_decomposition}, the response of the filter $r_{f,\theta}(x, y)$ will have, in the same way as the filter, a real part and an imaginary part, here denoted as $\RE{(\cdot)}$ and $\IM{(\cdot)}$, respectively.
 
 The linear transformation of an image using Eq. \eqref{eq:gabor_responses}, produces considerable information about the textures present in the image. The efficient manipulation of this information is the basis for the extraction of appropriate (local or global) texture features. Although the convolution of the image by a filter bank is a common denominator in techniques based on signal processing, in the literature we can find various schemes to create more separable texture features (see Figure \ref{fig:general_pipeline_gabor_feature_extraction}). In general, these methods vary in the type of output they use to measure the textural information of the image and the post-processing performed
 
@@ -29,19 +29,19 @@ The possible filter responses to measure the texture information are:
 \begin{enumerate}
     \item Amplitude of the response (magnitude or Gabor energy) \citep{Bovik.Clark.ea:TPAMI:1990}.
         \begin{equation}\label{eq:gabor_magnitude}
-            |r_{f, \theta}(x,y)| = \sqrt{\Re{(r_{f, \theta}(x, y))}^2 + \Im{(r_{f, \theta}(x, y))}^2}
+            |r_{f, \theta}(x,y)| = \sqrt{\RE{(r_{f, \theta}(x, y))}^2 + \IM{(r_{f, \theta}(x, y))}^2}
         \end{equation}
     \item Phase of the response \citep{Palm.Lehmann:MGV:2002}.
     \begin{equation}\label{eq:gabor_phase}
-            \arg(r_{f, \theta}(x,y)) = \arctan2{\left(\frac{\Im{(r_{f, \theta}(x, y))}}{\Re{(r_{f, \theta}(x, y))}}\right)}
+            \arg(r_{f, \theta}(x,y)) = \arctan2{\left(\frac{\IM{(r_{f, \theta}(x, y))}}{\RE{(r_{f, \theta}(x, y))}}\right)}
         \end{equation}
     \item Real component of the response \citep{Jain.Farrokhnia:IJPR:1991}.
     \begin{equation}\label{eq:gabor_real_part}
-            \Re{(r_{f, \theta}(x, y))}
+            \RE{(r_{f, \theta}(x, y))}
         \end{equation}
     \item Square amplitude of the response (Gabor local power spectrum) \citep{Grigorescu.Petkov.ea:TIP:2002}.
     \begin{equation}\label{eq:gabor_power}
-            |r_{f, \theta}(x,y)|^2 = \Re{(r_{f, \theta}(x, y))}^2 + \Im{(r_{f, \theta}(x, y))}^2
+            |r_{f, \theta}(x,y)|^2 = \RE{(r_{f, \theta}(x, y))}^2 + \IM{(r_{f, \theta}(x, y))}^2
         \end{equation}
 \end{enumerate}
 whereas the most common post-processing techniques for the filter outputs consists on a non-linear transformation followed by smoothing using a rectangular or Gaussian window \citep{Randen.Husoy:TPAMI:1999}, \citep{Clausi.EdJernigan:JPR:2000}. 
@@ -86,8 +86,36 @@ In both cases, the choice of a pertinent color space for the characterization of
 
 
 \section{Two-channel complex image representation}
+\begin{figure}[!ht] 
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{lab_complex_color}
+		\caption{}	
+		\label{fig:hsl_complex_color}
+	\end{subfigure}
+	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hsl_complex_color}
+		\caption{}	
+		\label{fig:hsv_complex_color}
+	\end{subfigure}
+	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hsv_complex_color}
+		\caption{ }	
+		\label{fig:hsv_complex_color}
+	\end{subfigure}
+	
+	\caption{}
+	\label{fig:complex_color_spaces}
+\end{figure}
 
-From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HLS$ color spaces prior to a transformation of the image from the $RGB$ space.
+From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HSL$ color spaces prior to a transformation of the image from the $RGB$ space.
 
 Thus, the complex chrominance channel in its exponential form is defined as  
 
