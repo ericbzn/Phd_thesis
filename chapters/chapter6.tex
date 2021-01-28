@@ -211,6 +211,41 @@ This algorithm simply performs K-means in the 5-d space of color information and
 \section{Perceptual image boundaries}
 \subsection{Earth Mover's Distance for non-normalized distributions}
 
+\subsubsection{Ground distance matrix}
+
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.47\textwidth}
+		\includegraphics[width=\textwidth]{ground_distance_matrix_euclidean}	
+		\caption{Euclidean}
+        \label{fig:ground_distance_matrix_euclidean}
+	\end{subfigure}
+	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.47\textwidth}
+		\includegraphics[width=\textwidth]{ground_distance_matrix_sqeuclidean}	
+		\caption{Squared euclidean}
+        \label{fig:ground_distance_matrix_sqeuclidean}
+	\end{subfigure} \\[2ex]
+    
+    \begin{subfigure}[b]{0.47\textwidth}
+		\includegraphics[width=\textwidth]{ground_distance_matrix_lin_polar}	
+		\caption{Linear-polar}
+        \label{fig:ground_distance_matrix_lin_polarc}
+	\end{subfigure}  
+	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blnk line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.47\textwidth}
+		\includegraphics[width=\textwidth]{ground_distance_matrix_log_polar}	
+		\caption{Log-polar}
+        \label{fig:ground_distance_matrix_log_polar}
+	\end{subfigure}  
+	   
+   \caption{Visualizations of cost matrix of EMD.}
+   \label{fig:EMD_ground_distance_matrix}
+\end{figure}
+
 \subsection{Image segmentation based on image gradients}
 \subsubsection{MST threshold graph-cut}
 This method is based on the graph cut using a threshold value. However, the choice of this threshold value is not always obvious, and this value may differ for each image.
@@ -303,7 +338,7 @@ Therefore, to evaluate the learning of the importance of color and texture and t
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{pr_curves_mymethod}
-	\caption{Precision-recall plot of different contour detectors.}\label{fig:pipeline_gabor_image_segmentation}
+	\caption{Precision-recall plot of different contour detectors.}\label{fig:pr_curves}
 \end{figure}
 \subsection{Results}
 
