@@ -4,10 +4,10 @@
 \chapter{Similarity Measures of Distributions}\label{ch:similarity_measures}
 Associated publications: \vspace{-2mm}
 
-\begin{itemize}
-	\item \citep{Bazan.Dokladal.ea:BMVC:2019}. << Quantitative Analysis of Similarity Measures of
-Distributions >>. In: \textit{30th British Machine Vision Conference 2019, BMVC 2019}. BMVC press, Cardiff, UK.
-\end{itemize}
+%\begin{itemize}
+%	\item \citep{Bazan.Dokladal.ea:BMVC:2019}. << Quantitative Analysis of Similarity Measures of
+%Distributions >>. In: \textit{30th British Machine Vision Conference 2019, BMVC 2019}. BMVC press, Cardiff, UK.
+%\end{itemize}
 
 \section*{Résumé}
 \noindent Il existe de nombreuses mesures de dissemblance qui, selon l'application, n'ont pas toujours un comportement optimal. Dans ce chapitre, nous présentons une analyse qualitative des mesures de similarité les plus utilisées dans la littérature et de la Earth Mover's Distance (EMD). L'EMD est une métrique basée sur la théorie du transport optimal avec des propriétés géométriques intéressantes pour la comparaison des distributions. Cependant, l'utilisation de cette mesure est limitée par rapport à d'autres mesures de similitude. La raison principale était, jusqu'à récemment, la complexité du calcul. Nous montrons la supériorité de l'EMD à travers trois expériences différentes. Premièrement, analyser la réponse des mesures dans le plus simple des cas; distributions synthétiques à une dimension. Deuxièmement, avec deux systèmes de récupération d'images; en utilisant des fonctionnalités de couleur et de texture. Enfin, utiliser une technique de réduction dimensionnelle pour une représentation visuelle des textures. Nous montrons qu'aujourd'hui l'EMD est une mesure qui reflète mieux la similitude entre deux distributions.
@@ -113,6 +113,7 @@ d_{EMD}(\boldsymbol{\alpha}, \boldsymbol{\beta}) = \frac{\sum_{ij}c_{ij}f_{ij}}{
 The importance of the EMD is that it represents the distance between two discrete measures (distributions) in a natural way. Moreover, when we use a \textit{ground distance} as the cost matrix $\mathbf{C}$, the EMD is a true distance. Peyré and Cuturi \citep{Peyre.Cuturi:arXiv:2018} show the metric properties of the EMD. To show these advantages, we developed a series of experiments described in the next section.
 
 
+
 \section{Comparative Analysis of Similarity Measures}\label{sec:comparison}
 
 \subsection{One-Dimensional Case Study}\label{subsec:1d_case}
@@ -143,7 +144,7 @@ To compare the measures described in section \ref{sec:measures} in the simplest 
     \begin{subfigure}[b]{0.3\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{Inter_dist}	
-		\caption{LAB color space}
+		\caption{Histogram intersection}
         \label{fig:inter_dist}
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -198,169 +199,169 @@ We develop two image retrieval systems as a second comparison test, one based on
 
 \begin{figure}[!ht]
 	\centering
-	\begin{subfigure}[b]{0.1\textwidth}
+	\begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{batman1_model}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{flash_model}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{hulk_model}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{wonderwoman_model}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{wolverine_model}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{ironman_model}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{thor_model}	
 	\end{subfigure} \\[2ex]
     
         
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{batman1}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{flash}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{hulk}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{wonderwoman}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{wolverine}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{ironman_b}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{thor}	
 	\end{subfigure} \\[2ex]
     
     
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{blanket1}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{blanket2}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{ceiling1}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{ceiling2}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{floor1}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{rug}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{stoneslab}	
 	\end{subfigure} \\[2ex]
     
         
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{grass}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{lentils}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{rice2}	
 	\end{subfigure}
 	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{scarf2}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{screen}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{scarf1}	
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.1\textwidth}
+    \begin{subfigure}[b]{0.12\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{pearlsugar}	
 	\end{subfigure}
@@ -396,28 +397,28 @@ We can interpret the cross-entropy value as the confidence level of the image cl
 
 \begin{figure}[ht]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{log_loss_rgb}	
 		\caption{RGB color space}
 	\end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{log_loss_hls}	
 		\caption{HLS color space}
 	\end{subfigure}\\[2ex]
 	
 	
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{log_loss_lab}	
 		\caption{LAB color space}
 	\end{subfigure}   
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{log_loss_texture}	
 		\caption{Texture Gabor energy space (Eq. \ref{eq:g_energy})}
