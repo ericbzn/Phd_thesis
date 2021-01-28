@@ -3,13 +3,11 @@
 \part{Global Color and Texture}\label{part:global_color_texture}%Image Global Color and Texture
 
 \section*{Introduction}
-In part \ref{part:image_contours}, we show that the contour features provide useful perceptual information that can be used to solve complex problems. We showed a framework that uses the concepts of human perception and contour information for the unsupervised detection of landing targets. The framework is able to identify the marker under degraded operating conditions using only exogenous features from the contours identified in gray-level images. This framework can be improved by adding other features that provide perceptual information of a scene.
+In part \ref{part:image_contours}, we show that low-level features, such as image contours, provide useful perceptual information that can be used to solve complex problems. We presented a framework that uses the concepts of human perception and contour information for the unsupervised detection of landing targets. This framework is able to identify the marker under degraded operating conditions using only exogenous features from the contours, which are identified on gray-level images. The framework can be improved by adding other features that provide perceptual information of a scene.
 
-In this part of the thesis we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans and their study can be very extensive. The objective of this part of the thesis is to explore the features of color and texture for their future integration into a general framework for the object detection.
-Particularly, we are interested in the global distribution of color and texture information of an image. For this purpose, we start the study of texture using images with homogeneous grayscale textures.
+In this part of the thesis, we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans and their study can be very extensive. The objective of this part is to explore the image color and texture features for their future integration into a general framework for object detection. Particularly, in this part of the thesis we are interested in the global distribution of color and texture information of an image. For this purpose, the chapter that opens this part seeks to remember recall the definition of color and texture in the field of computer vision. Moreover, it review different approaches to color representation as well as different strategies for characterizing texture features. Later, in chapter \ref{ch:similarity_measures}, we take interest at the comparison of distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and its application in the field of computer vision.
 
-In the chapter that opens this part, we recall the definition of color and texture in the field of computer vision and review different approaches to color representation as well as different strategies for characterizing texture features. Later, we take interest at the comparison of distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and its application in the field of computer vision.
-
+Throughout these chapters of the thesis, we address the study of those two properties using simple images containing the information of interest; in the case of color, images containing low color variation and; in the case of texture, grayscale images with homogeneous textures.
 
 The main contributions of this part are:
 
@@ -21,7 +19,6 @@ The main contributions of this part are:
 \end{enumerate}
 
 
-
 \chapter{Global Representations of Color and Texture } \label{ch:color_texure_representations}
 
 \section*{Résumé}
@@ -29,8 +26,7 @@ The main contributions of this part are:
 Ce chapitre présente une compilation des différentes manières de représenter les informations de couleur et de texture présentes dans une image. En ce qui concerne les informations de couleur, nous introduisons certains types d'espaces colorimétriques et leurs origines. De plus, nous présentons quelques techniques pour synthétiser ces informations. Dans le cas de la texture, nous présentons les différentes méthodologies pour son étude, en mettant en évidence les avantages et les inconvénients de chaque méthode.
 \section*{Abstract}
 \noindent 
-This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces.
-used as well as their origins and relationship to human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the different methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
+This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used as well as their origins and relationship to human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the different methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
 
 \section{Introduction}
 The color and texture of an image is very valuable information. This is why for decades several vision algorithms have sought to exploit this information. On the one hand, physically the color information of an image is linked to the measurement of the wavelength of visible light.
@@ -146,13 +142,15 @@ The advantages of this representation is that they are invariant to the rotation
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{araras}
+        \caption{Input image}
     \end{subfigure}
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{araras_single_histogram}
+        \caption{Single-channel color pixel distribution}
     \end{subfigure} 
     
     \caption{}\label{fig:single_channel_histogram}    
@@ -165,15 +163,19 @@ The advantages of this representation is that they are invariant to the rotation
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{araras}
-    \end{subfigure}
-        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.5\textwidth}
+        \caption{Input image}
+    \end{subfigure} \\
+       
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{araras_3d_distribution}
+        \caption{3-d image color pixel distribution}
+    \end{subfigure} 
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{araras_3d_histogram}
+        \caption{3-d color pixel histogram}
     \end{subfigure} 
     
-    \caption{}\label{fig:single_channel_histogram}    
+    \caption{3-d image color representation. 3-d pixel distribution and 10 bins 3-d pixel histogram.}\label{fig:3d_color_representation}    
 \end{figure}
 
 
@@ -181,19 +183,24 @@ The advantages of this representation is that they are invariant to the rotation
 
 \begin{figure}[!ht]
     \centering
-    
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{araras}
+        \caption{Input image}
+    \end{subfigure} \\
     
     \begin{subfigure}[b]{0.4\textwidth}
     	\includegraphics[width=\textwidth]{araras_color_clusters}
         \includegraphics[width=\textwidth]{araras_bar_signature}
+        \caption{Color signature}
     \end{subfigure}
     	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.5\textwidth}
         \includegraphics[width=\textwidth]{araras_3d_signature}
+        \caption{3-d representation of color ignature}
     \end{subfigure} 
     	    
-    \caption{}\label{fig:color_signature}    
+    \caption{Image color signature and the 3-d visualization of signature clusters.}\label{fig:color_signature}    
 \end{figure}
 
 
@@ -298,7 +305,7 @@ The advantages of this representation is that they are invariant to the rotation
         \includegraphics[width=\textwidth]{mountain_bar_signature}
     \end{subfigure}
                     
-	\caption{Different representations of color information. Input color image {\small \textsf{\textbf{(a)}}}, single-channel color histogram {\small \textsf{\textbf{(b)}}}, 3-d color distribution {\small \textsf{\textbf{(c)}}}, 3-d color histogram {\small \textsf{\textbf{(d)}}}, 3-d color signature {\small \textsf{\textbf{(e)}}}, color signature clusters {\small \textsf{\textbf{(f)}}}.}\label{fig:color_image_representations}    
+	\caption{Different representations of color information. {\small \textsf{\textbf{(a)}}} input color image , {\small \textsf{\textbf{(b)}}} single-channel color histogram , {\small \textsf{\textbf{(c)}}} 3-d color distribution , {\small \textsf{\textbf{(d)}}} 3-d color histogram , {\small \textsf{\textbf{(e)}}} 3-d color signature , {\small \textsf{\textbf{(f)}}} color signature clusters .}\label{fig:color_image_representations}    
 \end{figure}
 
 
@@ -309,73 +316,62 @@ The advantages of this representation is that they are invariant to the rotation
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_skin}
         \caption{}
-        \label{fig:tempo}
     \end{subfigure}
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_three}
         \caption{}
-        \label{fig:parrots}
     \end{subfigure} 
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)    
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_wall}
         \caption{}
-        \label{fig:clownfish}
     \end{subfigure}
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_vlines}
         \caption{}
-        \label{fig:mountains}
     \end{subfigure}
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_sponge}
         \caption{}
-        \label{fig:mountains}
     \end{subfigure}\\
     
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_tissue}
         \caption{}
-        \label{fig:tempo}
     \end{subfigure}
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_cafe}
         \caption{}
-        \label{fig:parrots}
     \end{subfigure} 
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)    
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_crystal}
         \caption{}
-        \label{fig:clownfish}
     \end{subfigure}
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_flowers}
         \caption{}
-        \label{fig:mountains}
     \end{subfigure}
     %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.19\textwidth}
         \includegraphics[width=\textwidth]{brodatz_paint}
         \caption{}
-        \label{fig:mountains}
-    \end{subfigure}
-    
+    \end{subfigure}    
                   
-    \caption{ Examples of texture images and its classification. Nautural textures {\small \textsf{\textbf{(a) (b) (e) (h)}}}, man-made textures {\small \textsf{\textbf{(c) (d) (f) (g) (i) (j)}}}, regular textures {\small \textsf{\textbf{(c) (d)}}}, stochastic textures {\small \textsf{\textbf{(g) (h)}}}, homogeneous {\small \textsf{\textbf{(c) (d)}}}, weakly-homogeneous {\small \textsf{\textbf{(a) (b) (f) (g) (h)}}}, inhomogeneous {\small \textsf{\textbf{(i) (j)}}}.}\label{fig:texture_images}    
+    \caption{ Examples of texture images and its classification. [{\small \textsf{\textbf{(a) (b) (e) (h)}}}] nautural textures, [{\small \textsf{\textbf{(c) (d) (f) (g) (i) (j)}}}] man-made textures, [{\small \textsf{\textbf{(c) (d)}}}] regular textures, [{\small \textsf{\textbf{(g) (h)}}}] stochastic textures, [{\small \textsf{\textbf{(c) (d)}}}] homogeneous, [{\small \textsf{\textbf{(a) (b) (f) (g) (h)}}}] weakly-homogeneous, [{\small \textsf{\textbf{(i) (j)}}}] inhomogeneous.}\label{fig:texture_images}    
 \end{figure}
 
 
