@@ -29,15 +29,11 @@ Ce chapitre présente une compilation des différentes manières de représenter
 This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used as well as their origins and relationship to human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the different methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
 
 \section{Introduction}
-The color and texture of an image is very valuable information. This is why for decades several vision algorithms have sought to exploit this information. On the one hand, physically the color information of an image is linked to the measurement of the wavelength of visible light.
 
+If we look around us, we can see that many of the materials and objects of our environment only exist with certain colors. For example, the clouds are mostly  white, the grass is green, the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings and on skins or objects surfaces. The color and texture of an image is very valuable information and therefore, the perception of such information is a powerful tool for classifying and recognizing certain objects and materials.
 
-This chapter shows a compilation of the various ways to represent the color and texture information present in an image. As far as color information is concerned, we introduce some of the most used color spaces as well as their origins and their relationship with human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the various methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
+For decades several vision algorithms have sought to exploit this information. Color and texture are of relevant importance for its use as a feature to characterize objects. Due to these facts, the definition and the various representations of the color, as well as the texture information, is addressed in this chapter. As far as color information is concerned, we give a brief introduction to what color is and how it can be represented. In the case of texture, we present a brief introduction to textures including its types and an overview to the various methodologies for its study, highlighting the advantages and disadvantages of each method. 
 
-
-\section{Color Feature Representation}
-
-The representation of color in computer vision has evolved over time, developing theories, such as the trichromatic theory or the opponent-colors theory \citep{Fairchild:Book:2005}, that attempt to explain the function of color vision. From these theories, abstract mathematical models were developed that serve to represent colors as vectors of numbers, which can be organized in different ways. These particular organizations are known as color spaces. One of the main contributors in the creation of color spaces is the International Lighting Commission (CIE for its acronym in French) \citep{Wright:BookCh2:2007}.
 
 \begin{figure}[!ht]
     \centering
@@ -68,10 +64,64 @@ The representation of color in computer vision has evolved over time, developing
         \label{fig:mountains}
     \end{subfigure}
                   
-    \caption{Some examples of color images: One synthetic image {\small \textsf{\textbf{(a)}}} and three natural images {\small \textsf{\textbf{(b) (c) (d)}}}.}\label{fig:color_images}    
+    \caption{Some examples of color images: One synthetic image {\small \textsf{\textbf{(a)}}} and three natural images [{\small \textsf{\textbf{(b) (c) (d)}}}].}\label{fig:color_images}    
 \end{figure}
 
-In this thesis, we focus on the most used color spaces in computer vision:
+
+\section{Color}
+
+Color is a physical property linked to the electromagnetic spectrum of light \citep{Beyerer.Leon.ea:Book:2016}. The perception of color in humans results from the quantity and wavelength captured by the eyes. This perception depends on many factors such as the type of surfaces or objects where the light is reflected, the environment and even the eyes of the observer. The perception of color is then an entirely arbitrary creation of our nervous system, and there is no way it is contained in the wavelengths or in light-reflecting objects and materials \citep{Goldstein:Book:2009} \citep{Beyerer.Leon.ea:Book:2016}. When an incident spectrum contains all frequencies in the range of visible wavelengths, humans perceive objects that reflect all frequencies as clear or \textit{white}. In the opposite case, when the material absorbs and does not reflect the visible frequencies, it is perceived as dark or \textit{black} {Gonzalez.Woods:Book:2008}. 
+
+Although color has measurable physical properties, the interpretation and perception of this information is completely subjective. A clear example of this is the naming of colors. Some works in this regard state that the naming of colors varies according to culture and language \citep{Berlin.Kay:Book:1991}. However, it is possible to find a correlation between languages and identify eleven basic color terms in English language that  seem to be anchored across the different languages as points in a certain color space \citep{Kay.Regier:PNAS:2003}. The definition of a coherent color space to the final task is therefore essential to represent the color information digitally.
+
+
+\section{Color representation}
+
+The representation of color has evolved over time developing theories, such as the trichromatic theory or the opponent-colors theory \citep{Fairchild:Book:2005}, that attempt to explain the function of color vision. The result of these theories has been the development of abstract mathematical models that serve to represent colors as vectors or tuples of numbers. These vectors, which are mostly in three dimensions, can be arranged in a variety of ways. Such particular organizations are known as color models.
+
+One of the main contributors in the creation of color spaces is the \textit{Commission Internationale de l'Éclairage} (CIE) \citep{CIE:Journal:1932}, who defined the three standard primaries of color $X$, $Y$ and $Z$. These primaries allow to define any visible color of the spectrum (see figure \ref{fig:visual_spectrum}) as a weighted sum of the three primary colors. They are defined mathematically with positive color-matching functions that specify the amount of each primary needed to describe any spectral color \citep{Wright:BookCh2:2007}. This color model is known as the CIE 1931 XYZ.
+
+The \textbf{XYZ color model} quantify an object’s color using a standardized method taking into account the human eye’s (observer) response to these colors in the calculation. $X$, $Y$ and $Z$ are the amount of each primary needed to produce a desired color
+\begin{eqnarray} 
+ C(\lambda) = (X,Y,Z) \label{eq:g_energy}
+\end{eqnarray}
+where the primary $Y$ is chosen such that its colour-matching function exactly matches the luminous-efficiency function for the human eye \citep{Wright:BookCh2:2007}. Therefore, to define a color in this space, we need to provide the weights fot the $X$, $Y$ and $Z$ primaries, for example, color $=xX + yY + zZ$. 
+ 
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{CIE_visible_spectrum}
+        \caption{}
+        \label{fig:visual_spectrum}
+    \end{subfigure}
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{CIE_chromaticity_diagram}
+        \caption{}
+        \label{fig:chrom_diagram}
+    \end{subfigure} 
+                      
+    \caption{CIE 1931 2 Degree Standard Observer: visible light spectrum {\small \textsf{\textbf{(a)}}} and chromaticity diagram {\small \textsf{\textbf{(b)}}}.}\label{fig:cie_standard_observer}    
+\end{figure}
+
+
+The \textbf{RGB color model} According to the three-component theory, our eyes only respond three primary colors of light; red, green, and blue . This theory gave rise to one of the first color models, which says that nearly all colors in the visible spectrum could be generated from the mixture of these three primaries (e.g. combining red and green produces yellow)\citep{Goldstein:Book:2009}. This occurs mainly because the red, green, and blue primaries of this color model are not standarized. 
+
+
+
+
+
+
+
+\textbf{HSV color model}
+
+\textbf{HSL color model}
+
+\textbf{LAB color model} (also known as CIEL*a*b* or CIELAB)
+
+
 \begin{itemize}
 
 	\item \textbf{RBG (Red-Green-Blue)} A color space that maps the amount of red, green and blue light perceived to reproduce the visible color gamut.
@@ -117,7 +167,7 @@ In this thesis, we focus on the most used color spaces in computer vision:
     \end{subfigure} \vspace{5pt}  
         
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Lab channels}}} }}%
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{LAB channels}}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_L}
     \end{subfigure}    
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -309,7 +359,9 @@ The advantages of this representation is that they are invariant to the rotation
 \end{figure}
 
 
-\section{Texture Feature Characterizations}
+\section{Texture}
+
+\section{Texture characterization}
 
 \begin{figure}[!ht]
     \centering
