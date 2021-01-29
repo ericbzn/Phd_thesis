@@ -83,10 +83,16 @@ One of the main contributors in the creation of color spaces is the \textit{Comm
 
 The \textbf{XYZ color model} quantify an object’s color using a standardized method taking into account the human eye’s (observer) response to these colors in the calculation. $X$, $Y$ and $Z$ are the amount of each primary needed to produce a desired color
 \begin{eqnarray} 
- C(\lambda) = (X,Y,Z) \label{eq:g_energy}
+ C(\lambda) = (X,Y,Z) \label{eq:XYZ_color}
 \end{eqnarray}
-where the primary $Y$ is chosen such that its colour-matching function exactly matches the luminous-efficiency function for the human eye \citep{Wright:BookCh2:2007}. Therefore, to define a color in this space, we need to provide the weights fot the $X$, $Y$ and $Z$ primaries, for example, color $=xX + yY + zZ$. 
- 
+where the primary $Y$ is chosen such that its colour-matching function exactly matches the luminous-efficiency function for the human eye, i.e., $Y$ measure the luminance of a color \citep{Wright:BookCh2:2007}. Therefore, to define a color in this space, we need to provide the weights fot the $X$, $Y$ and $Z$ primaries, for example, color $=xX + yY + zZ$, where 
+\begin{eqnarray} 
+	x = \frac{X}{X+Y+Z} \\
+	y = \frac{Y}{X+Y+Z} \\ 
+	z = \frac{Z}{X+Y+Z} = 1-x-y \label{eq:xyz_color_coords}
+\end{eqnarray}
+
+Under this representation, we can ignore the dimension of the luminance by the normalizacion of the primaries with the total light intensity; $x+y+z=1$. This allow to show all visibles colors of the spectrum in the chromaticity diagram (see figure \ref{fig:chrom_diagram}). The $x$ and $y$ axis give the normalised amounts of the $X$ and $Y$ primaries for a particular colour, and hence $z = 1 - x - y$ gives the amount of the $Z$ primary required. Chromaticity depends on dominant wavelength and saturation, and is independent of luminous energy. Colours with the same chromaticity but different luminance, all map to the same point within this region.
 
 \begin{figure}[!ht]
     \centering
@@ -107,13 +113,8 @@ where the primary $Y$ is chosen such that its colour-matching function exactly m
 \end{figure}
 
 
-The \textbf{RGB color model} According to the three-component theory, our eyes only respond three primary colors of light; red, green, and blue . This theory gave rise to one of the first color models, which says that nearly all colors in the visible spectrum could be generated from the mixture of these three primaries (e.g. combining red and green produces yellow)\citep{Goldstein:Book:2009}. This occurs mainly because the red, green, and blue primaries of this color model are not standarized. 
-
-
-
-
-
-
+The \textbf{RGB color model} is an additive model coming from the three-component theory. This model consists of three independent planes, represented as a three
+dimensional vector, one in each of the primary colours: red, green and blue. Therefore, to define a color in this model, we specify the proportion of red, green, and blue colors. 
 
 \textbf{HSV color model}
 
