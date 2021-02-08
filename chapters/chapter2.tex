@@ -98,7 +98,7 @@ The result of these theories has been the development of abstract mathematical m
 called a \textit{color model}, and its variables are said to be the coordinates of its
 three-dimensional \textit{color space}.
 
-In the next subsection, we describe a number of color models which are important both in theoretical work and in the representation of color in a wide range of technical fields, including the representation of still and moving images in digital form. 
+
 
 CIE, the International Commission on Illumination, in 1931 defined a color-mapping function based on a standard observer, representing an average human’s chromatic response within a $2^ \circ$ arc, to primaries at R = 435.8 nm, G = 546.1 nm, and B = 700 nm. Figure 2.17 shows the CIE 1931 chromaticity chart. The boundary represents maximum saturation for the spectral colors, and the diagram forms the boundary of all perceivable hues. The colors that can be created through combinations of any three primary colors (such as RGB) can be represented on the chromaticity diagram by a triangle joining the coordinates for the three colors.
 
@@ -117,7 +117,7 @@ where the primary $Y$ is chosen such that its colour-matching function exactly m
 
 Under this representation, we can ignore the dimension of the luminance by the normalizacion of the primaries with the total light intensity; $x+y+z=1$. This allow to show all visibles colors of the spectrum in the chromaticity diagram (see figure \ref{fig:chrom_diagram}). The $x$ and $y$ axis give the normalised amounts of the $X$ and $Y$ primaries for a particular colour, and hence $z = 1 - x - y$ gives the amount of the $Z$ primary required. Chromaticity depends on dominant wavelength and saturation, and is independent of luminous energy. Colours with the same chromaticity but different luminance, all map to the same point within this region.
 
-
+In the next subsection, we describe a number of color models which are important both in theoretical work and in the representation of color in a wide range of technical fields, including the representation of still and moving images in digital form. 
 
 \subsubsection{Color spaces}
 
@@ -198,47 +198,62 @@ The \textbf{LAB color model} (also known as CIEL*a*b* or CIELAB) is modeled on t
      
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
     	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{RGB channels}}} }}%
-    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_R}
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_R_RGB}
     \end{subfigure}      
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_G}
+        \includegraphics[width=\textwidth]{araras_G_RGB}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_B}
+        \includegraphics[width=\textwidth]{araras_B_RGB}
     \end{subfigure} \vspace{5pt}      
     
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
     	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV channels}}} }}%
-    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_H}
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_H_HSV}
     \end{subfigure}     
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_S}
+        \includegraphics[width=\textwidth]{araras_S_HSV}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_V}
-    \end{subfigure} \vspace{5pt}  
+        \includegraphics[width=\textwidth]{araras_V_HSV}
+    \end{subfigure} \vspace{5pt} 
+    
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSL channels}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_H_HLS}
+    \end{subfigure}     
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_S_HLS}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_L_HLS}
+    \end{subfigure} \vspace{5pt} 
         
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
     	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{LAB channels}}} }}%
-    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_L}
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_L_LAB}
     \end{subfigure}    
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_A}
+        \includegraphics[width=\textwidth]{araras_A_LAB}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_B}
+        \includegraphics[width=\textwidth]{araras_B_LAB}
     \end{subfigure} 
 
 	\caption{Color channels of an image in different color spaces in a grayscale}\label{fig:images_color_space}    
@@ -253,6 +268,8 @@ The advantages of this representation is that they are invariant to the rotation
 
 
 \subsection{Single-channel Color Histogram}
+
+
 
 \begin{figure}[!ht]
     \centering
@@ -422,6 +439,108 @@ The advantages of this representation is that they are invariant to the rotation
 	\caption{Different representations of color information. {\small \textsf{\textbf{(a)}}} input color image , {\small \textsf{\textbf{(b)}}} single-channel color histogram , {\small \textsf{\textbf{(c)}}} 3-d color distribution , {\small \textsf{\textbf{(d)}}} 3-d color histogram , {\small \textsf{\textbf{(e)}}} 3-d color signature , {\small \textsf{\textbf{(f)}}} color signature clusters .}\label{fig:color_image_representations}    
 \end{figure}
 
+
+\subsubsection{Two-channel complex image representation}
+\begin{figure}[!ht] 
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{lab_complex_color}
+		\caption{}	
+		\label{fig:lab_complex_color}
+	\end{subfigure}
+	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hsl_complex_color}
+		\caption{}	
+		\label{fig:hsl_complex_color}
+	\end{subfigure}
+	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hsv_complex_color}
+		\caption{ }	
+		\label{fig:hsv_complex_color}
+	\end{subfigure}
+	
+	\caption{}
+	\label{fig:complex_color_spaces}
+\end{figure}
+
+
+\begin{figure}[!ht]
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras}
+    \end{subfigure} \\    
+     
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV luma/chroma}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HSV}
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chrr_HSV}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chri_HSV}
+    \end{subfigure} \vspace{5pt}      
+    
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSL luma/chroma}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HLS}
+    \end{subfigure}     
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chrr_HLS}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chri_HLS}
+    \end{subfigure} \vspace{5pt} 
+    
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{LAB luma/chroma}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_LAB}
+    \end{subfigure}     
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chrr_LAB}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chri_LAB}
+    \end{subfigure} \vspace{5pt} 
+        
+    \caption{Color channels of an image in different color spaces in grayscale}\label{fig:images_color_complex_space}    
+\end{figure}
+
+
+From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HSL$ color spaces prior to a transformation of the image from the $RGB$ space.
+
+Thus, the complex chrominance channel in its exponential form is defined as  
+
+\begin{equation}\label{eq:chrominance_hsv}
+    C(x,y) = S(x,y) e^{iH(x,y)}
+\end{equation}
+where $H$ is the hue and $S$ is the saturation value obtained after the $RGB$ to $HLS$ transformation. While the combined chrominance function for $L^*a^*b^*$ is defined as
+
+\begin{equation}\label{eq:chrominance_lab}
+    C(x,y) = a^*(x,y) + ib^*(x,y)
+\end{equation}
+where $a^*$ and $b^*$ are two chroma variables obtained from $RGB$ to $L^*a^*b^*$ transformation. 
+
+We obtain a complex representation of chrominance content of the image whose spectrum is interesting to analyze in order to characterize the spatial variations of the chromatic part of the image. 
 
 \section{Texture}
 
