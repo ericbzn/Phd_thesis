@@ -26,137 +26,23 @@ The main contributions of this part are:
 Ce chapitre présente une compilation des différentes manières de représenter les informations de couleur et de texture présentes dans une image. En ce qui concerne les informations de couleur, nous introduisons certains types d'espaces colorimétriques et leurs origines. De plus, nous présentons quelques techniques pour synthétiser ces informations. Dans le cas de la texture, nous présentons les différentes méthodologies pour son étude, en mettant en évidence les avantages et les inconvénients de chaque méthode.
 \section*{Abstract}
 \noindent 
-This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used as well as their origins and relationship to human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the different methodologies for its study, highlighting the advantages and disadvantages of each method. The information presented in this chapter serves as the basis for the next chapter.
+This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used as well as their origins and relationship to human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the different methodologies for its study, highlighting the advantages and disadvantages of each method. 
 
 \section{Introduction}
 
-If we look around us, we can see that many of the materials and objects of our environment only exist with certain colors. For example, the clouds are mostly  white, the grass is green, the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings and on skins or objects surfaces. The color and texture of an image is very valuable information and therefore, the perception of such information is a powerful tool for classifying and recognizing certain objects and materials.
+If we look around us, we can see that many of the materials and objects of yhe environment only exist with certain colors. For example, the clouds are mostly  white, the grass is green, the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings and on skins or objects surfaces. The color and texture of an image is very valuable information and therefore, the perception of such information is a powerful tool for classifying and recognizing certain objects and materials.
 
 For decades several vision algorithms have sought to exploit this information. Color and texture are of relevant importance for its use as a feature to characterize objects. Due to these facts, the definition and the various representations of the color, as well as the texture information, is addressed in this chapter. As far as color information is concerned, we give a brief introduction to what color is and how it can be represented. In the case of texture, we present a brief introduction to textures including its types and an overview to the various methodologies for its study, highlighting the advantages and disadvantages of each method. 
 
 
 \section{Color}
-The study of color is one of the most perplexing and interesting subjects in vision. Although the understanding of the basic concept of the color spectrum is easy to explain, the theory of color is an infinitely more complex subject that has scientific and artistic origins. For example, Newton was interested in the physical properties of color and discovered, with his famous experiment of the light beam projected on a prism, that white light is a combination of all colors across the color spectrum \citep{Newton:Book:1704}.  On the other hand, authors like Goethe dedicated their work about color to a more human-centered analysis of the perception of color through a series of experiments that measure the response of the eyes to certain colors \citep{Goethe:Book:2015}.
-%Goethe, on the other hand, was interested in the analysis of color focused on the perception of this information by humans.
+The study of color is one of the most perplexing and interesting subjects in vision. Although the understanding of the basic concept of the color spectrum is easy to explain, the theory of color is an infinitely more complex subject that has scientific and artistic origins. For example, Newton was interested in the physical properties of color and discovered, with his famous experiment of the light beam projected on a prism, that white light is a combination of all colors across the color spectrum \citep{Newton:Book:1704}.  On the other hand, authors like Goethe dedicated their work about color to a more human-centered analysis of the perception of this information through a series of experiments that measure the response of the eyes to certain colors \citep{Goethe:Book:2015}.
 
 Today we know that the electromagnetic spectrum visible to humans is between 380 and 750 nm (see figure \ref{fig:visual_spectrum}). The electromagnetic radiation between this range of wavelenghts is what we call visible light or simply light. Therefore, we can define color as the main property of visible light by which a human observer can distinguish different kinds of light \citep{Kerr:Online:2003}.
 
 From a biological point of view, we are able to perceive different colors thanks to the human visual system (HVS) composed, roughly, by the eye's elements such as the retina and its photoreceptors (cones and rods); the nervous system and; the part of the brain that interprets information \citep{Fairchild:Book:2005}. The cones are the main photoreceptors for color vison because they work when more light is available, whereas rods are active in low illumination conditions. The three types of cones we have are properly referred to as L, M and S since they are sensitive to different wavelengths of light; long, medium and short wavelengths, respectively.
 
-
-\subsubsection{Color theories}
-Historically, there have been several attempts to explain HVS and interpret its function in color vision. Two of the most popular theories of the mechanism of color vision are the trichromatic theory and the opponent-colors theory \citep{Fairchild:Book:2005}. The first of these, proposed by Maxwell, Young, and Helmholtz \citep{Young:PTRSL:1802, VonHelmholtz:Book:1867}, is based on the fact that we have three types of receptors (L-M-S cones). They assume that the receptors are roughly sensitive to the wavelengths of the red, green, and blue colors. Consequently, this theory simply suggests that each type of receptor generates an image which is weighted by the brain in order to sort out the color appearances.
-
-The second theory is based on Hering's subjective observations \citep{Hering:Book:1878}. In the experiments, he noted that certain hues were never perceived to occur together. For example, color perception was never described as reddish-green or yellowish-blue. This suggested to him that the red – green and yellow – blue color pairs had something fundamental that caused them to behave like opponent colors. 
-This theory gained strength in the mid-20th century where, supported by quantitative data, the stage theory emerged. This modern theory suggests that color perception is done in two stages. The first stage coincides with the trichromatic theory, so the LMS cones generate three color-separation images, however, in the second stage, the neurons of the retina encoded the colors into opposing signals \citep{Fairchild:Book:2005}. 
-
-\subsection{Color representations}
-Human color perception depends on the amount and wavelength of light captured by the eyes. Therefore, perceived colors can vary due to several factors such as the type of surfaces (or objects) where the light is reflected, the environment and even the eyes of the observer. However, it is definite that the perception of color is an entirely arbitrary creation of our nervous system, and it is not contained in the wavelengths or in light-reflecting objects and materials \citep{Goldstein:Book:2009}. In other words, the interpretation of this information is completely subjective. A clear example of this is the naming of colors. When an incident spectrum contains all frequencies in the range of visible wavelengths, humans perceive objects that reflect all frequencies as clear, luminous or \textit{white}. In the opposite case, when the material absorbs and does not reflect the visible frequencies, it is perceived as dark, opaque or \textit{black}. Some works in this regard state that the naming of colors varies according to culture and language \citep{Berlin.Kay:Book:1991}. However, it is possible to find a correlation between languages and identify eleven basic color terms in English language that seem to be anchored across the different languages as points in a certain color representation \citep{Kay.Regier:PNAS:2003}.
-
-%\begin{figure}[!ht]
-%    \centering
-%    \begin{subfigure}[b]{0.45\textwidth}
-%        \includegraphics[width=\textwidth]{CIE_visible_spectrum}
-%        \vspace{20pt}
-%        \caption{}
-%        \label{fig:visual_spectrum}
-%    \end{subfigure}
-%    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-%      %(or a blank line to force the subfigure onto a new line)
-%    \begin{subfigure}[b]{0.45\textwidth}
-%        \includegraphics[width=\textwidth]{CIE_chromaticity_diagram}
-%        \caption{}
-%        \label{fig:chrom_diagram}
-%    \end{subfigure} 
-%                      
-%    \caption{CIE 1931 2 Degree Standard Observer: visible light spectrum {\small \textsf{\textbf{(a)}}} and chromaticity diagram {\small \textsf{\textbf{(b)}}}.}\label{fig:cie_standard_observer}    
-%\end{figure}
-
-\begin{figure}[!ht]
-    \centering
-    \begin{subfigure}[c]{0.65\textwidth}
-        \includegraphics[width=\textwidth]{CIE_visible_spectrum}
-        \caption{}
-        \label{fig:visual_spectrum}
-    \end{subfigure}
-    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[c]{0.65\textwidth}
-        \includegraphics[width=\textwidth]{CIE_chromaticity_diagram}
-        \caption{}
-        \label{fig:chrom_diagram}
-    \end{subfigure} 
-                      
-    \caption{CIE 1931 2 Degree Standard Observer: visible light spectrum {\small \textsf{\textbf{(a)}}} and chromaticity diagram {\small \textsf{\textbf{(b)}}}.}\label{fig:cie_standard_observer}    
-\end{figure}
-
-At first glance, the tasks and experiments mentioned above appear to be simple and straightforward for a human being, however, replicating in a machine is quite challenging. The definition of a coherent color space is therefore essential to represent the color information for its use in digital image processing. 
-
-As a result of the two color theories discussed above, it has been proven that to describe a particular color we must define three values. Color is thusm in the mathematical sense, a 3-d property. 
-
-The result of these theories has been the development of abstract mathematical models that serve to represent colors as vectors or tuples of numbers. In the case of another three-dimensional property, the location of a point in space, many different sets of three variables (coordinates) may be used. Similarly, in the case of color, many different systems of three variables may be utilized. A particular one is traditionally
-called a \textit{color model}, and its variables are said to be the coordinates of its
-three-dimensional \textit{color space}.
-
-
-
-CIE, the International Commission on Illumination, in 1931 defined a color-mapping function based on a standard observer, representing an average human’s chromatic response within a $2^ \circ$ arc, to primaries at R = 435.8 nm, G = 546.1 nm, and B = 700 nm. Figure 2.17 shows the CIE 1931 chromaticity chart. The boundary represents maximum saturation for the spectral colors, and the diagram forms the boundary of all perceivable hues. The colors that can be created through combinations of any three primary colors (such as RGB) can be represented on the chromaticity diagram by a triangle joining the coordinates for the three colors.
-
-One of the main contributors in the creation of color models is the \textit{Commission Internationale de l'Éclairage} (CIE) \citep{CIE:Journal:1932}, who defined the three standard primaries of color $X$, $Y$ and $Z$. These primaries allow to define any visible color of the spectrum (see figure \ref{fig:visual_spectrum}) as a weighted sum of the three primary colors. They are defined mathematically with positive color-matching functions that specify the amount of each primary needed to describe any spectral color \citep{Wright:BookCh2:2007}. This color model is known as the CIE 1931 XYZ.
-
-The \textbf{XYZ color model} quantify an object’s color using a standardized method taking into account the human eye’s (observer) response to these colors in the calculation. $X$, $Y$ and $Z$ are the amount of each primary needed to produce a desired color
-\begin{eqnarray} 
- c(\lambda) = (X,Y,Z) \label{eq:XYZ_color}
-\end{eqnarray}
-where the primary $Y$ is chosen such that its colour-matching function exactly matches the luminous-efficiency function for the human eye, i.e., $Y$ measure the luminance of a color \citep{Wright:BookCh2:2007}. Therefore, to define a color in this space, we need to provide the weights for the $X$, $Y$ and $Z$ primaries, for example, $c =xX + yY + zZ$, where 
-\begin{gather} 
-	x = \frac{X}{X+Y+Z} \nonumber \\ 
-	y = \frac{Y}{X+Y+Z} \label{eq:xyz_color_coords} \\ 
-	z = \frac{Z}{X+Y+Z} \nonumber 
-\end{gather}
-
-Under this representation, we can ignore the dimension of the luminance by the normalizacion of the primaries with the total light intensity; $x+y+z=1$. This allow to show all visibles colors of the spectrum in the chromaticity diagram (see figure \ref{fig:chrom_diagram}). The $x$ and $y$ axis give the normalised amounts of the $X$ and $Y$ primaries for a particular colour, and hence $z = 1 - x - y$ gives the amount of the $Z$ primary required. Chromaticity depends on dominant wavelength and saturation, and is independent of luminous energy. Colours with the same chromaticity but different luminance, all map to the same point within this region.
-
-In the next subsection, we describe a number of color models which are important both in theoretical work and in the representation of color in a wide range of technical fields, including the representation of still and moving images in digital form. 
-
-\subsubsection{Color spaces}
-
-
-%Color is a physical property linked to the electromagnetic spectrum of light \citep{Beyerer.Leon.ea:Book:2016}. The perception of color in humans results from the quantity and wavelength of light captured by the eyes. This perception depends on many factors such as the type of surfaces or objects where the light is reflected, the environment and even the eyes of the observer. The perception of color is then an entirely arbitrary creation of our nervous system, and there is no way it is contained in the wavelengths or in light-reflecting objects and materials \citep{Goldstein:Book:2009} \citep{Beyerer.Leon.ea:Book:2016}. When an incident spectrum contains all frequencies in the range of visible wavelengths, humans perceive objects that reflect all frequencies as clear or \textit{white}. In the opposite case, when the material absorbs and does not reflect the visible frequencies, it is perceived as dark or \textit{black} \citep{Gonzalez.Woods:Book:2008}. 
-%
-%
-%Although color has measurable physical properties, the interpretation and perception of this information is completely subjective. A clear example of this is the naming of colors. Some works in this regard state that the naming of colors varies according to culture and language \citep{Berlin.Kay:Book:1991}. However, it is possible to find a correlation between languages and identify eleven basic color terms in English language that  seem to be anchored across the different languages as points in a certain color space \citep{Kay.Regier:PNAS:2003}. The definition of a coherent color space to the final task is therefore essential to represent the color information digitally.
-
-
-%\section{Color representation}
-%
-%The representation of color has evolved over time developing theories, such as the trichromatic theory or the opponent-colors theory \citep{Fairchild:Book:2005}, that attempt to explain the function of color vision. 
-%
-%The result of these theories has been the development of abstract mathematical models that serve to represent colors as vectors or tuples of numbers. These vectors, which are mostly in three dimensions, can be arranged in a variety of ways. Such particular organizations are known as color models.
-%
-
-
-
-The \textbf{RGB color model} is an additive model coming from the three-component theory. This model consists of three independent planes, represented as a three
-dimensional vector, one in each of the primary colors: red, green and blue. Therefore, to define a color in this model, we need to specify the proportion of red, green, and blue colors. 
-
-The \textbf{HSV color model} is a cylindrical color model that remaps the RGB primary colors into dimensions that are easier for humans to understand. Like the Munsell Color System, these dimensions are hue, saturation, and value.
-
-Hue specifies the angle of the color on the RGB color circle. A 0° hue results in red, 120° results in green, and 240° results in blue. Saturation controls the amount of color used. A color with 100\% saturation will be the purest color possible, while 0\% saturation yields grayscale. Value controls the brightness of the color. A color with 0\% value is pure black while a color with 100\% value has no black mixed into the color. Because this dimension is often referred to as brightness, the HSV color model is sometimes called HSB.
-It is important to note that the three dimensions of the HSV color model are interdependent. If the value dimension of a color is set to 0\%, the amount of hue and saturation does not matter as the color will be black. Likewise, if the saturation of a color is set to 0%, the hue does not matter as there is no color used. Because the hue dimension is circular, the HSV color model is best depicted as a cylinder. This is illustrated in the interactive example below, where all possible color mixes are represented within the bounds of the cylinder.
-
-The \textbf{HSL color model} is another cylindrical model that shares two dimensions with HSV, while replacing the value dimension with a lightness dimension. Hue specifies the angle of the color on the RGB color circle while saturation controls the purity of the color, exactly like HSV. Lightness controls the luminosity of the color. This dimension is different from the HSV value dimension in that the purest color is positioned midway between black and white ends of the scale. A color with 0\% lightness is black, 50\% is the purest color possible, and 100\% is white. Even though the saturation dimension theoretically is similar between the two color models (controlling how much pure color is used), the resulting saturation scales differ between the models caused by the brightness to lightness remapping. Like HSV, the HSL color model is best depicted as a cylinder.
-
-The \textbf{LAB color model} (also known as CIEL*a*b* or CIELAB) is modeled on the opponent-process theory of human perception with two of three dimensions representing scales from red to green and yellow to blue – two opponent color pairs that humans cannot perceive simultaneously.
-
-
-\begin{itemize}
-
-	\item \textbf{RBG (Red-Green-Blue)} A color space that maps the amount of red, green and blue light perceived to reproduce the visible color gamut.
-	\item \textbf{HSV (Hue-Saturation-Value) and HSL (Hue-Saturation-Lightness)} Alternative representations to the RGB color space that more closely aligns with the way human vision perceives color-creating attributes.
-	\item \textbf{Lab (CIEL*a*b*) / Luv (CIEL*u*v*).} A color space where L compenent represents luminance and a* and b* (resp. u* v*) components represent chroma. This representation was created to reflect the high sensitivity of humans to changes in luminance in the perception of color.
-\end{itemize}
-
+The figure \ref{fig:color_images} shows different examples of color images. Specifically, the image on the left is said to be synthetic because it is a man-made image where the colors encode the perceptual information in the image. The remaining three images are natural images that show the importance of color information since many elements of nature have a specific color representation distribution.
 
 \begin{figure}[!ht]
     \centering
@@ -189,6 +75,77 @@ The \textbf{LAB color model} (also known as CIEL*a*b* or CIELAB) is modeled on t
                   
     \caption{Some examples of color images: One synthetic image {\small \textsf{\textbf{(a)}}} and three natural images [{\small \textsf{\textbf{(b) (c) (d)}}}].}\label{fig:color_images}    
 \end{figure}
+
+
+\subsubsection{Color theory}
+Historically, there have been several attempts to explain the HVS and interpret its function in color vision. Two of the most popular theories of the mechanism of color vision are the trichromatic theory and the opponent-colors theory \citep{Fairchild:Book:2005}. The first of these, proposed by Maxwell, Young, and Helmholtz \citep{Young:PTRSL:1802, VonHelmholtz:Book:1867}, is based on the fact that we have three types of receptors (L-M-S cones). They assume that the receptors are roughly sensitive to the wavelengths of the red, green, and blue colors. Consequently, this theory simply suggests that each type of receptor generates an image which is weighted by the brain in order to sort out the color appearances.
+
+The second theory is based on Hering's subjective observations \citep{Hering:Book:1878}. In his experiments, he noted that certain hues were never perceived to occur together. For example, color perception was never described as reddish-green or yellowish-blue. This suggested to him that the red – green and yellow – blue color pairs had something fundamental that caused them to behave like opponent colors. 
+This theory gained strength in the mid-20th century where, supported by quantitative data, the stage theory emerged. This modern theory suggests that color perception is done in two stages. The first stage coincides with the trichromatic theory, so the LMS cones generate three color-separation images, however, in the second stage, the neurons of the retina encoded the colors into opposing signals \citep{Fairchild:Book:2005}. 
+
+\subsection{Color representations}
+Human color perception depends on the amount and wavelength of light captured by the eyes. Therefore, perceived colors can vary due to several factors such as the type of surfaces (or objects) where the light is reflected; the environment and even; the eyes of the observer. However, it is definite that the perception of color is an entirely arbitrary creation of our nervous system, and it is not contained in the wavelengths or in light-reflecting objects and materials \citep{Goldstein:Book:2009}. In other words, the interpretation of this information is completely subjective. A clear example of this is the naming of colors. When an incident spectrum contains all frequencies in the range of visible wavelengths, humans perceive objects that reflect all frequencies as clear, luminous or \textit{white}. In the opposite case, when the material absorbs and does not reflect the visible frequencies, it is perceived as dark, opaque or \textit{black}. Some works in this regard state that the naming of colors varies according to culture and language \citep{Berlin.Kay:Book:1991}. However, it is possible to find a correlation between languages and identify eleven basic color terms in English language that seem to be anchored across the different languages as points in a certain color representation \citep{Kay.Regier:PNAS:2003}.% Add diagram images of color theory models???
+
+At first glance, the tasks and experiments mentioned above appear to be simple and straightforward for a human being, however, replicating this in a machine is quite challenging. The definition of a coherent method of describing a color is therefore essential to represent it and for its use in digital image processing. 
+
+A \textit{color model} is the mathematical way of describing colors. Such abstract mathematical models are the result of the theories of color described above. We see this in the fact that most models represent a color using three values. This consensus has allowed the development of color models that represent colors as a 3-d property using vectors or tuples of numbers \citep{Douglas.Kerr:Online:2005}. Like any property in 3-d, real colors can be represented as a point in space using a specific coordinate system. A \textit{color space} is thus method of mapping the visible colors a the color model and consequently, they define the range of colors that can be displayed or reproduced on a medium. 
+
+In principle, there are differences between color models and color spaces. For example, models are independent of physical devices (e.g. screens, printers) while color spaces are not. However, in an abuse of language, in this document we will use the term color space to mean a particular fully specified color model. In the next subsection, we describe a number of color spaces that are important both in the theoretical field and in the technical field for the representation of color and its use in the computer vision applications developped in this thesis.
+ 
+
+\subsubsection{Color models and color spaces}
+Color spaces are the quantitative links between the wavelength distributions of visible light and the colors psychologically perceived by the HVS. Since this perception is completely subjective, it is necessary to take the observers into account when modeling a color space. The \textit{Commission Internationale de l'Éclairage} (CIE) is one of the main contributors in the creation of color models. In 1931, they defined a color-mapping function based on a standard observer, representing an average human’s chromatic response within a $2^ \circ$ arc, to primaries at $R_0 = 435.8$ nm, $G_0 = 546.1$ nm, and $B_0 = 700$ nm \citep{Bull:Book:2014}. The positive color-matching functions specify the three standard primaries of color $X$, $Y$ and $Z$ \citep{CIE:Journal:1932}, which allow to define any visible color of the spectrum (see figure \ref{fig:visual_spectrum}) as a weighted sum of three primary colors \citep{Wright:BookCh2:2007}.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[c]{0.65\textwidth}
+        \includegraphics[width=\textwidth]{CIE_visible_spectrum}
+        \caption{}
+        \label{fig:visual_spectrum}
+    \end{subfigure}\\
+    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[c]{0.65\textwidth}
+        \includegraphics[width=\textwidth]{CIE_chromaticity_diagram}
+        \caption{}
+        \label{fig:chrom_diagram}
+    \end{subfigure} 
+                      
+    \caption{CIE 1931 2 Degree Standard Observer: visible light spectrum {\small \textsf{\textbf{(a)}}} and chromaticity diagram {\small \textsf{\textbf{(b)}}}.}\label{fig:cie_standard_observer}    
+\end{figure}
+
+With the standard primaries it is possible to quantify an object’s colors using a standardized method that takes into account the human eye’s (observer) response to these colors through the \textbf{XYZ color model} (also known as the CIEXYZ color model). In the model $X$, $Y$ and $Z$ are the amount of each primary needed to produce a desired color
+\begin{eqnarray} 
+ c(\lambda) = (X,Y,Z) \label{eq:XYZ_color}
+\end{eqnarray}
+where the primary $Y$ is chosen such that its color-matching function exactly matches the luminous-efficiency function for the human eye, i.e., $Y$ measure the luminance of a color \citep{Wright:BookCh2:2007}. Therefore, to define a color in this space, we need to provide the weights for the $X$, $Y$ and $Z$ primaries, for example, $c =xX + yY + zZ$, where 
+\begin{gather} 
+	x = \frac{X}{X+Y+Z} \nonumber \\ 
+	y = \frac{Y}{X+Y+Z} \label{eq:xyz_color_coords} \\ 
+	z = \frac{Z}{X+Y+Z} \nonumber 
+\end{gather}
+
+Under this representation, we can ignore the dimension of the luminance by the normalizacion of the primaries with the total light intensity; $x+y+z=1$. This allow to show all visibles colors of the spectrum in a diagram. Figure \ref{fig:chrom_diagram} shows such a diagram known as the CIE 1931 2 degree standard observer chromaticity chart. The $x$ and $y$ axis of the diagram give the normalised amounts of the $X$ and $Y$ primaries for a particular color, and hence $z = 1 - x - y$ gives the amount of the $Z$ primary required. The diagram reveals that large $x$ values correspond to red or orange hues, large values of $y$ correspond to green and, large $z$ values correspond to blue, violet or purple hues. Chromaticity depends on dominant wavelength and saturation, and is independent of luminous energy. Colors with the same chromaticity but different luminance, all map to the same point within this region. Moreover, the boundary of the chart represents maximum saturation for the visible colors, and the diagram forms the boundary of all perceivable hues \citep{Bull:Book:2014}. 
+
+The CIEXYZ model is a reference which has been uses as a basis for to defining other color spaces, and therefore as a standard basis in image processing for moving from one color space to another. The color gamut that can be created through combinations of any three primary colors (e.g. RGB) can be represented on the chromaticity diagram by a triangle joining the coordinates for the three colors. 
+%Images of RGB, HSV, HSL, LAB models?
+
+The \textbf{RGB color model} is one of the most popular models in computer vision and image analysis. This is an additive model coming directly from the three-component theory, this means that three color light beams (their wavelength light spectra) are added together to make a final color. The model consists of three independent planes, represented as a three dimensional vector, one in each of the primary colors: red, green and blue. Therefore, to define a color in this model, we need to specify the proportion of red, green, and blue colors. 
+
+Contrary to the XYZ model, the RGB color space is a device-dependent space, that is, different devices may reproduce or detect the same RGB value differently since the color elements and their response to the individual R, G, and B levels vary according to the manufacturer.
+
+The RGB color space is popularly represented as a cube that maps the red, blue and green dimensions on the x, y, z axes of the 3-d Cartesian coordinate system.
+
+The \textbf{HSV color model} is a cylindrical color model that remaps the RGB primary colors into dimensions that are easier for humans to understand. Like the Munsell Color System, these dimensions are hue, saturation, and value.
+
+Hue specifies the angle of the color on the RGB color circle. A 0° hue results in red, 120° results in green, and 240° results in blue. Saturation controls the amount of color used. A color with 100\% saturation will be the purest color possible, while 0\% saturation yields grayscale. Value controls the brightness of the color. A color with 0\% value is pure black while a color with 100\% value has no black mixed into the color. Because this dimension is often referred to as brightness, the HSV color model is sometimes called HSB.
+It is important to note that the three dimensions of the HSV color model are interdependent. If the value dimension of a color is set to 0\%, the amount of hue and saturation does not matter as the color will be black. Likewise, if the saturation of a color is set to 0\%, the hue does not matter as there is no color used. Because the hue dimension is circular, the HSV color model is best depicted as a cylinder. This is illustrated in the interactive example below, where all possible color mixes are represented within the bounds of the cylinder.
+
+The \textbf{HSL color model} is another cylindrical model that shares two dimensions with HSV, while replacing the value dimension with a lightness dimension. Hue specifies the angle of the color on the RGB color circle while saturation controls the purity of the color, exactly like HSV. Lightness controls the luminosity of the color. This dimension is different from the HSV value dimension in that the purest color is positioned midway between black and white ends of the scale. A color with 0\% lightness is black, 50\% is the purest color possible, and 100\% is white. Even though the saturation dimension theoretically is similar between the two color models (controlling how much pure color is used), the resulting saturation scales differ between the models caused by the brightness to lightness remapping. Like HSV, the HSL color model is best depicted as a cylinder.
+
+The \textbf{LAB color model} (also known as CIEL*a*b* or CIELAB) is modeled on the opponent-process theory of human perception with two of three dimensions representing scales from red to green and yellow to blue – two opponent color pairs that humans cannot perceive simultaneously.
+
+
 
 \begin{figure}[!ht]
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
@@ -259,15 +216,122 @@ The \textbf{LAB color model} (also known as CIEL*a*b* or CIELAB) is modeled on t
 	\caption{Color channels of an image in different color spaces in a grayscale}\label{fig:images_color_space}    
 \end{figure}
 
+\subsubsection{Two-channel complex image representation}
+\begin{figure}[!ht] 
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{lab_complex_color}
+		\caption{}	
+		\label{fig:lab_complex_color}
+	\end{subfigure}
+	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hsl_complex_color}
+		\caption{}	
+		\label{fig:hsl_complex_color}
+	\end{subfigure}
+	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hsv_complex_color}
+		\caption{ }	
+		\label{fig:hsv_complex_color}
+	\end{subfigure}
+	
+	\caption{}
+	\label{fig:complex_color_spaces}
+\end{figure}
+
+
+\begin{figure}[!ht]
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras}
+    \end{subfigure} \\    
+     
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV luma/chroma}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HSV}
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chrr_HSV}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chri_HSV}
+    \end{subfigure} \vspace{5pt}      
+    
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSL luma/chroma}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HLS}
+    \end{subfigure}     
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chrr_HLS}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chri_HLS}
+    \end{subfigure} \vspace{5pt} 
+    
+    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{LAB luma/chroma}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_LAB}
+    \end{subfigure}     
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chrr_LAB}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{araras_chri_LAB}
+    \end{subfigure} \vspace{5pt} 
+        
+    \caption{Color channels of an image in different color spaces in grayscale}\label{fig:images_color_complex_space}    
+\end{figure}
+
+
+From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HSL$ color spaces prior to a transformation of the image from the $RGB$ space.
+
+Thus, the complex chrominance channel in its exponential form is defined as  
+
+\begin{equation}\label{eq:chrominance_hsv}
+    C(x,y) = S(x,y) e^{iH(x,y)}
+\end{equation}
+where $H$ is the hue and $S$ is the saturation value obtained after the $RGB$ to $HLS$ transformation. While the combined chrominance function for $L^*a^*b^*$ is defined as
+
+\begin{equation}\label{eq:chrominance_lab}
+    C(x,y) = a^*(x,y) + ib^*(x,y)
+\end{equation}
+where $a^*$ and $b^*$ are two chroma variables obtained from $RGB$ to $L^*a^*b^*$ transformation. 
+
+We obtain a complex representation of chrominance content of the image whose spectrum is interesting to analyze in order to characterize the spatial variations of the chromatic part of the image. 
+
+
+
+
+
 The overall distribution of color within an image is a useful clue that contributes to the description of the content of an image. For example, we can characterize images that contain landscapes with mountains, jungles, urban environments, deserts or other scenes with different elements by their color distribution. The global color distribution can be represented by means of a color image histogram, which is a discrete function that associates to each intensity value (per color channel) the number of pixels that belong to this value.
 
 The advantages of this representation is that they are invariant to the rotation or translation of the image, as well as, to a lesser extent, to changes of point of view and changes of scale. In addition, we can compact the image color information by reducing the count intervals, that is, by selecting a small number of bins.
 
 
-\subsection{Color information management in computer vision and image processing}
+
+\subsection{Compact color representations for image processing}
 
 
-\subsection{Single-channel Color Histogram}
+\subsubsection{Single-channel Color Histogram}
 
 
 
@@ -288,7 +352,7 @@ The advantages of this representation is that they are invariant to the rotation
 \end{figure}
     
     
-\subsection{3-d Color Histogram}
+\subsubsection{3-d Color Histogram}
 
 \begin{figure}[!ht]
     \centering
@@ -310,7 +374,7 @@ The advantages of this representation is that they are invariant to the rotation
 \end{figure}
 
 
-\subsection{Color Signature}
+\subsubsection{Color Signature}
 
 \begin{figure}[!ht]
     \centering
@@ -440,107 +504,7 @@ The advantages of this representation is that they are invariant to the rotation
 \end{figure}
 
 
-\subsubsection{Two-channel complex image representation}
-\begin{figure}[!ht] 
-	\centering
-	\begin{subfigure}[b]{0.48\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{lab_complex_color}
-		\caption{}	
-		\label{fig:lab_complex_color}
-	\end{subfigure}
-	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-	%(or a blank line to force the subfigure onto a new line)
-	\begin{subfigure}[b]{0.48\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{hsl_complex_color}
-		\caption{}	
-		\label{fig:hsl_complex_color}
-	\end{subfigure}
-	~%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-	%(or a blank line to force the subfigure onto a new line)
-	\begin{subfigure}[b]{0.48\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{hsv_complex_color}
-		\caption{ }	
-		\label{fig:hsv_complex_color}
-	\end{subfigure}
-	
-	\caption{}
-	\label{fig:complex_color_spaces}
-\end{figure}
 
-
-\begin{figure}[!ht]
-    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
-    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras}
-    \end{subfigure} \\    
-     
-    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV luma/chroma}}} }}%
-    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HSV}
-    \end{subfigure}      
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_chrr_HSV}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_chri_HSV}
-    \end{subfigure} \vspace{5pt}      
-    
-    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSL luma/chroma}}} }}%
-    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HLS}
-    \end{subfigure}     
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_chrr_HLS}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_chri_HLS}
-    \end{subfigure} \vspace{5pt} 
-    
-    \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{LAB luma/chroma}}} }}%
-    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_LAB}
-    \end{subfigure}     
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_chrr_LAB}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{araras_chri_LAB}
-    \end{subfigure} \vspace{5pt} 
-        
-    \caption{Color channels of an image in different color spaces in grayscale}\label{fig:images_color_complex_space}    
-\end{figure}
-
-
-From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HSL$ color spaces prior to a transformation of the image from the $RGB$ space.
-
-Thus, the complex chrominance channel in its exponential form is defined as  
-
-\begin{equation}\label{eq:chrominance_hsv}
-    C(x,y) = S(x,y) e^{iH(x,y)}
-\end{equation}
-where $H$ is the hue and $S$ is the saturation value obtained after the $RGB$ to $HLS$ transformation. While the combined chrominance function for $L^*a^*b^*$ is defined as
-
-\begin{equation}\label{eq:chrominance_lab}
-    C(x,y) = a^*(x,y) + ib^*(x,y)
-\end{equation}
-where $a^*$ and $b^*$ are two chroma variables obtained from $RGB$ to $L^*a^*b^*$ transformation. 
-
-We obtain a complex representation of chrominance content of the image whose spectrum is interesting to analyze in order to characterize the spatial variations of the chromatic part of the image. 
 
 \section{Texture}
 
