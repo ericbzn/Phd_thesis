@@ -130,22 +130,30 @@ Under this representation, we can ignore the dimension of the luminance by the n
 The CIEXYZ model is a reference which has been uses as a basis for to defining other color spaces, and therefore as a standard basis in image processing for moving from one color space to another. The color gamut that can be created through combinations of any three primary colors (e.g. RGB) can be represented on the chromaticity diagram by a triangle joining the coordinates for the three colors. 
 %Images of RGB, HSV, HSL, LAB models?
 
-The \textbf{RGB color model} is one of the most popular models in computer vision and image analysis. This is an additive model coming directly from the three-component theory, this means that three color light beams (their wavelength light spectra) are added together to make a final color. The model consists of three independent planes, represented as a three dimensional vector, one in each of the primary colors: red, green and blue. Therefore, to define a color in this model, we need to specify the proportion of red, green, and blue colors. 
+The \textbf{RGB color model} is one of the most popular models in computer vision and image analysis. This is an additive model coming directly from the three-component theory, this means that three color light beams (their wavelength light spectra) are added together to make a final color \citep{Gonzalez.Woods:Book:2008}. The model consists of three independent planes, represented as a three dimensional vector, one in each of the primary colors: red, green and blue. Therefore, to define a color in this model, we need to specify the proportion of red, green, and blue colors. 
 
 Contrary to the XYZ model, the RGB color space is a device-dependent space, that is, different devices may reproduce or detect the same RGB value differently since the color elements and their response to the individual R, G, and B levels vary according to the manufacturer.
 
-The RGB color space is popularly represented as a cube that maps the red, blue and green dimensions on the x, y, z axes of the 3-d Cartesian coordinate system.
+The RGB color space is the most popular color space based on the RGB color model. The set of colors of this color space can be represented geometrically as a cube that maps the red, blue and green dimensions onto the $x$, $y$, $z$ axes of the 3-d Cartesian coordinate system in an Euclidean space. The non-negative values of the $RGB$ triplet $(r,g,b)$ are in the range $[0,1]$, where the origin at the vertex $(0,0,0)$ encodes the color black and the vertex $(1,1,1)$ encodes the color white. 
 
-The \textbf{HSV color model} is a cylindrical color model that remaps the RGB primary colors into dimensions that are easier for humans to understand. Like the Munsell Color System, these dimensions are hue, saturation, and value.
+The \textbf{HSV color model} and the \textbf{HSL color model} are cylindrical color models that remaps the RGB primary colors into dimensions that are easier for humans to understand. These two colos models share two of their three dimensions, the hue and the saturation. The third dimension of the HSV model is the value while the HSL model has a lightness dimension. Below is a more detailed description of these dimensions.
 
-Hue specifies the angle of the color on the RGB color circle. A 0° hue results in red, 120° results in green, and 240° results in blue. Saturation controls the amount of color used. A color with 100\% saturation will be the purest color possible, while 0\% saturation yields grayscale. Value controls the brightness of the color. A color with 0\% value is pure black while a color with 100\% value has no black mixed into the color. Because this dimension is often referred to as brightness, the HSV color model is sometimes called HSB.
-It is important to note that the three dimensions of the HSV color model are interdependent. If the value dimension of a color is set to 0\%, the amount of hue and saturation does not matter as the color will be black. Likewise, if the saturation of a color is set to 0\%, the hue does not matter as there is no color used. Because the hue dimension is circular, the HSV color model is best depicted as a cylinder. This is illustrated in the interactive example below, where all possible color mixes are represented within the bounds of the cylinder.
+\begin{itemize}
+	\item Hue specifies the angle of the color on the RGB color circle. A $0^\circ$ hue results in red, $120^\circ$ results in green, and $240^\circ$ results in blue.
+	\item Saturation or colorfulness controls the amount of color used. One particular thing about the saturation between the two cylindrical color spaces is that even though the saturation dimension theoretically is similar between them (controlling how much pure color is used), the resulting saturation scales differ between the models caused by the brightness to lightness remapping (see diferences between saturation image channels in figure \ref{fig:color_image_representations}). Therefore, for the HSV model a color with 100\% saturation will be the purest color possible, while 0\% saturation yields grayscale. On the other hand, to obtain the purest color in the HSL model we need 50\% lightness.
+	\item Value controls the brightness of the color. A color with 0\% value is pure black while a color with 100\% value has no black mixed into the color. Because this dimension is often referred to as brightness, the HSV color model is sometimes called HSB.
+	\item Lightness controls the luminosity of the color. This dimension is different from the HSV value dimension in that the purest color is positioned midway between black and white ends of the scale. A color with 0\% lightness is black, 50\% is the purest color possible, and 100\% is white.
+\end{itemize}
 
-The \textbf{HSL color model} is another cylindrical model that shares two dimensions with HSV, while replacing the value dimension with a lightness dimension. Hue specifies the angle of the color on the RGB color circle while saturation controls the purity of the color, exactly like HSV. Lightness controls the luminosity of the color. This dimension is different from the HSV value dimension in that the purest color is positioned midway between black and white ends of the scale. A color with 0\% lightness is black, 50\% is the purest color possible, and 100\% is white. Even though the saturation dimension theoretically is similar between the two color models (controlling how much pure color is used), the resulting saturation scales differ between the models caused by the brightness to lightness remapping. Like HSV, the HSL color model is best depicted as a cylinder.
+It is important to note that the three dimensions of the HSV/HSL color models are interdependent. If the value/lightness dimension of a color is set to 0\%, the amount of hue and saturation does not matter as the color will be black. Likewise, if the saturation of a color is set to 0\%, the hue does not matter as there is no color used.
 
-The \textbf{LAB color model} (also known as CIEL*a*b* or CIELAB) is modeled on the opponent-process theory of human perception with two of three dimensions representing scales from red to green and yellow to blue – two opponent color pairs that humans cannot perceive simultaneously.
+Unlike the RGB color space, the HSV/HSL triplet values $(h,s,v)$/$(h,s,l)$c annot be represented in a 3-d Euclidean space. The circular nature of the hue forces the first dimension to be in an angular space between $0^\circ$ and $360^\circ$, while the remaining two dimensions inhabit a linear space with values between 0 and 1. Consequetly, the HSV color space is best visualized as 3-d cone and the HSL color space as a 3-d bicone. 
 
+The \textbf{LAB color model} (also referred as CIEL*a*b* or CIELAB) is a result of the opponent-process theory of human perception. In it, color is also expressed with three values. Channel L represents the perceptual luminance wjereas channels A and B represent the scale from red to green and from yellow to blue respectively, which is consistent with the two opponent color pairs that humans cannot perceive simultaneously. 
 
+The color space from the LAB model was born with the intention of being a perceptually uniform space, that is, a space where a given numerical change corresponds to the same perception of change in color. As a non-linear transformation of the XYZ color space, the LAB color space is a device-independent space. This implies that its gamut is related to the CIE standard observer model, and therefore, it is impossible to generate a visual representation that displays all the colors of its gamut. The LAB space coordinates are given by the triplet $(l,a,b)$. The first valuer represent the luminance L and it may take values from $0$ to $100$, where 0 points to black and $100$ indicates (diffuse) white. The remaining two coordinates are technically unbounded, though it is commonly mapped to the range $[-128, 127]$. Negative values indicate green and positive values red for channel A, while negative values indicate yellow and positive values blue for channel B. 
+
+This color space offers some advantages over the spaces described above, especially in the area of image processing. The fact that this space was constructed to approximate human color vision makes it useful for calculating differences between two neighboring colors with high precision. However, this color model contains colors that are not physically representable by the devices, and a bad color quantization (bits per channel) can generate significant errors.
 
 \begin{figure}[!ht]
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
@@ -216,7 +224,17 @@ The \textbf{LAB color model} (also known as CIEL*a*b* or CIELAB) is modeled on t
 	\caption{Color channels of an image in different color spaces in a grayscale}\label{fig:images_color_space}    
 \end{figure}
 
-\subsubsection{Two-channel complex image representation}
+
+The figure \ref{fig:images_color_space} shows the three channels of the different color spaces reviewed so far. The input image is a natural color image where the three main colors red, green, and blue naturally stand out. For the visualization of each color channels, we transform its channel values to the range $[0, 255]$ and 255 and displayed in a gray scale. 
+
+
+\subsubsection{Luminance-chrominance color spaces}%Two-channel complex image representation
+
+Color spaces mostly map the perception of color as a three-dimensional property. However, these dimensions can be encompassed in only two aspects, so we can classify them into luminance-chromaticity and luminance-chrominance color spaces. In both cases, luminance is the property that describes the brightness of light, however, both categories have different ways of defining color. Chromaticity-based spaces define color independently of luminance (or the luminance equivalent in a particular color space). In a chrominance-based space, the chrominance values of the image change as the light intensity varies.
+ 
+, where chromaticity and chrominance contain two values.
+
+
 \begin{figure}[!ht] 
 	\centering
 	\begin{subfigure}[b]{0.48\textwidth}
