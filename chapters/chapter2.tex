@@ -231,9 +231,8 @@ The figure \ref{fig:images_color_space} shows the three channels of the differen
 \subsubsection{Luminance-chrominance color spaces}%Two-channel complex image representation
 
 Color spaces mostly map the perception of color as a three-dimensional property. However, these dimensions can be encompassed in only two aspects, so we can classify them into luminance-chromaticity and luminance-chrominance color spaces. In both cases, luminance is the property that describes the brightness of light, however, both categories have different ways of defining color. Chromaticity-based spaces define color independently of luminance (or the luminance equivalent in a particular color space). In a chrominance-based space, the chrominance values of the image change as the light intensity varies.
- 
-, where chromaticity and chrominance contain two values.
-
+  
+We can obtain a color space based on chromaticity from the classic trichromatic models described in the previous section. The chromaticity of these models consists mainly of two independent parameters. For example, the $xyY$ color space, from which we obtaon the CIE chromaticity chart (see figure \ref{fig:chrom_diagram}), uses the X and Y dimensions to calculate chromaticity. In the case of RGB space, it is possible to obtain a space based on chromaticity following the same principle; using only the R and G channels for its calculation. For cylindrical color spaces (HSV, HSL), the independent parameters that describe chromaticity are the dimensions of hue and colorfulness (saturation).
 
 \begin{figure}[!ht] 
 	\centering
@@ -263,6 +262,20 @@ Color spaces mostly map the perception of color as a three-dimensional property.
 	\caption{}
 	\label{fig:complex_color_spaces}
 \end{figure}
+
+Chromaticity-based models are reputed for their use in image editing and color correction. However, chrominance-based spaces are useful if we are looking for a uniform distribution of the color information in an image. Some examples of color spaces in this category are CIELAB and CIELUV. In them, the colorfulness information of an image is found in channels A and B (resp. U and V) and the final color is defined by the brightness of the light defined by the luminance L.
+
+The use of spaces based on luminance-chrominance reduces the dimensionality of the color to two channels $L$ and $C$. To make this two-channel color representation possible, we combine the values of channels A and B with the chrominance function.
+\begin{equation}\label{eq:chrominance_lab}
+    C(x,y) = a^*(x,y) + ib^*(x,y)
+\end{equation}
+
+In the same way, it is possible to obtain a luminance-chrominance color space using the dimensions of the cylindrical HSV/HSL color spaces. The chrominance is described by the hue H and saturation S channels such that the complex chrominance channel is defined by the function
+\begin{equation}\label{eq:chrominance_hsv}
+    C = S e^{iH}
+\end{equation}
+
+These representations have the advantage of reducing the dimensionality of the color information. In image processing, these color spaces can be obtained from the transformation of the image from the RGB space to the LAB, HSV and HSL spaces, from which the chrominance variables and consequently the complex chrominance channel are obtained. Regarding luminance, it may differ depending on the input color space. For example, for the LAB and HSL spaces, this variable is naturally defined, however, in the case of the HSV space, the luminance channel is obtained from the transformation of the RGB input image to a grayscale image. The figure \ref{fig:complex_color_spaces} shows the diagrams for obtaining an image represented in two channels.
 
 
 \begin{figure}[!ht]
@@ -319,35 +332,26 @@ Color spaces mostly map the perception of color as a three-dimensional property.
     \caption{Color channels of an image in different color spaces in grayscale}\label{fig:images_color_complex_space}    
 \end{figure}
 
-
-From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HSL$ color spaces prior to a transformation of the image from the $RGB$ space.
-
-Thus, the complex chrominance channel in its exponential form is defined as  
-
-\begin{equation}\label{eq:chrominance_hsv}
-    C(x,y) = S(x,y) e^{iH(x,y)}
-\end{equation}
-where $H$ is the hue and $S$ is the saturation value obtained after the $RGB$ to $HLS$ transformation. While the combined chrominance function for $L^*a^*b^*$ is defined as
-
-\begin{equation}\label{eq:chrominance_lab}
-    C(x,y) = a^*(x,y) + ib^*(x,y)
-\end{equation}
-where $a^*$ and $b^*$ are two chroma variables obtained from $RGB$ to $L^*a^*b^*$ transformation. 
-
-We obtain a complex representation of chrominance content of the image whose spectrum is interesting to analyze in order to characterize the spatial variations of the chromatic part of the image. 
+Figure \ref{fig:images_color_complex_space} shows the transformation of a natural image (first row of the figure array) from RGB space to complex two-channel color space. Each row in the figure shows the luminance channel and the two parts (real and imaginary) of the chrominance channel. Note that as it happened in the representation of the classic color spaces (figure \ref{fig:images_color_space}), since the method of computing saturation differs in HSV and HSL spaces, the chrominance channel is different. The same effect occurs with the L lumance channel from LAB space and the luminance from the RGB to gray transformation; in theory both are the same, but in practice we can see that there are differences.
 
 
-
-
-
-The overall distribution of color within an image is a useful clue that contributes to the description of the content of an image. For example, we can characterize images that contain landscapes with mountains, jungles, urban environments, deserts or other scenes with different elements by their color distribution. The global color distribution can be represented by means of a color image histogram, which is a discrete function that associates to each intensity value (per color channel) the number of pixels that belong to this value.
-
-The advantages of this representation is that they are invariant to the rotation or translation of the image, as well as, to a lesser extent, to changes of point of view and changes of scale. In addition, we can compact the image color information by reducing the count intervals, that is, by selecting a small number of bins.
-
+%From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HSL$ color spaces prior to a transformation of the image from the $RGB$ space.
+%
+%Thus, the complex chrominance channel in its exponential form is defined as  
+%
+%
+%where $H$ is the hue and $S$ is the saturation value obtained after the $RGB$ to $HLS$ transformation. While the combined chrominance function for $L^*a^*b^*$ is defined as
+%
+%
+%where $a^*$ and $b^*$ are two chroma variables obtained from $RGB$ to $L^*a^*b^*$ transformation. 
+%
+%We obtain a complex representation of chrominance content of the image whose spectrum is interesting to analyze in order to characterize the spatial variations of the chromatic part of the image. 
 
 
 \subsection{Compact color representations for image processing}
+The overall distribution of color within an image is a useful clue that contributes to the description of the content of an image. For example, we can characterize images that contain landscapes with mountains, jungles, urban environments, deserts or other scenes with different elements by their color distribution. The global color distribution can be represented by means of a color image histogram, which is a discrete function that associates to each intensity value (per color channel) the number of pixels that belong to this value.
 
+The advantages of this representation is that they are invariant to the rotation or translation of the image, as well as, to a lesser extent, to changes of point of view and changes of scale. In addition, we can compact the image color information by reducing the count intervals, that is, by selecting a small number of bins.
 
 \subsubsection{Single-channel Color Histogram}
 
