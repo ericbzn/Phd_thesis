@@ -417,7 +417,7 @@ The 3-d color histogram copes with the drawback of the color representation in s
 
 We can see the 3-d distribution of the color of the pixels in a color image, as well as its histogram of $k=10$ bins in figure \ref{fig:3d_color_representation}. In the figure, we can clearly notice how the colors most present in the image stand out in the histogram, generating larger spheres in the 3-d cube. Also, the shape of the pixel distribution is maintained. In relation to the number of bits required to encode the color of the image as a distribution or histogram, we can see that when representing the colors in a histogram with a low number of bins, the information to be manipulated is significantly less. 
 
-On the other hand, 3-d colors histograms suffer from some drawbacks. Because histograms are fixed-size structures, they cannot achieve a good balance between expressiveness and eficiency. For example, apply a coarsely quantized histogram on images that contain a large amount of color information it would lead to a loss of this information. In the opposite case, for images that contain a small amount of color information, a finely quantized histogram is highly inecient. In the example of the parrots image (figure \ref{fig:3d_color_representation}), we see that the 10-bin histogram is severe with the blue color of the feathers, causing it to almost disappear from the 3-d representation. 
+On the other hand, 3-d colors histograms suffer from some drawbacks. Because histograms are fixed-size structures, they cannot achieve a good balance between expressiveness and eficiency. For example, apply a coarsely quantized histogram on images that contain a large amount of color information it would lead to a loss of this information. In the opposite case, for images that contain a small amount of color information, a finely quantized histogram is highly ineficient. In the example of the parrots image (figure \ref{fig:3d_color_representation}), we see that the 10-bin histogram is severe with the blue color of the feathers, causing it to almost disappear from the 3-d representation. 
 
 
 
@@ -567,11 +567,11 @@ The definition that we support is based on an experimental finding: a texture is
 
 Some examples of natural textures are shown in the figure \ref{fig:texture_images}. These images come from the reference work Brodatz and show the possible variety of textures that are commonly used to test different algorithms and methods of vision. Generally we can classify such textures according to their provenance as natural or artificial, the latter being those created by man. We can also classify them by the regularity of the pattern they exile as regal or stochastic. Finally, we can also classify them according to the portion of the image that they occupy into homogeneous, inhomogeneous or inhomogeneous.
 
-\begin{itemize}
-	\item Natural and artificial 
-	\item Regular, stochastic
-	\item Homogeneous, non-homogeneous, in-homogeneous
-\end{itemize}
+%\begin{itemize}
+%	\item Natural and artificial 
+%	\item Regular, stochastic
+%	\item Homogeneous, non-homogeneous, in-homogeneous
+%\end{itemize}
 
 \begin{figure}[!ht]
     \centering
