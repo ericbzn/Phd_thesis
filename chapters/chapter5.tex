@@ -278,43 +278,170 @@ The feature space calculated from the spectral decomposition of the image captur
 \subsubsection{Birch clustering}
 
 
+%\begin{figure}[!ht]
+%    
+%    \begin{subfigure}[b]{0.24\textwidth}
+%    	\centering
+%    	\includegraphics[height=2.5cm]{a01_100007_Birch_min_segm}
+%        \caption{}
+%        \label{fig:}
+%    \end{subfigure}
+%    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+%    \begin{subfigure}[b]{0.24\textwidth}
+%    	\centering
+%        \includegraphics[height=2.5cm]{a02_160067_Birch_min_segm}
+%        \caption{}
+%        \label{fig:}
+%    \end{subfigure} 
+%    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)    
+%    \begin{subfigure}[b]{0.24\textwidth}
+%    	\centering
+%        \includegraphics[height=2.5cm]{a03_2018_Birch_min_segm}
+%        \caption{}
+%        \label{fig:}
+%    \end{subfigure}
+%    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+%    \begin{subfigure}[b]{0.24\textwidth}
+%    	\centering
+%        \includegraphics[height=2.5cm]{a04_175083_Birch_min_segm}
+%        \caption{}
+%        \label{fig:}
+%    \end{subfigure}
+%                  
+%    \caption{Some examples of color images: One synthetic image {\small \textsf{\textbf{(a)}}} and three natural images {\small \textsf{\textbf{(b) (c) (d)}}}.}\label{fig:clustering_results}    
+%\end{figure}
+
+
 \begin{figure}[!ht]
+         
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{a01_100007_Birch_min_segm} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a02_160067_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a03_2018_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a04_175083_Birch_min_segm}
+    \end{subfigure} \vspace{5pt}   
     
-    \begin{subfigure}[b]{0.24\textwidth}
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
     	\centering
-    	\includegraphics[height=2cm]{a01_100007_Birch_min_segm}
-        \caption{}
-        \label{fig:}
-    \end{subfigure}
-    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Kmeans}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{a01_100007_Birch_min_segm} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.23\textwidth}
     	\centering
-        \includegraphics[height=2cm]{a02_160067_Birch_min_segm}
-        \caption{}
-        \label{fig:}
+        \includegraphics[height=67.68857pt]{a02_160067_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a03_2018_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a04_175083_Birch_min_segm}
+    \end{subfigure} \vspace{5pt}
+    
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Fast Kmeans}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{a01_100007_Birch_min_segm} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a02_160067_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a03_2018_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a04_175083_Birch_min_segm}
+    \end{subfigure} \vspace{5pt}
+    
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Gaussian mixture}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{a01_100007_Birch_min_segm} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a02_160067_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a03_2018_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a04_175083_Birch_min_segm}
+    \end{subfigure} \vspace{5pt}
+    
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Birch}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{a01_100007_Birch_min_segm} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a02_160067_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a03_2018_Birch_min_segm}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{a04_175083_Birch_min_segm}
     \end{subfigure} 
-    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)    
-    \begin{subfigure}[b]{0.24\textwidth}
-    	\centering
-        \includegraphics[height=2cm]{a03_2018_Birch_min_segm}
-        \caption{}
-        \label{fig:}
-    \end{subfigure}
-    %~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.24\textwidth}
-    	\centering
-        \includegraphics[height=2cm]{a04_175083_Birch_min_segm}
-        \caption{}
-        \label{fig:}
-    \end{subfigure}
-                  
-    \caption{Some examples of color images: One synthetic image {\small \textsf{\textbf{(a)}}} and three natural images {\small \textsf{\textbf{(b) (c) (d)}}}.}\label{fig:clustering_results}    
+    
+	\caption{}\label{fig:}    
 \end{figure}
-
-
-
 
 \section{Conclusion}

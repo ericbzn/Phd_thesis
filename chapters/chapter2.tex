@@ -30,7 +30,7 @@ This chapter presents a compilation of the different ways of representing the co
 
 \section{Introduction}
 
-If we look around us, we can see that many of the materials and objects of yhe environment only exist with certain colors. For example, the clouds are mostly  white, the grass is green, the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings and on skins or objects surfaces. The color and texture of an image is very valuable information and therefore, the perception of such information is a powerful tool for classifying and recognizing certain objects and materials.
+The overall distribution of color within an image is a useful clue that contributes to the description of the content of an natural image. If we look around us, we can see that many of the materials and objects of the environment only exist with certain colors. For example, the clouds are mostly  white, the grass is green, the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings and on skins or objects surfaces. The color and texture of an image is very valuable information, it helps to characterize images that contain landscapes with mountains, jungles, urban environments, deserts or other scenes with different elements by their color and texture distributions. Therefore, the perception of such information is a powerful tool for classifying and recognizing certain objects and materials.
 
 For decades several vision algorithms have sought to exploit this information. Color and texture are of relevant importance for its use as a feature to characterize objects. Due to these facts, the definition and the various representations of the color, as well as the texture information, is addressed in this chapter. As far as color information is concerned, we give a brief introduction to what color is and how it can be represented. In the case of texture, we present a brief introduction to textures including its types and an overview to the various methodologies for its study, highlighting the advantages and disadvantages of each method. 
 
@@ -267,7 +267,7 @@ Chromaticity-based models are reputed for their use in image editing and color c
 
 The use of spaces based on luminance-chrominance reduces the dimensionality of the color to two channels $L$ and $C$. To make this two-channel color representation possible, we combine the values of channels A and B with the chrominance function.
 \begin{equation}\label{eq:chrominance_lab}
-    C(x,y) = a^*(x,y) + ib^*(x,y)
+    C(x,y) = A + iB
 \end{equation}
 
 In the same way, it is possible to obtain a luminance-chrominance color space using the dimensions of the cylindrical HSV/HSL color spaces. The chrominance is described by the hue H and saturation S channels such that the complex chrominance channel is defined by the function
@@ -349,36 +349,56 @@ Figure \ref{fig:images_color_complex_space} shows the transformation of a natura
 
 
 \subsection{Compact color representations for image processing}
-The overall distribution of color within an image is a useful clue that contributes to the description of the content of an image. For example, we can characterize images that contain landscapes with mountains, jungles, urban environments, deserts or other scenes with different elements by their color distribution. The global color distribution can be represented by means of a color image histogram, which is a discrete function that associates to each intensity value (per color channel) the number of pixels that belong to this value.
 
-The advantages of this representation is that they are invariant to the rotation or translation of the image, as well as, to a lesser extent, to changes of point of view and changes of scale. In addition, we can compact the image color information by reducing the count intervals, that is, by selecting a small number of bins.
+Color spaces serve as a link between color theories and representation for better visualization and mathematical interpretation of colors. However, for color information processing, it is often necessary to represent the color pixel values more compactly. This benefits the development of faster and more performant algorithms; the challenge is to maintain the consistency of the input information and not lose important characteristics of the color distribution. In the following subsections we will show some of the representations commonly used in to represent color information in a compact way.
+
 
 \subsubsection{Single-channel Color Histogram}
-
-
+The global color distribution of an image can be represented by means of a color image histogram.  A histogram $\mathbf{h}= \{h_i\}$ is a standard statistical tool that approximates the distribution of numerical data. Such representacion is done by a discrete function $h_i$ that maps an integer vector to the set of non-negative reals \citep{Scott:Book:2008}. These vectors represents bins (or their centers) in a fixed partition of the underliying feature space. The associated reals are a measure of the mass of the distribution that falls into the corresponding bin. For instance, the single-channel color histogram of a 2-d image 
+given by the following expression
+\begin{equation}\label{eq:single_channel_histogram}
+    h_i = \sum_{j=1}^{n}  \mathbbm{1}_{B}(x_j) \quad \textrm{with} 
+\end{equation}
+\begin{equation}\nonumber
+    \mathbbm{1}_{B_i}(x_j) = 
+    \begin{cases} 
+      1 \quad \textrm{if} \quad x_l \in B_i \\
+      0 \quad \textrm{elsewhere}        
+   	 \end{cases} 
+\end{equation}
+as indicator function. The $n$ pixels of the single-channel image are arranged in a one-dimensional vector $\{x_1, x_2, \cdots, x_l\}$; the set of possible color values is split into $k$ intervals, so $h_i$ is the number of pixels in an image that have a color value in the interval $[t_k, t_{k+1})$ denoted by $B_i$.
 
 \begin{figure}[!ht]
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+
+	\centering
+    \begin{subfigure}[b]{0.25\textwidth}
         \includegraphics[width=\textwidth]{araras}
         \caption{Input image}
-    \end{subfigure}
-        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
-        \includegraphics[width=\textwidth]{araras_single_histogram}
+    \end{subfigure} \\
+       
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{araras_single_distribution}
         \caption{Single-channel color pixel distribution}
     \end{subfigure} 
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{araras_single_histogram}
+        \caption{Single-channel color pixel histogram}
+    \end{subfigure}    
     
-    \caption{}\label{fig:single_channel_histogram}    
+    \caption{1-d image color representation. 1-d pixel distribution and 10 bins 1-d pixel histogram.}\label{fig:single_channel_histogram}    
 \end{figure}
-    
-    
+
+Figure \ref{fig:single_channel_histogram} shows the one-dimensional representations of the color information of a natural image. In it, we first plot the distribution of each channel of the image (RGB in this case) and then we show the color distribution of the pixels compressed by means of a 1-d histogram. The distributions are obtained by setting the number of bins equal to the maximum number of color values of an 8-bit image, that is, $b = 256$. The single-channel histograms split the color space in $k=10$ bins. In the both plots, the $x$-axis represents the value of the color channel whereas the $y$-axis represents the quantity of pixels (density) normalized between 0 and 1. Lastly, the color of the plots correspond to the color channel of the RGB space.
+
+The advantages of this representation is that it is invariant to the rotation or translation of the image, as well as, to a lesser extent, to changes of point of view and changes of scale. In addition, we can compact as much as we need the image color information by reducing the count intervals, that is, by selecting a small number of bins $k$. Despite the advantages offered by the representation of color information in simple channel histograms, analyzing the color channels independently does not provide a global idea of the color distribution since the final color of a pixel in RGB space is given by the sum of the three channel values.  A better way to analyze color information is to consider all channels at the same time.
+%For example, looking only at the blue channel through its 1-d histogram, we could deduce that the input image is mostly dark blue, this being false.
+
 \subsubsection{3-d Color Histogram}
+The 3-d color histogram copes with the drawback of the color representation in single-channel color histograms. Mainly, this representation is an extension of the single-channel histogram to three dimensions. The discrete function $h_{i, j, k}$ maps the 3-d integer vector of pixel color values $x_{i, j, k}$ an Euclidean cube where each axis corresponds to a color dimension divided into $k$ intervals. We count the number of pixels whose values falls into the bin $B_{i,j,k}$ with the indicator function as in \eqref{eq:single_channel_histogram}.
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.25\textwidth}
         \includegraphics[width=\textwidth]{araras}
         \caption{Input image}
     \end{subfigure} \\
@@ -395,12 +415,27 @@ The advantages of this representation is that they are invariant to the rotation
     \caption{3-d image color representation. 3-d pixel distribution and 10 bins 3-d pixel histogram.}\label{fig:3d_color_representation}    
 \end{figure}
 
+We can see the 3-d distribution of the color of the pixels in a color image, as well as its histogram of $k=10$ bins in figure \ref{fig:3d_color_representation}. In the figure, we can clearly notice how the colors most present in the image stand out in the histogram, generating larger spheres in the 3-d cube. Also, the shape of the pixel distribution is maintained. In relation to the number of bits required to encode the color of the image as a distribution or histogram, we can see that when representing the colors in a histogram with a low number of bins, the information to be manipulated is significantly less. 
+
+On the other hand, 3-d colors histograms suffer from some drawbacks. Because histograms are fixed-size structures, they cannot achieve a good balance between expressiveness and eficiency. For example, apply a coarsely quantized histogram on images that contain a large amount of color information it would lead to a loss of this information. In the opposite case, for images that contain a small amount of color information, a finely quantized histogram is highly inecient. In the example of the parrots image (figure \ref{fig:3d_color_representation}), we see that the 10-bin histogram is severe with the blue color of the feathers, causing it to almost disappear from the 3-d representation. 
+
+
+
+
+
+
+
 
 \subsubsection{Color Signature}
 
+The color signature is another representation for the compression of color information. The signatures are a type of boosted histogram, since they adapt the fixed bins of the color dimensions, which are mostly fixed. The signatures can be obtained via algorithms such as k-d tree or k-means. 
+
+A signature $\{s_j = (m_j, w_{m_j})$ represents a set of feature clusters. Each cluster is represented by its mean (or mode) $m_j$ and the fraction of the pixels $w_{m_j}$ that belong to that cluster \citep{Rubner.Tomasi:Book:2001}. The interestet thing about signatures is that they can adapt the number of clusters $j$ in fuction of the complexity of the individual images. Therefore, simple color images have short signatures, while complex color images have long signatures. 
+
+
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.25\textwidth}
         \includegraphics[width=\textwidth]{araras}
         \caption{Input image}
     \end{subfigure} \\
@@ -420,7 +455,7 @@ The advantages of this representation is that they are invariant to the rotation
     \caption{Image color signature and the 3-d visualization of signature clusters.}\label{fig:color_signature}    
 \end{figure}
 
-
+In figure \ref{fig:color_signature}, we depict the color signature of the parrot image and a rendering of the input image using the signature colors. Likewise, we plot the centroids of the $k = 10$ clusters obtained with the k-means algorithm in a 3-d space. The size of the spheres in the 3-d plot represents the fraction of pixels $w_{m_j}$ that belong to each cluster. Compared to the 3-d color histogram, the color signature better represents the original color information of the image, maintaining the high information compression rate without sacrificing some colors of the original distribution, as is the case of the 3-d histogram with blue feathers mentioned above. 
 
 \begin{figure}[!ht]
     \centering
@@ -428,93 +463,89 @@ The advantages of this representation is that they are invariant to the rotation
     	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(a)}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo}
     \end{subfigure}~ 
-%    \begin{subfigure}[b]{0.32\textwidth}
-%        \includegraphics[width=\textwidth]{araras}
-%    \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{clownfish}
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain}
-    \end{subfigure}\vspace{10pt}
+    \end{subfigure}\vspace{5pt}
+    
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
     	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(b)}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_single_distribution}
+    \end{subfigure}~     
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{clownfish_single_distribution}
+    \end{subfigure}~
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{mountain_single_distribution}
+    \end{subfigure}%\vspace{10pt}
+    
+    
+    \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(c)}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_single_histogram}
     \end{subfigure}~     
-%    \begin{subfigure}[b]{0.32\textwidth}
-%        \includegraphics[width=\textwidth]{araras_single_histogram}
-%    \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{clownfish_single_histogram}
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_single_histogram}
-    \end{subfigure}\vspace{10pt}
+    \end{subfigure}%\vspace{10pt}
+    
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(c)}} }}%
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(d)}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_distribution}
     \end{subfigure}~ 
-%    \begin{subfigure}[b]{0.32\textwidth}
-%        \includegraphics[width=\textwidth]{araras_3d_distribution}
-%    \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{clownfish_3d_distribution}
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_3d_distribution}
-    \end{subfigure}\vspace{10pt}
+    \end{subfigure}%\vspace{10pt}
+    
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(d)}} }}%
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(e)}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_histogram}
     \end{subfigure}~ 
-%    \begin{subfigure}[b]{0.32\textwidth}
-%        \includegraphics[width=\textwidth]{araras_3d_histogram}
-%    \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{clownfish_3d_histogram}
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_3d_histogram}
-    \end{subfigure}\vspace{10pt}
+    \end{subfigure}%\vspace{10pt}
+    
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(e)}} }}%
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(f)}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_signature}
     \end{subfigure}~ 
-%    \begin{subfigure}[b]{0.32\textwidth}
-%        \includegraphics[width=\textwidth]{araras_3d_signature}
-%    \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{clownfish_3d_signature}
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_3d_signature}
-    \end{subfigure}\vspace{10pt}
+    \end{subfigure}\vspace{2pt}
+    
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(f)}} }}%
+    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(g)}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_color_clusters}
     \end{subfigure}~ 
-%    \begin{subfigure}[b]{0.32\textwidth}
-%        \includegraphics[width=\textwidth]{araras_color_clusters}
-%    \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{clownfish_color_clusters}
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_color_clusters}
-    \end{subfigure}\vspace{-5pt}
+    \end{subfigure}\vspace{-10pt}
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
     	\makebox[20pt]{\raisebox{25pt}{}}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_bar_signature}
     \end{subfigure}~ 
-%    \begin{subfigure}[b]{0.32\textwidth}
-%        \includegraphics[width=\textwidth]{araras_bar_signature}
-%    \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{clownfish_bar_signature}
     \end{subfigure}~
@@ -522,15 +553,25 @@ The advantages of this representation is that they are invariant to the rotation
         \includegraphics[width=\textwidth]{mountain_bar_signature}
     \end{subfigure}
                     
-	\caption{Different representations of color information. {\small \textsf{\textbf{(a)}}} input color image , {\small \textsf{\textbf{(b)}}} single-channel color histogram , {\small \textsf{\textbf{(c)}}} 3-d color distribution , {\small \textsf{\textbf{(d)}}} 3-d color histogram , {\small \textsf{\textbf{(e)}}} 3-d color signature , {\small \textsf{\textbf{(f)}}} color signature clusters .}\label{fig:color_image_representations}    
+	\caption{Compact representations of color information. {\small \textsf{\textbf{(a)}}} input color image , {\small \textsf{\textbf{(b)}}} single-channel color distribution, {\small \textsf{\textbf{(c)}}} single-channel color histogram, {\small \textsf{\textbf{(d)}}} 3-d color distribution , {\small \textsf{\textbf{(e)}}} 3-d color histogram , {\small \textsf{\textbf{(f)}}} 3-d color signature , {\small \textsf{\textbf{(g)}}} color signature clusters .}\label{fig:color_image_representations}    
 \end{figure}
 
+Finally we show more examples of the different techniques to compact the color information reviewed in this section in figure \ref{fig:color_image_representations}. These examples include the images of figure \ref{fig:color_images}, where we show three natural images and one synthetic. To calculate the historams (single-channel and 3-d) and the color signature, we set the number of bins (and clusters in the case of the signatures) at 10 for visual comparison purposes.
 
-
+We obtain some interesting observations from the analysis of the different compact representations of color. For example, with the synthetic image plots (first column of the figure) we find that a medium-fine 3-d histogram with 10 bins is inefficient as there are many half-empty bins that could be removed. On the other hand, the color signatures do a good job of compression, respecting mostly the shape and density of the original color distribution, for example in the case of the clownfish image (central column of the figure). However, there is a problem related to the global analysis and compression of color information. When there are objects in the image with a low number of pixels and yet they are perceptually visible, there is no rendering technique that can preserve them. This is the example of snow cable cars which do not appear in the 3-d histogram or in the signature.
 
 \section{Texture}
+There is a disagreement in the definition of texture in the field of computer vision. It is possible to give a mathematical definition based on its statistical properties, however, these properties are very imprecise and/or restrictive to adapt to the diversity of existing textures.
 
-\section{Texture characterization}
+The definition that we support is based on an experimental finding: a texture is a field of the image that appears as a coherent and homogeneous domain, that is, it forms a whole for an observer. In fact, it is this property of coherence of the texture placed in the context of being perceived as a homogeneous whole for the human eye that is most often sought for image processing, either with the aim of isolating textures, to segment the image or for the recognition of regions.
+
+Some examples of natural textures are shown in the figure \ref{fig:texture_images}. These images come from the reference work Brodatz and show the possible variety of textures that are commonly used to test different algorithms and methods of vision. Generally we can classify such textures according to their provenance as natural or artificial, the latter being those created by man. We can also classify them by the regularity of the pattern they exile as regal or stochastic. Finally, we can also classify them according to the portion of the image that they occupy into homogeneous, inhomogeneous or inhomogeneous.
+
+\begin{itemize}
+	\item Natural and artificial 
+	\item Regular, stochastic
+	\item Homogeneous, non-homogeneous, in-homogeneous
+\end{itemize}
 
 \begin{figure}[!ht]
     \centering
@@ -596,35 +637,21 @@ The advantages of this representation is that they are invariant to the rotation
 \end{figure}
 
 
-\begin{itemize}
-	\item Natural and artificial 
-	\item Regular, stochastic
-	\item Homogeneous, non-homogeneous, in-homogeneous
-\end{itemize}
-
-
-
-There is a disagreement in the definition of texture in the field of computer vision. It is possible to give a mathematical definition based on its statistical properties, however, these properties are very imprecise and/or restrictive to adapt to the diversity of existing textures.
-
-The definition that we support is based on an experimental finding: a texture is a field of the image that appears as a coherent and homogeneous domain, that is, it forms a whole for an observer. In fact, it is this property of coherence of the texture placed in the context of being perceived as a homogeneous whole for the human eye that is most often sought for image processing, either with the aim of isolating textures, to segment the image or for the recognition of regions.
-
-Some examples of natural textures are shown in the figure. These images come from the reference work Brodatz and show the possible variety of textures that are commonly used to test different algorithms and methods of vision.
-
+\section{Texture characterization}
 The perception of textures is a key property of human vision. Although there is still no generalized definition, we can define texture as a measure of coarseness, contrast, directionality, line similarity, regularity and roughness. Therefore, the features that chracterize texture attempt to capture the granularity and repetition of perceptually similar patterns of surfaces within a region of the image, such that a human observer perceives the region as homogeneous.
 Unlike color, texture information is not a purely pixel-level property. Texture implies the notion of spatial extent, that is, that the spatial variation of intensities of a group of pixels generate textures in the images.
 
-There are numerous studies that review, compare and organize the work of texture analysis in different ways \citep{Materka.Strzelecki:Report:1998}, \citep{Zhang.Tan:PR:2002}, \citep{Bharati.Liu.ea:CILS:2004},\citep{Lukashevich.Sadykhov:ICPCI:2012}, \citep{Humeau-Heurtier:IEEEAccess:2019}. One possible organization is based on its operating principle, which classifies the texture characterization techniques into: statistical methods, structural method, model-based methods, transform-based methods, graph-based methods, learning-based methods and entropy-based methods. In this chapter we review five of the most widely used methods in the literature and their techniques for extracting textures fearures.
-
-% \begin{enumerate}[noitemsep]%,topsep=0pt
-%	\item Statistical methods
-%	\item Structural methods
-%	\item Model-based methods
-%	\item Transform-based methods
-%	\item Graph-based methods
-%	\item Learning-based methods
-%	\item Entropy-based methods
-%\end{enumerate}
-%	
+There are numerous studies that review, compare and organize the work of texture analysis in different ways \citep{Materka.Strzelecki:Report:1998}, \citep{Zhang.Tan:PR:2002}, \citep{Bharati.Liu.ea:CILS:2004},\citep{Lukashevich.Sadykhov:ICPCI:2012}, \citep{Humeau-Heurtier:IEEEAccess:2019}. One possible organization is based on its operating principle, which classifies the texture characterization techniques into
+ \begin{enumerate}[noitemsep]%,topsep=0pt
+	\item Statistical methods
+	\item Structural methods
+	\item Model-based methods
+	\item Transform-based methods
+	\item Graph-based methods
+	\item Learning-based methods
+	\item Entropy-based methods
+\end{enumerate}
+In this section we review five of the most widely used methods in the literature and their techniques for extracting textures fearures.
 
 \subsection{Statistical Methods}
 Statistical methods contemplate that textures are determined by the way the gray levels are distributed over the pixels of an image. In these methods, the gray level distribution of the image is represented by a histogram.
