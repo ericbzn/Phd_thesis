@@ -267,12 +267,12 @@ Chromaticity-based models are reputed for their use in image editing and color c
 
 The use of spaces based on luminance-chrominance reduces the dimensionality of the color to two channels $L$ and $C$. To make this two-channel color representation possible, we combine the values of channels A and B with the chrominance function.
 \begin{equation}\label{eq:chrominance_lab}
-    C(x,y) = A + iB
+    C = A + \mathsf{i}B
 \end{equation}
 
 In the same way, it is possible to obtain a luminance-chrominance color space using the dimensions of the cylindrical HSV/HSL color spaces. The chrominance is described by the hue H and saturation S channels such that the complex chrominance channel is defined by the function
 \begin{equation}\label{eq:chrominance_hsv}
-    C = S e^{iH}
+    C = S \mathsf{e}^{\mathsf{i}H}
 \end{equation}
 
 These representations have the advantage of reducing the dimensionality of the color information. In image processing, these color spaces can be obtained from the transformation of the image from the RGB space to the LAB, HSV and HSL spaces, from which the chrominance variables and consequently the complex chrominance channel are obtained. Regarding luminance, it may differ depending on the input color space. For example, for the LAB and HSL spaces, this variable is naturally defined, however, in the case of the HSV space, the luminance channel is obtained from the transformation of the RGB input image to a grayscale image. The figure \ref{fig:complex_color_spaces} shows the diagrams for obtaining an image represented in two channels.
