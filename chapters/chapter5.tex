@@ -287,6 +287,67 @@ Although the raw Gabor energies are a good starting point for describing texture
 
 In the literature there are various strategies to homogenize the filter responses, one of them very recurrent is the application of a non-linear transformation \citep{Jain.Farrokhnia:IJPR:1991}. This nonlinear transformation acts as the bounded sigmoid activation function used in artificial neural networks. The non-linear transformation modulates the sinusoidal signals of the image to square signals, so it behaves like a blob detector. The downside to this approach is that we need to define a empirical parameter that functions as a threshold for the transformation.
 
+We propose to use a morphological opening to achieve homogenization of Gabor energy. The opening is defined as
+\begin{equation}\label{eq:gabor_energy_opn}
+	\widehat{e}_{i, f, \theta}(x,y) = \gamma_B(e_{i, f, \theta}(x,y)) 
+\end{equation}
+where $B$ is the structuring element and $\gamma_B(e_{i, f, \theta}(x,y)) = \delta_B[\varepsilon_B(e_{i, f, \theta}(x,y)$ is the morphological opening defined as an erosion followed by a dilation using the same structuring element $B$ for both operations. The advantage of our approach is that the size of the structure element is defined individually for each Gabor energy by the central period $ T=1 / f $ of each filter. For example, the radius of a disk-shaped structuring element for the Gabor energies obtained with a filter with a center frequency $ f = 1/8 $ is 8 pixels. Gabor energies after morphological opening appear in the figure \ref{fig:synthetic_img_gresponses_opn}.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{\textwidth}   
+        \includegraphics[width=\textwidth]{gabor_resp_lum_synthetic_opn}
+        \caption{$\widehat{e}_{L, f, \theta}(x,y)$} 
+        \label{fig:lum_gabor_energies_opn}
+    \end{subfigure} \\ [2ex]   
+    \begin{subfigure}[b]{\textwidth}   
+    	\includegraphics[width=\textwidth]{gabor_resp_cr_synthetic_opn}
+    	\caption{$\widehat{e}_{\RE(C), f, \theta}(x,y)$}
+        \label{fig:cr_gabor_energie_opn}
+    \end{subfigure} \\ [2ex]    	
+    \begin{subfigure}[b]{\textwidth}  
+        \includegraphics[width=\textwidth]{gabor_resp_ci_synthetic_opn}
+        \caption{$\widehat{e}_{\IM(C), f, \theta}(x,y)$}
+        \label{fig:ci_gabor_energies_opn} 
+    \end{subfigure} 
+    	    
+    \caption{Gabor energies after morphological openning of the synthetic image. \small\textbf{\textsf{(a)}} luminance channel energies, \small\textbf{\textsf{(b)}} real part of chrominance channel energies, \small\textbf{\textsf{(c)}} imaginary part of chrominance channel energies.}\label{fig:synthetic_img_gresponses_opn}    
+\end{figure}
+
+Finally, after the morphological opening, we apply an adaptive Gussian smoothing to locally calculate the Gabor energy. This smothing is defined as
+\begin{equation}\label{eq:gabor_energy}
+	\widetilde{e}_{i, f, \theta}(x,y) = w(x, y)_\sigma\ast \widehat{e}_{i, f, \theta}(x,y)
+\end{equation}
+where the scale parameter $\sigma$ of the Gaussian window $W(x,y)_\sigma$ is the maximum between value between the standard deviations of the Gabor filter support in the $x$ and $y$ axis.
+\begin{equation}\label{eq:gauss_sigma_smth}
+	\sigma = \mathrm{max}(\sigma_x, \sigma_y)
+\end{equation}
+
+From the analysis of Gabor filters presented in Chapter \ref{ch:gabor_filter_description}, we know that the standard deviations $\sigma_x, \sigma_y$ (Eq. \eqref{eq:1D_Gaussian_envelope_width}) of a Gabor filter are defined by its center frequency $f$ and the frequency and angular point crossing points (Eqs. \eqref{eq:crossing_point}, \eqref{eq:orientation_interval_crossing_point}) defined at the moment of filter bank design. Figure \ref{fig:synthetic_img_gresponses_opn_smth} shows the gabor energies after opening and adaptive Gaussian smoothing. 
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{\textwidth}   
+        \includegraphics[width=\textwidth]{gabor_resp_lum_synthetic_opn_smth}
+        \caption{$\widetilde{e}_{L, f, \theta}(x,y)$} 
+        \label{fig:lum_gabor_energies_opn_smth}
+    \end{subfigure} \\ [2ex]   
+    \begin{subfigure}[b]{\textwidth}   
+    	\includegraphics[width=\textwidth]{gabor_resp_cr_synthetic_opn_smth}
+    	\caption{$\widetilde{e}_{\RE(C), f, \theta}(x,y)$}
+        \label{fig:cr_gabor_energie_opn_smth}
+    \end{subfigure} \\ [2ex]    	
+    \begin{subfigure}[b]{\textwidth}  
+        \includegraphics[width=\textwidth]{gabor_resp_ci_synthetic_opn}
+        \caption{$\widetilde{e}_{\IM(C), f, \theta}(x,y)$}
+        \label{fig:ci_gabor_energies_opn_smth} 
+    \end{subfigure} 
+    	    
+    \caption{Gabor energies after morphological openning and Gaussian smoothing of the synthetic image. \small\textbf{\textsf{(a)}} luminance channel energies, \small\textbf{\textsf{(b)}} real part of chrominance channel energies, \small\textbf{\textsf{(c)}} imaginary part of chrominance channel energies.}\label{fig:synthetic_img_gresponses_opn_smth}    
+\end{figure}
+
+
+
 %Taking for example the Gabor filter at frequency $f = 1/4$ (highest frequency on the image textures) and orientation $\theta = 0^\circ$ (vertical textures), the Gabor enrgy \eqref{eq:gabor_energy} obtained when applying the filter on the channels of the synthetic image is depicted by figure \ref{fig:synthetic_img_gresponse_00}. The result of convolution shows 
 %
 %\begin{figure}[!ht]
@@ -306,10 +367,7 @@ In the literature there are various strategies to homogenize the filter response
 %    \caption{Raw Gabor energy obtained a $f=1/4$ and $\theta=0^\circ$.}\label{fig:synthetic_img_gresponse_00}    
 %\end{figure}
 %
-%
-%\begin{equation}\label{eq:gabor_energy}
-%	\widehat{e}_{i, f, \theta}(x,y) = \gamma_B(e_{i, f, \theta}(x,y)) = \delta_B[\varepsilon_B(e_{i, f, \theta}(x,y)]
-%\end{equation}
+
 % 	    
 %
 %
@@ -331,10 +389,6 @@ In the literature there are various strategies to homogenize the filter response
 %    \caption{Gabor energy obtained a $f=1/4$ and $\theta=0^\circ$ after morphological openning.}\label{fig:synthetic_img_gresponse_00_opn}    
 %\end{figure}
 %
-%
-%\begin{equation}\label{eq:gabor_energy}
-%	\widetilde{e}_{i, f, \theta}(x,y) = W(x, y, \sigma_{f, \theta})\ast \widehat{e}_{i, f, \theta}(x,y)
-%\end{equation}
 %
 %
 %
@@ -358,23 +412,38 @@ In the literature there are various strategies to homogenize the filter response
 
 
 
-
-
-
-
-
-
-
-
-
-
 \section{Gabor feature space validation}
-The feature space calculated from the spectral decomposition of the image captures the color and texture information generated by changes in color and lighting in the image. To visually validate the quality of the feature space, we implement three clustering methods. 
 
-%\subsection{Clustering methods as a technique for color image segmentation}
+In this section we integrate the feature space obtained with Gabor filters within a clustering framework. Our hypothesis is that if the color/texture features represent the variety of information in the images (both synthetic and natural), then we can obtain a segmentation that is consistent with this perceptual information. We then use the segmentation results to qualitatively and quantitatively evaluate our Gabor feature space.
+
+Prior to clustering, we make the following adaptations to the feature space to prepare it for the clustering method.
+
+\paragraph{Data organization}
+The feature space 
+\begin{equation}\label{eq:feature_space}
+	X = \widetilde{e}_{i, f, \theta}(x,y)
+\end{equation}
+is composed of $3 \times m \times n$ Gabor energies, where $m$ is the number of frequencies, $n$ is the number of orientations captured by the filter bank and $3$ corresponds to the channels of the luminance-chrominance color space. We rearrange the data to obtain a two-dimensional array of size $p \times d$, where $p= h\times w$  is the number of samples or pixels and $d =3 \times m \times n$ in the number of feartures or dimensions of the data.
+
+
+\paragraph{Spatial information integration}
+Gabor's color and texture features do not include spatial information. We enter such information by adding two more dimensions to the $X$ space. These two features are the positional coordinates $(x, y)$ of each pixel in the image. 
+
+\paragraph{Data standardization}
+We standardize each feature $d$ of the $X$ matrix so that it has a mean of zero and a constant variance. We perform this operation with the intention of avoiding the domination of some features over others due to numerical differences of units of magnitude. 
+
+\paragraph{Dimensionality reduction}
+We reduce the dimensions of the feature space from  $d =3 \times m \times n \times 2 $ to 5 using the linear transformation technique of principal component analysis (PCA). With the PCA we identify patterns in the feature space based on the correlation between features. We choose 5 as the new subspace dimensions based on the idea that three of these dimensions contain Gabor's color and texture information and the remaining two dimensions contain the spatial information. In addition, a low number of dimensions speeds up the calculation of clustering algorithms.
 
 \subsection{Qualitive evaluation}
+We qualitatively validate our model for the generation of color and texture features based on Gabor filters first, in a totally controlled environment using the synthetic image and later, with a semi-controlled set up using handmade texture mosaics.
+
+In both cases we use the k-means algorithm as a clustering method on the feature space $X$ setting the number of clusters manually.
+
 \subsubsection{Synthetic image segmentation}
+In the case of the synthetic image, there are several coherent ways in which a human observer can segment it. The two possibilities most obvious are to segment the image into 7 clusters, where each cluster represents a region of the image and; segment the image only into 2 clusters, where one cluster groups the regions with texture and the other the flat region. 
+
+We apply these conditions for the segmentation of the synthetic image with the k-means algorithm and we demand $k = 7$ and $k = 2$ clusters. The segmentation results are depicted in figure \ref{fig:kmeans_segms_synthetic_img}. These segmentation results show that the color and texture information are well captured by the Gabor multispectral analysis, in addition that both information are perceptually relevant in the image segmentation task.  
 
 \begin{figure}[!ht]
     \centering
@@ -391,6 +460,9 @@ The feature space calculated from the spectral decomposition of the image captur
 \end{figure}
 
 \subsubsection{DTD moisaic imagete segmentation}
+To go a step further and test our feature space under slightly more complex conditions, we created a series of color texture mosaics using images from the Describable Textures Dataset (DTD) \citep{Cimpoi.Maji.ea:CVPR:2014} as a base. The DTD is a collection of homogeneous nature textures with 47 annotated classes. To create the mosaics, we take 5 images of the same (or similar ) class and put them together in a collage. The five classes from which we take the images are lined-banded-zigzagged, cracked, braided, dotted and striped-veined-scaly. The texture collage we propose is quite standard with a circular patch in the center of the image that is superimposed on four square patches. 
+
+We apply the clusrtering algorithm on each mosaic created, setting $ k = 5 $ clusters. The segmentation results are shown in figure \ref{fig:kmeans_segms_dtd_mosaics}. In this case, the results obtained by the clusterig algorithm are coherent with the input image, however the precision and quality of the segmentation is lower than in the case of the synthetic image. This is mainly due to the complexity of the natural textures in the mosaics. 
 
 \begin{figure}[!ht]
     \centering
@@ -431,12 +503,12 @@ The feature space calculated from the spectral decomposition of the image captur
         \caption{}
     \end{subfigure} 
         	    
-    \caption{Synthetic image k-means segmentation results.}\label{fig:kmeans_segms_dtd_mosaics}    
+    \caption{DTD_mosaics k-means segmentation results.}\label{fig:kmeans_segms_dtd_mosaics}    
 \end{figure}
 
 
-
 \subsection{Quatitative evaluation}
+To visually validate the quality of the feature space, we implement three clustering methods. 
 
 
 \subsubsection{Berkely Segmentation Image Data Set}
@@ -464,11 +536,6 @@ A simple metric that captures the trade-off between precision and recall is the 
 \end{equation}
 
 \subsubsection{Results}
-
-%\subsubsection{k-means clustering}
-%\subsubsection{Gaussian mixture clustering}
-%\subsubsection{Birch clustering}
-
 
 %\begin{figure}[!ht]
 %    
@@ -633,8 +700,10 @@ A simple metric that captures the trade-off between precision and recall is the 
         \includegraphics[height=67.68857pt]{a04_175083_Birch_min_segm}
     \end{subfigure} 
     
-	\caption{}\label{fig:}    
+	\caption{}\label{fig:BSD_clustering _results}    
 \end{figure}
 
 \section{Conclusion}
 In addition, we also propose a set of high-level features based on Gabor energy recovered from the real and complex channels of the image.
+
+Clustering methods as a technique for color image segmentation
