@@ -16,11 +16,12 @@
 \usepackage{amsmath}								% Allows to write mathematical equations
 \newcommand{\RE}{\mathrm{Re}}
 \newcommand{\IM}{\mathrm{Im}}
-\usepackage{bbm}
-\usepackage[framed,amsmath,thmmarks]{ntheorem}		% Allows to use theorems
-\newtheorem{theorem}{Theorem}
+\usepackage{bbm}		
+\usepackage{amsthm}  % Allows to use theorems
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter] % reset theorem numbering for each chapter
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
+\newtheorem{definition}[thm]{Definition} % definition numbers are dependent on theorem numbers
 \usepackage[ruled]{algorithm2e}						% Allows to use algorithms
 \usepackage{nicefrac}			% Allows to use 'inline' fractions 
 \usepackage{commath}			% Allows to use the \abs math command
