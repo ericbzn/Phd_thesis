@@ -513,17 +513,43 @@ We also quantitatively evaluate the quality of the feature space developed in th
 \subsubsection{Berkely Segmentation Image Data Set}
 The Berkely Database for Segmentation (BSDS) is one of the gold standards for segmentation results \citep{Martin.Fowlkes.ea:ICCV:2001}. The database is made up of images from the Corel database selected under a simple criterion: choose images of complex and natural scenes that contain at least one distinguishable object. Under this criteria, selected images contain multiple cues for human segmentation. For example, low-level cues such as coherence of brightness, texture and color or contour continuity; mid-level cues such as symmetry, convexity and area of the regions; as well as high-level cues based on the semantics of the image objects.
 
-There are two versions of this database. The first one contains 300 (BSDS300) images while the second contains (BSDS500). Each image in the database contains between 5 and 11 human-made segmentations. The instruction given to the observers to break the scene in a natural way is simple: \textit{Divide each image into pieces, where each piece represents a distinguished thing in the image. It is important that all of the pieces have approximately equal importance. The number of things in each image is up to you. Something between 2 and 30 should be reasonable for any of our images }\citep{Martin.Fowlkes.ea:ICCV:2001}. Following these instructions, most segmentations meet the criterion of the number of segments, however, we can also find exceptions with more than 50 segmented things.
+There are two versions of this database. The first one contains 300 (BSDS300) images while the second contains (BSDS500). Each image in the database contains between 5 and 11 human-made segmentations. The instruction given to the observers to break the scene in a natural way is simple: 
+\begin{displayquote}
+Divide each image into pieces, where each piece represents a distinguished thing in the image. It is important that all of the pieces have approximately equal importance. The number of things in each image is up to you. Something between 2 and 30 should be reasonable for any of our images \citep{Martin.Fowlkes.ea:ICCV:2001}.
+\end{displayquote}
+Following these instructions, most segmentations meet the criterion of the number of segments, however, we can also find exceptions with more than 50 segmented things.
 
 Finally, both databases (BSDS300 and BSDS500) contain segmentations of the images in gray level and color. Since in this chapter we analyze the color textures, we mainly use the BSDS500 color images with their respective segmentations for the evaluation of our segmentation results. Figure 3 shows some examples of images from the BSDS500 and the segmentations produced by different humans.
 
+\subsubsection{Scores}
+We use the human-generated segmentations of the BSDS500 as ground truth (GT) applying the precision-recall framework of \cite{Martin.Fowlkes.ea:PAMI:2004}. The precision is the fraction of detections that are true positives rather than false positives while the recall is the fraction of true positives that are detected rather than missed. This evaluation framework is generally applied to evaluate contour detection algorithms. Therefore, applied in the image segmentation task, it involves evaluating the boundaries of the segmentation resulting regions, considering the detected boundaries pixels as a two-classes classification problem (contour and non-contour pixels). Under this configuration, precision is translated as the number of pixels correctly labeled as belonging to the contour class (true positives) divided by the total number of pixels labeled as contours (the sum of true positives and false positives). The recall in this context is defined as the number of true positives divided by the sum of true positives and the pixels which were not labeled as contours, but should have been (false negatives). The following mathematical expressions define the precision of the recall. 
+
+\begin{equation}\label{eq:precision_score}
+    \text{precision} = \frac{tp}{tp+fp}
+\end{equation}
+
+\begin{equation}\label{eq:recall_score}
+    \text{recall} = \frac{tp}{tp+fn}
+\end{equation}
+
+A simple metric that captures the trade-off between precision and recall is the f-measure, which is defined as the harmonic mean between pressure and recall.
+
+\begin{equation}\label{eq:f_score}
+    \text{F-measure} = \frac{2 \times \text{precision}\times\text{recall}}{\text{precision} + \text{recall}}
+\end{equation}
+
+
 \subsubsection{Experiments set up}
 
-For the numerical evaluation, we perform the segmentation of the BSDS500 images using four different clustering algorithms: k-means, fast k-means, Birch and Gaussian mixture. In addition, we perform the segmentation in the feature space obtained with different luminance-chrominance color spaces, in particular those derived from the LAB, HSL and HSV spaces. 
+For the numerical evaluation, we perform the segmentation of the BSDS500 images using different clustering algorithms. In addition, we perform the segmentation in the feature space obtained with different luminance-chrominance color spaces, in particular those derived from the LAB, HSL and HSV spaces. These series of experiments allow us to evaluate other aspects of our Gabor-based feature space. For example, the behavior of the feature space on different clustering algorithms ´and viceversa, the performane of each clustering method in the image segmnetation task. Other secondary items that we also analyze are the effect of the initial color space in the transformation to the two-channel color space; the effect of the choice of the number of clusters to detect and; the computation time of the clustering algorithms. 
 
-These series of experiments allow us to evaluate other aspects of our Gabor-based feature space. For example, aspects such as the behavior of the feature space on different clustering algorithms (and viceversa), the computation time of the segmentation, the effect of the initial color space for the transformation into a two-channel color space, the effect of the number of clusters, among others.
+\paragraph{Clustering method vs former luminance-chrominance color space.} 
 
-\paragraph{Clustering method vs former luminance-chrominance color space} 
+Within the wide range of clustering algorithms that exist in the literature \citep{Omran.Engelbrecht.ea:IOS:2007} \citep{Sathya.Manavalan:IJCA:2011}, we performed the segmentation of the BSDS images using four different clustering techniques: k-means, fast k-means, Birch and Gaussian mixture. The choice of these techniques depends on the characteristics of the input data; a high dimensional space with a large number of observations. Such input data comes from the multispectral decomposition on the images using Gabor filters on the luminance-chrominance channels of the images. We then compare the performance of the different clustering algorithms on the luminance and chrominance feature spaces from the HSV, HSL and LAB color spaces. 
+
+Figures \ref{fig:lynx_clustering_method_v_colorspace} and \ref{fig:pheasant_clustering_method_v_colorspace} show the segmentation results of two images of the BSDS500. In both cases, the images contain wild animals in their natural environment, which implies that the color and texture of the fur / feathers helps them to blend in with the scene. Despite this, we see how, some configurations of color space and clustering algorithm manage to classify the pixels based on the perceptual information of color and texture encoded on the Gabor features. Particularly in these two segmentation examples, we could say that the color space that best represents the color and texture information of the image is the HSL, while the clustering method that best uses the multispectral features is the Gaussian mixture. 
+
+For the segmentation results shown in Figures \ref{fig:lynx_clustering_method_v_colorspace} and \ref{fig:pheasant_clustering_method_v_colorspace}, we use $k = 4$ as the target number of clusters to find in the image. In addition, for visualization purposes, we display the resulting clusters with the mean color of the pixels of the original image whitin the segmentation regions. 
 
 \begin{figure}[!ht]
          
@@ -531,7 +557,7 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
     	\centering
     	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{160067} 
-    \end{subfigure}  \\ \vspace{5pt}   
+    \end{subfigure}  \\ \vspace{-5pt}    
     
     
     \begin{subfigure}[b]{\dimexpr0.23\textwidth+20pt\relax}
@@ -556,9 +582,9 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{160067_GaussianMixture_const_segm_HSV}
-    \end{subfigure} \\ \vspace{5pt}
+    \end{subfigure} \\ \vspace{-5pt}  
     
-    
+          
     \begin{subfigure}[b]{\dimexpr0.23\textwidth+20pt\relax}
     	\centering
     	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV}}} }}%
@@ -581,9 +607,9 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{160067_GaussianMixture_const_segm_HSV}
-    \end{subfigure} \\ \vspace{5pt}
+    \end{subfigure} \\ \vspace{-5pt}
     
-    
+           
     \begin{subfigure}[b]{\dimexpr0.23\textwidth+20pt\relax}
     	\centering
     	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSL}}} }}%
@@ -612,7 +638,7 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
         \caption{Gaussian mixture}
     \end{subfigure} 
     
-	\caption{}\label{fig:BSD_clustering_method_v_colorspace}    
+	\caption{Importance of the color space and the clustering algorithm in the image segmentation task using the feature space based on Gabor filters. BSDS lynx image segmentation results.}\label{fig:lynx_clustering_method_v_colorspace}    
 \end{figure}
 
 
@@ -622,7 +648,7 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
     	\centering
     	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{43074} 
-    \end{subfigure}  \\ \vspace{5pt}   
+    \end{subfigure}  \\ \vspace{-5pt}   
     
     
     \begin{subfigure}[b]{\dimexpr0.23\textwidth+20pt\relax}
@@ -647,7 +673,7 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{43074_GaussianMixture_const_segm_HSV}
-    \end{subfigure} \\ \vspace{5pt}
+    \end{subfigure} \\ \vspace{-5pt}
     
     
     \begin{subfigure}[b]{\dimexpr0.23\textwidth+20pt\relax}
@@ -672,7 +698,7 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{43074_GaussianMixture_const_segm_HSV}
-    \end{subfigure} \\ \vspace{5pt}
+    \end{subfigure} \\ \vspace{-5pt}
     
     
     \begin{subfigure}[b]{\dimexpr0.23\textwidth+20pt\relax}
@@ -703,12 +729,20 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
         \caption{Gaussian mixture}
     \end{subfigure} 
     
-	\caption{}\label{fig:BSD_clustering_method_v_colorspace}    
+	\caption{Importance of the color space and the clustering algorithm in the image segmentation task using the feature space based on Gabor filters. BSDS pheasant image segmentation results.}\label{fig:pheasant_clustering_method_v_colorspace}    
 \end{figure}
 
 
 
-\paragraph{Number of clusters in the data} 
+\paragraph{Number of clusters in the data.} 
+Determining the number of segments to detect when using a clustering algotihms as image segmentation technique, is a frequent problem. The four algorithms we use here for image segmentation need the $k$ parameter to specify the number of clusters to find. Although there are techniques to estimate the number of regions in the image, these strategies involve one more stage of processing, which is reflected in the final segmentation calculation time. To find the optimal number of regions, we use the GT of the BSDS500. Since each image in the database contains between 5 and 11 human-made segmentations $\mathcal{S}=\{\mathcal{S}_1, \mathcal{S}_1, \cdots, \mathcal{S}_n\}$, we take $k$ as the maximum and minimum number of segments found by the human observers for each image. 
+\begin{eqnarray}
+	k = \mathrm{max}(\mathcal{S}) \\
+	k = \mathrm{min}(\mathcal{S})
+\end{eqnarray}
+
+Figure \ref{fig:Gmixture_starfish_segms_diff_k} shows the segmentation result of a BSDS image by manually setting $k$ with fixed values of 3 and 4 segments and defining $k$ as the number of maximum and minimum segments of the GT. In this particular case of the starfish image, the maximum number of annotated segments by a human observer is 92, while the minimum number of annotated segments is 6. The clustering algorithm used for this experiment is Gaussian mixture in using the feature space from the LAB color space.
+
 
 \begin{figure}[!ht]
     
@@ -730,41 +764,52 @@ These series of experiments allow us to evaluate other aspects of our Gabor-base
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
     	\includegraphics[width=\textwidth]{12003_GaussianMixture_min_segm}
-        \caption{$k=\mathrm{argmin}(\mathcal{S})$}
+        \caption{$k=\mathrm{min}(\mathcal{S})$}
     \end{subfigure} ~¨
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
     	\includegraphics[width=\textwidth]{12003_GaussianMixture_max_segm}
-        \caption{$k=\mathrm{argmax}(\mathcal{S})$}
+        \caption{$k=\mathrm{max}(\mathcal{S})$}
     \end{subfigure} 
         	    
-    \caption{Synthetic image k-means segmentation results.}\label{fig:kmeans_segms_synthetic_img}    
+    \caption{Effect of determining the number of clusters to detect in the clustering algorithms as segmentation methods.}\label{fig:Gmixture_starfish_segms_diff_k}    
 \end{figure}
 
+The image segmentation results show various phenomena. The first one is the big difference between human-made segmentations; the annotation with 92 regions implies a very detailed segmentation while the annotation with 6 regions does not reflect the most basic segmentation of the image: two objects, the starfish and the background.
 
+This behavior is of vital importance in the evaluation of a segmentation algorithm since the scores are a function of the GT. In the case of the BSDS500, increasing $k$ means finding more regions that coincide with the GT regions, so the recall score increases, however the precision of the regions found is very low. On the other hand, by decreasing $k$ we detect fewer regions, which favors the precision score but affects the recall. Figure \ref{fig:PR_boxplot_scores_min_max_clusters} shows this phenomenon with the boxplots of the precision and recall scores of the different clustering methods using k as $\mathrm{min}(\mathcal{S})$ and $\mathrm{max}(\mathcal{S})$.  Therefore, the optimal number of clusters $k$ should keep a balance between maximum data compression using a single cluster and maximum precision when assigning each pixel to its own cluster.
+
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{PrecisionRecall_boxplot_min_nclusters_LAB}
+        \caption{$k=\mathrm{min}(\mathcal{S})$}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\centering
+    	\includegraphics[width=\textwidth]{PrecisionRecall_boxplot_max_nclusters_LAB}
+        \caption{$k=\mathrm{max}(\mathcal{S})$}
+    \end{subfigure}     
+%    \begin{subfigure}[b]{0.3\textwidth}
+%    	\centering
+%    	\includegraphics[width=\textwidth]{PrecisionRecall_boxplot_const_nclusters_LAB}
+%        \caption{$k=4$}
+%    \end{subfigure}
+    
+        	    
+    \caption{Synthetic image k-means segmentation results.}\label{fig:PR_boxplot_scores_min_max_clusters}    
+\end{figure}
 
 %\paragraph{Clustering computation time } % pending !!!
 
-\subsubsection{Scores}
-We use the human-generated segmentations of the BSDS500 as ground truth (GT) applying the precision-recall framework of \cite{Martin.Fowlkes.ea:PAMI:2004}. The precision is the fraction of detections that are true positives rather than false positives while the recall is the fraction of true positives that are detected rather than missed. This evaluation framework is generally applied to evaluate contour detection algorithms. Therefore, applied in the image segmentation task, it involves evaluating the boundaries of the segmentation resulting regions, considering the detected boundaries pixels as a two-classes classification problem (contour and non-contour pixels). Under this configuration, precision is translated as the number of pixels correctly labeled as belonging to the contour class (true positives) divided by the total number of pixels labeled as contours (the sum of true positives and false positives). The recall in this context is defined as the number of true positives divided by the sum of true positives and the pixels which were not labeled as contours, but should have been (false negatives). The following mathematical expressions define the precision of the recall. 
-
-\begin{equation}\label{eq:precision_score}
-    \text{precision} = \frac{tp}{tp+fp}
-\end{equation}
-
-\begin{equation}\label{eq:recall_score}
-    \text{recall} = \frac{tp}{tp+fn}
-\end{equation}
-
-A simple metric that captures the trade-off between precision and recall is the f-measure, which is defined as the harmonic mean between pressure and recall.
-
-\begin{equation}\label{eq:f_score}
-    \text{F-measure} = \frac{2 \times \text{precision}\times\text{recall}}{\text{precision} + \text{recall}}
-\end{equation}
 
 
 
 \subsubsection{Results}
+The two previous experiments show that the segmentation of real images is a complex task in which the result depends on various parameters such as the configuration of the input space, the number of segments, etc. Here we show some segmentation results (see figure \ref{fig:BSD_clustering _results}) using the feature space derived from the HSV-based luminance-chrominance color space and the four segmentation algorithms presented in this section.
+
+The segmentation results are obtained by setting $k = 4$ for all images. The figure \ref{fig:PR_boxplot_scores} shows the precision and recalculation boxplots of each of the segmentation algorithms of the color spaces.
 
 \begin{figure}[!ht]
     \centering
@@ -783,7 +828,7 @@ A simple metric that captures the trade-off between precision and recall is the 
         \caption{LAB}
     \end{subfigure} 
         	    
-    \caption{Synthetic image k-means segmentation results.}\label{fig:PR_boxplot_scores}    
+    \caption{Boxplots of precision and recall scores of the different clustering methods and the different color space. For the three plots the number of clusters was set constant at $k=4$.}\label{fig:PR_boxplot_scores}    
 \end{figure}
 
 
@@ -914,7 +959,7 @@ A simple metric that captures the trade-off between precision and recall is the 
         \includegraphics[height=67.68857pt]{181021_Birch_const_segm}
     \end{subfigure} \vspace{5pt}
     
-	\caption{}\label{fig:BSD_clustering _results}    
+	\caption{Segmentation results using different segmentation algorithms and HSV color space. The number of segments to find is fixed at $ k = 4 $ for all images. }\label{fig:BSD_clustering _results}    
 \end{figure}
 
 
