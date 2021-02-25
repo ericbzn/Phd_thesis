@@ -73,7 +73,10 @@ COB                     & $\widehat{\text{OE}}$, BG, CG, $\widehat{\text{TG}}$  
 
 Graphs are historical mathematical structures that have been applied to almost all fields of engineering. Historically, Euler made use of these structures to solve a problem related to the optimal crossing of people across bridges. The success of these structures in fields such as electricity and chemistry, contributed to the creation of a standard nomenclature, giving way to the Graph theory.
 
-Fundamentally, a graph is an useful structure for modeling pairwise relations between objects. In the field of image processing we can find several approaches that make use of graphs. Generally these methods solve a minimization problem. For example, the \textit{minimun spanning tree} approach that aims to find for each pair of nodes, the path with the least weight edges. On the other hand, the \textit{max-flow min-cut} approach aims to maximize flow with the minimum number of cuts in the graph. Both strategies have been successfully applied to the image segmentation problem. Another application example involves the algebraic theory of graphs that studies the spectrum of matrices that represent graphs.
+Fundamentally, a graph is an useful structure for modeling pairwise relations between objects. In this section, we present the notation and the commonly encountered graphs in image processing applications.
+
+
+%In the field of image processing we can find several approaches that make use of graphs. Generally these methods solve a minimization problem. For example, the \textit{minimun spanning tree} approach that aims to find for each pair of nodes, the path with the least weight edges. On the other hand, the \textit{max-flow min-cut} approach aims to maximize flow with the minimum number of cuts in the graph. Both strategies have been successfully applied to the image segmentation problem. Another application example involves the algebraic theory of graphs that studies the spectrum of matrices that represent graphs.
 
 
 
@@ -119,110 +122,481 @@ In this section we introduce some important definitions that will be used throug
 			0 \quad \text{elsewhere}
 		\end{cases}		\nonumber		
 	\end{equation}
-
-
 \end{definition}
 
 
+%{Wang.Liu.ea:SP:2017} reference about superpixel benchmark
 
-\subsection{Pixel-based representation}
+\subsubsection{Pixel-based graph representation}
+
+Considering a digital image as a 2-d grid of pixels, where the intensity (or color) values are mapped to the spatial coordinates $(x, y)$, we can use the graph theory to represent all the pixels as a dense graph. In terms of a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, each node $\mathsf{v}_i \in \mathsf{V}$ corresponds to a pixel in the image, and edges link the pixels of the image. 
+
+There are several strategies to join the nodes of a graph. The types of graphs that we can form are a function of such union strategies. For example, the complete graph connects each pair of different nodes with a single edge. The epsilon-graph connects a pair of nodes if they are within an epsilon distance. The k-nearest neighbors graph (knn-graph) connects a central node to another node only if the distance between them is among the k smallest distances from the central node to other nodes. Lastly, the adjacency graph connects only a pair of nodes if they are neighbors or adjacent. At a pixel level, this last graph is referred to as \textit{pixel adjacency graph} (PAG).
+
+We can define the adjacency level of the pixels to generate a specific pixel-based graph. In our applications we mainly use the 4-neighbor adjacency system. This and other adjacency systems based are illustrated in figure \ref{fig:pixel_adjacency_graph}.
 
 
-\subsection{Region-based representation}
-The term \textit{superpixels} was introduced by (cite Ren and Malik) in 2013. The term superpixels emerge as an oversegmentation process. The motivation lies in the affirmation that pixels are not natural entities, they are consequence of the discrete representation of an image and also that the number of pixels is to high (even in moderate resolutions) making the optimization at pixel level difficult. The superpixels are local coherent and preserve most of the stucture necessary for the segmentation.  
+\begin{figure}[!ht]
+    \centering
 
-The superpixels technique comes from the oversegmentation techniques; to make the difference between them we can consider the following requeriments:
-\begin{enumerate}
- \item Partition. Superpixels should define a partition of the image. They should be disjoint and assign a label to every pixel.
- \item Connectivity. Superpixels represents a connected set of pixels.
+	\begin{subfigure}[b]{0.2\textwidth}
+    	\includegraphics[width=\textwidth]{4nn_pag}
+        \caption{ 4-neighborhood}
+    \end{subfigure}\qquad   
+    \begin{subfigure}[b]{0.2\textwidth}
+    	\includegraphics[width=\textwidth]{8nn_pag}
+        \caption{8-neighborhood}
+    \end{subfigure}\qquad
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\includegraphics[width=\textwidth]{6nn_pag}
+        \caption{6-neighborhood}
+    \end{subfigure}\\[5ex]    
+    \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{pixel_adjacency_graph}
+        \caption{Exaple of a 4-n graph on a real image}
+    \end{subfigure}         
+        	    
+    \caption{Most common k-nearest neighbors adjacency systems.}\label{fig:pixel_adjacency_graph}    
+\end{figure}
+
+The representation of an image as a graph opens the possibility of new methods for data processing, however, a recurring problem is the need to satisfy the compromise between algorithmic complexity and precision of the methods. In most algorithms, complexity is a function of the number of nodes and edges in the graph, so the adjacency system used plays an important role in the speed of the methods applied to image graph. One way to reduce the number of nodes (and consequently the number of edges) is to use graphs on elements or regions of the image of greater size.
+
+\subsubsection{Region-based graph representation}
+
+To build this type of graph, we must first separate the image into regions, preferably into regions that are coherent with the perceptual information of the image. Subsequently, the nodes of a graph represent the regions of the image while the egdes follow the same strategies described above to connect the regions. The main type of graph that we consider in this work is the \textit{region adjacency graph }(RAG).
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{region_adjacency_graph}       	    
+    \caption{Exaple of a Region Adjacency Graph on a real image.}\label{fig:region_adjacency_graph}    
+\end{figure}
+
+
+Pixels are the smallest elements in the image. The grouping of these elements in coherent regions generates so-called superpixels. In the next section we introduce some of the most used methods for the generation of these regions, exposing their main characteristics.
+
+
+\subsection{Superpixels}
+
+Pixels are a consequence of the discrete representation of the intensity or color of an image, therefore pixels are not entities that naturally reflect the perceptual information in an image. Moreover, the number of pixels on an image is to high (even in moderate resolutions) making the optimization at pixel level difficult. The superpixels are local coherent and preserve most of the stucture necessary for image processing algorithms.
+
+The term \textit{superpixels} was introduced first by \cite{Ren.Malik:ICCV:2003} to describe the resulting regions of an oversegmentation image process. However, \cite{Stutz.Hermans.ea:CVIU:2018} gathers a series of requirements from different works of the state of the art to differentiate superpixels from other regions generated by over-segmentation algorithms. 
+
+\begin{itemize}
+ \item \textbf{Partition}. Superpixels should define a partition of the image. They should be disjoint and assign a label to every pixel.
+ \item \textbf{Connectivity}. Superpixels represents a connected set of pixels.
  \item Boundary Adherence. Superpixels must preserve image bundaries.
- \item Compactness, Regularity and Smoothness. Superpixels should be compact (closed and bounded), placed regulary and exibit smooth boundaries.
- \item Efficiency. Shuold be generated efficiently
- \item Controllable number of superpixels. The number of superpixels should be controllable.
-\end{enumerate}
+ \item \textbf{Compactness, Regularity and Smoothness}. Superpixels should be compact (closed and bounded), placed regulary and exibit smooth boundaries.
+ \item \textbf{Efficiency}. Shuold be generated efficiently
+ \item \textbf{Controllable number of superpixels}. The number of superpixels should be controllable.
+\end{itemize}
 
-(Cite David Stutz) propouse a classification for superpixels techniques based on the strategy it follows to obtain the superpixels. Using this classification, superpixels methods currently developed in python lies in the following categories:
-\begin{enumerate}
- \item \textbf{Watershed-based.} Based on the watershed algorithm, these methods generally depends on the image pre-processing and the markers setting. 
- \item \textbf{Density-based.} Perform mode-seeking in a computed density image. These methods usually do not offer control over the number of superpixels or their compactness (they are consider as oversegmentation algorithms). 
- \item \textbf{Graph-based.} Treat the image as undirected graph and do a the image partition based on edge-weights  (computed as color differences or similarities).
- \item \textbf{Clustering-based.} Inspired in clissical clustering methods (k-means), these techniques group the pixels from seed pixels using color information, spacial information, and other (such as depth information). The number of superpixels and their compactness is controllable.
-\end{enumerate}
+In addition, according to the followed strategy   to obtain the regions, \cite{Stutz.Hermans.ea:CVIU:2018} propouse a classification for superpixels techniques. We present here four super pixel techniques; each one of them representative of a category the classification. 
+
+
+%\begin{enumerate}
+% \item \textbf{Watershed-based.} Based on the watershed algorithm, these methods generally depends on a image pre-processing step and the markers setting. 
+% \item \textbf{Density-based.} Perform mode-seeking in a computed density image. These methods usually do not offer control over the number of superpixels or their compactness (they are consider as oversegmentation algorithms). 
+% \item \textbf{Graph-based.} Treat the image as undirected graph and do a the image partition based on edge-weights  (computed as color differences or similarities).
+% \item \textbf{Clustering-based.} Inspired in clissical clustering methods (k-means), these techniques group the pixels from seed pixels using color information, spacial information, and other (such as depth information). The number of superpixels and their compactness is controllable.
+%\end{enumerate}
 
 
 \subsubsection{Felzenszwalb's Superpixels}
-Graph-based image segmentation techniques generally represent the problem in terms of a graph $G = (V, E)$ where each node $v_i \in V$ corresponds to a pixel in the image, and an edge $(v_i, v_j) \in E$ connects vertices $v_i$ and $v_j$ . A weight $w(v_i, v_j)$ is associated with each edge based on some property of the pixels that it connects, such as their image intensities.
 
-In the graph-based approach, a segmentation $S$ is a partition of $V$ into components such that each component (or region) $C \in S$ corresponds to a connected component in a graph $G = (V, E)$, where $E \subseteq E$. In other words, any segmentation is induced by a subset of the edges in $E$. There are different ways to measure the quality of a segmentation but in general we want the elements in a component to be similar, and elements in different components to be dissimilar. This means that edges between two vertices in the same component should have relatively low weights, and edges between vertices in different components should have higher weights.
+This technique belongs to the category of graph-based superpixels, which represent the region generation problem in terms of an edge-weighted undirected graph. 
 
-This work presents two ways to achieve the segmentacion:
+Treat the image as undirected graph and do a the image partition based on edge-weights  (computed as color differences or similarities). The weight of an edge  $\omega_{ij}$
+can be obtained in two ways,
+\begin{enumerate}
+	\item $\omega(\mathsf{v}_i, \mathsf{v}_j)= I(p_i) - I(p_j)|$, the absolute intensity difference between the pixels connected by an edge; 
+	\item $\omega(\mathsf{v}_i, \mathsf{v}_j)= X(p_i) - X(p_j)|$, the L2 (Euclidean)
+distance between two corresponding pixels in feature space.
+\end{enumerate}
 
-\subsubsection{Grid Graphs}
-They define an undirected graph $G = (V, E)$, where each image pixel $p_i$ has a corresponding vertex $vi \in V$. The edge set $E$ is constructed by connecting pairs of pixels that are neighbors in an 8-connected sense (any other local neighborhood could be used). This yields a graph where $m = O(n)$, so the running time of the segmentation algorithm is $O(n log n)$ for $n$ image pixels. We use an edge weight function based on the absolute intensity difference between the pixels connected by an edge, $$w(v_i, v_j) = |I(p_i) - I(p_j)|$$ where $I(p_i)$ isthe intensity of the pixel $p_i$.
+For color images is possible to use the option 1 considering each color channel as a individual intensity channel and then combine the tree weights. Otherwise, the feature space of option 2 is defined by $X = (x, y,r, g, b)$, where $(x, y)$ is the location of the pixels in the image and $(r, g, b)$ is the color value of the pixels. This method uses a Gaussian filter to smooth the image before the edge weights computation to compensate for digitization artifacts. 
 
+Whit this method we cannot directly control the number of resulting superpixels, we must use the Gaussian scale parameter to modify the size and shape of the superpixels. However, the actual size and number of segments can vary greatly, depending on local contrast.
 
-\subsubsection{Nearest Neighbor Graphs}
-As in the last technique, they use an undirect graph $G = (V, E)$ and the difference lies on the edge weight computation. The weight $w(v_i, v_j)$ of an edge is the distance between the two corresponding points in feature space. They map each pixel to the feature point $(x, y,r, g, b)$, where $(x, y)$ is the location of the pixel in the image and $(r, g, b)$ is the color value of the pixel. They use the $L_2$ (Euclidean) distance between points as the edge weights, although other distance functions are possible.
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067}
+    \end{subfigure} \\[2ex]       
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{150 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_fz_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_fz_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_fz_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_fz_150_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{300 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_fz_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_fz_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_fz_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_fz_300_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{600 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_fz_600_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_fz_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_fz_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_fz_600_segs}
+    \end{subfigure}     
 
+	\caption{Examples of superpixels using Felzenszwalb's technique.}\label{fig:fz_suprepixels}    
+\end{figure}
 
-\subsubsection{Quick Shift and kernel methods for mode seeking}
-\begin{description}
- \item \textbf{Kernel methods (Machine Learning). CITE Hoffmann and Campbell } Kernel methods owe their name to the use of kernel functions, which enable them to operate in a high-dimensional, implicit feature space without ever computing the coordinates of the data in that space, but rather by simply computing the inner products between the images of all pairs of data in the feature space. This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the \textit{kernel trick}. Kernel functions have been introduced for sequence data, graphs, text, images, as well as vectors.
+Figure \ref{fig:fz_suprepixels} shows the superpixels generated adjusting the scale parameter to obtain approximately 150, 300 and 600 super pixels (sp). The examples show that Felzenszwalb's superpixel technique acts more like an over-segmentation algorithm since neither the size nor the shape of the regions are close to being homogeneous. 
  
- Kernel is a way of computing the dot product of two vectors $ \mathbf{x}$ and $ \mathbf{y}$ in some (possibly very high dimensional) feature space, which is why kernel functions are sometimes called ``generalized dot product''.
+%In the graph-based approach, a segmentation $S$ is a partition of $V$ into components such that each component (or region) $C \in S$ corresponds to a connected component in a graph $G = (V, E)$, where $E \subseteq E$. In other words, any segmentation is induced by a subset of the edges in $E$. There are different ways to measure the quality of a segmentation but in general we want the elements in a component to be similar, and elements in different components to be dissimilar. This means that edges between two vertices in the same component should have relatively low weights, and edges between vertices in different components should have higher weights.
 
- Suppose we have a mapping $\varphi:\mathbb{R}^{n}\rightarrow \mathbb{R}^{m}$ that brings our vectors in $\mathbb{R}^{n}$ to some feature space $\mathbb{R}^{m}$. Then the dot product of $ \mathbf{x}$ and $ \mathbf{y}$ in this space is $\varphi( \mathbf{x})^{T}\varphi( \mathbf{y})$. A kernel is a function $k$ that corresponds to this dot product, i.e. $k( \mathbf{x}, \mathbf{y})=\varphi( \mathbf{x})^{T}\varphi( \mathbf{y})$.
+\subsubsection{Quick shift superpixels} %and kernel methods for mode seeking
 
- \textsl{Example:} Consider a polinomial kernel $k(\mathbf{x},\mathbf{y})=(1+ \mathbf{x}^{T} \mathbf{y})^{2}$ with $\mathbf{x},\mathbf{y} \in \mathbb{R}^{2}$. Assuming that $\mathbf{x}=(x_1, x_2)$ and $\mathbf{y}=(y_1, y_2)$, expanding the expresion: 
- \begin{eqnarray} 
-   \nonumber
-   k(\mathbf{x},\mathbf{y}) &=& (1+\mathbf{x}^{T}\mathbf{y})^{2}=(1+x_1y_1+x_2y_2)^2 \\ 
-   \nonumber
-   k(\mathbf{x},\mathbf{y}) &=& 1 + x_1^2y_1^2 + x_2^2y_2^2 + 2x_1y_1 + 2x_2y_2 + 2x_1x_2y_1y_2
- \end{eqnarray}
+The Quick Shift \citep{Vedaldi.Soatto:ECCV:2008} is a density-based method for superpixel computation. This technique perform a so-called mode-seeking algorithm \citep{YizongCheng:PAMI:1995} for locating the maxima of a density function. That is, it locates the maxima or the modes of a density function given discrete data sampled from that function through a mean shift procedure.
 
- We notice that this corresponds to a dot product between the vectors $(1, x_1^2, x_2^2, \sqrt{2}x_1,  \sqrt{2}x_2, \sqrt{2}x_1x_2)$ and $(1, y_1^2, y_2^2, \sqrt{2}y_1,  \sqrt{2}y_2, \sqrt{2}y_1y_2)$. Then  
- \begin{eqnarray} 
-   \nonumber
-   \varphi(\mathbf{x}) &=& \varphi(x_1, x_2) = (1, x_1^2, x_2^2, \sqrt{2}x_1,  \sqrt{2}x_2, \sqrt{2}x_1x_2) \\ 
-   \nonumber
-   \varphi(\mathbf{y}) &=& \varphi(y_1, y_2) = (1, y_1^2, y_2^2, \sqrt{2}y_1,  \sqrt{2}y_2, \sqrt{2}y_1y_2)
- \end{eqnarray}
+This is an iterative method that cannot offer control over the number of superpixels or their compactness and are, therefore, also categorized as an oversegmentation algorithm.
 
- So the kernel $k(\mathbf{x},\mathbf{y})=(1+ \mathbf{x}^{T} \mathbf{y})^{2} = \varphi(\mathbf{x})^T \varphi(\mathbf{y})$ computes a dot product in 6-dimensional space without explicitly visiting this space. 
- 
- Another example is Gaussian kernel $k(\mathbf{x},\mathbf{y})=\exp(- \gamma\parallel \mathbf{x} - \mathbf{y}\parallel^2)$.
- 
- \item \textbf{Kernel methods (Statistics).} The term kernel is a term in statistical analysis used to refer to a window function. The term ``kernel'' has several distinct meanings in different branches of statistics. In statistics, kernel density estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. Kernel density estimation is a fundamental data smoothing problem where inferences about the population are made, based on a finite data sample. In some fields such as signal processing and econometrics it is also termed the Parzen–Rosenblatt window method, after Emanuel Parzen and Murray Rosenblatt, who are usually credited with independently creating it in its current form (WIKI).
- 
- 
- \item \textbf{Mean shift.} Mean shift is a non-parametric feature-space analysis technique for locating the maxima of a density function, a so-called mode-seeking algorithm (CITE Cheng). Mean shift is a procedure for locating the maxima —the modes— of a density function given discrete data sampled from that function(CITE Cheng). This is an iterative method, and we start with an initial estimate $x$. 
- 
- Let a kernel function $K(x_{i}-x)$ be given. This function determines the weight of nearby points for re-estimation of the mean. Typically a Gaussian kernel on the distance to the current estimate is used, $K(x_{i}-x)=e^{-c \parallel x_{i}-x \parallel ^{2}}$. The weighted mean of the density in the window determined by $K$ is $$ m(x) = \frac{ \sum_{x_i \in N(x)} K(x_i - x) x_i } {\sum_{x_i \in N(x)} K(x_i - x)}$$ where $N(x)$ is the neighborhood of $x$, a set of points for which $K(x_i) \neq 0$.
- 
- The difference $m(x)-x$ is called mean shift in Fukunaga and Hostetler (CITE). The mean-shift algorithm now sets $x \leftarrow m(x)$, and repeats the estimation until $m(x)$ converges.
- 
- \item \textbf{Medoids.} Are representative objects of a data set or a cluster with a data set whose average dissimilarity to all the objects in the cluster is minimal. Medoids are similar in concept to means or centroids, but medoids are always restricted to be members of the data set. Medoids are most commonly used on data when a mean or centroid cannot be defined, such as graphs. They are also used in contexts where the centroid is not representative of the dataset like in images and 3-D trajectories and gene expression (where while the data is sparse, the medoid need not be). These are also of interest while wanting to find a representative using some distance other than squared euclidean distance.
- 
- \item \textbf{Medoid shift (CITE Sheikh).} Medoid shift is a modification of mean shift, the main difference: Meanshift selects the location that minimizes this function exactly while Medoidshift selects the data point that best minimizes it (medoid). Another difference is that the data space $X$ may be non-Euclidian.
-\end{description}
+Quickshift computer a hierarchical segmentation of the image at multiple scales simultaneously. Then the parameters to define the size and shape of the regions depend on the scale of the local density approximation and the level in the hierarchical segmentation that is produced. Additionally, the compromise between color space and distance in image space can also be controlled. 
 
-Taking the above concepts, the Quick Shift method simply propose moves each point $x_i$ to the nearest neighbor for which there is an increment of the density $P(x)$ (CITE Vedaldi).  
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067}
+    \end{subfigure} \\[2ex]       
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{150 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_quick_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_quick_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_quick_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_quick_150_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{300 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_quick_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_quick_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_quick_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_quick_300_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{600 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_quick_600_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_quick_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_quick_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_quick_600_segs}
+    \end{subfigure}     
+
+	\caption{Eamples of Quick Shift superpixels.}\label{fig:quick_suprepixels}    
+\end{figure}
+
+We illustrate in figure \ref{fig:quick_suprepixels} four images and the superpixels obtained with the quickshift algorithm setting the parameters to obtain 150, 300 and 600 super pixels. 
 
 
-\subsubsection{Compact watershed segmentation of gradient images}
-This method retakes the watershed segmentation proposed by (CITE Meyer). Originally, the watershed method is an over segmentation technique, i.e., one can control the number of regions by means of the number of markers but we cannot control its compactness.  In this context, high compactness means that the superpixels are of approximately equal size and more or less regularly shaped in the absence of strong image gradients (e.g. like a recangle or a circle). The method proposed by (CITE Neubert) upgrades the original algorithm adding the compactness. 
+\subsubsection{Watershed superpixels}%Compact watershed segmentation of gradient images
+The watershed-based superpixel techniques takes the watershed segmentation algortihm proposed by \citep{Meyer:ICIP:1992} as calculation basis. Originally, the watershed method is an over segmentation technique, i.e., one can control the number of regions by means of the number of markers but we cannot control its compactness.  In this context, high compactness means that the superpixels are of approximately equal size and more or less regularly shaped in the absence of strong image gradients (e.g. like a recangle or a circle). Some watershed-based superpixel algorithms, such as the Compact watershed algortihm \citep{Neubert.Protzel:ICPR:2014} or the Water Pixels algorithm \citep{Machairas.Faessel.ea:IP:2015}, upgrades the original algorithm adding the compactness. 
 
-At base, the algorithm is an implemetation of the OpenCv funtion ``watershed'' whichs implements a seeded watershed segmentation (also called marker controlled watershed). The seeds are externally provided to the algorithm, e.g. as local gradient minima or for superpixel-like segmentation on a uniform grid. The seeds grow iteratively pixel by pixel until they reach a border to the segment around another seed. These borders form the watersheds. The next seed to expand by one pixel is chosen based on a distance function. In the OpenCV implementation, this distance function only incorporates the intensity or color value of the pixels. To influence the compactness of the segmentation, they propose the simple extension of incorporating the distance to the seed point as well.
+Initially, these algorithms implements a seeded watershed segmentation (also called marker controlled watershed). Markers can be determined manually, or automatically using for example the local minima of the gradient of the image, or the local maxima of the distance function to the background. Therefore, instead of taking a color image as input, watershed requires a grayscale gradient image, where bright pixels denote a boundary between regions. 
+
+Once the markers and the gradient are given, the algorithm views the image as a landscape, where bright pixels of the gradeint forms high peaks. This landscape is then flooded from the given markers, until separate flood basins meet at the peaks. Each distinct basin forms a different image segment.
+
+The figure \ref{fig:wt_suprepixels} shows the superpixels obtained with the compact watershed algorithm \citep{Neubert.Protzel:ICPR:2014} defining the number of superpixels to find at 150, 300 and 600.
+
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067}
+    \end{subfigure} \\[2ex]       
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{150 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_wt_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_wt_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_wt_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_wt_150_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{300 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_wt_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_wt_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_wt_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_wt_300_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{600 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_wt_600_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_wt_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_wt_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_wt_600_segs}
+    \end{subfigure}     
+
+	\caption{}\label{fig:wt_suprepixels}    
+\end{figure}
 
 
 \subsubsection{SLIC superpixels}
-This algorithm simply performs K-means in the 5-d space of color information and image location and is therefore closely related to quickshift. As the clustering method is simpler, it is very efficient. It is essential for this algorithm to work in Lab color space to obtain good results
+The Simple Linear Iterative Clustering (SLIC) algorithm is part of the superpixel clustering-based methods. The methods in this category group pixels into clusters (superpixels) and iteratively refine such clusters until some convergence criterion is met. In the case of the SLIC, the centers of the clusters are randomly initialized and then associate each pixel to the closest central pixel. The central clusters are subsequently adjusted iteratively until the error converges.
 
-\subsubsection{Superpixels techniques comparison}
+The SLIC algorithm allows to control the number of superpixels (approximately) to be found in the image; the compactness of the superpixels and the as well as the adherence to the boundaries of the objects. However, this method cannot capture the global properties of the image \citep{Stutz.Hermans.ea:CVIU:2018}. Figure \ref{fig:slic_suprepixels} shows, in the same way as the previous algorithms, the results of the method asking for 150, 300 and 600 superpixels.
+
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067}
+    \end{subfigure} \\[2ex]       
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{150 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_slic_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_slic_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_slic_150_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_slic_150_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{300 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_slic_150_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_slic_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_slic_300_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_slic_300_segs}
+    \end{subfigure} \\ [2ex]
+    
+    \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
+    	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{600 sp}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{35028_slic_600_segs} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{87015_slic_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{130066_slic_600_segs}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{160067_slic_600_segs}
+    \end{subfigure}     
+
+	\caption{}\label{fig:slic_suprepixels}    
+\end{figure}
+
 
 \section{Perceptual image boundaries}
+
+
 \subsection{Earth Mover's Distance for non-normalized distributions}
+We have seen the utility of EMD in Chapter \ref{ch:similarity_measures} as a true metric for measuring similarity between distributions. In image search systems based on color information, EMD is capable of measuring small changes in the normalized color distributions of superhero images. On the other hand, with the texture imagettes, the EMD is able to capture, reflect and measure the importance of the logarithmic (frequency) and polar (orientation) axes of the texture signature (see figure \ref{fig:MDS_EMD}  in appendix \ref{ch:suplementary_material_retrieval_systems}). 
+
 
 \subsubsection{Ground distance matrix}
 
@@ -310,6 +684,13 @@ Therefore, to evaluate the learning of the importance of color and texture and t
 
 \section{Comparison with the state of the art}
 \subsection{Scores}
+
+\subsubsection{Precision-Recall curve and Average Precision (AP)}
+\subsubsection{Optimal Dataset Scale (ODS), Optimal Image Scale (OIS)}
+\subsubsection{Probabilistic Rand Index (PRI)}
+\subsubsection{Variation of Information(VI)}
+
+\subsubsection{}
 
 \begin{table}[]
 \centering
