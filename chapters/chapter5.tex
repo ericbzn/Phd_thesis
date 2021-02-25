@@ -807,7 +807,7 @@ This behavior is of vital importance in the evaluation of a segmentation algorit
 
 
 \subsubsection{Results}
-The two previous experiments show that the segmentation of real images is a complex task in which the result depends on various parameters such as the configuration of the input space, the number of segments, etc. Here we show some segmentation results (see figure \ref{fig:BSD_clustering _results}) using the feature space derived from the HSV-based luminance-chrominance color space and the four segmentation algorithms presented in this section.
+The two previous experiments show that the segmentation of real images is a complex task in which the result depends on various parameters such as the configuration of the input space, the number of segments, etc. Here we show some segmentation results (see figure \ref{fig:BSD_clustering_results}) using the feature space derived from the HSV-based luminance-chrominance color space and the four segmentation algorithms presented in this section.
 
 The segmentation results are obtained by setting $k = 4$ for all images. The figure \ref{fig:PR_boxplot_scores} shows the precision and recalculation boxplots of each of the segmentation algorithms of the color spaces.
 
@@ -857,8 +857,7 @@ The segmentation results are obtained by setting $k = 4$ for all images. The fig
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{181021}
-    \end{subfigure} \vspace{5pt}   
-    
+    \end{subfigure} \\ 
     
     \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
     	\centering
@@ -882,9 +881,8 @@ The segmentation results are obtained by setting $k = 4$ for all images. The fig
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{181021_Kmeans_const_segm}
-    \end{subfigure} \vspace{5pt}
-    
-    
+    \end{subfigure} \\ 
+       
     \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
     	\centering
     	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Fast Kmeans}}} }}%
@@ -907,8 +905,7 @@ The segmentation results are obtained by setting $k = 4$ for all images. The fig
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{181021_MiniBatchKMeans_const_segm}
-    \end{subfigure} \vspace{5pt}
-    
+    \end{subfigure} \\ 
     
     \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
     	\centering
@@ -932,8 +929,7 @@ The segmentation results are obtained by setting $k = 4$ for all images. The fig
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{181021_GaussianMixture_const_segm}
-    \end{subfigure} \vspace{5pt}
-    
+    \end{subfigure} \\ 
     
     \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
     	\centering
@@ -957,9 +953,8 @@ The segmentation results are obtained by setting $k = 4$ for all images. The fig
     \begin{subfigure}[b]{0.23\textwidth}
     	\centering
         \includegraphics[height=67.68857pt]{181021_Birch_const_segm}
-    \end{subfigure} \vspace{5pt}
-    
-	\caption{Segmentation results using different segmentation algorithms and HSV color space. The number of segments to find is fixed at $ k = 4 $ for all images. }\label{fig:BSD_clustering _results}    
+    \end{subfigure}     
+	\caption{Segmentation results using different segmentation algorithms and HSV color space. The number of segments to find is fixed at $ k = 4 $ for all images. }\label{fig:BSD_clustering_results}    
 \end{figure}
 
 
