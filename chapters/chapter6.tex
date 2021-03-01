@@ -125,7 +125,7 @@ In this section we introduce some important definitions that will be used throug
 \end{definition}
 
 
-%{Wang.Liu.ea:SP:2017} reference about superpixel benchmark
+%
 
 \subsubsection{Pixel-based graph representation}
 
@@ -191,7 +191,7 @@ The term \textit{superpixels} was introduced first by \cite{Ren.Malik:ICCV:2003}
  \item \textbf{Controllable number of superpixels}. The number of superpixels should be controllable.
 \end{itemize}
 
-In addition, according to the followed strategy   to obtain the regions, \cite{Stutz.Hermans.ea:CVIU:2018} propouse a classification for superpixels techniques. We present here four super pixel techniques; each one of them representative of a category the classification. 
+In addition, according to the followed strategy to obtain the regions, \cite{Stutz.Hermans.ea:CVIU:2018} propouse a classification for superpixels techniques. We present here four super pixel techniques; each one of them representative of a category the classification. 
 
 
 %\begin{enumerate}
@@ -590,16 +590,56 @@ The SLIC algorithm allows to control the number of superpixels (approximately) t
 	\caption{}\label{fig:slic_suprepixels}    
 \end{figure}
 
+In this work we choose the SLIC algorithm to generate the superpixels of the images. This method is one of the most competent in terms of customization and calculation time. Furthermore, it is possible to use the image in the LAB color space to form superpixels according to the perceptual colors of the image. For more details on the implementation and performance of the different superpixel algorithms, we invite the reader to review the work of \cite{Wang.Liu.ea:SP:2017}.
 
 \section{Perceptual image boundaries}
 
 
 \subsection{Earth Mover's Distance for non-normalized distributions}
-We have seen the utility of EMD in Chapter \ref{ch:similarity_measures} as a true metric for measuring similarity between distributions. In image search systems based on color information, EMD is capable of measuring small changes in the normalized color distributions of superhero images. On the other hand, with the texture imagettes, the EMD is able to capture, reflect and measure the importance of the logarithmic (frequency) and polar (orientation) axes of the texture signature (see figure \ref{fig:MDS_EMD}  in appendix \ref{ch:suplementary_material_retrieval_systems}). 
+We have seen the utility of the EMD in Chapter \ref{ch:similarity_measures} as true metric for measuring similarity between distributions. In image retrieval systems based on color information, EMD is capable of measuring small changes in the normalized color distributions of superhero images. On the other hand, with the texture patches, the EMD is able to capture, reflect and measure the importance of the logarithmic (frequency) and polar (orientation) axes of the texture signature (see figure \ref{fig:MDS_EMD}  in appendix \ref{ch:suplementary_material_retrieval_systems}). In this chapter we use EMD to measure the similarity between two elements of an image, pixels or superpixels. By measuring the similarity of elements in Gabor's feature space, we locally measure changes in color and texture in the image.
+
+
+The EMD \citep{Rubner.Tomasi.ea:IJCV:2000} , as we used it to measure color and texture distributions in Chapter \ref{ch:similarity_measures} (cf. Eq. \eqref{eq:emd}), is a true metric only when used with normalized distributions (histograms or signatures), i.e., distributions with total mass equal to one. This fact has no impact when the distributions represent global information of an image, color or texture. However, the distributions of the elements of the image (pixels or superpixels) contain only a portion of the information; for example, in the case of our feature space, Gabor's energy.
+
+Normalizing the texture signatures of the individual pixels or superpixels leads to a loss of Gabor energy information, so the classic EMD cannot be applied. We use instead the EMD proposed by \citep{Pele.Werman::2008}.
+
+\begin{eqnarray}
+d_{\widehat{EMD}}(P, Q) = \left( \underset{\{f_{ij}\}}{\mathrm{min}}\sum_{i,j}f_{ij}c_{ij}\right)
++ \left\vert \sum_{i} P_i - \sum_{j} Q_j \right\vert \times \alpha\, \underset{{i,j}}{\mathrm{max}} \{c_{ij}\}  \quad \text{s.t.}\label{eq:emd_pele} \\
+\sum_{j}f_{ij} \leq P_i \, , \; \sum_{i}f_{ij} \leq Q_j \, , \; \sum_{i,j}f_{ij} \leq Q_j \, , \; \sum_{i,j}f_{ij} = \mathrm{min} \left( \sum_{i} P_i , \sum_{j} Q_j\right)\, , \; f_{ij} \geq 0
+\end{eqnarray}
+where $f_{ij}$ denotes the amount transported and $c_{ij}$ denotes the cost of transport from the $i$th supplier in $P$ to the $j$th consumer in $Q$. 
 
 
 \subsubsection{Ground distance matrix}
+The EMD finds the best match that minimizes the maximum cost of transportation; however, the design of the ground distance can have a large impact on the total transportation cost.
 
+Modifying the ground distance to represent the properties of the feature space limits the effect that some signatures have on the EMD. The most classic way to define the ground distance of the EMD is to take it as the Euclidean distance between two points. This configuration is suitable for points that live in an Euclidean feature space, for example the color pixels of an image in the LAB color space. In such a case the ground distance of two points $(a,b)$ is defined as
+\begin{eqnarray} \label{eq:emd_euclidean_ground_distance}
+	d(a, b) = \sqrt{(\Delta L)^2 + (\Delta A)^2 + (\Delta B)^2 + \lambda((\Delta x)^2 +(\Delta y)^2) } 	
+\end{eqnarray}
+where the deltas ($\Delta$) define the difference between the values of each color channel and the position in the image space. The parameter $\lambda$ weights the importance between the spatial information and the color information of the points. A representation of ground distance resulting from Eq. \eqref{eq:emd_euclidean_ground_distance} is the squared Euclidean distance, which penalizes the points that are further away in color space. 
+
+
+In the case of the analysis of textures with a Gabor filter bank, the Euclidean distances are not convenient to design the ground distance of the EMD between signatures. Remember that we use Gabor energy to measure the texture information in each color channel of the image,
+\begin{equation}\label{eq:feature_space}
+	E = \{\widetilde{e}_{c, f, \theta}\}
+\end{equation}
+where $m$ denotes the number of frequencies and $n$ the number of orientations captured by the filter bank and $c$ corresponds to the channels of the luminance-chrominance color space. Under this texture representation, a texture can be seen as a vector within a hypersphere in $m \times n$ dimensional space.
+
+We can define the ground distance as the L1 distance in a linear-polar (lin-polar) space or in a logarithmic-polar (log-polar) space; in this way the ground distance follows the properties of the texture space. In both cases, the orientations of the textures are represented on the porlar axis, while the frequencies are represented on either the linear axis or the logarithmic axis. The ground distance between two texture signatures $(f_1, \theta_1)$, $(f_2, \theta_2)$ is then:
+\begin{eqnarray} \label{eq:emd_lin_log_polar}
+	d((f_1, \theta_1), (f_2, \theta_2)) = |\Delta f| + \alpha |\Delta \theta|
+\end{eqnarray}
+where $\Delta f = \arg{(f_1)} - \arg{(f_2)}$ for the linear spacer and $\Delta f = f_1 - f_2$ for the logartihmic space of the frequency axis. Since the polar axis is cylindrical, there are two possible distances between a pair of points; we take the smaller of the two distances such that
+\begin{eqnarray} \label{eq:emd_ground_dist_polar_axis}
+	\Delta \theta = \mathrm{min}(|\theta_1-\theta_2|, n-|\theta_1-\theta_2|) \nonumber
+\end{eqnarray}
+Finally, the $\alpha$ parameter controls the relative importance between the frequency and the orientation of textures; we use $\alpha=1$ in all of our experiments.
+
+For a better understanding of the effect of ground distance on EMD for measurement of similarity between textures, let's consider the following example. We have a filter bank formed by $m = 3$ frequencies separated at a frequency bandwidth $B_f = 1$ (1 octave) and $n = 3$ orientations separated at an angular bandwidth $B_\theta = 60^\circ$. With this configuration, the bank contains $ m \cdot n = 9 $ different Gabor filters and consequently we have the same number of Gabor energies per image channel. The ground distance to compute the EMD between two signatures of this bank must then be a symmetric matrix of size $ m \cdot n \times m \cdot n $ with zeros on the diagonal. Each cell $(i, j)$ of the matrix represents the distance (L1 or L2) between two frequency and orientation settings $(f,\theta)$. For example, the row $i = 0$ represents the comparison between the combination $(f_1, \theta_1)$ of the first signature against all the configurations of the second signature.
+
+We illustrate in Fig. \ref{fig:EMD_ground_distance_matrix} the ground distance matrix between two texture signatures subjects of $m = 3$ frequencies and $n = 3$ orientations using the four distances described in this section: L2-Eculidean distance, L2-Squared Eculidean distance, L1 lin-polar distance and L1 log-polar distance. In this figure, we see how distances in linear-polar or logarithmic-polar space are more convenient with textures and Gabor filters, since they take into account the cylindrical axis of the angles.
 
 \begin{figure}[!ht]
     \centering
