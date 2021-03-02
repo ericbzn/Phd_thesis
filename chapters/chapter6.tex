@@ -25,7 +25,7 @@ The present framework obtains the segmentation of an image from the perceptual g
 \section{Related work}
 Edge detection is a fundamental problem of computer vision that has been intensively studied since the early 1970s \citep{Hueckel:JACM:1971, Fram.Deutsch:TC:1975}. The main idea behind traditional approaches to contour extraction is to model edges as discontinuities in the brightness channel of an image. This idea gave way to the creation of mask-based operators such as Sobel \citep{Maitre:Book:2003}, Roberts \citep{Roberts:Thesis:1963}, Gradient \citep{Maitre:Book:2003} and Prewitt \citep{Prewitt:PPP:1970}, which quantify the presence of an edge through the convolution of a gray level image with local derivative filters. Other techniques, such as Marr and Hildreth \citep{Marr.Hildreth:PRS:1980}, define edges as the zero crossings of the Laplacian of a Gaussian (LoG). Within traditional methods, the Canny \citep{Canny:PAMI:1986} operator is one of the most popular approaches to this day. This operator follows the same principle of operation of the previous methods, adding a non-maximum suppression stage and a hysteresis thresholding.
 
-Despite their efficiency in controlled environments or in synthetic images, traditional methods suffer when it comes to identifying contours in natural images. The edges of natural images can be present at different scales, and the colors and textures of the scene can generate edges that are perceptually significant to the human eye. Ideally, a contour detection method is intended to simultaneously exploit the brightness, color and texture properties of an image in such a way that it can handle the boundary perimeters defined by the brightness steps and the regions with constant color and / or texture.
+Despite their efficiency in controlled environments or in synthetic images, traditional methods suffer when it comes to identifying contours in natural images. The edges of natural images can be present at different scales, and the colors and textures of the scene can generate edges that are perceptually significant to the human eye. Ideally, a contour detection method is intended to simultaneously exploit the brightness, color and texture properties of an image in such a way that it can handle the boundary perimeters defined by the brightness steps and the regions with constant color and/or texture.
 
 One of the relatively recent strategies for identifying perceptual contours is to use the local energy response of an image. The principle of operation is simple: generate features from the responses of an image produced by a family of filters at different scales and orientations. The idea has been exploited from different points of view. For example, the use of the  Difference of Gaussians (DoG) and its HIlbert transform \citep{Morrone.Owens:PR:1987, Morrone.Burr.ea:RSL:1988} for the generation of a family of filters. Inspired by Gabor's work, this group of filters comply with the Parseval principle; in addition to generating an exact quadrature pair (even and odd symmetry cells).
 
@@ -98,11 +98,11 @@ In this section we introduce some important definitions that will be used throug
 \end{definition}
 
 \begin{definition}[Edge-weighted graph]
-	Given a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, egde weighting is a function $\omega: \mathsf{E} \rightarrow \mathbb{R}$. The weight of an edge incident to two vertices is denoted by  $\omega(\mathsf{v}_{i}, \mathsf{v}_{j})$, $ \omega(\mathsf{e}_{i,j})$ or simply as $\omega_{i,j}$.
+	Given a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, egde weighting is a function $\omega: \mathsf{E} \rightarrow \mathbb{R}$. The weight of an edge incident to two vertices is denoted by  $\omega(\mathsf{v}_{i}, \mathsf{v}_{j})$, $ \omega(\mathsf{e}_{i,j})$ or simply as $\omega_{i,j}$. We denote an edge-weighted graph as $(\mathcal{G}, \omega)$.
 \end{definition}
 
 \begin{definition}[Node-weighted graph]
-	Given a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, vertex weighting is a function $\hat{\omega}: \mathsf{V} \rightarrow \mathbb{R}$. The weight of a vertex is denoted by  $\hat{\omega}(\mathsf{v}_{i})$ or simply as $\hat{\omega}_{i}$.
+	Given a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, vertex weighting is a function $\hat{\omega}: \mathsf{V} \rightarrow \mathbb{R}$. The weight of a vertex is denoted by  $\hat{\omega}(\mathsf{v}_{i})$ or simply as $\hat{\omega}_{i}$. We denote an node-weighted graph as $(\mathcal{G}, \hat{\omega})$.
 \end{definition}
 
 \begin{definition}[Adjacency]
@@ -124,7 +124,24 @@ In this section we introduce some important definitions that will be used throug
 	\end{equation}
 \end{definition}
 
+\begin{definition}[Minimum Spanning Tree (MST)]
+	Given an edge-weighted graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, the minimum spanning tree is a subset of edges that connects all the nodes together with the minimum possible total edge weight. That is, is a spanning tree $\mathcal{MST}=(\mathsf{V}, \mathsf{E}_{MST})$ of $(\mathcal{G}, \omega)$ such that
+the sum of its edges is minimal.
 
+\begin{equation}
+	\mathcal{MST}(\mathcal{G}) = \underset{\mathcal{T} \in \mathcal{ST}}{\mathrm{argmin}} \left( \sum_{\mathsf{e}_{i,j} \in \mathsf{E}_\mathcal{ST}} \omega_{ij} \right)
+\end{equation}
+where $\mathcal{ST}$ is the set of all trees $\mathcal{T}$ of $\mathcal{G}$.
+
+\end{definition}
+
+\begin{definition}[Graph cut]
+	A cut $\mathsf{C}=(\mathsf{S}, \mathsf{T})$ is a partition of the vertices $\mathsf{V}$ of a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$ into two disjoint subsets $\mathsf{S}$, $\mathsf{T}$. The set nodes of a graph cut is denoted as $\mathsf{C}=\{ (\mathsf{s}, \mathsf{t}) \in \mathsf{E} | \mathsf{s} \in \mathsf{S}, \mathsf{t} \in \mathsf{T} \}$.
+
+
+
+
+\end{definition}
 %
 
 \subsubsection{Pixel-based graph representation}
@@ -151,7 +168,7 @@ We can define the adjacency level of the pixels to generate a specific pixel-bas
     	\includegraphics[width=\textwidth]{6nn_pag}
         \caption{6-neighborhood}
     \end{subfigure}\\[5ex]    
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.5\textwidth}\label{fig:pag_example}
         \includegraphics[width=\textwidth]{pixel_adjacency_graph}
         \caption{Exaple of a 4-n graph on a real image}
     \end{subfigure}         
@@ -397,7 +414,7 @@ Quickshift computer a hierarchical segmentation of the image at multiple scales 
         \includegraphics[width=\textwidth]{160067_quick_600_segs}
     \end{subfigure}     
 
-	\caption{Eamples of Quick Shift superpixels.}\label{fig:quick_suprepixels}    
+	\caption{Examples of Quick Shift superpixels.}\label{fig:quick_suprepixels}    
 \end{figure}
 
 We illustrate in figure \ref{fig:quick_suprepixels} four images and the superpixels obtained with the quickshift algorithm setting the parameters to obtain 150, 300 and 600 super pixels. 
@@ -495,7 +512,7 @@ The figure \ref{fig:wt_suprepixels} shows the superpixels obtained with the comp
         \includegraphics[width=\textwidth]{160067_wt_600_segs}
     \end{subfigure}     
 
-	\caption{}\label{fig:wt_suprepixels}    
+	\caption{Examples superpixels obtained with the Compact Watershed algorithm.}\label{fig:wt_suprepixels}    
 \end{figure}
 
 
@@ -587,17 +604,17 @@ The SLIC algorithm allows to control the number of superpixels (approximately) t
         \includegraphics[width=\textwidth]{160067_slic_600_segs}
     \end{subfigure}     
 
-	\caption{}\label{fig:slic_suprepixels}    
+	\caption{Examples of superpixels generated with SLIC algorithm.}\label{fig:slic_suprepixels}    
 \end{figure}
 
 In this work we choose the SLIC algorithm to generate the superpixels of the images. This method is one of the most competent in terms of customization and calculation time. Furthermore, it is possible to use the image in the LAB color space to form superpixels according to the perceptual colors of the image. For more details on the implementation and performance of the different superpixel algorithms, we invite the reader to review the work of \cite{Wang.Liu.ea:SP:2017}.
 
-\section{Perceptual image boundaries}
+\section{Graph-based image gradient and segmentation}
 
+In this section we develop the methodology to obtain a perceptual gradient on an image-graph. Such an image gradient is said perceptual as it is based on the multispectral decomposition of an image with the use of Gabor filters. We use EMD as a measure of simulity between the nodes of the graph to define the weight of the edges. Specifications and adaptations of the EMD are also developed in this section. Subsequently, we use the resulting gradients to segment the image using well-known techniques in the state of the art. 
 
 \subsection{Earth Mover's Distance for non-normalized distributions}
 We have seen the utility of the EMD in Chapter \ref{ch:similarity_measures} as true metric for measuring similarity between distributions. In image retrieval systems based on color information, EMD is capable of measuring small changes in the normalized color distributions of superhero images. On the other hand, with the texture patches, the EMD is able to capture, reflect and measure the importance of the logarithmic (frequency) and polar (orientation) axes of the texture signature (see figure \ref{fig:MDS_EMD}  in appendix \ref{ch:suplementary_material_retrieval_systems}). In this chapter we use EMD to measure the similarity between two elements of an image, pixels or superpixels. By measuring the similarity of elements in Gabor's feature space, we locally measure changes in color and texture in the image.
-
 
 The EMD \citep{Rubner.Tomasi.ea:IJCV:2000} , as we used it to measure color and texture distributions in Chapter \ref{ch:similarity_measures} (cf. Eq. \eqref{eq:emd}), is a true metric only when used with normalized distributions (histograms or signatures), i.e., distributions with total mass equal to one. This fact has no impact when the distributions represent global information of an image, color or texture. However, the distributions of the elements of the image (pixels or superpixels) contain only a portion of the information; for example, in the case of our feature space, Gabor's energy.
 
@@ -627,7 +644,7 @@ In the case of the analysis of textures with a Gabor filter bank, the Euclidean 
 \end{equation}
 where $m$ denotes the number of frequencies and $n$ the number of orientations captured by the filter bank and $c$ corresponds to the channels of the luminance-chrominance color space. Under this texture representation, a texture can be seen as a vector within a hypersphere in $m \times n$ dimensional space.
 
-We can define the ground distance as the L1 distance in a linear-polar (lin-polar) space or in a logarithmic-polar (log-polar) space; in this way the ground distance follows the properties of the texture space. In both cases, the orientations of the textures are represented on the porlar axis, while the frequencies are represented on either the linear axis or the logarithmic axis. The ground distance between two texture signatures $(f_1, \theta_1)$, $(f_2, \theta_2)$ is then:
+We can define the ground distance as the L1 distance in a\ linear-polar (lin-polar) space or in a logarithmic-polar (log-polar) space; in this way the ground distance follows the properties of the texture space. In both cases, the orientations of the textures are represented on the porlar axis, while the frequencies are represented on either the linear axis or the logarithmic axis. The ground distance between two texture signatures $(f_1, \theta_1)$, $(f_2, \theta_2)$ is then:
 \begin{eqnarray} \label{eq:emd_lin_log_polar}
 	d((f_1, \theta_1), (f_2, \theta_2)) = |\Delta f| + \alpha |\Delta \theta|
 \end{eqnarray}
@@ -673,12 +690,119 @@ We illustrate in Fig. \ref{fig:EMD_ground_distance_matrix} the ground distance m
    \label{fig:EMD_ground_distance_matrix}
 \end{figure}
 
-\subsection{Image segmentation based on image gradients}
-\subsubsection{MST threshold graph-cut}
-This method is based on the graph cut using a threshold value. However, the choice of this threshold value is not always obvious, and this value may differ for each image.
-We propose obtaining a threshold value by fitting a probability density function to the values of the egdes of the image graph. Our hypothesis is that the areas with the same color and / or texture information behave as flat areas in the generated feature space, therefore those edges that connect these areas behave as outliers within the probability function. Under this principle, we can propose a cut at some quantile level of the distribution, for example, to 90\%.
+\subsection{Graph image gradients}
 
-In addition, to increase the visibility of outliers, we reduce the number of edges by applying the distribution of the function on the minimun spaning tree (MST) of the k-nn graph.
+As we described earlier, we can use pixels or superpixels as support to represent an image as a graph. Figure \ref{fig:computational_support} shows a natural color image, its superpixels obtained with the SLIC technique (approximately 2500 regions) and the region adjacency graph obtained on the superpixels. In this sense, each node of the graph is positioned at the centroid of each superpixel in the image. This allows reducing the EMD calculation time between nodes of the graph, with the compromise. The pixel adjacency graph of the image is not displayed due to poor visualization (see instead \ref{fig:pag_example} for a PAG reference) however we used a 4 neighboring node adjacency system (4nn) for its creation.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\includegraphics[width=\textwidth]{100007} 
+    	\caption{Input image}
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{100007_slic}
+        \caption{SLIC superpixels}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{100007_raw_rag}
+        \caption{Unweighted superpixel RAG}
+    \end{subfigure}
+    
+	\caption{Computational support for graph-based image gradient.}\label{fig:computational_support}    
+\end{figure}
+
+The weight of the edges between nodes of both computational supports is given by the EMD for non-normalized distributions. In the case of color images, we obtain a weighted edge graph for each channel of the complex luminance-chrominance color space. Figure \ref{fig:graph_gradient_pixel_superpixel} shows the weighted graphs of each channel of a natural image on the support of pixels and super pixels.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\includegraphics[width=\textwidth]{100007_lum_grad} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{100007_cr_grad}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{100007_ci_grad}
+    \end{subfigure} \\ [1ex]    
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\includegraphics[width=\textwidth]{100007_weighted_lum_rag} 
+    	\caption{Luminance}
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{100007_weighted_cr_rag}
+        \caption{Chrominance (real part)}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{100007_weighted_ci_rag}
+        \caption{Chrominance (imag part)}
+    \end{subfigure}
+    
+	\caption{Graph gradient images. First row: pixel-based graph gradient, second raw: Region-based graph gradient. The columns names indicate the respective color channel of the gradient.}\label{fig:graph_gradient_pixel_superpixel}    
+\end{figure}
+
+The gradients obtained with this methodology follow the color and texture variations of the real images. Furthermore, an important aspect of our methodology is that the decomposition of the image using the optimized Gabor filters and the complex color space respects the identity of Perceval. In other words, the sum of the energies of all the decompositions (frequency, angular and per color channel) is equal to 1. This is reflected in the weights of the edges of the luminance and chrominance graphs. Generally, the luminance channel is the one that recovers most of the energy, while the color energy is divided into the real and imaginary part of the chrominance. In the case of the gradients of the second row of images of figure \ref{fig:graph_gradient_pixel_superpixel}, the maximum distance between two nodes in the luminance channel is approximately 30, while in the real and imaginary part of the chrominance the distance varies between 10 and 14. This property allows us to add the weights of the edges of the graphs of each channel to obtain a single graph gradient. You can see the total gradients in the pixel and superpixel support in figure \ref{fig:total_graph_gradient_pixel_superpixel}.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\includegraphics[width=\textwidth]{100007_pred_grad} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{100007_weighted_pred}
+    \end{subfigure}    
+	\caption{Total graph gradient images.}\label{fig:total_graph_gradient_pixel_superpixel}    
+\end{figure}
+
+\subsection{Image segmentation based on image gradients}
+The perceptual gradients obtained with EMD contain the necessary structure to segment images using graph-based segmentation methods. We use the adjacency matrix of the graph for this purpose. Here we present the methodology and results of three different segmentation methods on the weighted graphs on the superpixel support; pixel-level graphs are not considered due to the high computation time. 
+
+\subsubsection{MST threshold graph-cut}
+
+This image segmentation method consists of obtaining the minimum spanning tree (MTS) of the total edge-weighted graph (with normalized values between 0 and 1) and then perform a cut over the graph. Since in the MST there is only a single path that joins all the nodes of the graph, we can make one or more graph cuts to separate the image into regions. We define the edges that are removed by the cut setting a a threshold value over the weights of the MST edges. The choice of this threshold value is not always obvious, and this value may differ for each image.
+
+We propose obtaining a threshold value by fitting a probability density function to the distribution of the MST edges values. Our hypothesis is that the areas with the same color and/or texture information behave as flat areas in the generated feature space, therefore the edges that connect these areas have a big EMD value and behave as outliers within the probability function. We choose the logarithmic distribution as the density function to fit. The threshold value is defined then by the point in the log distribution where the edge weights reache the quantile of order $q = 0.9$. Under this setting, we cut all the MST edges that are above the quantile and keep 90\% of the edges of the graph. The segmentation of the image is given by the connected components of the resulting graph.
+
+Taking the example of the polar bear image, Figure \ref{fig:graphcut_segmentation_technique}  shows MST graph of the image and the weight distribution of the MST edges (black bars) together with the logarithmic distribution (red line) that matches the weight histgram. The red arrow on the plot shows the threshold value for cutting the graph. The resulting segmentation is shown in subfigure \ref{fig:graphcut_segmentation_result}.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+    	\includegraphics[width=\textwidth]{100007_weighted_mstgraph}
+    	\caption{edge-weighted MTS} 
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{100007_weight_dist}
+        \caption{MTS weights distribution}
+    \end{subfigure}    
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{100007_graphcut_result}
+        \caption{Threshold graph-cut segmentation result}
+        \label{fig:graphcut_segmentation_result}
+    \end{subfigure}  
+	\caption{Stages of threshold graph-cut segmentation technique.}\label{fig:graphcut_segmentation_technique}    
+\end{figure}
+
+
+An advantage of this method is the computational speed to obtain an image segmentation. Furthermore, the selection of the threshold value for the graph cut is independent of the user and self-adapting for each image. However, the choice of quantile q is important; a very low value leads to cutting edges within flat areas of color and/or texture generating an over segmentation of the image; on the other hand, a threshold value leads to preserving most of the edges so that the image regions remain connected.
 
 %\begin{figure}[!ht]
 %\centering
@@ -716,7 +840,7 @@ Therefore, to evaluate the learning of the importance of color and texture and t
 %\includegraphics[width=\textwidth]{Spectral_clustering_Fscores_global_complete_boxplot.png}\\
 %Scores using the sum of the computed gradients and the Spectral Clustering method\\
 
-\section{Perceptual image segmentation}
+\section{Image contour detection a segmentation}
 \subsection{Hierarchical watershed}
 \subsection{Interactive image segmentation}
 
@@ -730,7 +854,6 @@ Therefore, to evaluate the learning of the importance of color and texture and t
 \subsubsection{Probabilistic Rand Index (PRI)}
 \subsubsection{Variation of Information(VI)}
 
-\subsubsection{}
 
 \begin{table}[]
 \centering
