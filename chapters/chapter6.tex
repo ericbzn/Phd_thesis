@@ -113,15 +113,47 @@ In this section we introduce some important definitions that will be used throug
 	The adjacency matrix of a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$ is a $|\mathsf{V}| \times |\mathsf{V}|$ matrix $A_{\mathcal{G}}$ that indicates whether pairs of vertices are adjacent or not. For undirected graphs, it is a symmetric $(0,1)$-matrix with zeros on its diagonal such that 
 	
 	\begin{equation}	
-		A_{\mathcal{G}} = (a_{ij})_{(i, j)\in \{1,\cdots, n\}}  \quad \text{where $n$ is the number of nodes in $\mathcal{G}$ and} \nonumber 		
+		A_{\mathcal{G}} = (A_{ij})_{(i, j)\in \{1,\cdots, n\}}  \quad \text{where $n=|\mathsf{V}|$ is the number of nodes in $\mathcal{G}$ and} \nonumber 		
 	\end{equation}
 	\begin{equation}	
-		a_{ij}= 
+		A_{ij}= 
 		\begin{cases}
 			1 \quad \text{if $i, j$ are adjacent in $\mathcal{G}$} \\
 			0 \quad \text{elsewhere}
 		\end{cases}		\nonumber		
 	\end{equation}
+	The adjacency matrix may be transformed into a weighted adjacency matrix $W$ replacing the 1 by the edge weight $\omega_{ij}$ if $i, j$ are adjacent.
+\end{definition}
+
+\begin{definition}[Affinity matrix]
+	The affinity matrix $A$ (also called similarity matrix) of a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$ is a $|\mathsf{V}| \times |\mathsf{V}|$ matrix that indicates how affine or similar a pair of vertices are. For undirected graphs, it is a symmetric matrix with zeros on its diagonal such that 
+	
+	\begin{equation}	
+		A = (A_{ij})_{(i, j)\in \{1,\cdots, n\}}  \quad \text{with}  \nonumber 		
+	\end{equation}
+	\begin{equation}	
+		A_{ij}= 
+		\begin{cases}
+			s(i,j) \quad \text{if $i, j$ are adjacent in $\mathcal{G}$} \\
+			0 \quad \text{elsewhere}
+		\end{cases}	 \nonumber		
+	\end{equation}
+where $n=|\mathsf{V}|$ is the number of nodes in $\mathcal{G}$ and $s(i,j)$ is some similarity function between the points $i,j$.
+\end{definition}
+
+\begin{definition}[Degree matrix]
+	The Degree matrix $D=(D_{ij})$ is a diagonal matrix that measures the \textit{degree} at each node $\mathsf{v} \in \mathsf{V}$ of a graph $\mathcal{G}$ such that 
+	\begin{equation}	
+		D_{ii} =  \underset{\{j|(i,j)\in \mathsf{E}\}}{\sum}  s(i,j)  \nonumber 		
+	\end{equation}	
+\end{definition}
+
+\begin{definition}[Laplacian matrix]
+	Given a graph $\mathcal{G}$ with $n=|\mathsf{V}|$ vertices, its Laplacian matrix $L = (L_{ij})_{(i, j)\in \{1,\cdots, n\}}$ is defined as 
+	\begin{equation}	
+		L = D - A  \nonumber 		
+	\end{equation}	
+where $D$ is the degree matrix and $A$ is the affinity matrix of the graph.
 \end{definition}
 
 \begin{definition}[Minimum Spanning Tree (MST)]
@@ -129,18 +161,13 @@ In this section we introduce some important definitions that will be used throug
 the sum of its edges is minimal.
 
 \begin{equation}
-	\mathcal{MST}(\mathcal{G}) = \underset{\mathcal{T} \in \mathcal{ST}}{\mathrm{argmin}} \left( \sum_{\mathsf{e}_{i,j} \in \mathsf{E}_\mathcal{ST}} \omega_{ij} \right)
+	\mathcal{MST}(\mathcal{G}) = \underset{\mathcal{T} \in \mathcal{ST}}{\mathrm{argmin}} \left( \sum_{\mathsf{e}_{i,j} \in \mathsf{E}_\mathcal{ST}} \omega_{ij} \right) \nonumber
 \end{equation}
 where $\mathcal{ST}$ is the set of all trees $\mathcal{T}$ of $\mathcal{G}$.
-
 \end{definition}
 
 \begin{definition}[Graph cut]
 	A cut $\mathsf{C}=(\mathsf{S}, \mathsf{T})$ is a partition of the vertices $\mathsf{V}$ of a graph $\mathcal{G}=(\mathsf{V}, \mathsf{E})$ into two disjoint subsets $\mathsf{S}$, $\mathsf{T}$. The set nodes of a graph cut is denoted as $\mathsf{C}=\{ (\mathsf{s}, \mathsf{t}) \in \mathsf{E} | \mathsf{s} \in \mathsf{S}, \mathsf{t} \in \mathsf{T} \}$.
-
-
-
-
 \end{definition}
 %
 
@@ -168,9 +195,10 @@ We can define the adjacency level of the pixels to generate a specific pixel-bas
     	\includegraphics[width=\textwidth]{6nn_pag}
         \caption{6-neighborhood}
     \end{subfigure}\\[5ex]    
-    \begin{subfigure}[b]{0.5\textwidth}\label{fig:pag_example}
+    \begin{subfigure}[b]{0.5\textwidth}
         \includegraphics[width=\textwidth]{pixel_adjacency_graph}
         \caption{Exaple of a 4-n graph on a real image}
+        \label{fig:pag_example}
     \end{subfigure}         
         	    
     \caption{Most common k-nearest neighbors adjacency systems.}\label{fig:pixel_adjacency_graph}    
@@ -186,7 +214,8 @@ To build this type of graph, we must first separate the image into regions, pref
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{region_adjacency_graph}       	    
-    \caption{Exaple of a Region Adjacency Graph on a real image.}\label{fig:region_adjacency_graph}    
+    \caption{Exaple of a Region Adjacency Graph on a real image.}
+    \label{fig:region_adjacency_graph}    
 \end{figure}
 
 
@@ -582,7 +611,7 @@ The SLIC algorithm allows to control the number of superpixels (approximately) t
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.2\textwidth}
         \includegraphics[width=\textwidth]{160067_slic_300_segs}
-    \end{subfigure} \\ [2ex]
+    \end{subfigure} \\ [2ex]       
     
     \begin{subfigure}[t]{\dimexpr0.2\textwidth+20pt\relax}
     	\makebox[20pt]{\raisebox{25pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{600 sp}}} }}%
@@ -603,7 +632,7 @@ The SLIC algorithm allows to control the number of superpixels (approximately) t
     \begin{subfigure}[b]{0.2\textwidth}
         \includegraphics[width=\textwidth]{160067_slic_600_segs}
     \end{subfigure}     
-
+    
 	\caption{Examples of superpixels generated with SLIC algorithm.}\label{fig:slic_suprepixels}    
 \end{figure}
 
@@ -716,7 +745,11 @@ As we described earlier, we can use pixels or superpixels as support to represen
 	\caption{Computational support for graph-based image gradient.}\label{fig:computational_support}    
 \end{figure}
 
-The weight of the edges between nodes of both computational supports is given by the EMD for non-normalized distributions. In the case of color images, we obtain a weighted edge graph for each channel of the complex luminance-chrominance color space. Figure \ref{fig:graph_gradient_pixel_superpixel} shows the weighted graphs of each channel of a natural image on the support of pixels and super pixels.
+The weight of the edges between nodes of both computational supports is given by the EMD for non-normalized distributions. 
+\begin{equation}
+	\mathsf{e}_ij \leftarrow \omega(\mathsf{v}_i, \mathsf{v}_j) = d_{\widehat{EMD}}(\widetilde{e}(i), \widetilde{e}(j))
+\end{equation}
+In the case of color images, we obtain a weighted edge graph for each channel of the complex luminance-chrominance color space. Figure \ref{fig:graph_gradient_pixel_superpixel} shows the weighted graphs of each channel of a natural image on the support of pixels and super pixels.
 
 \begin{figure}[!ht]
     \centering
@@ -757,12 +790,12 @@ The gradients obtained with this methodology follow the color and texture variat
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
     	\includegraphics[width=\textwidth]{100007_pred_grad} 
     \end{subfigure}      
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{100007_weighted_pred}
     \end{subfigure}    
 	\caption{Total graph gradient images.}\label{fig:total_graph_gradient_pixel_superpixel}    
@@ -793,7 +826,7 @@ Taking the example of the polar bear image, Figure \ref{fig:graphcut_segmentatio
     \end{subfigure}    
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{100007_graphcut_result}
         \caption{Threshold graph-cut segmentation result}
         \label{fig:graphcut_segmentation_result}
@@ -802,57 +835,261 @@ Taking the example of the polar bear image, Figure \ref{fig:graphcut_segmentatio
 \end{figure}
 
 
-An advantage of this method is the computational speed to obtain an image segmentation. Furthermore, the selection of the threshold value for the graph cut is independent of the user and self-adapting for each image. However, the choice of quantile q is important; a very low value leads to cutting edges within flat areas of color and/or texture generating an over segmentation of the image; on the other hand, a threshold value leads to preserving most of the edges so that the image regions remain connected.
-
-%\begin{figure}[!ht]
-%\centering
-%\includegraphics[width=0.4\textwidth]{cow_mst_weight_dist.png} \caption{Weight distribution of the edges of the MST of an image.  On the values we fit a log-norm probability function}
-%\end{figure}\label{fig:gradient_computation_diagram}
-%
-%\begin{tabular}{ccc}
-%\includegraphics[width=0.33\textwidth]{8068_graphcut_result.png}  & \includegraphics[width=0.33\textwidth]{15062_graphcut_result.png} & \includegraphics[width=0.33\textwidth]{48017_graphcut_result.png}\\
-%\end{tabular}
-
+An advantage of this method is the computational speed to obtain an image segmentation. Furthermore, the selection of the threshold value for the graph cut is independent of the user and self-adapting for each image. However, the choice of the quantile $q$ is important; a very low value leads to cutting edges within flat areas of color and/or texture generating an over segmentation of the image; on the other hand, a high threshold value leads to preserving most of the edges so that most of the image regions remain connected.
 
 \subsubsection{Spectral clustering}
-To apply this segmentation method, we obtain a affinity matrix from the adjacency matrix generated from the connections of the k-nn graph. The normalization of the affinity matrix is a prerequisite for achieving image segmentation. To achieve this, we apply a global normalization with a sigma parameter.
 
-%\begin{tabular}{ccc}
-%\includegraphics[width=0.33\textwidth]{8068_spec_result.png}  & \includegraphics[width=0.33\textwidth]{15062_spec_result.png} & \includegraphics[width=0.33\textwidth]{48017_spec_result.png}\\
-%\end{tabular}
+Spectral clustering is a technique used to cluster elements of a graph. Considering the RAG weighted with the EMD over the Gabor feature space, we used this technique to group the superpixels into perceptual regions consistent with the color and texture information.
+
+This technique transfers the data from a given domain to the spectral domain using eigendecomposition. The general process of spectral clutering is mainly divided into the following three stages:
+
+\begin{itemize}
+	\item Preprocessing: Construct a similarity matrix.
+	\item Decomposition: Compute the eigenvectors of the Laplacian graph to embed the data points in a low-dimensional space (spectral embeding).
+	\item Grouping: Assign the points in k clusters based on the new representation using the k-means algorithm.
+\end{itemize}
+
+Detailing the stages of spectral clustering, we obtain the affinity matrix $A = (A_{ij})$ from the graph based on superpixels. The elements of the matrix are given by the function
+\begin{equation}	
+	A_{ij}= 
+	\begin{cases}
+		\exp{\left(- \alpha \frac{\omega_{ij}}{\sigma(W)}\right)}  \quad \text{if $i, j$ are adjacent in $\mathcal{G}$} \\
+		0 \quad \text{elsewhere}
+	\end{cases}	 
+\end{equation}
+where $\omega_{ij}$ is the measure of distance between nodes of the graph (given by the EMD between non-normalized distributions); $\sigma(W)$ is the total standard deviation of the weight matrix $W$ that serves a global optimization parameter for the affinity matrix computation and; $\alpha$ is a human-defined constant which controls how rapidly the affinity $A_{ij}$ falls off with the distance between $i$ and $j$.
+
+The spectral decomposition is done using the Laplacian matrix, which depends on the affinity matrix $A$ and the matrix of degree $D$. We follow the algorithm of \cite{Ng.Jordan.ea:NIPS:2001}, which proposes to use the normalized Laplacian matrix $L = D^{-1/2} A D^{-1/2}$. This form of the Laplacian matrix is known as the non-normalized one. Once the k largest eigenvectors of $ L $ have been found and normalized, we apply the k-means algorithm on the data points of this reduced space of the graph and assign each node to a cluster.
+
+Figure \ref{fig:spectral_clustering_process} shows the similarity graph constructed from the EMD distances between texture signatures. Since the similarity function $s(i, j)$ is inverse to the distance $\omega (i, j)$ between nodes, we see that the value of the edges tends to zero (black edges) when the regions they are dissimilar and when the regions are similar, the value of the edges tends to 1 (white edges). Subfigure \ref{fig:spectral_clustering_segm_result} shows the polar bear segmentation result using k = 5 and $ \ alpha = 6 $.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{100007_weighted_completegraph} 
+    	\caption{Affinity graph}
+    \end{subfigure}      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{100007_spec_result}
+        \caption{Spectral clustering segmentation result}
+        \label{fig:spectral_clustering_segm_result} 
+    \end{subfigure}    
+	\caption{Gradient-based spectral clustering segmentation.}\label{fig:spectral_clustering_process}    
+\end{figure}
+
 
 \subsubsection{Normalized graph-cut}
-In the same way as the spectral clustering method, the normalized slicing method uses a normalized affinity matrix. The differences between these two methods lie in the speed of calculation and the need to define a number of clusters. In the case of spectral clustering, the calculation time is less, however, it is necessary to give an estimated number of regions to find.
+The Normalized cuts technique is a variation of the spectral clutering technique to cluster graphs. Originally proposed by \cite{JianboShi.Malik:PAMI:2000}, this method performs the same spectral clustering steps described above with some minor differences. As for the affinity matrix, it remains the same. However, the Laplacian matrix here is given as
+$L_{Ncut} = D^{-1}L$
+so the eigendecomposition problem is different as well.
 
-\subsubsection{Gradient-based segmentation comparison}
+Furthermore, the normalized cut is a recursive method that finds a bipartition of the graph so that the $Ncut$ is maximized. This process is repeated if $Ncut$ is below the preset value and taking into account the stability of the cut. This implies that, unlike spectral clustering, we do not need to introduce a specific number $k$ of regions to find in the image. More details about this method can be found in \cite{JianboShi.Malik:PAMI:2000}. We show the segmentation result of the polar bear image using the normalized cut method in figure \ref{fig:norm_cut_segm_result}. 
 
-Taking into account the great variety of techniques, models, strategies and their respective parameters used in this work, we wanted to cover the widest possible range of variables in our tests.
+\begin{figure}[!ht]
+    \centering
+  	\includegraphics[width=0.45\textwidth]{100007_ncut_result}
+    \caption{Normalized gut segmentation result}
+    \label{fig:norm_cut_segm_result}    
+\end{figure}
 
-Therefore, to evaluate the learning of the importance of color and texture and to have a qualitative score, we calculated the F-score using the segmentation results of each method mentioned above. The calculation of such a score can be done individually, that is, by image, however, we collect the set of scores from the BSD test subset and use them in some box plots. These graphs first show the precision and recall of each method, but it also allows us to see which Gabor space configuration gives the best results.
 
+\subsubsection{Comparison of the different graph-based segmentation methods}
+We evaluate the quality of the segmentations of the three segmentation methods based on graphs. For this, we use the Berkeley image base test set and the F-measure obtained from the precision and recall scores described in chapter \ref{ch:complex_spectral_image_decomposition}. 
 
-%\includegraphics[width=\textwidth]{Thr_graphcut_Fscores_log_mst_boxplot_pred_linreg.png}  \\
-%Scores using the gradients predicted by the linear regression model (LinReg) and the Threshold graph cut method\\
-%\includegraphics[width=\textwidth]{Thr_graphcut_Fscores_log_mst_boxplot.png} \\
-%Scores using the sum of the computed gradients and the Threshold graph cut method\\
-%\includegraphics[width=\textwidth]{Spectral_clustering_Fscores_global_complete_boxplot_pred_linreg.png} \\
-%Scores using the gradients predicted by the linear regression model (LinReg) and the Spectral Clustering method\\
-%\includegraphics[width=\textwidth]{Spectral_clustering_Fscores_global_complete_boxplot.png}\\
-%Scores using the sum of the computed gradients and the Spectral Clustering method\\
+In the figures \ref{fig:boxplot_threshold_graphcut}, \ref{fig:boxplot_spectral_clustering}, \ref{fig:boxplot_normalized_graphcut}, we show the resulting scores applying the segmentation methods to graphs built in different feature spaces. In particular, we vary the input color space for the construction of the luminance-chrominance representation of the image.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Thr_graphcut_Fscores_log_mst_boxplot}
+        \caption{F-score}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\centering
+    	\includegraphics[width=\textwidth]{Thr_graphcut_precisions_log_mst_boxplot}
+        \caption{Precision}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\centering
+        \includegraphics[width=\textwidth]{Thr_graphcut_recalls_log_mst_boxplot}
+        \caption{Recall}
+    \end{subfigure} 
+        	    
+    \caption{Segmentation scores using Threshold graph-cut.}\label{fig:boxplot_threshold_graphcut}    
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Spectral_clustering_Fscores_global_complete_boxplot}
+        \caption{F-score}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\centering
+    	\includegraphics[width=\textwidth]{Spectral_clustering_precision_global_complete_boxplot}
+        \caption{Precision}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\centering
+        \includegraphics[width=\textwidth]{Spectral_clustering_recalls_global_complete_boxplot}
+        \caption{Recall}
+    \end{subfigure} 
+        	    
+    \caption{Segmentation scores using Spectral clustering.}\label{fig:boxplot_spectral_clustering}    
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Normalized_graphcut_Fscores_global_complete_boxplot}
+        \caption{F-score}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\centering
+    	\includegraphics[width=\textwidth]{Normalized_graphcut_precisions_global_complete_boxplot}
+        \caption{Precision}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.3\textwidth}
+    	\centering
+        \includegraphics[width=\textwidth]{Normalized_graphcut_recalls_global_complete_boxplot}
+        \caption{Recall}
+    \end{subfigure} 
+        	    
+    \caption{Segmentation scores using Normalized graph-cut.}\label{fig:boxplot_normalized_graphcut}    
+\end{figure}
 
 \section{Image contour detection a segmentation}
-\subsection{Hierarchical watershed}
-\subsection{Interactive image segmentation}
+
+Graph-based segmentation methods have been shown to give interesting results on a perceptual level. However, these methods require a series of parameters that, very often, are not so easy to define. For example, the number of k regions to segment, the alpha constant for the construction of the affinity matrix or the point of estop for the normalized cut. Although there are various methods in the literature to optimize and automate the selection of such parameters, this implies a longer calculation time to obtain a segmentation. 
+
+
+\begin{figure}[!ht] 
+   
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{175083} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{101084}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{41096}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{2018}
+    \end{subfigure} \\ \vspace{-5pt}      
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{GT}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{175083_gt_grad} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{101084_gt_grad}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{41096_gt_grad}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{2018_gt_grad}
+    \end{subfigure} \\ \vspace{-5pt}   
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{4nn}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{175083_4nn_cont} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{101084_4nn_cont}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{41096_4nn_cont}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{2018_4nn_cont}
+    \end{subfigure} \\ \vspace{-5pt} 
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{2500}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{175083_2500sp_cont} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{101084_2500sp_cont}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{41096_2500sp_cont}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{2018_2500sp_cont}
+    \end{subfigure}   
+    
+	\caption{Some examples of image contours obtained with the Gabor complex color (GCC) feature space on the support of pixels (4nn) and superpixels (2500) graph.}\label{fig:slic_suprepixels}    
+\end{figure}
+
+
+
+\subsection{Contour-based image segmentation: Hierarchical watershed}
+
+
+%\subsection{Interactive image segmentation}
 
 
 
 \section{Comparison with the state of the art}
+
+
+
 \subsection{Scores}
 
+
 \subsubsection{Precision-Recall curve and Average Precision (AP)}
+
 \subsubsection{Optimal Dataset Scale (ODS), Optimal Image Scale (OIS)}
+
 \subsubsection{Probabilistic Rand Index (PRI)}
+
 \subsubsection{Variation of Information(VI)}
+
 
 
 \begin{table}[]
@@ -900,7 +1137,7 @@ Therefore, to evaluate the learning of the importance of color and texture and t
 \subsection{Results}
 
 
-\section{Importance of color and texture in image segmentation}
+%\section{Importance of color and texture in image segmentation}
 
 
 \section{Conclusions}
