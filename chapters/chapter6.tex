@@ -22,7 +22,7 @@ The present framework obtains the segmentation of an image from the perceptual g
 	\caption{General pipeline for extraction of perceptual imagen boundaties and unsupervised image segmentation.}\label{fig:pipeline_gabor_image_segmentation}
 \end{figure}
 
-\section{Related work}
+\section{Related work}\label{sec:soa_boundaries_segmentation}
 Edge detection is a fundamental problem of computer vision that has been intensively studied since the early 1970s \citep{Hueckel:JACM:1971, Fram.Deutsch:TC:1975}. The main idea behind traditional approaches to contour extraction is to model edges as discontinuities in the brightness channel of an image. This idea gave way to the creation of mask-based operators such as Sobel \citep{Maitre:Book:2003}, Roberts \citep{Roberts:Thesis:1963}, Gradient \citep{Maitre:Book:2003} and Prewitt \citep{Prewitt:PPP:1970}, which quantify the presence of an edge through the convolution of a gray level image with local derivative filters. Other techniques, such as Marr and Hildreth \citep{Marr.Hildreth:PRS:1980}, define edges as the zero crossings of the Laplacian of a Gaussian (LoG). Within traditional methods, the Canny \citep{Canny:PAMI:1986} operator is one of the most popular approaches to this day. This operator follows the same principle of operation of the previous methods, adding a non-maximum suppression stage and a hysteresis thresholding.
 
 Despite their efficiency in controlled environments or in synthetic images, traditional methods suffer when it comes to identifying contours in natural images. The edges of natural images can be present at different scales, and the colors and textures of the scene can generate edges that are perceptually significant to the human eye. Ideally, a contour detection method is intended to simultaneously exploit the brightness, color and texture properties of an image in such a way that it can handle the boundary perimeters defined by the brightness steps and the regions with constant color and/or texture.
@@ -49,25 +49,6 @@ There is a fine line between the contour detection and image segmentation. In th
 
 The Pb contour detector has driven (directly or indirectly) 50 years of research work around the detection of perceptual contours in natural images their segmentation. Like the Canny operator, the Pb operator has become the reference work. The importance of this method is that it provides a good basis that takes into account the principles of human perception, using operators that have a physical sense.
 
-
-\begin{table}[]
-\begin{tabular}{c|c|c|c}
-\textbf{Edge detector} & \textbf{Input features}                                                                           & \textbf{Main approach}                                           & \textbf{\begin{tabular}[c]{@{}c@{}}Segmentation \\ technique\end{tabular}} \\ \hline
-Pb                      & BG, TG                                                                                            & Gradients dissimilarity                                          & Normalized cuts                                                            \\
-PMI                     & LUV color channels                                                                                & Pixel mutual information                                         & -                                                                          \\ \hline
-SCG                     & \begin{tabular}[c]{@{}c@{}}Gray, color, and \\ depth channels\end{tabular}                        & \begin{tabular}[c]{@{}c@{}}Sparse coding\\ +\\ SVM\end{tabular}  & -                                                                          \\
-SCT                     & RGB color channels                                                                                & \begin{tabular}[c]{@{}c@{}}Sparse coding\\  +\\ SVM\end{tabular} & -                                                                          \\ \hline
-$\widehat{\text{Pb}}$   & BG, TG                                                                                            & Logistic regression                                              & Normalized cuts                                                            \\
-gPb                     & $\widehat{\text{OE}}$, BG, CG, $\widehat{\text{TG}}$                                              & Logistic regression                                              & UCM + OWT                                                                  \\
-BEL                     & Integral channel features                                                                         & Gradient boosting                                                & -                                                                          \\
-Sketch tokens           & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
-SE                      & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
-OEF                     & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
-DeepNet                  & Covariance-like features                                                                          & Deep NN                                                          & -                                                                          \\
-ISCRA                   & \begin{tabular}[c]{@{}c@{}}BG, CG, TG, SIFT,\\  shape features, \\ boundary features\end{tabular} & Cascading classifier                                             & Region merging                                                             \\
-COB                     & $\widehat{\text{OE}}$, BG, CG, $\widehat{\text{TG}}$                                              & Convolutional NN                                                 & -                                                                       
-\end{tabular}
-\end{table}
 
 \section{Image as a graph}
 
@@ -960,10 +941,11 @@ In the figures \ref{fig:boxplot_threshold_graphcut}, \ref{fig:boxplot_spectral_c
     \caption{Segmentation scores using Normalized graph-cut.}\label{fig:boxplot_normalized_graphcut}    
 \end{figure}
 
-\section{Image contour detection a segmentation}
+\section{Image contour detection and segmentation}
 
-Graph-based segmentation methods have been shown to give interesting results on a perceptual level. However, these methods require a series of parameters that, very often, are not so easy to define. For example, the number of k regions to segment, the alpha constant for the construction of the affinity matrix or the point of estop for the normalized cut. Although there are various methods in the literature to optimize and automate the selection of such parameters, this implies a longer calculation time to obtain a segmentation. 
+The graph-based segmentation methods presented above showed interesting results in the segmentation task of natural color images. However, these methods require a series of parameters that, very often, are not so easy to define. For example, the number of $k$ regions to segment, the $\alpha$ constant for the construction of the affinity matrix or the stop point for the normalized cut algortihm. Although there are various methods in the literature to optimize and automate the selection of such parameters, this implies a longer calculation time to obtain a segmentation. The peculiarity of these methods is that they depend on an over-segmentation in superpixels prior to the calculation of the gradient of the graph. Although this step reduces the number of nodes and consequently the number of edges and EMD to be calculated, the contours of the final segmentation of the image are part of the contours found with the superpixel method. In other words, if the boundaries of the regions thrown by the SLIC algorithm do not correspond to the contours of the objects in the images, these borders will not appear in the final segmentation.
 
+In this section we present the methodology to obtain the perceptual contours of the objects in an image directly using the information from the egde-weighted graph instead of using graph-based segmentation methods. The advantage of this approach is that the contours of the image can be obtained at the pixel and superpixel level. The procedure for obtaining the contours is straighforward. The similarity between elements of the image (pixels or superpixels) is calculated by the EMD and stored in the edges of the graph. So, in the case of a graph at pixel level, the perceptual contours are obtained with the transformation of edge-weighted graph into node-weighted grap; where the value of each node (pixel) is the maximum value between the weights of all the edges connected to the node. In the case of superpixels, we transform the edge-weighted graph into a perceptual contour image by assigning the weight of the egde between two regions to the pixels that form the common border between these superpixels. Figure \ref{fig:GCC_results}  shows some examples of the contours found with this methodology in images of the BSDS500 using the graphs at the pixel and superpixel level.
 
 \begin{figure}[!ht] 
    
@@ -1063,34 +1045,172 @@ Graph-based segmentation methods have been shown to give interesting results on 
         \includegraphics[height=67.68857pt]{2018_2500sp_cont}
     \end{subfigure}   
     
-	\caption{Some examples of image contours obtained with the Gabor complex color (GCC) feature space on the support of pixels (4nn) and superpixels (2500) graph.}\label{fig:slic_suprepixels}    
+	\caption{Some examples of image contours obtained with the Gabor Complex Color (GCC) feature space on the support of pixels (4nn) and superpixels (2500) graph.}\label{fig:GCC_results}    
 \end{figure}
-
 
 
 \subsection{Contour-based image segmentation: Hierarchical watershed}
 
+Image segmentation is a complementary problem to contour detection. Some methods such as the ultrametric contour map generate a hierarchical partition of the image from the contours of an image. In a partition hierarchy, an image is represented as a sequence of coarse to fine partitions that satisfy the principle of causality of \cite{Koenderink:BC:1984}, that is, any partition is a refinement of the previous one in the sequence \citep{Perret.Cousty.ea:TIP:2018}.
 
+We only use the information from the gradient resulting from the transformation of the edge-weighted graph to a bounday image (described in the previous section) in a classic morphological approach for image segmentation; the so-called watershed. This approach complies with the principle of causality, so it is possible to define a hierarchy of watersheds as a sequence of watershed segmentations of an image.
+
+One of the first authors to study the properties and relationship between the partition hierarchy and the watershed operator for image segmentation are \citep{Najman.Schmitt:PAMI:1996}. In general terms, this method construct a watershed by a flooding process, that is, the gradient image, seen as a topographic surface, is pierced at its minima and progressively submerged in water. The water fills the catchment basins of the minima and forms lakes. When the water of two lakes meet, the saddle point height where this occurs determines the saliency of the corresponding watershed arch. The sequence of watershed segmentations are obtained by sequentially removing the minima from the gradient image according to regional attributes related to size and the contrast of the components, for example, dynamics, area or volume. In figure \ref{fig:GCC_higra_results} we show the results of hierarchical watershed segmentation using the volume attribute on the GCC4nn and GCC2500 image gradients.
+
+\begin{figure}[!ht] 
+   
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{175083} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{101084}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{41096}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{2018}
+    \end{subfigure} \\ \vspace{-5pt}      
+    
+        
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{4nn}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{175083_4nn_higra} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{101084_4nn_higra}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{41096_4nn_higra}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{2018_4nn_higra}
+    \end{subfigure} \\ \vspace{-5pt} 
+    
+    \begin{subfigure}[t]{\dimexpr0.23\textwidth+20pt\relax}
+    	\centering
+    	\makebox[20pt]{\raisebox{30pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{2500}}} }}%
+    	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{175083_2500sp_higra} 
+    \end{subfigure}      
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{101084_2500sp_higra}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{41096_2500sp_higra}
+    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.23\textwidth}
+    	\centering
+        \includegraphics[height=67.68857pt]{2018_2500sp_higra}
+    \end{subfigure}   
+    
+	\caption{Some examples of image segmentations obtained with the hirachical watershed method on the Gabor Complex Color (GCC) boundaries in the pixels level support (4nn) and superpixels (2500) support.}\label{fig:GCC_higra_results}    
+\end{figure}
 %\subsection{Interactive image segmentation}
 
 
 
 \section{Comparison with the state of the art}
+In the section \ref{sec:soa_boundaries_segmentation}, we review the different methods for the detection of contours and segmentation of natural images. In this section we classify state-of-the-art methods based on the input features and the technique used for contour detection and image segmentation. Table \ref{table:characteristics_soa_methods} orders the different characteristics of these methods, which allows us to position our contour detector with respect to the existing works. 
+
+We recall that one of the objectives of the thesis is to generate algorithms for the detection of objects in complex environments, this with the purpose of implementing such algorithms in the framework of unmanned aerial vehicles. In this sense, the characteristics that we look for in a contour detector is the independence of databases to train learning models; simplicity and a low number of parameters and; the possible real-time implementation. Taking this into account, the table separates state-of-the-art methods into three groups: unsupervised (N-S), semi-supervised (S-S) and fully supervised (F-S) approaches. Our contour detector is positioned in the group of unsupervised methods (first column of the table; Pb and PMI methods). 
+
+\begin{table}[]
+\begin{tabular}{c|c|c|c}
+\textbf{Edge detector} & \textbf{Input features}                                                                           & \textbf{Main approach}                                           & \textbf{\begin{tabular}[c]{@{}c@{}}Segmentation \\ technique\end{tabular}} \\ \hline
+Pb                      & BG, TG                                                                                            & Gradients dissimilarity                                          & Normalized cuts                                                            \\
+PMI                     & LUV color channels                                                                                & Pixel mutual information                                         & Spectral clustering                                                                          \\ \hline
+SCG                     & \begin{tabular}[c]{@{}c@{}}Gray, color, and \\ depth channels\end{tabular}                        & \begin{tabular}[c]{@{}c@{}}Sparse coding\\ +\\ SVM\end{tabular}  & -                                                                          \\
+SCT                     & RGB color channels                                                                                & \begin{tabular}[c]{@{}c@{}}Sparse coding\\  +\\ SVM\end{tabular} & -                                                                          \\ \hline
+$\widehat{\text{Pb}}$   & BG, TG                                                                                            & Logistic regression                                              & Normalized cuts                                                            \\
+gPb                     & $\widehat{\text{OE}}$, BG, CG, $\widehat{\text{TG}}$                                              & Logistic regression                                              & UCM + OWT                                                                  \\
+BEL                     & Integral channel features                                                                         & Gradient boosting                                                & -                                                                          \\
+Sketch tokens           & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
+SE                      & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
+OEF                     & Integral channel features                                                                         & Random forest                                                    & -                                                                          \\
+DeepNet                  & Covariance-like features                                                                          & Deep NN                                                          & -                                                                          \\
+ISCRA                   & \begin{tabular}[c]{@{}c@{}}BG, CG, TG, SIFT,\\  shape features, \\ boundary features\end{tabular} & Cascading classifier                                             & Region merging                                                             \\
+COB                     & $\widehat{\text{OE}}$, BG, CG, $\widehat{\text{TG}}$                                              & Convolutional NN                                                 & -                                                                       
+\end{tabular}
+\label{table:characteristics_soa_methods}
+\end{table}
 
 
 
 \subsection{Scores}
+We use the benchmark for contour detection and image segmentation of the BSDS. This benchmark uses the precision and recall scores described in subsection \ref{subsec:quantitative_evaluation}. In addition to these scores, the BSDS benchmark uses the following measures and tools for a more detailed comparison of results in contour detection and image segmentation.
 
-
-\subsubsection{Precision-Recall curve and Average Precision (AP)}
 
 \subsubsection{Optimal Dataset Scale (ODS), Optimal Image Scale (OIS)}
 
+A hierarchical segmentation method applied on an image provides a hierarchy $(H, \lambda)$, where the successive ultrametric levels $(\lambda_1, \cdots , \lambda_N )$ correspond to a series of nested segmentations $(S_1, \cdots , S_N )$. To properly evaluate it, one has to compute the score$(S_i , GT )$ for any level $\lambda_i$ of the hierarchy of each image. One can then either retain these best level $\lambda$ on the overall dataset, and the corresponding score is the Optimal Dataset Scale (ODS), or retain the best level $\lambda_i$ for each image and average the best individual scores for all images, which correspond to the Optimal Image Scale (OIS). By definition, the ODS is inferior or equal to the OIS. In the case of a gradient image, the levels $\lambda_i$ correspond to the threshold values at which the image contours are evaluated.
+
+\subsubsection{Precision-Recall curve and Average Precision (AP)}
+
+A precision-recall curve (PRC) is a graph that shows the relationship between precision (positive predictive value), in the x-axis, and recall (sensitivity), in the y-axis, for every possible cut-off. The cut-offs in the case of a gradient image are the threshold values are the threshold values at which the image contours are evaluated. Every point on the PRC represents a chosen cut-off, therefore, what we can see in the graph is the precision and the recall we get when choosing a cut-off. The average precision (AP) on the full recall range is equivalent to the area under the precision-recall curve.
+
+\subsubsection{Segmentation Covering}
+
+The covering of a segmentation $S$ by a segmentation $S'$ is defined as 
+\begin{equation}
+	\mathcal{C}(S' \rightarrow S) = \frac{1}{N}\sum_{R \in S} |R| \cdot \underset{R' \in S'}{\mathrm{max}} \mathcal{O}(R, R')
+\end{equation}
+where $N$ denotes the total number of pixels in the image and $\mathcal{O}(\cdot)$ denotes the overlap between two regions $R$ and $R'$, defined as
+\begin{equation}
+	\mathcal{O}(R, R') = \frac{R \cap R'}{R \cup R'}
+\end{equation}
+
+In the case of a family of mutiple ground-truth segmentations $\{GT_i\}$ for an image, the covering of a machine segmentation $S$ is defined by first covering $S$ separately with each human segmentation $GT_i$, and then averaging over the different humans. To achieve perfect covering the machine segmentation must explain all of the human data. 
+
 \subsubsection{Probabilistic Rand Index (PRI)}
+The Rand Index has initially been introduced for clusterings evaluation. It operates by comparing the compatibility of assignments between pairs of points in the compared clusters. The Rand Index between a machine segmentation $S$ and a ground-truth $GT$ is the sum of the number of pixels pairs that have the same labels in $S$ and $GT$, and of those which have different labels in the two segmentations, divided by the total number of pixels pairs. The Probabilistic Rand Index (PRI) is a variant introduced for the case when multiple ground truths are available. If we consider a set of ground-truth segmentations $\{GT_k\}$, the PRI is given by:
+\begin{equation}
+	PRI(S, \{GT_k\}) = \frac{1}{T}\sum_{i<j} [c_{ij}p_{ij} + (1-c_{ij})(1-p_{ij})]
+\end{equation}
+where $c_{ij}$ is the event the pixels $i$ and $j$ have the same label and $p_{ij}$ its probability. $T$ is the total number of pixel pairs.
 
 \subsubsection{Variation of Information(VI)}
+The Variation of Information (VI) is also a metric that has been introduced to compare clusterings. It measures the distance between two segmentations relatively to their average conditional entropies given by:
+\begin{equation}
+	VI(S, S') = H(S) + H(S') - 2I(S, S')
+\end{equation}
+where $H$ and $I$ respectively represent the entropies and mutual information between two data clusterings $S$ and $S'$. In our case, these clusterings are the test and ground-truth segmentations.
 
 
+\subsection{Results}
+To provide a basis of comparison for the GCC boundaries, we make use of the region merging (Felz-Hutt), Mean Shift, and Multiscale NCuts segmentation methods as well as the Canny and (Probability-boundary) Pb edge detectors reviewed in Section \ref{sec:soa_boundaries_segmentation}. We evaluate each method using the boundary-based precision-recall framework. On the other hand, we use the Variation of Information, Probabilistic Rand Index, and segment covering criteria discussed in above to compare the hierachical segmentations obtained from the GCC boundaries. The BSDS serves as ground-truth for both the boundary and region quality measures, since the human-drawn boundaries are closed and hence are also segmentations.
+
+Table 1 shows the scores of the boundaray detection for the BSDS300 and BSDS500. Figure 2 display the full precision-recall curves of different methdos only for the BSDS500. Table 2 presents region benchmarks on the BSDS500. For a family of machine segmentations $\{S_i\}$, associated with different scales of a hierarchical algorithm or different sets of parameters, we report three scores for the covering of the ground-truth by segments in $\{S_i\}$. These correspond to selecting covering regions from the segmentation at a universal fixed scale (ODS), a fixed scale per image (OIS), or from any level of the hierarchy or collection $\{S_i\}$ (Best). We also report the Probabilistic Rand Index and Variation of Information benchmarks. While the relative ranking of segmentation algorithms remains fairly consistent across different benchmark criteria, the boundary benchmark (Table 1 and Figure 17) appears most capable of discriminating performance.
+
+Los resultados de las tablas y de la figura 4 muestran que nuestro metodo sobre pasa la performancia del famoso detector de contornos Pb. Si bien los escores 
 
 \begin{table}[]
 \centering
@@ -1113,6 +1233,13 @@ Graph-based segmentation methods have been shown to give interesting results on 
 \end{table}
 
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pr_curves_mymethod}
+	\caption{Precision-recall plot of different contour detectors.}\label{fig:pr_curves}
+\end{figure}
+
+
 \begin{table}[]
 \centering
 \begin{tabular}{c|c|c|c||c|c||c|c|}
@@ -1129,15 +1256,14 @@ Graph-based segmentation methods have been shown to give interesting results on 
 \end{tabular}
 \end{table}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{pr_curves_mymethod}
-	\caption{Precision-recall plot of different contour detectors.}\label{fig:pr_curves}
-\end{figure}
-\subsection{Results}
-
 
 %\section{Importance of color and texture in image segmentation}
 
 
 \section{Conclusions}
+
+
+In this chapter we have presented the methodology for the segmentation of natural images based on the Gabor Complex Color feature space. We show the diversity of possibilities that exist for segmentation using such feature space. In the first place with the segmentation methods based on graphs and secondly with the boundary detector and hierarchical segmentation by watershed.
+
+The scores obtained from the BSDS benchmark show that our algorithms for the detection of contours and the segmentation of images are competitive taking into account the characteristics of the input fetures and the methods used for the processing of the images: dissimilarity gradients in the Complex color Gabor space and completely unsupervised algorithms for image segmentation.
+
