@@ -1,25 +1,25 @@
 % created on 30/03/2020
 % @author : ebazan
-\part{Color of the Textures}\label{part:local_color_of_texture}
-
-\section*{Introduction}
-We dedicate part \ref{part:global_color_texture} of this thesis to the study of the global distribution of color and texture information. In the case of color, we emphasize the importance of choosing a perceptual color space, while for texture, we show that Gabor filters satisfactorily characterize the properties of homogeneous textures. We show the aforementioned through two image retrieval systems that use color and texture information in conjunction with EMD to retrieve the most similar images. We also show that EMD is a metric that reflects the similarity between distributions in a perceptual way.
-
-However, the understanding of scenes (in a general way but particulary in the context of UAVs), is a more complex problem compared to the image retrieval systems presented in the previous part.
-First, the distribution of color and texture information in natural images is more complex. Since we are dealing with non-homogeneous images, it is very possible that an image has objects with different colors and / or textures. In addition, it is possible that one feature generates or is implicit in the other. For example, a repetitive variation between two colors seen very closely can be perceived as two objects, while seen at a longer distance, it can be perceived as the texture of a more complex object.
-
-In this final part of the thesis, we use the color and texture information again but in a different way. We explore the spectral decomposition of an image in a complex color space. With this strategy we recover the local texture information of the objects in an image taking into account the luminance and chrominance information of the scene.
-
-This technique generates a space of balanced fetaures that allows to recover the perceptual contours of the objects in an image and consequently their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is totally unsupervised, we show that it is also useful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
-
-The main contributions of this part are:
-\begin{enumerate}
-	\item Extensive analysis of gabor filters and their properties in the space-frequency domains.
-	\item Interactive tool for custom generation of 2D Gabor filters.
-	\item Generation of a feature space that includes the color and texture information of an image.
-	\item Unsupervised framework for natural image segmentation.
-	\item Tool for the interactive segmentation of images considering the information of color and texture.
-\end{enumerate}
+%\part{Color of the Textures}\label{part:local_color_of_texture}
+%
+%\section*{Introduction}
+%We dedicate part \ref{part:global_color_texture} of this thesis to the study of the global distribution of color and texture information. In the case of color, we emphasize the importance of choosing a perceptual color space, while for texture, we show that Gabor filters satisfactorily characterize the properties of homogeneous textures. We show the aforementioned through two image retrieval systems that use color and texture information in conjunction with EMD to retrieve the most similar images. We also show that EMD is a metric that reflects the similarity between distributions in a perceptual way.
+%
+%However, the understanding of scenes (in a general way but particulary in the context of UAVs), is a more complex problem compared to the image retrieval systems presented in the previous part.
+%First, the distribution of color and texture information in natural images is more complex. Since we are dealing with non-homogeneous images, it is very possible that an image has objects with different colors and / or textures. In addition, it is possible that one feature generates or is implicit in the other. For example, a repetitive variation between two colors seen very closely can be perceived as two objects, while seen at a longer distance, it can be perceived as the texture of a more complex object.
+%
+%In this final part of the thesis, we use the color and texture information again but in a different way. We explore the spectral decomposition of an image in a complex color space. With this strategy we recover the local texture information of the objects in an image taking into account the luminance and chrominance information of the scene.
+%
+%This technique generates a space of balanced fetaures that allows to recover the perceptual contours of the objects in an image and consequently their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is totally unsupervised, we show that it is also useful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
+%
+%The main contributions of this part are:
+%\begin{enumerate}
+%	\item Extensive analysis of gabor filters and their properties in the space-frequency domains.
+%	\item Interactive tool for custom generation of 2D Gabor filters.
+%	\item Generation of a feature space that includes the color and texture information of an image.
+%	\item Unsupervised framework for natural image segmentation.
+%	\item Tool for the interactive segmentation of images considering the information of color and texture.
+%\end{enumerate}
 
 \chapter{Spectral Decomposition of an Image}\label{ch:spectral_image_decomposition}
 

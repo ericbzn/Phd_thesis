@@ -2,7 +2,7 @@
 % @author : ebazan
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
-In this thesis we present the study of low-level primitives of an image such as contours, color, texture and texture color in search of generating general vision algorithms that later can be useful for autonomous navigation of Unmanned Aerial Vehicles (UAVs). Since such primitives allow to characterize objects in images under various conditions, they have widely been used in image segmentation and modeling tasks. To go further, we take interest in the study of these primitives in combination with some concepts of human visual perception, seeking to achieve high-level tasks such as the scene understanding. For this purpose, we favor traditional Computer Vision (CV) methods, avoiding dependence on finely adjusted parameters, to obtain image features with physical sense that can be used later in completely unsupervised algorithms.
+In this thesis we present the study of low-level primitives of an image such as contours, color, texture and the relationship between them in search of generating general vision algorithms that later can be useful for autonomous navigation of Unmanned Aerial Vehicles (UAVs). Since such primitives allow to characterize objects in images under various conditions, they have widely been used in image segmentation and modeling tasks. To go further, we take interest in the study of these primitives in combination with some concepts of human visual perception, seeking to achieve high-level tasks such as the scene understanding. For this purpose, we favor traditional Computer Vision (CV) methods, avoiding dependence on finely adjusted parameters, to obtain image features with physical sense that can be used later in completely unsupervised algorithms.
 
 %\section*{Relationship between drones and computer vision }
 \section*{Background and Motivation}
@@ -127,12 +127,11 @@ Finally, this thesis aims to show that traditional computer vision methods are (
 
 
 \section*{Organization of the Document}
-We explore three low-level primitives during this thesis; contours, color and texture. The organization of this document follows to some extent the evolution of the construction of the vision-based framework for object detection and aid in drone navigation. This thesis will then be decomposed into three parts:
+We explore three low-level primitives during this thesis; contours, color and texture. The organization of this document follows to some extent the evolution of the construction of the vision-based framework for object detection and aid in drone navigation. This thesis will then be decomposed into two parts:
 
 \begin{enumerate}
 	\item A part dedicated to the study of the contours of the image, in which we review in detail some of the classic methods for obtaining image contours. We use this information in conjunction with the \textit{a contrario} method and the Gestalt organizing laws to perform the detection and identification of landing targets.
-	\item The second part is dedicated to the study of the color and texture of an image. In particular, we are interested in the global distribution of this information and the existing metrics to measure the similarity between the distributions. We apply and validate these concepts in a retrival image system.
-	\item In the third and last part of this work, we extend the study of color and texture in images, this time we are interested in the local distribution of these primitives. We also study the influence of color information on the creation of textures in an image. We propose a completely unsupervised framework for the detection of perceptual bondaries. Furthermore, we explore different strategies to obtain the segmentation of natural images using the obtained perceptual boundaries.
+	\item The second part is dedicated to the study of the properties of color and texture of an image. In a fisrt moment, we are interested in the global distribution of this information and the existing metrics to measure the similarity between the distributions; we apply and validate these concepts in a retrival image system. Subsequently, we extend the study of color and texture in images, exploding the local distribution of these primitives and studying the influence of color information on the creation of textures in an image. We propose a completely unsupervised framework for the detection of perceptual bondaries. Furthermore, we explore different strategies to obtain the segmentation of natural images using the obtained perceptual boundaries.
 \end{enumerate}
 
 More specifically, the chapters contained in the three sections are structured as follows:
@@ -149,8 +148,6 @@ More specifically, the chapters contained in the three sections are structured a
 	\item \textbf{Chapter \ref{ch:complex_spectral_image_decomposition}} brings an analysis of the texture information present in color images, showing the strong relationship between those two features. Using the spectral analysis of an image with the previously defined Gabor filters, we generate a feature space that captures the color and texture information simultaneously. We show the richness of such feature space by performing unsupervised image segmentation only using simple clustering techniques.
 	
 	\item \textbf{Chapter \ref{ch:perceptual_object_boundaries_detection}} introduces a framework for the detection of perceptual boundaries of objects present in natural images. This framework brings together the concepts addressed throughout this document such as the spectral decomposition of the image, the optimal transport as a true metric, and the relationship between color and texture information. In addition, using the hierarchical segmentation technique, we segment natural images in an unsupervised manner. We perform a quantitative and qualitative validation of our method using a known database.
-	
-	\item \textbf{Chapter \ref{ch:general_discussion}} is dedicated to the discussion of the different results presented throughout this manuscript.
 	
 	\item \textbf{Chapter \ref{ch:general_conclusions}} contains the general conclusions of the thesis in addition to addressing the different possible lines of research as a continuation of this work.
 	

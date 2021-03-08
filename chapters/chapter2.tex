@@ -1,13 +1,17 @@
 % created on 28/07/2020
 % @author : ebazan
-\part{Global Color and Texture}\label{part:global_color_texture}%Image Global Color and Texture
+\part{Color and Texture Information}\label{part:color_texture}%Image Global Color and Texture
 
 \section*{Introduction}
 In part \ref{part:image_contours}, we show that low-level features, such as image contours, provide useful perceptual information that can be used to solve complex problems. We presented a framework that uses the concepts of human perception and contour information for the unsupervised detection of landing targets. This framework is able to identify the marker under degraded operating conditions using only exogenous features from the contours, which are identified on gray-level images. The framework can be improved by adding other features that provide perceptual information of a scene.
 
-In this part of the thesis, we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans and their study can be very extensive. The objective of this part is to explore the image color and texture features for their future integration into a general framework for object detection. Particularly, in this part of the thesis we are interested in the global distribution of color and texture information of an image. For this purpose, the chapter that opens this part seeks to remember recall the definition of color and texture in the field of computer vision. Moreover, it review different approaches to color representation as well as different strategies for characterizing texture features. Later, in chapter \ref{ch:similarity_measures}, we take interest at the comparison of distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and its application in the field of computer vision.
+In this part of the thesis, we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans and their study can be very extensive. The objective of this part is to explore the image color and texture features for their future integration into a general framework for object detection. For this purpose, the chapter that opens this part seeks to recall the definition of color and texture in the field of computer vision. Moreover, it review different approaches to color representation as well as different strategies for characterizing texture features. Then, we study the color features in two different frameworks. 
 
-Throughout these chapters of the thesis, we address the study of those two properties using simple images containing the information of interest; in the case of color, images containing low color variation and; in the case of texture, grayscale images with homogeneous textures.
+First we are interested in the global distribution of color and texture information of an image. Therefore in chapter \ref{ch:similarity_measures}, we take interest at the comparison of distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and its application in the field of computer vision. 
+
+In the second stage of the study of color and texture, we use the color and texture information united in a single feature space. We delve into the study of Gabor filters and explore the spectral decomposition of an image in a complex color space. With this strategy we recover the local texture information of the objects in an image taking into account the luminance and chrominance information of the scene. With the use of classic vision methods and the feature space developed, we recover the perceptual contours of the objects in an image and consequently their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is totally unsupervised, we show that it is also useful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
+
+Throughout these chapters of the part, we address an extensive study of the color and texture properties of an image using different kinds of images containing the information of interest to test the robustness of our methods. In the first stage we carry out the analysis of the color and the texture separately using images, in the case of color, containing low color variation and; in the case of texture, using grayscale images with homogeneous textures. For the second stage of the analysis we mainly use natural color images. 
 
 The main contributions of this part are:
 
@@ -16,6 +20,11 @@ The main contributions of this part are:
 	\item Review of the state of the art of similarity measures, particulary the interpretation of the OT in computer vision: the Earth Mover's Distance (EMD).
 	\item Qualitative and quantitative study between the most popular measures in the comparison of distributions and the EMD. 
 	\item An unsupervised image retrieval system based on global color/texture information.
+	\item Extensive analysis of gabor filters and their properties in the space-frequency domains.
+	\item Interactive tool for custom generation of 2D Gabor filters.
+	\item Generation of a feature space that includes the color and texture information of an image.
+	\item Unsupervised framework for natural image segmentation.
+	\item Tool for the interactive segmentation of images considering the information of color and texture.
 \end{enumerate}
 
 
