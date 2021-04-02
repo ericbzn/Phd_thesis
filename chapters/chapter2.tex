@@ -3,28 +3,27 @@
 \part{Color and Texture Information}\label{part:color_texture}%Image Global Color and Texture
 
 \section*{Introduction}
-In part \ref{part:image_contours}, we show that low-level features, such as image contours, provide useful perceptual information that can be used to solve complex problems. We presented a framework that uses the concepts of human perception and contour information for the unsupervised detection of landing targets. This framework is able to identify the marker under degraded operating conditions using only exogenous features from the contours, which are identified on gray-level images. The framework can be improved by adding other features that provide perceptual information of a scene.
+In part \ref{part:image_contours}, we show that low-level features, such as image contours, provide useful perceptual information that can be used to solve complex problems. We presented a framework that uses human perception concepts and contours information for the unsupervised detection of landing targets. This framework can identify the marker under degraded operating conditions using only exogenous features from the contours identified on gray-level images. We can improve the framework by adding other features that provide perceptual information of a scene.
 
-In this part of the thesis, we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans and their study can be very extensive. The objective of this part is to explore the image color and texture features for their future integration into a general framework for object detection. For this purpose, the chapter that opens this part seeks to recall the definition of color and texture in the field of computer vision. Moreover, it review different approaches to color representation as well as different strategies for characterizing texture features. Then, we study the color features in two different frameworks. 
+In this part of the thesis, we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans, and their study can be pervasive. This part explores the image color and texture features for their future integration into a general framework for object detection. For this purpose, the chapter that opens this part seeks to recall the definition of color and texture in the field of computer vision. Moreover, it reviews different approaches to color representation as well as different strategies for characterizing texture features. Then, we study the color features in two different frameworks.
 
-First we are interested in the global distribution of color and texture information of an image. Therefore in chapter \ref{ch:similarity_measures}, we take interest at the comparison of distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and its application in the field of computer vision. 
+First, we are interested in the global distribution of color and texture information of an image. Therefore in chapter \ref{ch:similarity_measures}, we take an interest in comparing distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and their application in the field of computer vision.
 
-In the second stage of the study of color and texture, we use the color and texture information united in a single feature space. We delve into the study of Gabor filters and explore the spectral decomposition of an image in a complex color space. With this strategy we recover the local texture information of the objects in an image taking into account the luminance and chrominance information of the scene. With the use of classic vision methods and the feature space developed, we recover the perceptual contours of the objects in an image and consequently their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is totally unsupervised, we show that it is also useful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
+In the second stage of the study of color and texture, we use the color and texture information united in a single feature space. We deepen in the study of Gabor filters, and we explore the spectral decomposition of an image in a complex color space. With this strategy, we recover the objects' local texture information in an image, taking into account the scene's luminance and chrominance information. With the use of classic vision methods and the feature space developed, we recover the perceptual contours of the objects in an image and, consequently, their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is fully unsupervised, we show that it is also helpful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
 
-Throughout these chapters of the part, we address an extensive study of the color and texture properties of an image using different kinds of images containing the information of interest to test the robustness of our methods. In the first stage we carry out the analysis of the color and the texture separately using images, in the case of color, containing low color variation and; in the case of texture, using grayscale images with homogeneous textures. For the second stage of the analysis we mainly use natural color images. 
+Throughout the chapters in this part, we address an extensive study of color and texture properties of an image using different kinds of images containing the information of interest to test our methods' robustness. In the first stage, we carry out the analysis of the color and the texture separately using images, in the case of color, containing low color variation and, in the case of texture, using grayscale images with homogeneous textures. For the second stage of the analysis, we mainly use natural color images. 
 
 The main contributions of this part are:
-
 \begin{enumerate}
 	\item Review of the state of the art of global color representations and texture characterizations.
-	\item Review of the state of the art of similarity measures, particulary the interpretation of the OT in computer vision: the Earth Mover's Distance (EMD).
-	\item Qualitative and quantitative study between the most popular measures in the comparison of distributions and the EMD. 
+	\item Review of the state of the art of similarity measures, particularly the interpretation of the OT in computer vision: the Earth Mover's Distance (EMD).
+	\item A qualitative and quantitative study between the most popular measures in the comparison of distributions and the EMD. 
 	\item An unsupervised image retrieval system based on global color/texture information.
-	\item Extensive analysis of gabor filters and their properties in the space-frequency domains.
+	\item Extensive analysis of Gabor filters and their properties in the space-frequency domains.
 	\item Interactive tool for custom generation of 2D Gabor filters.
 	\item Generation of a feature space that includes the color and texture information of an image.
 	\item Unsupervised framework for natural image segmentation.
-	\item Tool for the interactive segmentation of images considering the information of color and texture.
+	\item A tool for the interactive segmentation of images considering the information of color and texture.
 \end{enumerate}
 
 
@@ -32,26 +31,26 @@ The main contributions of this part are:
 
 \section*{Résumé}
 \noindent 
-Ce chapitre présente une compilation des différentes manières de représenter les informations de couleur et de texture présentes dans une image. En ce qui concerne les informations de couleur, nous introduisons certains types d'espaces colorimétriques et leurs origines. De plus, nous présentons quelques techniques pour synthétiser ces informations. Dans le cas de la texture, nous présentons les différentes méthodologies pour son étude, en mettant en évidence les avantages et les inconvénients de chaque méthode.
+Ce chapitre présente une compilation des différentes manières de représenter les informations de couleur et de texture présentes dans une image. En ce qui concerne les informations de couleur, nous présentons certains des espaces colorimétriques les plus utilisés, leurs origines et leur relation avec la perception humaine. Par ailleurs, nous présentons quelques techniques pour synthétiser ces informations. Dans le cas de la texture, nous présentons les différentes méthodologies pour son étude, en mettant en évidence les avantages et les inconvénients de chaque méthode.
 \section*{Abstract}
 \noindent 
-This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used as well as their origins and relationship to human perception. In addition, we present some techniques to synthesize this information. In the case of texture, we present the different methodologies for its study, highlighting the advantages and disadvantages of each method. 
+This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used and their origins and relationship to human perception. Besides, we present some techniques to synthesize this information. In the case of texture, we present different methodologies for its study, highlighting each method's advantages and disadvantages.
 
 \section{Introduction}
 
-The overall distribution of color within an image is a useful clue that contributes to the description of the content of an natural image. If we look around us, we can see that many of the materials and objects of the environment only exist with certain colors. For example, the clouds are mostly  white, the grass is green, the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings and on skins or objects surfaces. The color and texture of an image is very valuable information, it helps to characterize images that contain landscapes with mountains, jungles, urban environments, deserts or other scenes with different elements by their color and texture distributions. Therefore, the perception of such information is a powerful tool for classifying and recognizing certain objects and materials.
+The overall distribution of color in an image is a helpful clue that contributes to describing a natural image's content. If we look around us, we can see that many of the environment's materials and objects only exist with specific colors. For example, the clouds are primarily white; the grass is green; the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings, and on skins or objects surfaces. The color and texture of an image is valuable information; it helps to characterize images that contain landscapes with mountains, jungles, urban environments, deserts, or other scenes with different elements by their color and texture distributions. Therefore, the perception of such information is a powerful tool for classifying and recognizing particular objects and materials.
 
-For decades several vision algorithms have sought to exploit this information. Color and texture are of relevant importance for its use as a feature to characterize objects. Due to these facts, the definition and the various representations of the color, as well as the texture information, is addressed in this chapter. As far as color information is concerned, we give a brief introduction to what color is and how it can be represented. In the case of texture, we present a brief introduction to textures including its types and an overview to the various methodologies for its study, highlighting the advantages and disadvantages of each method. 
+For decades several vision algorithms have sought to exploit this information. Color and texture are of relevant importance for their use as a feature to characterize objects. Due to these facts, this chapter addresses the definition and the various representations of the color and the texture information. As far as color information is concerned, we give a brief introduction to what color is and how we can represent it. In the case of texture, we present a brief introduction to textures, including their types and an overview of various methodologies for its analysis, highlighting each method's advantages and disadvantages. 
 
 
 \section{Color}
-The study of color is one of the most perplexing and interesting subjects in vision. Although the understanding of the basic concept of the color spectrum is easy to explain, the theory of color is an infinitely more complex subject that has scientific and artistic origins. For example, Newton was interested in the physical properties of color and discovered, with his famous experiment of the light beam projected on a prism, that white light is a combination of all colors across the color spectrum \citep{Newton:Book:1704}.  On the other hand, authors like Goethe dedicated their work about color to a more human-centered analysis of the perception of this information through a series of experiments that measure the response of the eyes to certain colors \citep{Goethe:Book:2015}.
+The study of color is one of the most perplexing and exciting subjects in vision. Although understanding the basic concept of the color spectrum is easy to explain, the theory of color is an infinitely more complex subject with scientific and artistic origins. For example, Newton was interested in the physical properties of color and discovered, with his famous experiment of the light beam projected on a prism, that white light combines all colors across the color spectrum \citep{Newton:Book:1704}.  On the other hand, authors like Goethe dedicated their work about color to a more human-centered analysis. He analyses the perception of color information through a series of experiments that measure the eyes' response to specific colors \citep{Goethe:Book:2015}.
 
-Today we know that the electromagnetic spectrum visible to humans is between 380 and 750 nm (see figure \ref{fig:visual_spectrum}). The electromagnetic radiation between this range of wavelenghts is what we call visible light or simply light. Therefore, we can define color as the main property of visible light by which a human observer can distinguish different kinds of light \citep{Kerr:Online:2003}.
+Today we know that the electromagnetic spectrum visible to humans is between 380 and 750 nm (see figure \ref{fig:visual_spectrum}). We call visible light (or simply light) the electromagnetic radiation between this range of wavelengths. Therefore, we can define color as the main property of visible light by which a human observer can distinguish different kinds of light \citep{Kerr:Online:2003}.
 
-From a biological point of view, we are able to perceive different colors thanks to the human visual system (HVS) composed, roughly, by the eye's elements such as the retina and its photoreceptors (cones and rods); the nervous system and; the part of the brain that interprets information \citep{Fairchild:Book:2005}. The cones are the main photoreceptors for color vison because they work when more light is available, whereas rods are active in low illumination conditions. The three types of cones we have are properly referred to as L, M and S since they are sensitive to different wavelengths of light; long, medium and short wavelengths, respectively.
+From a biological point of view, we can perceive different colors thanks to the human visual system (HVS) composed, roughly, by the eye's elements such as the retina and its photoreceptors (cones and rods), the nervous system, and the part of the brain that interprets information \citep{Fairchild:Book:2005}. The cones are the primary photoreceptors for color vision because they act when more light is available, whereas rods are active mainly in low illumination conditions. The three types of cones we have are appropriately referred to as L, M, and S since they are sensitive to different wavelengths of light; long, medium, and short wavelengths, respectively
 
-The figure \ref{fig:color_images} shows different examples of color images. Specifically, the image on the left is said to be synthetic because it is a man-made image where the colors encode the perceptual information in the image. The remaining three images are natural images that show the importance of color information since many elements of nature have a specific color representation distribution.
+The figure \ref{fig:color_images} shows different examples of color images. Specifically, the leftmost image is a synthetic (human-made) image where the colors encode the image's perceptual information. The remaining three images are natural images that show the importance of color information and how many elements of nature have a specific color representation distribution.
 
 \begin{figure}[!ht]
     \centering
@@ -82,28 +81,28 @@ The figure \ref{fig:color_images} shows different examples of color images. Spec
         \label{fig:mountains}
     \end{subfigure}
                   
-    \caption{Some examples of color images: One synthetic image {\small \textsf{\textbf{(a)}}} and three natural images [{\small \textsf{\textbf{(b) (c) (d)}}}].}\label{fig:color_images}    
+    \caption{Some examples of color images: \captext{(a)} Synthetic image, and [\captext{(b) (c) (d)}] three natural images.}\label{fig:color_images}    
 \end{figure}
 
 
 \subsubsection{Color theory}
-Historically, there have been several attempts to explain the HVS and interpret its function in color vision. Two of the most popular theories of the mechanism of color vision are the trichromatic theory and the opponent-colors theory \citep{Fairchild:Book:2005}. The first of these, proposed by Maxwell, Young, and Helmholtz \citep{Young:PTRSL:1802, VonHelmholtz:Book:1867}, is based on the fact that we have three types of receptors (L-M-S cones). They assume that the receptors are roughly sensitive to the wavelengths of the red, green, and blue colors. Consequently, this theory simply suggests that each type of receptor generates an image which is weighted by the brain in order to sort out the color appearances.
+Historically, there have been several attempts to explain the HVS and interpret its function in color vision. Two of the most popular theories of the mechanism of color vision are the trichromatic theory and the opponent-colors theory \citep{Fairchild:Book:2005}. The first of these, proposed by Maxwell, Young, and Helmholtz \citep{Young:PTRSL:1802, VonHelmholtz:Book:1867}, is based on the fact that we have three types of receptors (L-M-S cones). They assume that the receptors are roughly sensitive to the red, green, and blue wavelengths. Consequently, this theory suggests that each receptor generates an image weighted by the brain to sort out the color appearances.
 
-The second theory is based on Hering's subjective observations \citep{Hering:Book:1878}. In his experiments, he noted that certain hues were never perceived to occur together. For example, color perception was never described as reddish-green or yellowish-blue. This suggested to him that the red – green and yellow – blue color pairs had something fundamental that caused them to behave like opponent colors. 
-This theory gained strength in the mid-20th century where, supported by quantitative data, the stage theory emerged. This modern theory suggests that color perception is done in two stages. The first stage coincides with the trichromatic theory, so the LMS cones generate three color-separation images, however, in the second stage, the neurons of the retina encoded the colors into opposing signals \citep{Fairchild:Book:2005}. 
+The second theory is based on Hering's subjective observations \citep{Hering:Book:1878}. In his experiments, he noted that certain hues were never perceived to occur together. For example, the color perception was never described as reddish-green or yellowish-blue. This response suggested that the red–green and yellow–blue color pairs had something fundamental that caused them to behave like opponent colors. 
+This theory gained strength in the mid-20th century, where, supported by quantitative data, the stage theory emerged. This modern theory suggests that color perception is done in two stages. The first stage coincides with the trichromatic theory, so the LMS cones generate three color-separation images; however, in the second stage, the retina neurons encoded the colors into opposing signals \citep{Fairchild:Book:2005}. 
 
 \subsection{Color representations}
-Human color perception depends on the amount and wavelength of light captured by the eyes. Therefore, perceived colors can vary due to several factors such as the type of surfaces (or objects) where the light is reflected; the environment and even; the eyes of the observer. However, it is definite that the perception of color is an entirely arbitrary creation of our nervous system, and it is not contained in the wavelengths or in light-reflecting objects and materials \citep{Goldstein:Book:2009}. In other words, the interpretation of this information is completely subjective. A clear example of this is the naming of colors. When an incident spectrum contains all frequencies in the range of visible wavelengths, humans perceive objects that reflect all frequencies as clear, luminous or \textit{white}. In the opposite case, when the material absorbs and does not reflect the visible frequencies, it is perceived as dark, opaque or \textit{black}. Some works in this regard state that the naming of colors varies according to culture and language \citep{Berlin.Kay:Book:1991}. However, it is possible to find a correlation between languages and identify eleven basic color terms in English language that seem to be anchored across the different languages as points in a certain color representation \citep{Kay.Regier:PNAS:2003}.% Add diagram images of color theory models???
+Human color perception depends on the amount and wavelength of light captured by the eyes. Therefore, perceived colors can vary due to several factors, such as the type of surfaces (or objects) where the light is reflected, the environment, and even the observer's eyes. However, it is definite that the perception of color is an entirely arbitrary creation of our nervous system, and it is not contained in wavelengths or light-reflecting objects and materials \citep{Goldstein:Book:2009}. In other words, the interpretation of this information is entirely subjective. A clear example of this is the naming of colors. When an incident spectrum contains all frequencies in the range of visible wavelengths, humans perceive objects that reflect all frequencies as clear, luminous, or \textit{white}. In the opposite case, when the material absorbs and does not reflect the visible frequencies, it is perceived as dark, opaque, or \textit{black}. Some works in this regard state that the naming of colors varies according to culture and language \citep{Berlin.Kay:Book:1991}. However, it is possible to find a correlation between languages and identify eleven basic color terms in the English language that seem to be anchored across the different languages as points in a particular color representation \citep{Kay.Regier:PNAS:2003}.% Add diagram images of color theory models???
 
-At first glance, the tasks and experiments mentioned above appear to be simple and straightforward for a human being, however, replicating this in a machine is quite challenging. The definition of a coherent method of describing a color is therefore essential to represent it and for its use in digital image processing. 
+At first glance, the tasks and experiments mentioned above appear to be simple and straightforward for a human being; however, replicating this in a machine is quite challenging. Therefore, the definition of a coherent method of describing color is essential to represent it and for its use in digital image processing.
 
-A \textit{color model} is the mathematical way of describing colors. Such abstract mathematical models are the result of the theories of color described above. We see this in the fact that most models represent a color using three values. This consensus has allowed the development of color models that represent colors as a 3-d property using vectors or tuples of numbers \citep{Douglas.Kerr:Online:2005}. Like any property in 3-d, real colors can be represented as a point in space using a specific coordinate system. A \textit{color space} is thus method of mapping the visible colors a the color model and consequently, they define the range of colors that can be displayed or reproduced on a medium. 
+A \textit{color model} is a mathematical way of describing colors. Such abstract mathematical models are the result of the theories of color described above. We see this in the fact that most models represent a color using three values. This consensus has allowed the development of color models representing colors as a 3-d property using vectors or tuples of numbers \citep{Douglas.Kerr:Online:2005}. Like any property in 3-d, real colors can be represented as a point in space using a specific coordinate system. A \textit{color space} is thus the method of mapping the visible colors a the color model, and consequently, they define the range of colors that can be displayed or reproduced on a medium.
 
-In principle, there are differences between color models and color spaces. For example, models are independent of physical devices (e.g. screens, printers) while color spaces are not. However, in an abuse of language, in this document we will use the term color space to mean a particular fully specified color model. In the next subsection, we describe a number of color spaces that are important both in the theoretical field and in the technical field for the representation of color and its use in the computer vision applications developped in this thesis.
+In principle, there are differences between color models and color spaces. For example, models are independent of physical devices (e.g., screens, printers) while color spaces are not. However, in abuse of language, in this document, we will use the term color space to mean a particular fully specified color model. In the following subsection, we describe some color spaces that are important both in the theoretical field and in the technical field for the representation of color and its use in the computer vision applications developed in this thesis.
  
 
 \subsubsection{Color models and color spaces}
-Color spaces are the quantitative links between the wavelength distributions of visible light and the colors psychologically perceived by the HVS. Since this perception is completely subjective, it is necessary to take the observers into account when modeling a color space. The \textit{Commission Internationale de l'Éclairage} (CIE) is one of the main contributors in the creation of color models. In 1931, they defined a color-mapping function based on a standard observer, representing an average human’s chromatic response within a $2^ \circ$ arc, to primaries at $R_0 = 435.8$ nm, $G_0 = 546.1$ nm, and $B_0 = 700$ nm \citep{Bull:Book:2014}. The positive color-matching functions specify the three standard primaries of color $X$, $Y$ and $Z$ \citep{CIE:Journal:1932}, which allow to define any visible color of the spectrum (see figure \ref{fig:visual_spectrum}) as a weighted sum of three primary colors \citep{Wright:BookCh2:2007}.
+Color spaces are the quantitative links between the wavelength distributions of visible light and the colors psychologically perceived by the HVS. Since this perception is entirely subjective, it is necessary to take the observers into account when modeling a color space. The \textit{Commission Internationale de l'Éclairage} (CIE) is one of the main contributors to creating color models. In 1931, they defined a color-mapping function based on a standard observer, representing an average human's chromatic response within a $2^ \circ$ arc, to primaries at $R_0 = 435.8$ nm, $G_0 = 546.1$ nm, and $B_0 = 700$ nm \citep{Bull:Book:2014}. The positive color-matching functions specify the three standard primaries of color $X$, $Y$ and $Z$ \citep{CIE:Journal:1932}, which allow defining any visible color of the spectrum (see figure \ref{fig:visual_spectrum}) as a weighted sum of three primary colors \citep{Wright:BookCh2:2007}.
 
 \begin{figure}[!ht]
     \centering
@@ -120,58 +119,58 @@ Color spaces are the quantitative links between the wavelength distributions of 
         \label{fig:chrom_diagram}
     \end{subfigure} 
                       
-    \caption{CIE 1931 2 Degree Standard Observer: visible light spectrum {\small \textsf{\textbf{(a)}}} and chromaticity diagram {\small \textsf{\textbf{(b)}}}.}\label{fig:cie_standard_observer}    
+    \caption{CIE 1931 2 $2^\circ$ Standard Observer: \captext{(a)} Visible light spectrum, and \captext{(b)} Chromaticity diagram.}\label{fig:cie_standard_observer}    
 \end{figure}
 
-With the standard primaries it is possible to quantify an object’s colors using a standardized method that takes into account the human eye’s (observer) response to these colors through the \textbf{XYZ color model} (also known as the CIEXYZ color model). In the model $X$, $Y$ and $Z$ are the amount of each primary needed to produce a desired color
+With the standard primaries, it is possible to quantify an object's colors using a standardized method that considers the human eye's (observer) response to these colors through the \textbf{XYZ color model} (also known as the CIEXYZ color model). In the model $X$, $Y$ and $Z$ are the amount of each primary needed to produce a desired color.
 \begin{eqnarray} 
  c(\lambda) = (X,Y,Z) \label{eq:XYZ_color}
 \end{eqnarray}
-where the primary $Y$ is chosen such that its color-matching function exactly matches the luminous-efficiency function for the human eye, i.e., $Y$ measure the luminance of a color \citep{Wright:BookCh2:2007}. Therefore, to define a color in this space, we need to provide the weights for the $X$, $Y$ and $Z$ primaries, for example, $c =xX + yY + zZ$, where 
+The primary $Y$ is chosen such that its color-matching function exactly matches the luminous-efficiency function for the human eye, i.e., $Y$ measuring the luminance of a color \citep{Wright:BookCh2:2007}. Therefore, to define a color in the  XYZ color space, we need to provide the weights for the $X$, $Y$m and $Z$ primaries, for example, $c =xX + yY + zZ$, where 
 \begin{gather} 
 	x = \frac{X}{X+Y+Z} \nonumber \\ 
 	y = \frac{Y}{X+Y+Z} \label{eq:xyz_color_coords} \\ 
 	z = \frac{Z}{X+Y+Z} \nonumber 
 \end{gather}
 
-Under this representation, we can ignore the dimension of the luminance by the normalizacion of the primaries with the total light intensity; $x+y+z=1$. This allow to show all visibles colors of the spectrum in a diagram. Figure \ref{fig:chrom_diagram} shows such a diagram known as the CIE 1931 2 degree standard observer chromaticity chart. The $x$ and $y$ axis of the diagram give the normalised amounts of the $X$ and $Y$ primaries for a particular color, and hence $z = 1 - x - y$ gives the amount of the $Z$ primary required. The diagram reveals that large $x$ values correspond to red or orange hues, large values of $y$ correspond to green and, large $z$ values correspond to blue, violet or purple hues. Chromaticity depends on dominant wavelength and saturation, and is independent of luminous energy. Colors with the same chromaticity but different luminance, all map to the same point within this region. Moreover, the boundary of the chart represents maximum saturation for the visible colors, and the diagram forms the boundary of all perceivable hues \citep{Bull:Book:2014}. 
+Under this representation, we can ignore the luminance's dimension by normalizing the primaries with the total light intensity; $x+y+z=1$. This strategy allows showing all visible colors of the spectrum in a diagram. Figure \ref{fig:chrom_diagram} shows such a diagram known as the CIE 1931 $2^{\circ}$ standard observer chromaticity chart. The $x$ and $y$ axis of the diagram give the normalized amounts of the $X$ and $Y$ primaries for a particular color, and hence $z = 1 - x - y$ gives the amount of the $Z$ primary required. The diagram reveals that large $x$ values correspond to red or orange hues, large values of $y$ correspond to green, and large $z$ values correspond to blue, violet or purple hues. The chromaticity depends on the dominant wavelength and saturation and is independent of luminous energy. Colors with the same chromaticity but different luminance all map to the same point within this region. Moreover, the chart boundary represents maximum saturation for the visible colors, and the diagram forms the boundary of all perceivable hues \citep{Bull:Book:2014}. 
 
-The CIEXYZ model is a reference which has been uses as a basis for to defining other color spaces, and therefore as a standard basis in image processing for moving from one color space to another. The color gamut that can be created through combinations of any three primary colors (e.g. RGB) can be represented on the chromaticity diagram by a triangle joining the coordinates for the three colors. 
+The CIEXYZ model is a reference that has been used as a basis for defining other color spaces, and therefore as a standard basis in image processing for moving from one color space to another. The color gamut that can be created through combinations of any three primary colors (e.g., RGB) can be represented on the chromaticity diagram by a triangle joining the three colors' coordinates.
 %Images of RGB, HSV, HSL, LAB models?
 
-The \textbf{RGB color model} is one of the most popular models in computer vision and image analysis. This is an additive model coming directly from the three-component theory, this means that three color light beams (their wavelength light spectra) are added together to make a final color \citep{Gonzalez.Woods:Book:2008}. The model consists of three independent planes, represented as a three dimensional vector, one in each of the primary colors: red, green and blue. Therefore, to define a color in this model, we need to specify the proportion of red, green, and blue colors. 
+The \textbf{RGB color model} is one of the most popular models in computer vision and image analysis. This is an additive model coming directly from the three-component theory; this means that three color light beams (their wavelength light spectra) are added together to make a final color \citep{Gonzalez.Woods:Book:2008}. The model consists of three independent planes, represented as a three-dimensional vector, one in each of the primary colors: red, green, and blue. Therefore, to define a color in this model, we need to specify the proportion of red, green, and blue colors.
 
-Contrary to the XYZ model, the RGB color space is a device-dependent space, that is, different devices may reproduce or detect the same RGB value differently since the color elements and their response to the individual R, G, and B levels vary according to the manufacturer.
+Contrary to the XYZ model, the RGB color space is a device-dependent space; that is, different devices may reproduce or detect the same RGB value differently since the color elements and their response to the individual R, G, and B levels vary according to the manufacturer.
 
-The RGB color space is the most popular color space based on the RGB color model. The set of colors of this color space can be represented geometrically as a cube that maps the red, blue and green dimensions onto the $x$, $y$, $z$ axes of the 3-d Cartesian coordinate system in an Euclidean space. The non-negative values of the $RGB$ triplet $(r,g,b)$ are in the range $[0,1]$, where the origin at the vertex $(0,0,0)$ encodes the color black and the vertex $(1,1,1)$ encodes the color white. 
+The RGB color space is the most popular color space based on the RGB color model. We can geometrically represent the set of colors of this color space as a cube that maps the red, blue, and green dimensions onto the $x$, $y$, $z$ axes of the 3-d Cartesian coordinate system in a Euclidean space. The non-negative values of the $RGB$ triplet $(r,g,b)$ are in the range $[0,1]$, where the origin at the vertex $(0,0,0)$ encodes the color black, and the vertex $(1,1,1)$ encodes the color white. 
 
-The \textbf{HSV color model} and the \textbf{HSL color model} are cylindrical color models that remaps the RGB primary colors into dimensions that are easier for humans to understand. These two colos models share two of their three dimensions, the hue and the saturation. The third dimension of the HSV model is the value while the HSL model has a lightness dimension. Below is a more detailed description of these dimensions.
+The \textbf{HSV color model} and the \textbf{HSL color model} are cylindrical color models that remap the RGB primary colors into dimensions that are easier for humans to understand. The HSV and HSL color models share two of their three dimensions, the hue, and the saturation. The third dimension of the HSV model is the value, while the HSL model has a lightness dimension. Below is a more detailed description of these dimensions.
 
 \begin{itemize}
 	\item Hue specifies the angle of the color on the RGB color circle. A $0^\circ$ hue results in red, $120^\circ$ results in green, and $240^\circ$ results in blue.
-	\item Saturation or colorfulness controls the amount of color used. One particular thing about the saturation between the two cylindrical color spaces is that even though the saturation dimension theoretically is similar between them (controlling how much pure color is used), the resulting saturation scales differ between the models caused by the brightness to lightness remapping (see diferences between saturation image channels in figure \ref{fig:color_image_representations}). Therefore, for the HSV model a color with 100\% saturation will be the purest color possible, while 0\% saturation yields grayscale. On the other hand, to obtain the purest color in the HSL model we need 50\% lightness.
-	\item Value controls the brightness of the color. A color with 0\% value is pure black while a color with 100\% value has no black mixed into the color. Because this dimension is often referred to as brightness, the HSV color model is sometimes called HSB.
-	\item Lightness controls the luminosity of the color. This dimension is different from the HSV value dimension in that the purest color is positioned midway between black and white ends of the scale. A color with 0\% lightness is black, 50\% is the purest color possible, and 100\% is white.
+	\item Saturation or colorfulness controls the amount of color used. One particular thing about the saturation between the two cylindrical color spaces is that even though the saturation dimension theoretically is similar between them (controlling how much pure color is used), the resulting saturation scales differ between the models caused by the brightness to lightness remapping (see differences between saturation image channels in figure \ref{fig:color_image_representations}). Therefore, for the HSV model, a color with 100\% saturation will be the purest color possible, while 0\% saturation yields grayscale. On the other hand, to obtain the purest color in the HSL model we need 50\% lightness.
+	\item Value controls the brightness of the color. A color with 0\% value is pure black, while a color with 100\% value has no black mixed into the color. Because this dimension is often referred to as brightness, the HSV color model is sometimes called HSB.
+	\item Lightness controls the luminosity of the color. This dimension is different from the HSV value dimension in that the purest color is positioned midway between the black and white ends of the scale. A color with 0\% lightness is black, 50\% is the purest color possible, and 100\% is white.
 \end{itemize}
 
 It is important to note that the three dimensions of the HSV/HSL color models are interdependent. If the value/lightness dimension of a color is set to 0\%, the amount of hue and saturation does not matter as the color will be black. Likewise, if the saturation of a color is set to 0\%, the hue does not matter as there is no color used.
 
-Unlike the RGB color space, the HSV/HSL triplet values $(h,s,v)$/$(h,s,l)$c annot be represented in a 3-d Euclidean space. The circular nature of the hue forces the first dimension to be in an angular space between $0^\circ$ and $360^\circ$, while the remaining two dimensions inhabit a linear space with values between 0 and 1. Consequetly, the HSV color space is best visualized as 3-d cone and the HSL color space as a 3-d bicone. 
+Unlike the RGB color space, we can not represent the HSV/HSL triplet values $(h,s,v)$/$(h,s,l)$ in a 3-d Euclidean space. The hue's circular nature forces the first dimension to be in an angular space between $0^\circ$ and $360^\circ$, while the remaining two dimensions inhabit a linear space with values between 0 and 1. Consequently, the HSV color space is best visualized as a 3-d cone and the HSL color space as a 3-d bicone.
 
-The \textbf{LAB color model} (also referred as CIEL*a*b* or CIELAB) is a result of the opponent-process theory of human perception. In it, color is also expressed with three values. Channel L represents the perceptual luminance wjereas channels A and B represent the scale from red to green and from yellow to blue respectively, which is consistent with the two opponent color pairs that humans cannot perceive simultaneously. 
+The \textbf{LAB color model} (also referred to as CIEL*a*b* or CIELAB) results from the opponent-process theory of human perception. In it, we also express the color with three values. Channel L represents the perceptual luminance, whereas channel A represents the scale from red to green and channel B from yellow to blue. The arrangement above is consistent with the two opponent color pairs that humans cannot perceive simultaneously.
 
-The color space from the LAB model was born with the intention of being a perceptually uniform space, that is, a space where a given numerical change corresponds to the same perception of change in color. As a non-linear transformation of the XYZ color space, the LAB color space is a device-independent space. This implies that its gamut is related to the CIE standard observer model, and therefore, it is impossible to generate a visual representation that displays all the colors of its gamut. The LAB space coordinates are given by the triplet $(l,a,b)$. The first valuer represent the luminance L and it may take values from $0$ to $100$, where 0 points to black and $100$ indicates (diffuse) white. The remaining two coordinates are technically unbounded, though it is commonly mapped to the range $[-128, 127]$. Negative values indicate green and positive values red for channel A, while negative values indicate yellow and positive values blue for channel B. 
+The color space from the LAB model was born to be a perceptually uniform space, i.e., a space where a given numerical change corresponds to the same perception of color change. As a non-linear transformation of the XYZ color space, the LAB color space is a device-independent space. This property implies that its gamut is related to the CIE standard observer model, and therefore, it is impossible to generate a visual representation that displays all the colors of its gamut. The triplet $(l,a,b)$ gives the LAB space coordinates. The first value represents the luminance L, and it may take values from $0$ to $100$, where $0$ points to black and $100$ indicates (diffuse) white. The remaining two coordinates are technically unbounded, though it is commonly mapped to the range $[-128, 127]$. Negative values indicate green and positive values red for channel A, while negative values indicate yellow and positive values blue for channel B.
 
-This color space offers some advantages over the spaces described above, especially in the area of image processing. The fact that this space was constructed to approximate human color vision makes it useful for calculating differences between two neighboring colors with high precision. However, this color model contains colors that are not physically representable by the devices, and a bad color quantization (bits per channel) can generate significant errors.
+This color space offers some advantages over the spaces described above, especially in the image processing field. This space was constructed to approximate human color vision, making it helpful in calculating differences between two neighboring colors with high precision. However, this color model contains colors that are not physically representable by the devices, and a poor color quantization (bits per channel) can generate significant errors.
 
 \begin{figure}[!ht]
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{Input image}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras}
     \end{subfigure} \\    
      
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{RGB channels}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{RGB channels}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_R_RGB}
     \end{subfigure}      
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -186,7 +185,7 @@ This color space offers some advantages over the spaces described above, especia
     \end{subfigure} \vspace{5pt}      
     
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV channels}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{HSV channels}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_H_HSV}
     \end{subfigure}     
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -201,7 +200,7 @@ This color space offers some advantages over the spaces described above, especia
     \end{subfigure} \vspace{5pt} 
     
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSL channels}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{HSL channels}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_H_HLS}
     \end{subfigure}     
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -216,7 +215,7 @@ This color space offers some advantages over the spaces described above, especia
     \end{subfigure} \vspace{5pt} 
         
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{LAB channels}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{LAB channels}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_L_LAB}
     \end{subfigure}    
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -230,18 +229,18 @@ This color space offers some advantages over the spaces described above, especia
         \includegraphics[width=\textwidth]{araras_B_LAB}
     \end{subfigure} 
 
-	\caption{Color channels of an image in different color spaces in a grayscale}\label{fig:images_color_space}    
+	\caption{Color channels of an image in different color spaces in a grayscale.}\label{fig:images_color_space}    
 \end{figure}
 
 
-The figure \ref{fig:images_color_space} shows the three channels of the different color spaces reviewed so far. The input image is a natural color image where the three main colors red, green, and blue naturally stand out. For the visualization of each color channels, we transform its channel values to the range $[0, 255]$ and 255 and displayed in a gray scale. 
+The figure \ref{fig:images_color_space} shows the three channels of the different color spaces reviewed so far. The input image is a natural color image where the three primary colors, red, green, and blue, naturally stand out. For the visualization of each color channel, we transform channel values in the range between $0$ and $255$ and displayed them on a grayscale. 
 
 
 \subsubsection{Luminance-chrominance color spaces}%Two-channel complex image representation
 
-Color spaces mostly map the perception of color as a three-dimensional property. However, these dimensions can be encompassed in only two aspects, so we can classify them into luminance-chromaticity and luminance-chrominance color spaces. In both cases, luminance is the property that describes the brightness of light, however, both categories have different ways of defining color. Chromaticity-based spaces define color independently of luminance (or the luminance equivalent in a particular color space). In a chrominance-based space, the chrominance values of the image change as the light intensity varies.
+Color spaces mostly map the perception of color as a three-dimensional property. However, these dimensions can be encompassed in only two aspects; therefore, we can classify them into luminance-chromaticity and luminance-chrominance color spaces. In both cases, luminance is the property that describes the brightness of the light; however, both categories have different ways of defining color. Chromaticity-based spaces define color independently of luminance (or the luminance equivalent in particular color space). In a chrominance-based space, the chrominance values of the image change as the light intensity varies.
   
-We can obtain a color space based on chromaticity from the classic trichromatic models described in the previous section. The chromaticity of these models consists mainly of two independent parameters. For example, the $xyY$ color space, from which we obtaon the CIE chromaticity chart (see figure \ref{fig:chrom_diagram}), uses the X and Y dimensions to calculate chromaticity. In the case of RGB space, it is possible to obtain a space based on chromaticity following the same principle; using only the R and G channels for its calculation. For cylindrical color spaces (HSV, HSL), the independent parameters that describe chromaticity are the dimensions of hue and colorfulness (saturation).
+We can obtain a color space based on chromaticity from the classic trichromatic models described in the previous section. The chromaticity of these models consists mainly of two independent parameters. For example, the $xyY$ color space, from which we obtain the CIE chromaticity chart (see figure \ref{fig:chrom_diagram}), uses the X and Y dimensions to calculate chromaticity. In RGB space, it is possible to obtain a space based on chromaticity following the same principle, using only the R and G channels for its calculation. For cylindrical color spaces (HSV, HSL), the independent parameters that describe the chromaticity are hue and colorfulness (saturation) dimensions.
 
 \begin{figure}[!ht] 
 	\centering
@@ -268,33 +267,33 @@ We can obtain a color space based on chromaticity from the classic trichromatic 
 		\label{fig:hsv_complex_color}
 	\end{subfigure}
 	
-	\caption{}
+	\caption{Graphic display of tree alternatives to obtain the complex color representation of an image: \captext{(a)} form LAB color space, \captext{(b)} from form HSL color space, and \captext{(c)} from HSV color space.}
 	\label{fig:complex_color_spaces}
 \end{figure}
 
-Chromaticity-based models are reputed for their use in image editing and color correction. However, chrominance-based spaces are useful if we are looking for a uniform distribution of the color information in an image. Some examples of color spaces in this category are CIELAB and CIELUV. In them, the colorfulness information of an image is found in channels A and B (resp. U and V) and the final color is defined by the brightness of the light defined by the luminance L.
+The chromaticity-based models are reputed for their use in image editing and color correction. However, the chrominance-based spaces are helpful if we are looking for a uniform distribution of the color information in an image. Some examples of color spaces in this category are CIELAB and CIELUV. In them, the colorfulness information of an image is found in channels A and B (resp. U and V), and the final color is defined by the brightness of the light defined by the luminance L.
 
-The use of spaces based on luminance-chrominance reduces the dimensionality of the color to two channels $L$ and $C$. To make this two-channel color representation possible, we combine the values of channels A and B with the chrominance function.
+The use of spaces based on luminance-chrominance reduces the dimensionality of the color to two channels $L$ and $C$.To make this two-channel color representation possible, we combine the values of channels A and B with the chrominance function.
 \begin{equation}\label{eq:chrominance_lab}
     C = A + \mathsf{i}B
 \end{equation}
 
-In the same way, it is possible to obtain a luminance-chrominance color space using the dimensions of the cylindrical HSV/HSL color spaces. The chrominance is described by the hue H and saturation S channels such that the complex chrominance channel is defined by the function
+In the same way, it is possible to obtain a luminance-chrominance color space using the dimensions of the cylindrical HSV/HSL color spaces. In that case, the hue H and saturation S channels describe the chrominance such that the function
 \begin{equation}\label{eq:chrominance_hsv}
     C = S \mathsf{e}^{\mathsf{i}H}
 \end{equation}
+defines the complex chrominance channel.
 
-These representations have the advantage of reducing the dimensionality of the color information. In image processing, these color spaces can be obtained from the transformation of the image from the RGB space to the LAB, HSV and HSL spaces, from which the chrominance variables and consequently the complex chrominance channel are obtained. Regarding luminance, it may differ depending on the input color space. For example, for the LAB and HSL spaces, this variable is naturally defined, however, in the case of the HSV space, the luminance channel is obtained from the transformation of the RGB input image to a grayscale image. The figure \ref{fig:complex_color_spaces} shows the diagrams for obtaining an image represented in two channels.
-
+These representations have the advantage of reducing the dimensionality of the color information. In image processing, we can obtain these color spaces from the transformation of the image from the RGB space to the LAB, HSV, and HSL spaces, from which we get the chrominance variables and, consequently, the complex chrominance channel. Regarding the luminance, it may differ depending on the input color space. For example, for the LAB and HSL spaces, this variable is naturally defined; however, in the HSV space, the luminance channel is obtained from the transformation of the RGB input image to a grayscale image. The figure \ref{fig:complex_color_spaces} shows the diagrams for obtaining an image represented in two channels.
 
 \begin{figure}[!ht]
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{Input image}}} }}%
+    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90}{\captext{Input image}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras}
     \end{subfigure} \\    
      
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSV luma/chroma}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{HSV luma/chroma}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HSV}
     \end{subfigure}      
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -309,7 +308,7 @@ These representations have the advantage of reducing the dimensionality of the c
     \end{subfigure} \vspace{5pt}      
     
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{HSL luma/chroma}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{HSL luma/chroma}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_HLS}
     \end{subfigure}     
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -324,7 +323,7 @@ These representations have the advantage of reducing the dimensionality of the c
     \end{subfigure} \vspace{5pt} 
     
     \begin{subfigure}[t]{\dimexpr0.3\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{35pt}{ \rotatebox[origin=c]{90} {\small \textsf{\textbf{LAB luma/chroma}}} }}%
+    	\makebox[20pt]{\raisebox{35pt} {\rotatebox[origin=c]{90}{\captext{LAB luma/chroma}} }}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{araras_lum_LAB}
     \end{subfigure}     
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -338,10 +337,10 @@ These representations have the advantage of reducing the dimensionality of the c
         \includegraphics[width=\textwidth]{araras_chri_LAB}
     \end{subfigure} \vspace{5pt} 
         
-    \caption{Color channels of an image in different color spaces in grayscale}\label{fig:images_color_complex_space}    
+    \caption{Color channels of an image in different color spaces in grayscale.}\label{fig:images_color_complex_space}    
 \end{figure}
 
-Figure \ref{fig:images_color_complex_space} shows the transformation of a natural image (first row of the figure array) from RGB space to complex two-channel color space. Each row in the figure shows the luminance channel and the two parts (real and imaginary) of the chrominance channel. Note that as it happened in the representation of the classic color spaces (figure \ref{fig:images_color_space}), since the method of computing saturation differs in HSV and HSL spaces, the chrominance channel is different. The same effect occurs with the L lumance channel from LAB space and the luminance from the RGB to gray transformation; in theory both are the same, but in practice we can see that there are differences.
+Figure \ref{fig:images_color_complex_space} shows the transformation of a natural image (first row of the figure array) from RGB space to complex two-channel color space. Each row in the figure shows the luminance channel and the two parts (real and imaginary) of the chrominance channel. Note that as it happened in the representation of the classic color spaces (figure \ref{fig:images_color_space}) since the method to compute saturation differs in HSV and HSL spaces, the chrominance channel is different. The same effect occurs with the L luminance channel from LAB space and the luminance from the RGB to gray transformation; in theory, both are the same, but in practice, we can see differences.
 
 
 %From the previous section, it is clear that the luminance information is a cue in obtaining texture features, however, the chrominance also plays an important role. We can obtain this information using the two-complex channels form. This representation contains the pure luminance $L^*$ values in a real channel while the chrominance $C$ is contained in a complex channel. This complex channel can be obtained from the components of the $L^*a^*b^*$ or the components of $HSV$ / $HSL$ color spaces prior to a transformation of the image from the $RGB$ space.
@@ -359,23 +358,21 @@ Figure \ref{fig:images_color_complex_space} shows the transformation of a natura
 
 \subsection{Compact color representations for image processing}
 
-Color spaces serve as a link between color theories and representation for better visualization and mathematical interpretation of colors. However, for color information processing, it is often necessary to represent the color pixel values more compactly. This benefits the development of faster and more performant algorithms; the challenge is to maintain the consistency of the input information and not lose important characteristics of the color distribution. In the following subsections we will show some of the representations commonly used in to represent color information in a compact way.
-
+Color spaces serve as links between color theories and representation for better visualization and mathematical interpretation of colors. However, for color information processing, it is often necessary to represent the color pixel values more compactly. This property benefits the development of faster and more performant algorithms; the challenge is to maintain the input information's consistency and not lose the primary characteristics of the color distribution. In the following subsections, we will show some of the representations commonly used to represent color information compactly.
 
 \subsubsection{Single-channel Color Histogram}
-The global color distribution of an image can be represented by means of a color image histogram.  A histogram $\mathbf{h}= \{h_i\}$ is a standard statistical tool that approximates the distribution of numerical data. Such representacion is done by a discrete function $h_i$ that maps an integer vector to the set of non-negative reals \citep{Scott:Book:2008}. These vectors represents bins (or their centers) in a fixed partition of the underliying feature space. The associated reals are a measure of the mass of the distribution that falls into the corresponding bin. For instance, the single-channel color histogram of a 2-d image 
-given by the following expression
+We can represent the global color distribution of an image employing a color image histogram. A histogram $\mathbf{h}= \{h_i\}$ is a standard statistical tool that approximates the distribution of numerical data. Such representation is done by a discrete function $h_i$ that maps an integer vector to the set of non-negative reals \citep{Scott:Book:2008}. These vectors represent bins (or their centers) in a fixed partition of the underlying feature space. The associated reals are a measure of the mass of the distribution that falls into the corresponding bin. For instance, the single-channel color histogram of a 2-d image given by the following expression
 \begin{equation}\label{eq:single_channel_histogram}
-    h_i = \sum_{j=1}^{n}  \mathbbm{1}_{B}(x_j) \quad \textrm{with} 
+    h_i = \sum_{j=1}^{n}  \mathbbm{1}_{B_i}(x_j) \quad \textrm{with} 
 \end{equation}
 \begin{equation}\nonumber
-    \mathbbm{1}_{B_i}(x_j) = 
+    \mathbbm{1}_{B_i}(x) = 
     \begin{cases} 
-      1 \quad \textrm{if} \quad x_l \in B_i \\
+      1 \quad \textrm{if} \quad x \in B_i \\
       0 \quad \textrm{elsewhere}        
    	 \end{cases} 
 \end{equation}
-as indicator function. The $n$ pixels of the single-channel image are arranged in a one-dimensional vector $\{x_1, x_2, \cdots, x_l\}$; the set of possible color values is split into $k$ intervals, so $h_i$ is the number of pixels in an image that have a color value in the interval $[t_k, t_{k+1})$ denoted by $B_i$.
+as indicator function. The $n$ pixels of the single-channel image are arranged in a one-dimensional vector $\{x_1, x_2, \cdots, x_n\}$; the set of possible color values is split into $k$ intervals, so $h_i$ is the number of pixels in an image that have a color value in the interval $[t_i, t_{i+1})$ denoted by $B_i$ with $0 < i leq k$.
 
 \begin{figure}[!ht]
 
@@ -397,13 +394,13 @@ as indicator function. The $n$ pixels of the single-channel image are arranged i
     \caption{1-d image color representation. 1-d pixel distribution and 10 bins 1-d pixel histogram.}\label{fig:single_channel_histogram}    
 \end{figure}
 
-Figure \ref{fig:single_channel_histogram} shows the one-dimensional representations of the color information of a natural image. In it, we first plot the distribution of each channel of the image (RGB in this case) and then we show the color distribution of the pixels compressed by means of a 1-d histogram. The distributions are obtained by setting the number of bins equal to the maximum number of color values of an 8-bit image, that is, $b = 256$. The single-channel histograms split the color space in $k=10$ bins. In the both plots, the $x$-axis represents the value of the color channel whereas the $y$-axis represents the quantity of pixels (density) normalized between 0 and 1. Lastly, the color of the plots correspond to the color channel of the RGB space.
+Figure \ref{fig:single_channel_histogram} shows the one-dimensional representations of the color information of a natural image. In it, we first plot the distribution of each channel of the image (RGB in this case), and then we show the color distribution of the pixels compressed using a 1-d histogram. We obtain the distributions by setting the number of bins equal to the maximum number of color values of an 8-bit image, that is, $b = 256$. The single-channel histograms split the color space into $k=10$ bins. In the both plots, the $x$-axis represents the value of the color channel, whereas the $y$-axis represents the number of pixels (density) normalized between 0 and 1. Lastly, the color of the plots corresponds to the color channel of the RGB space.
 
-The advantages of this representation is that it is invariant to the rotation or translation of the image, as well as, to a lesser extent, to changes of point of view and changes of scale. In addition, we can compact as much as we need the image color information by reducing the count intervals, that is, by selecting a small number of bins $k$. Despite the advantages offered by the representation of color information in simple channel histograms, analyzing the color channels independently does not provide a global idea of the color distribution since the final color of a pixel in RGB space is given by the sum of the three channel values.  A better way to analyze color information is to consider all channels at the same time.
+This representation's advantages are that it is invariant to the rotation or translation of the image and, to a lesser extent, to changes of point of view and scale changes. Besides, we can compact as much as we need the image color information by reducing the count intervals, that is, by selecting a small number of bins $k$. Despite the advantages offered by the color representation in simple channel histograms, analyzing the color channels individually does not provide a global idea of the color distribution. This effect occurs because only the blend of the three-channel values gives the final color of a pixel in RGB space. A better way to analyze color information is to consider all channels at the same time.
 %For example, looking only at the blue channel through its 1-d histogram, we could deduce that the input image is mostly dark blue, this being false.
 
 \subsubsection{3-d Color Histogram}
-The 3-d color histogram copes with the drawback of the color representation in single-channel color histograms. Mainly, this representation is an extension of the single-channel histogram to three dimensions. The discrete function $h_{i, j, k}$ maps the 3-d integer vector of pixel color values $x_{i, j, k}$ an Euclidean cube where each axis corresponds to a color dimension divided into $k$ intervals. We count the number of pixels whose values falls into the bin $B_{i,j,k}$ with the indicator function as in \eqref{eq:single_channel_histogram}.
+The 3-d color histogram copes with the drawback of the color representation in single-channel color histograms. Mainly, this representation is an extension of the single-channel histogram to three dimensions. The discrete function $h_{i, j, k}$ maps the 3-d integer vector of pixel color values $x_{i, j, k}$ into a Euclidean cube where each axis corresponds to a color dimension divided into $k$ intervals. We count the number of pixels whose values fall into the bin $B_{i,j,k}$ with the indicator function as in Eq. \eqref{eq:single_channel_histogram}.
 
 \begin{figure}[!ht]
     \centering
@@ -421,26 +418,18 @@ The 3-d color histogram copes with the drawback of the color representation in s
         \caption{3-d color pixel histogram}
     \end{subfigure} 
     
-    \caption{3-d image color representation. 3-d pixel distribution and 10 bins 3-d pixel histogram.}\label{fig:3d_color_representation}    
+    \caption{3-d image color representation. 3-d pixel distribution and ten bins 3-d pixel histogram.}\label{fig:3d_color_representation}    
 \end{figure}
 
-We can see the 3-d distribution of the color of the pixels in a color image, as well as its histogram of $k=10$ bins in figure \ref{fig:3d_color_representation}. In the figure, we can clearly notice how the colors most present in the image stand out in the histogram, generating larger spheres in the 3-d cube. Also, the shape of the pixel distribution is maintained. In relation to the number of bits required to encode the color of the image as a distribution or histogram, we can see that when representing the colors in a histogram with a low number of bins, the information to be manipulated is significantly less. 
+We can see the 3-d distribution of the color of the pixels in a color image and its histogram of $k=10$ bins in figure \ref{fig:3d_color_representation}. In the figure, we can notice how the colors most present in the image stand out in the histogram, generating larger spheres in the 3-d cube. Also, the shape of the pixel distribution is maintained. A reflection we can make about the number of bits required to encode the image color as a 3-d distribution is that, when representing the colors in a histogram with a low number of bins, the information to manipulate is significantly less. 
 
-On the other hand, 3-d colors histograms suffer from some drawbacks. Because histograms are fixed-size structures, they cannot achieve a good balance between expressiveness and eficiency. For example, apply a coarsely quantized histogram on images that contain a large amount of color information it would lead to a loss of this information. In the opposite case, for images that contain a small amount of color information, a finely quantized histogram is highly ineficient. In the example of the parrots image (figure \ref{fig:3d_color_representation}), we see that the 10-bin histogram is severe with the blue color of the feathers, causing it to almost disappear from the 3-d representation. 
-
-
-
-
-
-
-
+On the other hand, 3-d color histograms suffer from some drawbacks. Because histograms are fixed-size structures, they cannot achieve a good balance between expressiveness and efficiency. For example, applying a coarsely quantized histogram on images containing a large amount of color information would lead to losing this information. In the opposite case, for images that contain a small amount of color information, a finely quantized histogram is highly inefficient. In the example of the parrots' image (figure \ref{fig:3d_color_representation}), we see that the 10-bin histogram is severe with the blue color of the feathers, causing it to almost disappear from the 3-d representation.
 
 \subsubsection{Color Signature}
 
-The color signature is another representation for the compression of color information. The signatures are a type of boosted histogram, since they adapt the fixed bins of the color dimensions, which are mostly fixed. The signatures can be obtained via algorithms such as k-d tree or k-means. 
+The color signature is another representation for the compression of color information. The signatures are a type of boosted histogram since they make adjustable the number of bins of each color dimension in the 3-d histogram. Two of the main strategies to obtain color image signatures are k-d tree or k-means algorithms.
 
-A signature $\{s_j = (m_j, w_{m_j})$ represents a set of feature clusters. Each cluster is represented by its mean (or mode) $m_j$ and the fraction of the pixels $w_{m_j}$ that belong to that cluster \citep{Rubner.Tomasi:Book:2001}. The interestet thing about signatures is that they can adapt the number of clusters $j$ in fuction of the complexity of the individual images. Therefore, simple color images have short signatures, while complex color images have long signatures. 
-
+A signature $\{s_j = (m_j, w_{m_j})$ denotes a set of feature clusters. Each cluster is represented by its mean (or mode) $m_j$ and the fraction of the pixels $w_{m_j}$ that belong to that cluster \citep{Rubner.Tomasi:Book:2001}. The exciting thing about signatures is that they can adapt the number of clusters $j$ in the function of the image's complexity. Therefore, images with a low or straightforward quantity of color have short signatures, while images with complex variations of color have long signatures.
 
 \begin{figure}[!ht]
     \centering
@@ -464,12 +453,12 @@ A signature $\{s_j = (m_j, w_{m_j})$ represents a set of feature clusters. Each 
     \caption{Image color signature and the 3-d visualization of signature clusters.}\label{fig:color_signature}    
 \end{figure}
 
-In figure \ref{fig:color_signature}, we depict the color signature of the parrot image and a rendering of the input image using the signature colors. Likewise, we plot the centroids of the $k = 10$ clusters obtained with the k-means algorithm in a 3-d space. The size of the spheres in the 3-d plot represents the fraction of pixels $w_{m_j}$ that belong to each cluster. Compared to the 3-d color histogram, the color signature better represents the original color information of the image, maintaining the high information compression rate without sacrificing some colors of the original distribution, as is the case of the 3-d histogram with blue feathers mentioned above. 
+In figure \ref{fig:color_signature}, we depict the color signature of the parrot image and a rendering of the input image using the signature colors. Likewise, we plot the centroids of the $k = 10$ clusters obtained with the k-means algorithm in a 3-d space. The spheres' size in the 3-d plot represents the fraction of pixels $w_{m_j}$ that belong to each cluster. Compared to the 3-d color histogram, the color signature better represents the original color information of the image, maintaining the high information compression rate without losing some colors of the original distribution, as is the case of the 3-d histogram with blue feathers mentioned above.
 
 \begin{figure}[!ht]
     \centering
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(a)}} }}%
+    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(a)}}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -481,7 +470,7 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(b)}} }}%
+    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(b}}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_single_distribution}
     \end{subfigure}~     
     \begin{subfigure}[b]{0.32\textwidth}
@@ -493,7 +482,7 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(c)}} }}%
+    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(c)}}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_single_histogram}
     \end{subfigure}~     
     \begin{subfigure}[b]{0.32\textwidth}
@@ -505,7 +494,7 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(d)}} }}%
+    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(d)}}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_distribution}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -517,7 +506,7 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(e)}} }}%
+    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(e)}}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_histogram}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -529,7 +518,7 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(f)}} }}%
+    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(f)}}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_signature}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -541,7 +530,7 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt}{ \small\textbf{\textsf{(g)}} }}%
+    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(g)}}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_color_clusters}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -562,19 +551,19 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
         \includegraphics[width=\textwidth]{mountain_bar_signature}
     \end{subfigure}
                     
-	\caption{Compact representations of color information. {\small \textsf{\textbf{(a)}}} input color image , {\small \textsf{\textbf{(b)}}} single-channel color distribution, {\small \textsf{\textbf{(c)}}} single-channel color histogram, {\small \textsf{\textbf{(d)}}} 3-d color distribution , {\small \textsf{\textbf{(e)}}} 3-d color histogram , {\small \textsf{\textbf{(f)}}} 3-d color signature , {\small \textsf{\textbf{(g)}}} color signature clusters .}\label{fig:color_image_representations}    
+	\caption{Compact representations of color information: \captext{(a)} Input color image, \captext{(b)} Single-channel color distribution, \captext{(c)} Single-channel color histogram, \captext{(d)} 3-d color distribution, \captext{(e)} 3-d color histogram, \captext{(f)} 3-d color signature, \captext{(g)} Color signature clusters.}\label{fig:color_image_representations}    
 \end{figure}
 
-Finally we show more examples of the different techniques to compact the color information reviewed in this section in figure \ref{fig:color_image_representations}. These examples include the images of figure \ref{fig:color_images}, where we show three natural images and one synthetic. To calculate the historams (single-channel and 3-d) and the color signature, we set the number of bins (and clusters in the case of the signatures) at 10 for visual comparison purposes.
+Finally, we show more examples of the different techniques to compact the color information reviewed in this section in figure \ref{fig:color_image_representations}. These examples include the images of figure \ref{fig:color_images}, where we show three natural and one synthetic image. To calculate the histograms (single-channel and 3-d) and the color signature, we set the number of bins (and clusters in the case of the signatures) at ten for visual comparison purposes.
 
-We obtain some interesting observations from the analysis of the different compact representations of color. For example, with the synthetic image plots (first column of the figure) we find that a medium-fine 3-d histogram with 10 bins is inefficient as there are many half-empty bins that could be removed. On the other hand, the color signatures do a good job of compression, respecting mostly the shape and density of the original color distribution, for example in the case of the clownfish image (central column of the figure). However, there is a problem related to the global analysis and compression of color information. When there are objects in the image with a low number of pixels and yet they are perceptually visible, there is no rendering technique that can preserve them. This is the example of snow cable cars which do not appear in the 3-d histogram or in the signature.
+We obtain some interesting observations from the analysis of the different compact representations of color. For example, with the synthetic image plots (first column of the figure), we find that a medium-fine 3-d histogram with ten bins is inefficient since many half-empty bins could be removed. On the other hand, the color signatures do a good job of compression, mainly respecting the shape and density of the original color distribution, for example, in the clownfish image (central column of the figure). However, there is a problem related to the global analysis and compression of color information. When there are objects in the image with a low number of pixels, and yet they are perceptually visible, there is no rendering technique that can preserve them. We can see this effect in the snow mountains' image; although the yellow and red color of the cable cars are perceptive, neither the 3-d histogram nor the color signature makes the colors appear.
 
 \section{Texture}
-There is a disagreement in the definition of texture in the field of computer vision. It is possible to give a mathematical definition based on its statistical properties, however, these properties are very imprecise and/or restrictive to adapt to the diversity of existing textures.
+There is a disagreement in the definition of texture in the field of computer vision. It is possible to give a mathematical definition based on its statistical properties; however, these properties are very imprecise and restrictive to adapt to the diversity of existing textures.
 
-The definition that we support is based on an experimental finding: a texture is a field of the image that appears as a coherent and homogeneous domain, that is, it forms a whole for an observer. In fact, it is this property of coherence of the texture placed in the context of being perceived as a homogeneous whole for the human eye that is most often sought for image processing, either with the aim of isolating textures, to segment the image or for the recognition of regions.
+The definition that we prefer in the context of this work is based on an experimental finding: a texture is a field of the image that appears as a coherent and homogeneous domain; that is, it forms a whole for an observer. In fact, the texture coherence property placed in the context of being perceived as a homogeneous whole for the human eye is most often sought for image processing, either to isolate textures, segment, and recognize regions.
 
-Some examples of natural textures are shown in the figure \ref{fig:texture_images}. These images come from the reference work Brodatz and show the possible variety of textures that are commonly used to test different algorithms and methods of vision. Generally we can classify such textures according to their provenance as natural or artificial, the latter being those created by man. We can also classify them by the regularity of the pattern they exile as regal or stochastic. Finally, we can also classify them according to the portion of the image that they occupy into homogeneous, inhomogeneous or inhomogeneous.
+We show some examples of natural textures in the figure \ref{fig:texture_images}. These images come from the reference work Brodatz and show the possible variety of textures that are commonly used to test different algorithms and methods of vision. Generally, we can classify such textures according to their origine as natural or artificial, the latter being those created by man. We can also classify them by the regularity of the pattern they display as real or stochastic. Finally, we can also classify them according to the image proportion they cover into homogeneous, weakly-homogeneous, or inhomogeneous.
 
 %\begin{itemize}
 %	\item Natural and artificial 
@@ -642,15 +631,14 @@ Some examples of natural textures are shown in the figure \ref{fig:texture_image
         \caption{}
     \end{subfigure}    
                   
-    \caption{ Examples of texture images and its classification. [{\small \textsf{\textbf{(a) (b) (e) (h)}}}] nautural textures, [{\small \textsf{\textbf{(c) (d) (f) (g) (i) (j)}}}] man-made textures, [{\small \textsf{\textbf{(c) (d)}}}] regular textures, [{\small \textsf{\textbf{(g) (h)}}}] stochastic textures, [{\small \textsf{\textbf{(c) (d)}}}] homogeneous, [{\small \textsf{\textbf{(a) (b) (f) (g) (h)}}}] weakly-homogeneous, [{\small \textsf{\textbf{(i) (j)}}}] inhomogeneous.}\label{fig:texture_images}    
+    \caption{Examples of texture images and its classification: [\captext{(a) (b) (e) (h)}] Nautural textures, [\captext{(c) (d) (f) (g) (i) (j)}] Human-made textures, [\captext{(c) (d)}] Regular textures, [\captext{(g) (h)}] Stochastic textures, [\captext{(c) (d)}] homogeneous, [\captext{(a) (b) (f) (g) (h)}] weakly-homogeneous, [\captext{(i) (j)}] inhomogeneous.}\label{fig:texture_images}    
 \end{figure}
 
 
 \section{Texture characterization}
-The perception of textures is a key property of human vision. Although there is still no generalized definition, we can define texture as a measure of coarseness, contrast, directionality, line similarity, regularity and roughness. Therefore, the features that chracterize texture attempt to capture the granularity and repetition of perceptually similar patterns of surfaces within a region of the image, such that a human observer perceives the region as homogeneous.
-Unlike color, texture information is not a purely pixel-level property. Texture implies the notion of spatial extent, that is, that the spatial variation of intensities of a group of pixels generate textures in the images.
+The perception of textures is a key property of human vision. Although there is still no generalized definition, we can define texture using measures of coarseness, contrast, directionality, line similarity, regularity, and roughness. Therefore, the features that characterize texture attempt to capture the granularity and repetition of perceptually similar patterns of surfaces within a region of the image, such that a human observer perceives the region as homogeneous. Unlike color, texture information is not a purely pixel-level property. Texture implies the notion of spatial extent, that is, that the spatial variation of intensities of a group of pixels generates textures in the images.
 
-There are numerous studies that review, compare and organize the work of texture analysis in different ways \citep{Materka.Strzelecki:Report:1998}, \citep{Zhang.Tan:PR:2002}, \citep{Bharati.Liu.ea:CILS:2004},\citep{Lukashevich.Sadykhov:ICPCI:2012}, \citep{Humeau-Heurtier:IEEEAccess:2019}. One possible organization is based on its operating principle, which classifies the texture characterization techniques into
+There are numerous studies that review, compare and organize the work of texture analysis in different ways  \citep{Materka.Strzelecki:Report:1998}, \citep{Zhang.Tan:PR:2002}, \citep{Bharati.Liu.ea:CILS:2004},\citep{Lukashevich.Sadykhov:ICPCI:2012}, \citep{Humeau-Heurtier:IEEEAccess:2019}. One possible organization is based on its operating principle, which classifies the texture characterization techniques into
  \begin{enumerate}[noitemsep]%,topsep=0pt
 	\item Statistical methods
 	\item Structural methods
@@ -660,47 +648,46 @@ There are numerous studies that review, compare and organize the work of texture
 	\item Learning-based methods
 	\item Entropy-based methods
 \end{enumerate}
-In this section we review five of the most widely used methods in the literature and their techniques for extracting textures fearures.
+This section reviews five of the most widely used literature methods and their techniques for extracting texture features.
 
 \subsection{Statistical Methods}
-Statistical methods contemplate that textures are determined by the way the gray levels are distributed over the pixels of an image. In these methods, the gray level distribution of the image is represented by a histogram.
+Statistical methods contemplate that textures are determined by how the gray levels are spatially distributed over the image pixels. In these methods, the gray level distribution of the image is represented by a histogram.
 
-A first approach in this category is the histogram properties analysis \citep{Aggarwal.K.Agrawal:JSIP:2012}. The first-order statistics properties are the mean and the Central Moments of the 1D histogram, that is, the variance, skewness, and kurtosis. These properties provide information on the distribution of the gray levels of the image from a global point of view, taking into account individually the gray level of the pixels. Hoewever, they do not provide any information on how the gray level of a pixel at a given location statistically affects the gray level value of another pixel at a relative location from the reference pixel.
-The second-order statistical properties explore this option ang give a description of the texture, based on the comparison of intensity values of two pixels. In this case the Co-Occurrence matrix \citep{Haralick.Shanmugam.ea:TSMC:1973} is the second-level histogram that maps the intensity distribution of the pixels. Some of the texture features extracted from the second-order statistics are Angular Second Moment (ASM), Contrast, Correlation, Homogeneity, Entropy and Energy.
+The first approach in this category is the histogram properties analysis \citep{Aggarwal.K.Agrawal:JSIP:2012}. 1-d image histogram, brightness, and contrast are among the first-order statistics from which we can compute the central moments: mean, variance, skewness, and kurtosis. These properties provide information on the distribution of the gray levels of the image from a global point of view, taking into account individually the gray level of the pixels. However, they do not provide any information on how the gray level of a pixel at a given location statistically affects the gray level value of another pixel at a relative location from the reference pixel. 
+The second-order statistical properties explore this option and describe the texture based on comparing two pixels' intensity values. In this case, the Co-Occurrence matrix \citep{Haralick.Shanmugam.ea:TSMC:1973} is the second-level histogram that maps the pixels' intensity distribution. Some of the texture features extracted from the second-order statistics are Angular Second Moment (ASM), contrast, dissimilarity, homogeneity (Inverse Difference Moment), entropy, maximum probability, mean, standard deviation, correlation and energy.
 
-Local Binary Patterns (LBP) \citep{Ojala.Pietikainen.ea:PR:1996} are another technique for obtaining second-level histograms. This approach summarizes the spatial structure and local contrast of an image within a binary pattern, comparing the gray level of each pixel with its neighborhood. If the intensity value of the central pixel is greater than its neighbor, then it is denoted by 1, otherwise by 0. Subsequently, a binary array is constructed, following a consistent ordering of the neighboring values, which is transformed to decimal number and stored in a new array. The process of thresholding, construction of binary strings, binary to decimal transformation, and storing of decimal output is performed for all pixels in the image, resulting in an LPB image. Finally the second-level histogram for texture chraracterization is obtained from this resulting LBP image.
+Local Binary Patterns (LBP) \citep{Ojala.Pietikainen.ea:PR:1996} are another technique for obtaining second-level histograms. This approach summarizes the spatial structure and local contrast of an image within a binary pattern, comparing the gray level of each pixel with its neighborhood. If the central pixel's intensity value is more significant than its neighbor, it is denoted by 1, otherwise 0. Subsequently, a binary array is constructed, following a consistent ordering of the neighboring values, which is transformed to a decimal number and stored in a new array. The process of thresholding, construction of binary strings, binary to decimal transformation, and storing of decimal output is performed for all pixels in the image, resulting in an LPB image. Finally, the second-level histogram for texture characterization is obtained from this resulting LBP image.
+
 
 \subsection{Structural Methods}
-The structural methods are based on the decomposition of the image in basic units, i.e., in elements, low-level primitives o texels. Such units can be points, lines, regions, or shapes. The basic units and their spatial arrangement in the image are used to characterize the textures. These approaches consider that textures are patterns formed by replication, more or less regular, of a basic unit. The arrangement of the primitives allows obtaining geometric relationships and subsequently statistical properties that serve serve to characterize textures. Structural tecniques aim to determine the textual primitive and define the location rules.
+The structural methods are based on the decomposition of the image in basic units, i.e., in elements, low-level primitives, o texels. Such units can be points, lines, regions, or shapes. The basic units and their spatial arrangement in the image are used to characterize the textures. These approaches consider that textures are patterns formed by replication, more or less regular, of a basic unit. The arrangement of the primitives allows obtaining geometric relationships and subsequently statistical properties that serve to characterize textures. Structural techniques aim to determine the textual primitive and define the location rules \citep{Humeau-Heurtier:IEEEAccess:2019}.
 
-Dpends on the application, structural tecniques differ according to the choice of primitives. Some of the commonly considered primitives are pixels, regions of uniform intensity, line segments, or peaks in the gray level distribution. For the recovery of these primitives, highly known approaches are generally used, for example, the SIFT (Scale Invariant Feature Trasform) operator in the case of characteristic points and the contour detectors, such as Sobel and Canny, for line and edge recovery. On the other hand, the primitive's measurements and statistics most commonly used are intensity, orientation, elongation, curvature, compactness, among others.
+Depending on the application, structural techniques differ according to the choice of primitives. Some of the commonly considered primitives are pixels \citep{Lu.Fu:CGIP:1978}, regions of uniform intensity \citep{Tuceryan.Jain:WS:1993}, line segments \citep{Carlucci:PR:1972}, or peaks in the gray level distribution \citep{Ehrich.Foith:CGIP:1978}. For the recovery of these primitives, highly known approaches are generally used, such as the SIFT (Scale Invariant Feature Transform) operator for points characterization and the contour detectors, such as Sobel Canny, for line and edge recovery. On the other hand, the primitive's measurements and statistics most commonly used are intensity, orientation, elongation, curvature, and compactness.
 
 \subsection{Model-based Methods}
-This group of methods stipulates that the textures can be described by some mathematical model. This category is mainly subdivided into two approaches: stochastics and fractals.
+This group of methods stipulates that some mathematical models can describe the textures. We can subdivide this category mainly into two approaches: stochastics and fractals.
 
-Stochastic methods for texture modeling are very popular, in particular random field models. In this context, a texture model is a parametric family of spatially homogeneous random fields, which depend on a series of hyperparameters \citep{Winkler:Book:2003}. Inside such a family a specific texture can be characterized by a special set of hyperparameters that captures its characteristic features. According to the properties of the random fields, some of the models used for the characterization of texture are Markov Random Field (MRF) \citep{Hassner.Sklansky:CGIM:1980, Cross.Jain:PAMI:1983}, Gibbs Random Field (GRF) \citep{Derin.Cole:CVGIM:1986}, Conditional Random Field (CRF), Gaussian Markov Random Field (GMRF) \citep{Cohen.Fan.ea:PAMI:1991}.
+Stochastic methods for texture modeling are popular, in particular random field models. In this context, a texture model is a parametric family of spatially homogeneous random fields depending on a hyperparameters series \citep{Winkler:Book:2003}. Inside such a family, a specific texture can be characterized by a unique set of hyperparameters that captures its characteristic features. According to the properties of the random fields, some of the models used for the characterization of texture are Markov Random Field (MRF) \citep{Hassner.Sklansky:CGIM:1980, Cross.Jain:PAMI:1983}, Gibbs Random Field (GRF) \citep{Derin.Cole:CVGIM:1986}, Conditional Random Field (CRF), Gaussian Markov Random Field (GMRF) \citep{Cohen.Fan.ea:PAMI:1991}.
 
-Within the category of stochastic approaches, there is a group of techniques that use probabilistic approaches and mathematical morphology operators for the modeling of random textures \citep{Serra:CGIM:1980}, \citep{Cord.Bach.ea:JoM:2010}.
+Within the category of stochastic approaches, we found a group of techniques that use probabilistic approaches and mathematical morphology operators to model random textures \citep{Serra:CGIM:1980}, \citep{Cord.Bach.ea:JoM:2010}.
 
-Fractal models consider textures as complex chaotic systems, so they exhibit fractal behavior. Textures, as fractal objects, have identical shape and statistical characteristics at different scales. Fractal geometry relies on self similarity across multiple scales and is measured with the fractal dimension. Fractal model-based approaches aim to determine fractal dimension, find fractal geometry, and calculate fractal measurements for the description of textures in images.
+Fractal models consider textures as complex, chaotic systems, so they exhibit fractal behavior \citep{Petrolekas.Mitra:ISOP:1993}. Textures, as fractal objects, have identical shapes and statistical characteristics at different scales. Fractal geometry relies on self-similarity across multiple scales and is measured with the fractal dimension \citep{Keller.Chen.ea:CVGIP:1989}. Fractal model-based approaches aim to determine fractal dimension, find fractal geometry, and calculate fractal measurements to describe textures in images.
 
 
 \subsection{Transform-based Methods}
-Transform methods map an image to a space within which the textures are characterizable. The peculiarity is that the new space coordinates allow the interpretation of the textures because they reflect the texture properties, for example, the log-polar coordinates in the case of Gabor transform, they reflect the periodicity and orientation of the textures present in an image.
+Transform methods map an image to a space within which the textures are characterizable. The peculiarity is that the new space coordinates allow the interpretation of the textures because they reflect the texture properties; for example, the log-polar coordinates in the Gabor transform reflect the periodicity and orientation of the textures in an image.
 
-Within this category, one of the most notable methods for the extraction of texture features are Law's filter banks \citep{Laws:IUW:1979, Laws:IPMG:1980, Laws:Report:1980}. There are also the approaches based on the Fourier transform \citep{Ursani.Kpalma.ea:ICMV:2007}, where it is used to decompose the image into its frequency components. Following the same principle, there are the approaches based on Gabor decomposition \citep{Gabor:JIEE:1946} and those based on wavelets \citep{Arivazhagan.Ganesan:PR:2003}, which analyze the content of a texture not only in the frequency domain, but also in the spatial domain. On the one hand, the Gabor filter is defined as a sinusoidal wave plane modulated Gaussian kernel, which can be adapted in frequency, orientation and bandwidth. For its part, the wavelet transform allows the analysis of the texture in the frequency and spatial domain by means of the dilation and translation, respectively, of a mother wavelet.
+Within this category, one of the most notable methods for the extraction of texture features is Law's filter banks \citep{Laws:IUW:1979, Laws:IPMG:1980, Laws:Report:1980}. There are also the approaches based on the Fourier transform \citep{Ursani.Kpalma.ea:ICMV:2007}, where we use it to decompose the image into its frequency components. Following the same principle, there are the approaches based on Gabor decomposition \citep{Gabor:JIEE:1946} and those based on wavelets  \citep{Arivazhagan.Ganesan:PR:2003}, which analyze the content of a texture not only in the frequency domain but also in the spatial domain. On the one hand, the Gabor filter is defined as a sinusoidal wave plane modulated by a Gaussian kernel, which can be adapted in frequency, orientation, and bandwidth. For its part, the wavelet transform allows the analysis of the texture in the frequency and spatial domain employing the dilation and translation, respectively, of a mother wavelet.
 
 \subsection{Learning-based Methods}
-The methods for the extraction of texture features based on learning are relatively new with respect to the other methods mentioned in this work.
-This category of approaches can be divided into two subclasses: the visual dictionary methods and the deep learning methods.
+The extraction of texture features based on learning is relatively new concerning the other methods mentioned in this work. We can divide this category of approaches into two subclasses: visual dictionary methods and deep learning methods.
 
-Visual dictionary methods are motivated by natural language processing algorithms. In this case, the aim is to generate a codebook or dictionary that contains basic geometric elements of the images, also called \textit{textons}. In the document processing analogy, textons correspond to words; so an image can be described by the repetition (organized or not) of a set of textons.
+Visual dictionary methods are motivated by natural language processing algorithms. In this case, the aim is to generate a codebook or dictionary that contains essential geometric elements of the images, also called \textit{textons}. In the document processing analogy, textons correspond to words so that an image can be described by the repetition (organized or not) of a set of textons.
 
-There are different strategies for calculating textons \citep{Zhu.Guo.ea:IJCV:2005}. For example, the approaches based on generative models, where an image is considered to be a linear combination of some base images. Such base images are represented by Gabor or Laplacian-of-Gaussian (LoG) functions and other wavelet transforms. Following the principle of generative models, textons are the base functions learned from a large number of image patches.
-Other approaches to obtaining textons are based on discriminative modeling. In this case, the base functions are rotated and scaled filters that form a family which is convolved with the image. The responses of the filters form a feature space  in which it is possible to form clusters. Each cluster center then corresponds to a texton. To obtain a texton dictionary, it is necessary to obtain the feature space and the cluster centers from a group of training images.
+There are different strategies for calculating textons \citep{Zhu.Guo.ea:IJCV:2005}, for example, the approaches based on generative models, where an image is considered a linear combination of some base images. Such base images are represented by Gabor or Laplacian-of-Gaussian (LoG) functions, and other wavelet transforms. Following generative models' principle, textons are the base functions learned from a large number of image patches. 
+Other approaches to obtaining textons are based on discriminative modeling. In this case, the base functions are defined by rotated and scaled filters that form a family with which we convolve the image. The responses of the filters form a feature space in which it is possible to form clusters. Each cluster center then corresponds to a texton; therefore, to obtain a texton dictionary, we need to obtain from a group of training images the feature space and the cluster centers.
 
-Models based on deep learning use Convolutional Neural Networks (CNNs) for the extraction and representation of image features. CNNs consist of multiple locally connected layers which covolve kernels over the entire image. These approaches analyze the information of a group of images to generate a model. The characteristics of the learned model are a function of the input images, which in the case of the study of texture, is expected to generalize the properties of granularity, frequency, orientation, etc. of patterns in the training dataset.
-
+Models based on deep learning use Convolutional Neural Networks (CNN) to extract and represent image features. CNN methods consist of multiple locally connected layers which convolve kernels over the entire image. These approaches analyze the information of a group of images to generate a model \citep{Lin.Maji:CVPR:2016}. The characteristics of the learned model are a function of the input images, which in the case of texture information, is expected to generalize the properties, such as granularity, frequency, and orientation of patterns in the training dataset.
 
 %\section{Conclusions}
 

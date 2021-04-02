@@ -1,23 +1,23 @@
 % created on 27/04/2020
 % @author : ebazan
 
-\chapter{The uncertainty princple and its implications in image processing}\label{ch:uncertainty_principle}
+\chapter{The Uncertainty Principle and Its Implications in Image Processing}\label{ch:uncertainty_principle}
 
-The uncertainty principle is one of the most famous ideas in quantum mechanics. An early incarnation of the uncertainty principle appeared in a 1927 paper by the German physicist Heisenberg. The uncertainty principle says that we cannot measure the position $(x)$ and the momentum $(p)$ of a particle with absolute precision. The more accurately we know one of these values, the less accurately we know the other. 
+The uncertainty principle is one of the most famous ideas in quantum mechanics. An early incarnation of the uncertainty principle appeared in a 1927 paper by the German physicist Heisenberg. The uncertainty principle says that we cannot measure the position $(x)$ of a particle with absolute precision. The more accurately we know one of these values, the less accurately we know the other.
 
-However, the uncertainty principle in the field of quantum mechanics is just a particular case of a more general compromise that appears in simple phenomena of everyday life involving waves. The central idea is connected with the interrelation between frequency and duration. For example, in the case of sound waves, if we want to identify the frequency of a musical note, the shorter the sound lasts in time, the less certain we can be about the exact frequency of the sound; to find a more defined frequency, it would be necessary to listen to the sound for a longer time. In the language of signal processing, we can say that a short signal correlates highly with a wide range of frequencies and only wide signals correlate with a short range of frequencies. Formally this is expressed as
+However, quantum mechanics' uncertainty principle is just a particular case of a more general compromise in simple everyday life phenomena involving waves. The central idea is connected with the interrelation between frequency and duration. For example, in the case of sound waves, if we want to identify the frequency of a musical note, the shorter the sound lasts in time, the less specific we can be about the exact frequency of the sound to find a more defined frequency, it would be necessary to listen to the sound for a longer time, in which case the locality measure loses its sense. In the language of signal processing, we can say that a short signal correlates highly with a wide range of frequencies, and only wide signals correlate with a short range of frequencies. Formally this is expressed as
 
 \begin{equation}\label{eq:uncertainty_principle_rad}
 	\Delta t\Delta \omega \geq \frac{1}{2}
 \end{equation}
 
-where $\Delta t$ is the duration of the signal in the time domain and $\Delta \omega$ is the bandwidth of the signal in the frequency domain (CITE). The uncertainty principle then says: the product of the spectral bandwidth multiplied with the time duration of the signal cannot be less than a certain minimum value. Considering the bandwidth of the signal in terms of frequency as $\Delta \upsilon$ where $\omega = 2\pi \upsilon$, the uncertainty principle is stated as 
+where $\Delta t$ is the duration of the signal in the time domain and $\Delta \omega$ is the bandwidth of the signal in the frequency domain \citep{Petrou.Sevilla:Book:2006}. The uncertainty principle then states: the spectral bandwidth product multiplied with the signal's time duration cannot be less than a particular minimum value. Considering the bandwidth of the signal in terms of frequency as $\Delta \upsilon$ where $\omega = 2\pi \upsilon$, the uncertainty principle is stated as 
 
 \begin{equation}\label{eq:uncertainty_principle_freq}
 	\Delta t\Delta \upsilon \geq \frac{1}{4\pi}
 \end{equation}
 
-The Heisenberg uncertainty principle in the field of signal processing and image processing can be mathematically proved by the \textbf{Parseval's theorem}
+The Heisenberg uncertainty principle can be mathematically proved in signal processing and image processing by \textbf{Parseval's identity}, where \textbf{Parseval's theorem}
 
 \begin{equation}\label{eq:parseval_theorem}
 	\int_{-\infty}^{\infty} h(t)^2 dt =  \frac{1}{2 \pi} \int_{-\infty}^{\infty} |H(\omega)|^2 d\omega =  \int_{-\infty}^{\infty} |H(\upsilon)|^2 d\upsilon
@@ -38,7 +38,7 @@ From the Parseval's identity this may be written as:
     E_{\infty} =  \int_{-\infty}^{\infty} |H(\upsilon)|^2 d\upsilon
 \end{equation}
 
-The \textbf{time dispersion} of the signal is given by
+By setting $\Delta t = t - t_0$, the \textbf{time dispersion} of the signal is given by
 
 \begin{equation}\label{eq:time_dispersion_no_centered}
     (\Delta t)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (t-t_{0})^2 h(t)^2 dt
@@ -56,7 +56,7 @@ and where if we shift the origin of $t$ so that $t_{0}=0$, then
     (\Delta t)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} t^2 h(t)^2 dt
 \end{equation}
 
-In an analogous way, the \textbf{spectral bandwidth} of the signal is given by
+In an analogous way for $\Delta \upsilon = \upsilon - f$, the \textbf{spectral bandwidth} of the signal is given by
 
 \begin{equation}\label{eq:spectral_bandwidth_no_centered}
     (\Delta \upsilon)^2 \equiv \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} (\upsilon-f)^2 |H(\upsilon)|^2 d\upsilon
@@ -68,13 +68,13 @@ where $f$ is the \textbf{spectral center of gravity} of the signal defined by:
     f \equiv  \frac{2 \pi}{E_{\infty}} \int_{-\infty}^{\infty} f |H(\upsilon)|^2 d\upsilon
 \end{equation}
 
-if we consider $f=0$:
+if we consider $f=0$, the Eq. \eqref{eq:spectral_bandwidth_no_centered} becomes
 
 \begin{equation}\label{eq:spectral_bandwidth}
     (\Delta \upsilon)^2 = \frac{1}{E_{\infty}} \int_{-\infty}^{\infty} f^2 |H(\upsilon)|^2 d\upsilon 
 \end{equation}
 
-If $h'(t)$ is the derivative of the function, its Fourier transform is $j2\pi f H(\upsilon)$. By applying the Parseval's theorem to the Fourier pair $h'(t)\longleftrightarrow j2\pi f H(\upsilon)$ we obtain:
+If $h'(t)$ is the derivative of the function, its Fourier transform is $j2\pi f H(\upsilon)$. By applying the Parseval's identity (using the left and right terms in Eq. \eqref{eq:parseval_theorem})to the Fourier pair $h'(t)\longleftrightarrow j2\pi f H(\upsilon)$ we obtain:
 
 \begin{equation}\label{eq:applyed_parseval_theorem}
     4 \pi^{2} \int_{-\infty}^{\infty} f^2 |H(\upsilon)|^2 d\upsilon =  \int_{-\infty}^{\infty} h'(t)^2 dt
@@ -116,55 +116,86 @@ If we use this into $\eqref{eq:schwartz_inequality}$ and then into $\eqref{eq:ti
    (\Delta t)^2(\Delta \upsilon)^2 \geq \frac{1}{16\pi^{2}} 
 \end{equation}
 
-This is the mathematical statement of the uncertainty principle in signal processing.
+This is the mathematical statement of the uncertainty principle in signal processing \citep{Petrou.Sevilla:Book:2006}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
-
-\begin{equation}\label{eq:windowed_function}
-    h(t) = f(t)w(t-t_0)
-\end{equation}
-
-
-Due to the shifting property of the Fourier transform, the Fourier transform of the window is $e^{-j\omega t_0}W(\omega)$. Since the window multiplies the signal, the Fourier transform of the window is convolved with the Fourier transform of the signal. Therefore, the Fourier transform of what we observe is given by:
-
-\begin{equation}\label{eq:short_time_fourier_transform}
-    H(\omega) = \int_{-\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
-\end{equation}
-
-In general $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
-
-To see this behavior, consider a signal $f(t)=A \sin \omega_{0} t$, where $A$ is a positive constant, and a window $w(t)$ defined by a Gaussian function. 
-
-\begin{equation}\label{eq:1d_gaussian_function}
-    w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
-\end{equation}
-A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation, which in this context is also called \textit{spread} and is denoted by $\sigma$. 
-
-\begin{figure}
-\centering
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{sin_signal}\label{fig:sin_signal}}%
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{real_sin_signal}}%\label{fig:sin_signal_real}
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{imag_sin_signal}}\\%\label{fig:sin_signal_imag}
-\hspace{0.33\textwidth}
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{mag_sin_signal}}%\label{fig:sin_signal_mag}
-\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{phase_sin_signal}}%\label{fig:sin_signal_phase}
-\caption{A continous fuction (a), and the real part (b), imaginary part (c), magnitude (d) and phase (e) of its Fourier transform.}\label{fig:sin_signal_fourier_comp}
-\end{figure}
-
-Figures demonstrate the result for a signal with $\omega_0=5$ and $A=2$. Figure  shows the continuous signal and  the real and imaginary parts and the magnitude and phase of its Fourier transform.  Figure  shows various windowed parts of the signal ($h(t)$) and the real and imaginary parts of their corresponding Fourier transforms.  Figure is the same as figure , but it shows the magnitude and phase of each Fourier transform. These Fourier transforms should be compared with their counterparts in figure  in order to appreciate the effect of both the size of the window and the locality of the window (Gaussian function). In all cases the main peaks of the Fourier transform's magnitude, which correspond to delta function impulses at $\omega=\pm 5$ in the continuous case, are preserved, but they become less sharp and the recovered value starts to move away from the real value as soon as the size of the window decreases. 
-
-For the analysis of discrete signals it is possible to estimate the uncertainty principle. The easiest way is to consider signal segments and calculate the discrete Fourier transform (DFT) of each segment. This is the so-called Short Time Fourier Transform (STFT). If we consider an odd-sized window and associate the DFT that we calculate within it with the sample in the center of the window, we will be associating each sample of the signal with a ``small'' Fourier transform. In this context, how ``small'' the DTF is depends on the size of the window.
-
-\begin{figure}
-\centering
-\includegraphics{sin_gauss_real_imag.pdf}
-\caption{The effect of Gaussian window. Sinusoidal signal bounded by a Gaussian window (first column) and the real and imaginary part of its corresponding Fourier transform (second and third columns). From top to bottom: $[\sigma=1, t_0=0]$, $[\sigma=1, t_0=1.6]$, $[\sigma=1.5, t_0=0]$, $[\sigma=1.5, t_0=1.6]$, $[\sigma=2.5, t_0=0]$, $[\sigma=2.5, t_0=1.6]$.}\label{fig:gaussian_window_real_imag}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics{sin_gauss_mag_phase.pdf}
-\caption{The effect of Gaussian window. Sinusoidal signal bounded by a Gaussian window (first column) and the magnitude and phase of its corresponding Fourier transform (second and third columns). From top to bottom: $[\sigma=1, t_0=0]$, $[\sigma=1, t_0=1.6]$, $[\sigma=1.5, t_0=0]$, $[\sigma=1.5, t_0=1.6]$, $[\sigma=2.5, t_0=0]$, $[\sigma=2.5, t_0=1.6]$.}\label{fig:gaussian_window_mag_phase}
-\end{figure}
+%The uncertainty principle shows that the size, the shape and the shift of the window through which we make measurements affects the accuracy of what we compute. For example, let us consider a signal $f(t)$ with Fourier transform $F(\omega)$. Let us assume that we observe only a part of the signal through a window $w(t)$, with Fourier transform $W(\omega)$ centered at $t_0$
+%
+%\begin{equation}\label{eq:windowed_function}
+%    h(t) = f(t)w(t-t_0)
+%\end{equation}
+%
+%
+%Due to the shifting property of the Fourier transform, the Fourier transform of the window is $e^{-j\omega t_0}W(\omega)$. Since the window multiplies the signal, the Fourier transform of the window is convolved with the signal's Fourier transform. Therefore, the Fourier transform of what we observe is given by:
+%
+%\begin{equation}\label{eq:short_time_fourier_transform}
+%    H(\omega) = \int_{-\infty}^{\infty}F(\omega - u)e^{-ju t_0}W(u) du
+%\end{equation}
+%
+%In general, $H(\omega)$ is different from $G(\omega)$ and depends on the locality of the window $t_0$.
+%
+%To see this behavior, consider a signal $f(t)=A \sin \omega_{0} t$, where $A$ is a positive constant, and a window $w(t)$ defined by a Gaussian function. 
+%
+%\begin{equation}\label{eq:1d_gaussian_function}
+%    w(t)=e^{-\frac{(t-t_0)^2}{2\sigma^2}}
+%\end{equation}
+%A Gaussian window is infinite in extent, so it is characterized by its locality $t_0$ and its standard deviation, which in this context is also called \textit{spread} and is denoted by $\sigma$. 
+%
+%\begin{figure}[!ht]
+%    \centering
+%
+%	\begin{subfigure}[b]{0.325\textwidth}
+%    	\includegraphics[width=\textwidth]{sin_signal}
+%        \caption{$f(t)$}\label{fig:sin_signal}
+%    \end{subfigure}~   
+%    \begin{subfigure}[b]{0.325\textwidth}
+%    	\includegraphics[width=\textwidth]{real_sin_signal}
+%        \caption{$\RE{(F(\omega))}$}
+%    \end{subfigure}~
+%    \begin{subfigure}[b]{0.325\textwidth}
+%    	\includegraphics[width=\textwidth]{imag_sin_signal}
+%        \caption{$\IM{(F(\omega))}$}
+%    \end{subfigure}\\ 
+%    \hspace{0.66\textwidth}
+%    \begin{subfigure}[b]{0.325\textwidth}
+%    	\includegraphics[width=\textwidth]{mag_sin_signal}
+%        \caption{Magnitud of $F(\omega)$}
+%    \end{subfigure}~   
+%    \begin{subfigure}[b]{0.325\textwidth}
+%        \includegraphics[width=\textwidth]{phase_sin_signal}
+%        \caption{Phase of $F(\omega)$}
+%        \label{fig:pag_example}
+%    \end{subfigure}         
+%        	    
+%	\caption{A continous fuction and its Fourier transform components.}\label{fig:sin_signal_fourier_comp}
+%\end{figure}
+%
+%
+%%
+%%\begin{figure}
+%%\centering
+%%\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{sin_signal}\label{fig:sin_signal}}%
+%%\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{real_sin_signal}}%\label{fig:sin_signal_real}
+%%\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{imag_sin_signal}}\\%\label{fig:sin_signal_imag}
+%%\hspace{0.33\textwidth}
+%%\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{mag_sin_signal}}%\label{fig:sin_signal_mag}
+%%\subcaptionbox{}{\includegraphics[width=0.325\textwidth]{phase_sin_signal}}%\label{fig:sin_signal_phase}
+%%\caption{A continous fuction the components of its Fourier transform.}\label{fig:sin_signal_fourier_comp}
+%%\end{figure}
+%
+%Figures demonstrate the result for a signal with $\omega_0=5$ and $A=2$. Figure  shows the continuous signal and  the real and imaginary parts and the magnitude and phase of its Fourier transform.  Figure  shows various windowed parts of the signal ($h(t)$) and the real and imaginary parts of their corresponding Fourier transforms.  Figure is the same as figure , but it shows the magnitude and phase of each Fourier transform. These Fourier transforms should be compared with their counterparts in figure  in order to appreciate the effect of both the size of the window and the locality of the window (Gaussian function). In all cases the main peaks of the Fourier transform's magnitude, which correspond to delta function impulses at $\omega=\pm 5$ in the continuous case, are preserved, but they become less sharp and the recovered value starts to move away from the real value as soon as the size of the window decreases. 
+%
+%For the analysis of discrete signals it is possible to estimate the uncertainty principle. The easiest way is to consider signal segments and calculate the discrete Fourier transform (DFT) of each segment. This is the so-called Short Time Fourier Transform (STFT). If we consider an odd-sized window and associate the DFT that we calculate within it with the sample in the center of the window, we will be associating each sample of the signal with a ``small'' Fourier transform. In this context, how ``small'' the DTF is depends on the size of the window.
+%
+%\begin{figure}
+%\centering
+%\includegraphics{sin_gauss_real_imag.pdf}
+%\caption{The effect of Gaussian window. Sinusoidal signal bounded by a Gaussian window (first column) and the real and imaginary part of its corresponding Fourier transform (second and third columns). From top to bottom: $[\sigma=1, t_0=0]$, $[\sigma=1, t_0=1.6]$, $[\sigma=1.5, t_0=0]$, $[\sigma=1.5, t_0=1.6]$, $[\sigma=2.5, t_0=0]$, $[\sigma=2.5, t_0=1.6]$.}\label{fig:gaussian_window_real_imag}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics{sin_gauss_mag_phase.pdf}
+%\caption{The effect of Gaussian window. Sinusoidal signal bounded by a Gaussian window (first column) and the magnitude and phase of its corresponding Fourier transform (second and third columns). From top to bottom: $[\sigma=1, t_0=0]$, $[\sigma=1, t_0=1.6]$, $[\sigma=1.5, t_0=0]$, $[\sigma=1.5, t_0=1.6]$, $[\sigma=2.5, t_0=0]$, $[\sigma=2.5, t_0=1.6]$.}\label{fig:gaussian_window_mag_phase}
+%\end{figure}

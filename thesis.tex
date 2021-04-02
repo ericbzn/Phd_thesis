@@ -73,63 +73,81 @@
 	\maketitle{}
 	
     \input{layout/dedication.tex}
-%    \afterpage{\blankpage}
 	\cleardoublepage
     
     \input{layout/acknowledgements.tex}
-    % \afterpage{\blankpage}
    	\cleardoublepage
     
     \input{layout/abstract.tex}
-%    \afterpage{\blankpage}
 	\cleardoublepage
     
     \input{layout/resume.tex}
-%    \afterpage{\blankpage}
 	\cleardoublepage
     
 %    \input{layout/nomenclature.tex}
-%%    \afterpage{\blankpage}
 %	\cleardoublepage
 
     \tableofcontents
 %    \listoffigures
 %    \listoftables
 
-%    \afterpage{\blankpage}
     \cleardoublepage
 
     \pagenumbering{arabic}   
 
-%	\input{chapters/chapter6.tex}
-%%    \afterpage{\blankpage}
-%	\cleardoublepage
-%	
-	    \input{chapters/introduction.tex}
-%    \afterpage{\blankpage}
+%%% Compile thesis' chapters and appendices individually 
+	
+	\input{chapters/introduction.tex}
 	\cleardoublepage
+	\input{chapters/chapter1.tex}
+	\cleardoublepage
+	\input{chapters/chapter2.tex}
+	\cleardoublepage
+	\input{chapters/chapter3.tex}
+	\cleardoublepage
+	\input{chapters/chapter4.tex}
+	\cleardoublepage
+	\input{chapters/chapter5.tex}
+	\cleardoublepage	
+	\input{chapters/chapter6.tex}
+	\cleardoublepage
+	\input{chapters/chapter7.tex}
+	\cleardoublepage				
 
-%	
-    \foreach \i in {1,2, ...,\NumOfChapters}{
-        \input{chapters/chapter\i.tex}
-%        \includefrom{chapters/\i/}{chapter\i}
-        %\afterpage{\blankpage}
-        \cleardoublepage
-    }
-    
-    \appendix
-    \foreach \i in {1,2,...,\NumOfAppendices}{
-        \input{appendices/appendix\i.tex}
-%        \includefrom{appendices/\i/}{appendix\i}
-        %\afterpage{\blankpage}
-        \cleardoublepage
-    }
+	\appendix
+	\input{appendices/appendix1.tex}
+	\cleardoublepage	
+%	\input{appendices/appendix2.tex}
+%	\cleardoublepage	
+%	\input{appendices/appendix3.tex}
+%	\cleardoublepage	
+	\input{appendices/appendix4.tex}
+	\cleardoublepage
+	\input{appendices/appendix5.tex}
+	\cleardoublepage	
+
+%%% Compile thesis' chapters and appendices in loop 
+
+%%% Chapters
+%	\input{chapters/introduction.tex}
+%	\cleardoublepage
+%    \foreach \i in {1,2, ...,\NumOfChapters}{
+%        \input{chapters/chapter\i.tex}
+%%        \includefrom{chapters/\i/}{chapter\i}
+%        \cleardoublepage
+%    }
+
+%%% Appendices
+%    \appendix
+%    \foreach \i in {1,2,...,\NumOfAppendices}{
+%        \input{appendices/appendix\i.tex}
+%%        \includefrom{appendices/\i/}{appendix\i}
+%        \cleardoublepage
+%    }
 %    
     \bibliography{biblio}
     \pagebreak
     
-    \input{appendices/appendix5.tex}
-%    \afterpage{\blankpage}
-	\cleardoublepage
+    
    	
 \end{document}
