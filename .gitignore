@@ -281,3 +281,5 @@ chapter3.pdf
 *.mtc
 
 thesis/
+
+build/

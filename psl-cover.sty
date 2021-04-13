@@ -306,7 +306,7 @@
 
       \fontsize{11}{13}\selectfont
       %% french keywords
-      \node[yshift=0mm, above] (frKeywords) at (o) {
+      \node[yshift=-5mm, above] (frKeywords) at (o) { % It had 0mm. I changed because my abstract is too long
         \pslbacknode{MOTS CL\'{E}S}{\@frkeywords{}}{10}{12}
       };
       %% french abstract
@@ -318,7 +318,7 @@
         \pslbacknode{ABSTRACT}{\@enabstract{}}{9}{11}
       };
       %% english keywords
-      \node[yshift=-2mm, below] at (enAbstract.south) {
+      \node[yshift=2mm, below] at (enAbstract.south) { % It had -2mm. I changed because my abstract is too long
         \pslbacknode{KEYWORDS}{\@enkeywords{}}{10}{12}
       };
 
@@ -340,7 +340,7 @@
     \vspace{-2.5mm}
     \tikz{\draw[pslblue, line width=.5mm] (0, 0) -- (16.8, 0);}
 
-    \vspace{3mm}
+    \vspace{-1mm} % It had 3mm. I changed because my abstract is too long
     {\color{black}\fontsize{#3}{#4}\selectfont #2}\unskip\strut\par
   \end{minipage}
 }

@@ -21,7 +21,7 @@ The present framework obtains the segmentation of an image from the perceptual g
 	\caption{General pipeline for extraction of perceptual image boundaries and unsupervised image segmentation.}\label{fig:pipeline_gabor_image_segmentation}
 \end{figure}
 
-\section{Related work}\label{sec:soa_boundaries_segmentation}
+\section{Related Work}\label{sec:soa_boundaries_segmentation}
 Edge detection is a fundamental problem of computer vision that has been intensively studied since the early 1970s \citep{Hueckel:JACM:1971, Fram.Deutsch:TC:1975}. The main idea behind traditional approaches to contour extraction is to model edges as discontinuities in the brightness channel of an image. This idea gave way to the creation of mask-based operators such as Sobel \citep{Sobel.Feldman:SAIL:1990}, Roberts \citep{Roberts:Thesis:1963}, Gradient \citep{Maitre:Book:2003} and Prewitt \citep{Prewitt:PPP:1970}, which quantify the presence of an edge through the convolution of a gray level image with local derivative filters. Other techniques, such as Marr and Hildreth \citep{Marr.Hildreth:PRS:1980}, define edges as the zero crossings of the Laplacian of a Gaussian (LoG). The Canny operator \citep{Canny:PAMI:1986} is one of the most popular approaches to this day within traditional methods. This operator follows the same operation principle of the previous methods, adding a non-maximum suppression stage and hysteresis thresholding. 
 
 Despite their efficiency in controlled environments or synthetic images, traditional methods suffer from identifying contours in natural images. The edges of natural images can be present at different scales, and the colors and textures of the scene can generate edges that are perceptually significant to the human eye. Ideally, a contour detection method is intended to simultaneously exploit the brightness, color, and texture properties of an image so that it can handle the boundary perimeters defined by the brightness steps and the regions with consistent color and (or) texture.
@@ -49,7 +49,7 @@ There is a fine line between contour detection and image segmentation. In this s
 The Pb contour detector has driven (directly or indirectly) 50 years of research work around perceptual contours detection in natural images and their segmentation. Like the Canny operator, the Pb operator has become a reference work. The importance of this method is that it provides a reasonable basis that considers human perception principles, using operators that have a physical sense. 
 
 
-\section{Image as a graph}
+\section{Image as a Graph}
 
 Graphs are mathematical structures that have been applied to almost all fields of engineering. Historically, Euler used these structures to solve a problem related to the optimal crossing of people across bridges. The success of these structures in fields such as electricity and chemistry contributed to creating a standard nomenclature, giving way to the Graph theory. 
 
@@ -60,7 +60,7 @@ Fundamentally, a graph is a helpful structure for modeling pairwise relations be
 
 
 
-\subsection{Graph notations and definitions}
+\subsection{Graph Notations and Definitions}
 
 This section introduces some critical definitions that will be used throughout the chapter related to graphs and related structures. 
 
@@ -616,11 +616,11 @@ The SLIC algorithm allows controlling (approximately) the number of superpixels 
 
 In this work, we choose the SLIC algorithm to generate the superpixels of the images. This method is one of the most competent in terms of customization and calculation time. Furthermore, it is possible to use the image in the LAB color space to form superpixels according to the image's perceptual colors. For more details on the implementation and performance of the different superpixel algorithms, we invite the reader to review the work of \cite{Wang.Liu.ea:SP:2017}.
 
-\section{Graph-based image gradient and segmentation}
+\section{Graph-based Image Gradient and Segmentation}
 
 In this section, we develop the methodology to obtain a perceptual gradient on an image-graph. Such an image gradient is said perceptual as it is based on the multispectral decomposition of an image using Gabor filters. We use EMD as a measure of similarity between the graph's nodes to define the edges' weight. Specifications and adaptations of the EMD are also developed in this section. Subsequently, we use the resulting gradients to segment the image using well-known state-of-the-art techniques.  
 
-\subsection{Earth Mover's Distance for non-normalized distributions}
+\subsection{Earth Mover's Distance for Non-normalized Distributions}
 In chapter \ref{ch:similarity_measures}, we have seen the utility of the EMDas a true metric for measuring similarity between distributions. In image retrieval systems based on color information, the EMD can measure tiny changes in the normalized color distributions of superhero images. On the other hand, with the texture patches, the EMD can capture, reflect and measure the importance of the logarithmic (frequency) and polar (orientation) axis of the texture signature (see figure \ref{fig:MDS_EMD} in section \ref{ch:suplementary_material_retrieval_systems}). This chapter uses EMD to measure the similarity between two elements of an image: pixels or superpixels. By measuring the similarity of elements in Gabor's feature space, we locally measure changes in color and texture in the image. 
 
 The EMD \citep{Rubner.Tomasi.ea:IJCV:2000} , as we used it to measure color and texture distributions in chapter \ref{ch:similarity_measures} (cf. Eq. \eqref{eq:emd}), is a true metric only when used with normalized distributions (histograms or signatures), i.e., distributions with total mass equal to one. This fact has no impact when the distributions represent global information of an image (color or texture). However, the distributions of the image elements (pixels or superpixels) contain only a portion of the information; for example, in the case of our feature space, Gabor's energy. 
@@ -634,87 +634,20 @@ d_{\widehat{EMD}}(P, Q) = \left( \underset{\{f_{ij}\}}{\mathrm{min}}\sum_{i,j}f_
 \end{eqnarray}
 where $f_{ij}$ denotes the amount transported and $c_{ij}$ denotes the transport cost from the $i$th supplier in $P$ to the $j$th consumer in $Q$. 
 
-
-%\subsubsection{Ground distance matrix}
-%The EMD finds the best match that minimizes the maximum transport cost; however, the ground distance design can significantly impact the total transportation cost.
-%
-%Modifying the ground distance to represent the feature space's properties limits the effect that some signatures have on the EMD. The most traditional way to define the ground distance of the EMD is to take it as the Euclidean distance between two points. This configuration is suitable for points that live in a Euclidean feature space, for example, the color pixels of an image in the LAB color space. In such a case, the ground distance of two points $(a,b)$ is defined as
-%\begin{eqnarray} \label{eq:emd_euclidean_ground_distance}
-%	d(a, b) = \sqrt{(\Delta L)^2 + (\Delta A)^2 + (\Delta B)^2 + \lambda((\Delta x)^2 +(\Delta y)^2) } 	
-%\end{eqnarray}
-%where the Deltas ($\Delta$) define the difference between the values of each color channel and the position in the image space. The parameter $\lambda$ weights the importance between the spatial information and the color information of the points. A representation of ground distance resulting from Eq. \eqref{eq:emd_euclidean_ground_distance} is the squared Euclidean distance, which penalizes the further away points in the color space.
-%
-%In the texture analysis with a Gabor filter bank, the Euclidean distance is not convenient to design the ground distance of the EMD between signatures. Remember that we use Gabor energy to measure the texture information in each color channel of the image,
-%\begin{equation}\label{eq:feature_space}
-%	E = \{\widetilde{e}_{c, f, \theta}\}
-%\end{equation}
-%where $m$ denotes the number of frequencies and $n$ the number of orientations captured by the filter bank and $c$ corresponds to the channels of the luminance-chrominance color space. Under this texture representation, a texture can be seen as a vector within a hypercylinder in a $m \times n$ dimensional space.
-%
-%We can define the ground distance as the L1 distance in a linear-polar (lin-polar) space or in a logarithmic-polar (log-polar) space; thus, the ground distance follows the properties of the texture space. In both cases, we map texture orientations on a polar axis, while for the frequencies, we can map them either on a linear axis or on a logarithmic axis. The ground distance between two texture signatures $(f_1, \theta_1)$, $(f_2, \theta_2)$ is then:
-%\begin{eqnarray} \label{eq:emd_lin_log_polar}
-%	d((f_1, \theta_1), (f_2, \theta_2)) = |\Delta f| + \alpha |\Delta \theta|
-%\end{eqnarray}
-%where $\Delta f = \arg{(f_1)} - \arg{(f_2)}$ for the linear space and $\Delta f = f_1 - f_2$ for the logarithmic space. Since the polar axis is cylindrical, there are two possible distances between a pair of points; we take the smaller of the two distances such that
-%\begin{eqnarray} \label{eq:emd_ground_dist_polar_axis}
-%	\Delta \theta = \mathrm{min}(|\theta_1-\theta_2|, n-|\theta_1-\theta_2|) \nonumber
-%\end{eqnarray}
-%Finally, the $\alpha$ parameter controls the relative importance between the frequency and the orientation of textures; we use $\alpha=1$ in all of our experiments.
-%
-%To better understand the effect of ground distance on EMD for measuring the similarity between textures, let us consider the following example. We have a filter bank formed by $m = 3$ frequencies separated at a frequency bandwidth $B_f = 1$ (1 octave) and $n = 3$ orientations separated at an angular bandwidth $B_\theta = 60^\circ$. With this configuration, the filter bank contains $ m \cdot n = 9 $ different Gabor filters; consequently, we have the same number of Gabor responses per image channel. Then, the EMD's ground distance for this filter bank is a symmetric matrix of size $ m \cdot n \times m \cdot n $ with zeros on the diagonal. Each cell $(i, j)$ of the matrix represents the distance (L1 or L2) between two frequency and orientation settings $(f,\theta)$. For example, the row $i = 0$ represents the comparison between the combination $(f_1, \theta_1)$ of the first signature against all the configurations of the second signature.
-%
-%We illustrate in Fig. \ref{fig:EMD_ground_distance_matrix} the ground distance matrix between two texture signatures subjects of $m = 3$ frequencies and $n = 3$ orientations using the four distances described in this section: L2-Euclidean distance, L2-Squared Euclidean distance, L1 lin-polar distance, and L1 log-polar distance. This figure shows how distances in linear-polar or logarithmic-polar space are more convenient with textures and Gabor filters since they consider the cylindrical axis of the angles.
-%
-%\begin{figure}[!ht]
-%    \centering
-%    \begin{subfigure}[b]{0.47\textwidth}
-%		\includegraphics[width=\textwidth]{ground_distance_matrix_euclidean}	
-%		\caption{Euclidean}
-%        \label{fig:ground_distance_matrix_euclidean}
-%	\end{subfigure}
-%	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-%    %(or a blank line to force the subfigure onto a new line)
-%    \begin{subfigure}[b]{0.47\textwidth}
-%		\includegraphics[width=\textwidth]{ground_distance_matrix_sqeuclidean}	
-%		\caption{Squared euclidean}
-%        \label{fig:ground_distance_matrix_sqeuclidean}
-%	\end{subfigure} \\[2ex]
-%    
-%    \begin{subfigure}[b]{0.47\textwidth}
-%		\includegraphics[width=\textwidth]{ground_distance_matrix_lin_polar}	
-%		\caption{Linear-polar}
-%        \label{fig:ground_distance_matrix_lin_polarc}
-%	\end{subfigure}  
-%	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-%    %(or a blnk line to force the subfigure onto a new line)
-%	\begin{subfigure}[b]{0.47\textwidth}
-%		\includegraphics[width=\textwidth]{ground_distance_matrix_log_polar}	
-%		\caption{Log-polar}
-%        \label{fig:ground_distance_matrix_log_polar}
-%	\end{subfigure}  
-%	   
-%   \caption{Visualizations of cost matrix of EMD.}
-%   \label{fig:EMD_ground_distance_matrix}
-%\end{figure}
-
-\subsection{Graph image gradients}
-
+\subsection{Graph Image Gradients}
 As we described earlier, we can use pixels or superpixels as support to represent an image as a graph. Figure \ref{fig:computational_support} shows a natural-color image, its superpixels obtained with the SLIC technique (approximately 2500 regions), and the region adjacency graph obtained on the superpixels. In this sense, each node of the graph is positioned at the centroid of each superpixel in the image. This strategy allows reducing the EMD calculation time between nodes of the graph, with the compromise. The pixel adjacency graph of the image is not displayed (see instead \ref{fig:pag_example} as a PAG reference); however, we used a 4 neighboring node adjacency system (4nn) for its creation.
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
     	\includegraphics[width=\textwidth]{100007} 
     	\caption{Input image}
-    \end{subfigure}      
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \end{subfigure}    
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_slic}
         \caption{SLIC superpixels}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \end{subfigure}\\    
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_raw_rag}
         \caption{Unweighted superpixel RAG}
     \end{subfigure}
@@ -730,55 +663,46 @@ In color images, we obtain a weighted edge graph for each channel of the complex
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
     	\includegraphics[width=\textwidth]{100007_lum_grad} 
-    \end{subfigure}      
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \end{subfigure}         
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{100007_weighted_lum_rag}
+    \end{subfigure}\\ [1ex]    
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_cr_grad}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \end{subfigure}     
+    \begin{subfigure}[b]{0.49\textwidth}
+    	\includegraphics[width=\textwidth]{100007_weighted_cr_rag} 
+    \end{subfigure}\\ [1ex]          
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_ci_grad}
-    \end{subfigure} \\ [1ex]    
-    \begin{subfigure}[b]{0.3\textwidth}
-    	\includegraphics[width=\textwidth]{100007_weighted_lum_rag} 
-    	\caption{Luminance}
-    \end{subfigure}      
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{100007_weighted_cr_rag}
-        \caption{Chrominance (real part)}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+        \caption{Pixel-based graph gradient}
+    \end{subfigure}   
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_weighted_ci_rag}
-        \caption{Chrominance (imag part)}
+        \caption{Region-based graph gradient}
     \end{subfigure}
     
-	\caption{Graph gradient images. First row: pixel-based graph gradient, second raw: Region-based graph gradient. The columns names indicate the respective color channel of the gradient.}\label{fig:graph_gradient_pixel_superpixel}    
+	\caption{Graph gradient images. First row: Luminance channel, second raw: Chrominance (real part), and third raw: Chrominance (imag part). The raws names indicate the respective graph structure used to compute the gradient.}\label{fig:graph_gradient_pixel_superpixel}    
 \end{figure}
 
 The gradients obtained with this methodology follow the color and texture variations of the authentic images. Furthermore, an essential aspect of our methodology is that the image's decomposition using the optimized Gabor filters and the complex color space respects Parseval's identity. In other words, the sum of all Gabor responses (in frequency axis, angular axis, and per color channel) is equal to 1. This property is reflected in the weights of the edges of the luminance and chrominance graphs. Generally, the luminance channel is the one that recovers most of the energy, while the color energy is divided into the real and imaginary parts of the chrominance. In the gradients of the second row of images of figure \ref{fig:graph_gradient_pixel_superpixel}, the maximum distance between two nodes in the luminance channel is approximately 30, while in the real and imaginary part of the chrominance, the distance varies between 10 and 14. This property allows us to add the weights of the edges of each channel's graphs to obtain a single graph gradient. We can see the total gradients in the pixel and superpixel support in figure \ref{fig:total_graph_gradient_pixel_superpixel}.
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
     	\includegraphics[width=\textwidth]{100007_pred_grad} 
     \end{subfigure}      
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_weighted_pred}
     \end{subfigure}    
 	\caption{Total graph gradient images.}\label{fig:total_graph_gradient_pixel_superpixel}    
 \end{figure}
 
-\subsection{Image segmentation based on image gradients}
+\subsection{Image Segmentation Based on Image Gradients}
 The perceptual gradients obtained with EMD contain the necessary structure to segment images using graph-based segmentation methods. We use the adjacency matrix of the graph for this purpose. Here we present the methodology and results of three different segmentation methods on the weighted graphs on the superpixel support; pixel-level graphs are not considered due to the high computation time. 
 
 \subsubsection{MST threshold graph-cut}
@@ -791,23 +715,24 @@ Taking the example of the polar bear image, figure \ref{fig:graphcut_segmentatio
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
     	\includegraphics[width=\textwidth]{100007_weighted_mstgraph}
     	\caption{edge-weighted MTS} 
     \end{subfigure}      
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_weight_dist}
         \caption{MTS weights distribution}
-    \end{subfigure}    
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    \end{subfigure}\\ [1ex]
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_graphcut_result}
         \caption{Threshold graph-cut segmentation result}
         \label{fig:graphcut_segmentation_result}
-    \end{subfigure}  
+    \end{subfigure}    
+    
 	\caption{Stages of threshold graph-cut segmentation technique.}\label{fig:graphcut_segmentation_technique}    
 \end{figure}
 
@@ -837,17 +762,17 @@ where $\omega_{ij}$ is the measure of distance between nodes of the graph (given
 
 The spectral decomposition is done using the Laplacian matrix, which depends on the affinity matrix $A$ and the matrix of degree $D$. We follow the algorithm of \cite{Ng.Jordan.ea:NIPS:2001}, which proposes to use the normalized Laplacian matrix $L = D^{-1/2} A D^{-1/2}$. This Laplacian matrix form is known as the non-normalized one. Once the k largest eigenvectors of $ L $ have been found and normalized, we apply the k-means algorithm on the data points of this reduced space of the graph and assign each node to a cluster.
 
-Figure \ref{fig:spectral_clustering_process} shows the similarity graph constructed from the EMD distances between texture signatures. Since the similarity function $s(i, j)$ is inverse to the distance $\omega (i, j)$ between nodes, we see that the edges' value tends to $0$ (black edges) when the regions are dissimilar, and when the regions are similar, the edges' value tends to $1$ (white edges). Subfigure \ref{fig:spectral_clustering_segm_result} shows the polar bear segmentation result using $k = 5$ and $\alpha = 6$.
+Figure \ref{fig:spectral_clustering_process} shows the similarity graph constructed from the EMD distances between texture signatures. Since the similarity function $s(i, j)$ is inverse to the distance $\omega (i, j)$ between nodes, we see that the edges' value tends to $0$ (black edges) when the regions are dissimilar, and when the regions are similar, the edges' value tends to $1$ (white edges). Subfigure \ref{fig:spectral_clustering_segm_result} shows the polar bear segmentation result using $k = \mathrm{min}(\mathcal{S})$ (which for this image $k =5$) and $\alpha = 6$.
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
     	\includegraphics[width=\textwidth]{100007_weighted_completegraph} 
     	\caption{Affinity graph}
     \end{subfigure}      
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{100007_spec_result}
         \caption{Spectral clustering segmentation result}
         \label{fig:spectral_clustering_segm_result} 
@@ -865,78 +790,38 @@ Furthermore, the normalized cut is a recursive method that finds a bipartition o
 
 \begin{figure}[!ht]
     \centering
-  	\includegraphics[width=0.45\textwidth]{100007_ncut_result}
-    \caption{Normalized cut segmentation result}
+  	\includegraphics[width=0.49\textwidth]{100007_ncut_result}
+    \caption{Normalized cut segmentation result.}
     \label{fig:norm_cut_segm_result}    
 \end{figure}
 
 
-\subsubsection{Comparison of the different graph-based segmentation methods}
+\subsubsection{Comparison of the Different Graph-based Segmentation Methods}
 We evaluate the quality of the segmentation given by the three segmentation methods based on graphs: MST threshold graph-cut, Spectral clustering, and Normalized graph-cut.  For this, we use the Berkeley image database test set and the F-measure obtained from the precision and recall scores described in chapter \ref{ch:complex_spectral_image_decomposition}. 
 
-In the figures \ref{fig:boxplot_threshold_graphcut}, \ref{fig:boxplot_spectral_clustering}, \ref{fig:boxplot_normalized_graphcut}, we show the resulting scores applying the segmentation methods to graphs built in different feature spaces. In particular, we vary the input color space to construct the luminance-chrominance representation of the image.
+In figure \ref{fig:boxplot_score_methods}, we show the resulting scores applying the segmentation methods to graphs built in different feature spaces. In particular, we vary the input color space to construct the luminance-chrominance representation of the image.
 
 \begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Thr_graphcut_Fscores_log_mst_boxplot}
-        \caption{F-score}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Thr_graphcut_scores_log_mst_boxplot}
+        \caption{Threshold graph-cut}
     \end{subfigure}     
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
     	\centering
-    	\includegraphics[width=\textwidth]{Thr_graphcut_precisions_log_mst_boxplot}
-        \caption{Precision}
+    	\includegraphics[width=\textwidth]{Spectral_clustering_scores_global_complete_boxplot}
+        \caption{Spectral clustering}
     \end{subfigure}     
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
     	\centering
-        \includegraphics[width=\textwidth]{Thr_graphcut_recalls_log_mst_boxplot}
-        \caption{Recall}
+        \includegraphics[width=\textwidth]{Normalized_graphcut_scores_global_complete_boxplot}
+        \caption{Normalized graph-cut}
     \end{subfigure} 
         	    
-    \caption{Segmentation scores using Threshold graph-cut.}\label{fig:boxplot_threshold_graphcut}    
+    \caption{Segmentation scores of the different graph-based segmentation methods.}\label{fig:boxplot_score_methods}    
 \end{figure}
 
-\begin{figure}[!ht]
-    \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Spectral_clustering_Fscores_global_complete_boxplot}
-        \caption{F-score}
-    \end{subfigure}     
-    \begin{subfigure}[b]{0.3\textwidth}
-    	\centering
-    	\includegraphics[width=\textwidth]{Spectral_clustering_precision_global_complete_boxplot}
-        \caption{Precision}
-    \end{subfigure}     
-    \begin{subfigure}[b]{0.3\textwidth}
-    	\centering
-        \includegraphics[width=\textwidth]{Spectral_clustering_recalls_global_complete_boxplot}
-        \caption{Recall}
-    \end{subfigure} 
-        	    
-    \caption{Segmentation scores using Spectral clustering.}\label{fig:boxplot_spectral_clustering}    
-\end{figure}
-
-\begin{figure}[!ht]
-    \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Normalized_graphcut_Fscores_global_complete_boxplot}
-        \caption{F-score}
-    \end{subfigure}     
-    \begin{subfigure}[b]{0.3\textwidth}
-    	\centering
-    	\includegraphics[width=\textwidth]{Normalized_graphcut_precisions_global_complete_boxplot}
-        \caption{Precision}
-    \end{subfigure}     
-    \begin{subfigure}[b]{0.3\textwidth}
-    	\centering
-        \includegraphics[width=\textwidth]{Normalized_graphcut_recalls_global_complete_boxplot}
-        \caption{Recall}
-    \end{subfigure} 
-        	    
-    \caption{Segmentation scores using Normalized graph-cut.}\label{fig:boxplot_normalized_graphcut}    
-\end{figure}
-
-\section{Image contour detection and segmentation}
+\section{Image Contour Detection and Segmentation}
 
 The graph-based segmentation methods presented above showed exciting results in the segmentation task of natural color images. However, these methods require a series of parameters that are often not so easy to define, for example, the number of $k$ regions to segment, the $\alpha$ parameter for constructing the affinity matrix, and the stop point of the normalized cut algorithm. Although there are various literature methods to optimize and automate the choice of such parameters, this implies a longer calculation time to obtain a segmentation. The peculiarity of these methods is that they depend on an over-segmentation in superpixels before calculating the graph's gradient. Although this step reduces the number of nodes and, consequently, the number of edges and EMD to be calculated, the contours in the image's final segmentation are part of the superpixel method's contours. In other words, if the boundaries of the regions thrown by the SLIC algorithm do not correspond to the contours of the objects in the images, these borders will not appear in the final segmentation. 
 
@@ -1044,7 +929,7 @@ This section presents the methodology to obtain the objects' perceptual contours
 \end{figure}
 
 
-\subsection{Contour-based image segmentation: Hierarchical watershed}
+\subsection{Contour-based Image Segmentation: Hierarchical Watershed}
 
 Image segmentation is a complementary problem to contour detection. Some methods, such as the UCM \citep{Arbelaez.Maire.ea:PR:2009}, generate a hierarchical partition of the image from an image contours. In a partition hierarchy, the image is represented as a sequence of coarse to fine partitions that satisfy the principle of causality of \cite{Koenderink:BC:1984}, that is, any partition is a refinement of the previous one in the sequence \citep{Perret.Cousty.ea:TIP:2018}.
 
@@ -1133,7 +1018,7 @@ One of the first authors to study the properties and relationship between the pa
 
 
 
-\section{Comparison with the state of the art}
+\section{Comparison with the State-of-the-Art}
 In section \ref{sec:soa_boundaries_segmentation}, we review the different methods for detecting contours and the segmentation of natural images. This section classifies state-of-the-art methods based on the input features and the techniques used for contour detection and image segmentation. Table \ref{table:characteristics_soa_methods} organizes the various characteristics of these methods, which allows us to position our contour detector (GCC) w.r.t. the existing works.
 
 We recall that one of the thesis's objectives is to generate algorithms for the detection of objects in complex environments to implement them in the context of UAV tasks. In this sense, the characteristics that we look for in a contour detector are:

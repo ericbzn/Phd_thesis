@@ -3,14 +3,16 @@
 \chapter*{Résumé}
 \addcontentsline{toc}{chapter}{Résumé}
 
-\noindent Ce travail de thèse traite de l'extraction de caractéristiques dans les images à partir de primitives de bas niveau pour la compréhension de scènes à partir de la détection et de la segmentation d'objets. Ce travail est divisé en deux parties.
+\vspace*{-8ex}
+\noindent Ce travail de thèse traite de l'extraction de caractéristiques et de primitives de bas niveau à partir d'informations d'image perceptives pour comprendre des scènes. Motivés par les besoins et les problèmes de la navigation visuelle des véhicules aériens sans pilote (UAV), nous proposons des méthodes innovantes axées sur les étapes avant de comprendre les scènes: détection, identification, classification et segmentation des objets. De même, ce travail explore trois informations principales dans une image: l'intensité, la couleur et la texture.
 \newline 
 
-\noindent La première partie explore l'utilisation des contours d'image en combinaison avec certains concepts de la perception humaine tels que le principe de Helmholtz et les lois de la Gestalt. Ces méthodes sont ensuite appliquées à la tâche de détection des cibles pour l'atterrissage des drones. Nous présentons un cadre non supervisé robuste aux perturbations les plus courantes présentes dans les tâches de ce type.
+\noindent Dans un premier temps, nous travaillons avec les informations d'intensité à travers les contours de l'image. Nous combinons ces informations avec des concepts de perception humaine, tels que le principe de Helmholtz et les lois de la Gestalt, pour proposer un cadre non supervisé pour la détection et l'identification d'objets. Nous appliquons cette méthodologie dans une application spécifique au drone, la tâche de détection de cible d'atterrissage.
 \newline 
 
-\noindent La deuxième partie explore les informations globales de couleur et de texture contenues dans les images. Dans une première phase, nous présentons une analyse de la couleur et de la texture en tant que distributions globales d'une image. Cette approche conduit à étudier les différentes mesures de similitude entre les distributions existantes. Nous validons ces concepts dans deux systèmes de recherche d'images basés sur la similitude de la distribution des couleurs et de la distribution de l'énergie des textures. Dans la deuxième phase, nous abordons la relation entre la couleur et la texture localement dans une image, en reprenant certains concepts tels que la mesure de la similitude. Nous introduisons un cadre non supervisé pour obtenir des limites perceptuelles d'objets à partir de la décomposition spectrale d'une image. De plus, nous montrons une série de méthodes de segmentation à partir du groupe de caractéristiques calculées dans cet espace perceptif de couleur et de texture.
+\noindent Dans un second temps, nous explorons les informations de couleur et de texture contenues dans les images. Dans la première phase, nous présentons une analyse de la couleur et de la texture en tant que distributions globales d'une image. Cette approche nous amène à étudier la théorie du transport optimal et ses propriétés comme une véritable métrique pour la comparaison des distributions de couleurs et de textures. Nous passons en revue et comparons les mesures de similarité les plus populaires entre les distributions pour montrer l'importance d'une métrique appropriée. Nous validons ces concepts dans deux systèmes de récupération d'images basés sur la similitude de la distribution des couleurs et de la distribution de l'énergie des textures.
 
+\noindent Dans la deuxième phase, nous construisons un espace de fonctionnalités qui exploite la relation entre la couleur et la texture dans une image. L'espace des caractéristiques est obtenu à partir de la décomposition spectrale de l'image à l'aide d'une famille de filtres de Gabor optimisés sur l'image représentée dans un espace colorimétrique complexe. Nous présentons en détail les propriétés et l'optimisation de l'espace de Gabor ainsi que les espaces colorimétriques complexes. Enfin, nous présentons une série de méthodes de segmentation et de détection des limites basées sur l'espace des caractéristiques perceptuelles calculé.
 
 %\noindent La deuxième partie explore les informations globales de couleur et de texture contenues dans les images. Nous présentons une analyse quantitative des différentes mesures de similarité existantes pour la mesure des distributions de couleur et d'énergie (signatures de texture) des images. Nous validons ces concepts dans un système de recherche d'images basé sur la similarité.
 %\newline 
@@ -19,4 +21,4 @@
   
 \vspace*{\fill}
 
-\textbf{Mots clés:} Traitement d'image, Primitives de bas niveau, Détection, Segmentation, Compréhension de Scène, Apprentissage Automatique, Drone.
+\textbf{Mots clés:} Traitement d'Image, Primitives de Bas Niveau, Détection, Segmentation, Méthodes Non Supervisées, Compréhension de Scène, Apprentissage Automatique, Drone.

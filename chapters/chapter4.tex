@@ -21,7 +21,7 @@
 %	\item Tool for the interactive segmentation of images considering the information of color and texture.
 %\end{enumerate}
 
-\chapter{Spectral Decomposition of an Image}\label{ch:spectral_image_decomposition}
+\chapter{Spectral Image Decomposition}\label{ch:spectral_image_decomposition}
 
 \section*{Résumé}
 \noindent Ce chapitre utilise la théorie du signal et la transformée de Fourier pour générer une famille optimisée de filtres de Gabor. Le but est de récupérer autant d'informations que possible sur des textures d'une image dans le domaine fréquentiel sans affecter la localisation des informations. Nous présentons une analyse de la fonction de Gabor conforme au principe d'incertitude de Heisenberg. La méthodologie présentée dans ce chapitre générera des banques de filtres Gabor entièrement personnalisées.
@@ -65,13 +65,13 @@ We carry out an analysis of the Gabor filters first from the point of view of si
 
 Using a Gabor filter family, we generate a feature bank that contains local information about the texture. As natural images contain color information, the proposed framework allows obtaining local texture features taking into account the luminance and the chrominance of an image. This strategy's novelty is that we consider color as a complex signal where we can measure the space-frequency distribution of a color texture. 
 
-\section{The Gabor filter as a measurement tool}\label{ch:gabor_filter_description}
+\section{The Gabor Filter as a Measurement Tool}\label{ch:gabor_filter_description}
 
 This section presents a reminder of the signal theory applied to image processing for feature extraction. First, we show the reasons for restricting signal analysis in two predefined domains: time and frequency (for the 1-d case) and space and frequency (for the 2-d case). We especially recall the Gabor's filter theory and properties by showing how these filters are related to Heisenberg's uncertainty principle.
 
 As we mentioned before, we use Gabor filters as a tool to measure the information that characterizes a signal. Since the signal carries relevant information at different points and scales (either in the spatial or space-frequency domain), a well-known strategy used in the literature is to create a filter bank that covers most of the spectrum to be able to reconstruct the original signal.
 
-\subsection{Signals in two domains}
+\subsection{Signals in Two Domains}
 Bound by the Fourier transform, there are two equivalent representations of a signal (one-dimensional (1-d) or two-dimensional (2-d)). The first consists of representing the signal as a function of time, while the second represents it as a function of frequency. These two representations carry the same information but in different ways; besides, we can go from one to another via the Fourier transform (or the inverse Fourier transform), making these special interest descriptions. We define the pair of 1-d Fourier transforms (FT) as follows
 \begin{equation}\label{eq:fourier_transforms_1d}
     \begin{gathered}
@@ -92,7 +92,7 @@ while for the 2-d case, we define the FT as
 
 It is evident that the function $h(t)$ (resp. $h(x, y)$) is located in both domains; however, it is also well known that no signal with compact support can have a finite Fourier transform and vice versa \citep{Bracewell:FourierBook:1999}, there is a particular uncertainty in the time and frequency locations of $h(t)$ (resp. space and frequency locations of $h(x, y)$). We developed and demonstrated the principle that defines this uncertainty (for signal processing and image processing) in the following section.%appendix \ref{ch:uncertainty_principle} of this document.
 
-\subsection{The uncertainty principle in image rocessing}\label{ch:uncertainty_principle}
+\subsection{The Uncertainty Principle in Image Processing}\label{ch:uncertainty_principle}
 
 The uncertainty principle is one of the most famous ideas in quantum mechanics. An early incarnation of the uncertainty principle appeared in a 1927 paper by the German physicist Heisenberg. The uncertainty principle says that we cannot measure the position $(x)$ of a particle with absolute precision. The more accurately we know one of these values, the less accurately we know the other.
 
@@ -209,7 +209,7 @@ If we use this into $\eqref{eq:schwartz_inequality}$ and then into $\eqref{eq:ti
 
 This is the mathematical statement of the uncertainty principle in signal processing \citep{Petrou.Sevilla:Book:2006}.
 
-\subsection{1-d Gabor filters}
+\subsection{1-d Gabor Filters}
 The uncertainty principle shows that time and frequency are two fundamental domains and physically measurable quantities, but still idealizations if we consider one from the other's perspective. Frequency is a simple waveform in the time domain, but to be sharply defined in the frequency domain, it must be infinite in the time domain, i.e., a waveform that has always existed and will remain forever. In everyday life, it is complicated to find phenomena with these characteristics; it is more common to find signals that have properties from both domains; certainly, they have some frequency characteristics, but they also have a starting point, and after some time, these signals begin to fade away. This phenomenon motivated Dennis Gabor to represent signals simultaneously in time and frequency through the Gabor Elementary Function (GEF) \citep{Gabor:JIEE:1946}. The function represents the minimal quantum of information, i.e., the minimal amount of simultaneous information in time and frequency. In other words, it occupies the minimal area, given by a rectangle, in the time-frequency plane.  
 %(see appendix \ref{ch:uncertainty_principle})
 
@@ -406,14 +406,14 @@ Gathering the different modifications of Gabor functions developed in the previo
      \end{gathered}
 \end{equation}
 
-This Gabor function representation allows generating filter banks normalized by the maximum spectrum condition and homogeneously distributed in the frequency domain. Besides, a filter bank generated with the Gabor function Eq. \eqref{eq:gabor_function_1d_timefreq_bank} integrates the frequency crossing point allowing a quasi-total and almost flat coverage of the frequency spectrum, occupying the most relevant part of the filter using an adaptive window.
+This Gabor function representation allows generating filter banks normalized by the maximum spectrum condition and homogeneously distributed in the frequency domain. Besides, a filter bank generated with the Gabor function Eq. \eqref{eq:gabor_function_1d_timefreq_bank} integrates the frequency crossing point allowing a quasi-total and almost flat coverage of the frequency spectrum, occupying the most relevant part of the filter using an adaptive window. A possible disadvantageous effect of this approach is the ripple between the filter bank's filters; however, we must remember that the filters proposed here are normalized concerning the size of the support (Gaussian window) and the central frequency of each filter. Therefore, even though a filter responds to different frequencies, textures close to the filter's center frequency are weighted. Additionally, the ripple effect occurs more frequently when decreasing the bandwidth of the filter bank. Moreover, this effect can be reduced by applying a halfwave rectification or, more generally called a thresholding \citep{Petkov:FGCS:1995}, \citep{Grigorescu.Petkov.ea:TIP:2003} \citep{Kruizinga.Petkov:TIP:1999}.
 
 Figure \ref{fig:1d_filterbank_spacing} shows three examples of filter banks in the frequency domain.  Particulary, figure \ref{fig:filterbnk_octave_spacing} shows a bank without the relationship between the effective width and the central frequency of the filter, whereas the figures \ref{fig:filterbnk_half_crossingpoint} and \ref{fig:filterbnk_new_crossingpoint} show the interdependence between $\alpha$, $B_F$, $f$ and $c_1$ and the behavior of the bank with a different crossing point.
 
 
 
 
-\subsection{2-d Gabor filters}
+\subsection{2-d Gabor Filters}
 The generalization of the Gabor function's theory from 1-d to 2-d is straightforward. First, we replace the time variable $t$ with the pair of spatial coordinates $(x, y)$ and the frequency variable $f$ with the pair of frequency variables $(u, v)$. Then, as for the 1-d case, the 2-d Gabor functions follows the Heisenberg principle where the uncertainty measures for the spatial and spatial-frequency domains are expressed in terms of $\Delta x$, $\Delta y$, $\Delta u$, and $\Delta v$, for which it holds that
 
 \begin{equation}\label{eq:uncertainty_principle_2d}
@@ -519,4 +519,15 @@ Figure \ref{fig:2d_filterbank_spacing} shows the octave spacing and the orientat
     \caption{Custom designed Gabor filter bank. The design parameters are: max/min period $[1/f_{min}=70, 1/f_{max}=4]$, crossing points (frequency and angular) $[c_1=c_2= 0.9]$, bandwidths (frequency and angular) $[B_F=1, B_{\theta} = 35^{\circ}]$, standard devaitions $[\sigma=3]$.}\label{fig:2d_filterbank}
 \end{figure}
 
-%\section{Conclusion}
+\section{Conclusion}
+
+In this chapter, we have presented a space-frequency analysis for creating a filter. This study aims to create a family of filters capable of measuring the texture information in an image under a perceptual approach. The human eye (perception and stimulus) is sensitive to the local contrast of textures, that is, to their amplitude. Therefore, we are interested in measuring this amplitude and its location correctly through a filter bank.
+
+We use the Gabor function, which follows the Heisenberg uncertainty principle, to design an optimal filter bank. Given its ability to measure the texture's energy, both in the spatial domain and in the frequency domain, the filter configuration that we propose in this chapter allows us to build an adaptive filter bank. The filter bank is adaptable because we can customize it to privilege the precision of the measurement of the amplitude or the locality of a texture. Also, the proposed filter family is efficient since the Gaussian support is variable as a function of the central frequency of analysis, accelerating the convolution with the image.
+
+On the other hand, each Gabor function of the filter bank is normalized concerning the central frequency of analysis, taking into account the size of the analysis window (Gaussian function). This characteristic makes it possible to attenuate the ripple and aliasing effects characteristic of the classic Gabor function.
+
+The bank of filters proposed in this chapter achieves an almost total and uniform coverage of the frequency spectrum due to the modification of the frequency and angular crossover points.
+We must then uniformly cover the entire spectrum. Modifying the Gabor function to create a filter bank is an effort to conceive filters capable of measuring the amplitude and locality of a texture's different spectral components. 
+
+In the following chapters, we show this filter bank's use for the spectral decomposition of an image. This decomposition allows measuring the texture's information favoring the locality of the textures (without losing the amplitude), which makes this bank of filters a texture measurement tool.

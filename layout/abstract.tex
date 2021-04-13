@@ -3,14 +3,24 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-
-\noindent This thesis work deals with the extraction of features in images from low-level primitives to understand scenes through the detection and segmentation of objects. Likewise, this work is divided into two parts.
+\vspace*{-8ex}
+\noindent This thesis work deals with extracting features and low-level primitives from perceptual image information to understand scenes. Motivated by the needs and problems in Unmanned Aerial Vehicles (UAVs) visual-based navigation, we propose novel methods focusing on stages before understanding scenes: detection, identification, classification, and segmentation of objects. Likewise, this work explores three main pieces of information in an image: intensity, color, and texture.
 \newline 
 
-\noindent The first part explores image contours combined with human perception concepts, such as the Helmholtz principle and the Gestalt laws. We then apply this methodology in a drone-specific application, the landing target detection task. We present an unsupervised framework robust to the most common disturbances present in tasks of this type.
+\noindent In the first moment, we work with the intensity information through image contours. We combine this information with human perception concepts, such as the Helmholtz principle and the Gestalt laws, to propose an unsupervised framework for object detection and identification. We apply this methodology in a drone-specific application, the landing target detection task.
 \newline
 
-\noindent The second part explores color and texture information contained in the images. In the first phase, we present an analysis of color and texture as global distributions of an image. This approach leads us to the study of the most popular existing similarity measures between distributions. We validate such concepts in two image retrieval systems based on the similarity of color distribution and texture energy distribution. In the second phase, we address the relationship between color and texture locally in an image, taking up some concepts such as the measure of similarity. We introduce an unsupervised framework for obtaining perceptual boundaries of objects from the spectral decomposition of an image. Besides, we show a series of segmentation methods from the group of features calculated in this perceptual space of color and texture.
+\noindent In a second moment, we explore the color and texture information contained in the images. In the first phase, we present an analysis of color and texture as global distributions of an image. This approach leads us to study the Optimal Transport theory and its properties as a true metric for color and texture distributions comparison. We review and compare the most popular similarity measures between distributions to show the importance of a proper metric. We validate such concepts in two image retrieval systems based on the similarity of color distribution and texture energy distribution. 
+
+\noindent In the second phase, we build a feature space that exploits the relationship between color and texture in an image. The feature space is obtained from the image's spectral decomposition using a family of optimized Gabor filters on the image represented in a complex color space. We present in detail the properties and optimization of Gabor's space as well as complex color spaces. Finally, we present a series of segmentation and boundary detection methods based on the computed perceptual feature space.
+
+%\noindent This thesis work deals with the extraction of features in images from low-level primitives to understand scenes through the detection and segmentation of objects. Likewise, this work is divided into two parts.
+%\newline 
+%
+%\noindent The first part explores image contours combined with human perception concepts, such as the Helmholtz principle and the Gestalt laws. We then apply this methodology in a drone-specific application, the landing target detection task. We present an unsupervised framework robust to the most common disturbances present in tasks of this type.
+%\newline
+%
+%\noindent The second part explores color and texture information contained in the images. In the first phase, we present an analysis of color and texture as global distributions of an image. This approach leads us to the study of the most popular existing similarity measures between distributions. We validate such concepts in two image retrieval systems based on the similarity of color distribution and texture energy distribution. In the second phase, we address the relationship between color and texture locally in an image, taking up some concepts such as the measure of similarity. We introduce an unsupervised framework for obtaining perceptual boundaries of objects from the spectral decomposition of an image. Besides, we show a series of segmentation methods from the group of features calculated in this perceptual space of color and texture.
 
 
 %\noindent The second part explores the global color and texture information contained in the images. We present a quantitative analysis of the different existing similarity measures for the measurement of color and energy distributions (texture signatures) of images. We validate these concepts in a similarity-based image retrieval system.
@@ -20,4 +30,4 @@
 
 \vspace*{\fill}
 
-\textbf{Keywords:} Image Processing, Low-level Primitives, Detection, Segmentation, Unsupervised Methods, Scene Understanding, Machine Learning, UAV.
+\textbf{Keywords:} Image Processing, Low-level Primitives, Human Perception, Detection, Segmentation, Unsupervised Methods, Scene Understanding, Machine Learning, UAV.

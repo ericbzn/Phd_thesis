@@ -1,25 +1,25 @@
 % created on 28/07/2020
 % @author : ebazan
-\part{Image Contours}\label{part:image_contours}
+%\part{Image Contours}\label{part:image_contours}
+%
+%\section*{Introduction}
+%We remember that the thesis's general objective is to propose vision-based algorithms for UAVs' navigation aid. Drone navigation is a complex task, so we propose decomposing the problem into concrete and straightforward tasks.  We consider that scene understanding is an essential aspect in image analysis for the robot navigation problem. Then, the proposal is to build a framework that obtains perceptual information using low-level primitives and low-level features of the image. The idea is to attack the first stages of scene understanding and object recognition tasks: detecting and identifying objects.  
+%
+%In this chapter of the thesis, we focus on studying the the intensity information in an image and their properties. We review some concepts of human perception, such as Helmholtz's principle, and we interpret and apply them to the contours extracted from the intensity information.  More specifically, we use the non-accidentalness (\textit{a contrario} approach) of the image contours to avoid modeling the possible objects to detect. Instead, we detect objects as a deviation of the normality represented by a random configuration model. This approach is inspired by postulates of works from the beginning of the 20th century that we strive to formalize mathematically. We use this algorithm for the autonomous drone landing task. Therefore, the objects to be identified are a series of numbered landing targets specifically designed for this problem.
+%
+%The main contributions of this chapter are:
+%
+%\begin{enumerate}
+%	\item Study and comparison of different classical approaches to image contours detection.
+%	\item A new methodology for searching and interpreting perceptual information using the a contrario method and Gestalt theory.
+%	\item A non-parametric framework for fully unsupervised landing target detection robust to the image degradations present in the autonomous landing task.
+%	\item An algorithm coding information into landing targets.
+%
+%\end{enumerate}
 
-\section*{Introduction}
-We remember that the thesis's general objective is to propose vision-based algorithms for UAVs' navigation aid. Drone navigation is a complex task, so we propose decomposing the problem into concrete and straightforward tasks.  We consider that scene understanding is an essential aspect in image analysis for the robot navigation problem. Then, the proposal is to build a framework that obtains perceptual information using low-level primitives and low-level features of the image. The idea is to attack the first stages of scene understanding and object recognition tasks: detecting and identifying objects.  
 
-In this first part of the thesis, we focus on studying the image contours and their properties. We review some concepts of human perception, such as Helmholtz's principle, and we interpret and apply them to the contours extracted from the image.  More specifically, we use the non-accidentalness (\textit{a contrario} approach) of the image contours to avoid modeling the possible objects to detect. Instead, we detect objects as a deviation of the normality represented by a random configuration model. This approach is inspired by postulates of works from the beginning of the 20th century that we strive to formalize mathematically. We use this algorithm for the autonomous drone landing task. The objects to be identified are a series of landing targets specifically designed for this problem.
-
-The main contributions of this first part are:
-
-\begin{enumerate}
-	\item Study and comparison of different classical approaches to image contours detection.
-	\item A new methodology for searching and interpreting perceptual information using the a contrario method and Gestalt theory.
-	\item A non-parametric framework for fully unsupervised landing target detection robust to the image degradations present in the autonomous landing task.
-	\item An algorithm coding information into landing targets.
-
-\end{enumerate}
-
-
-\chapter{Unsupervised Object Detection for UAV Autonomous Landing Task} \label{ch:landing_target_detection}
-
+%\chapter{Unsupervised Object Detection for UAV Autonomous Landing Task} \label{ch:landing_target_detection}
+\chapter{Intensity Image Contours and Information's Perceptual Organization} \label{ch:landing_target_detection}
 %Associated publications: \vspace{-2mm}
 %
 %\begin{itemize}
@@ -35,6 +35,21 @@ The main contributions of this first part are:
 
 
 \section{Introduction}\label{sec:introduction_ch1}
+We remember that the thesis's general objective is to propose vision-based algorithms for UAVs' navigation aid. Drone navigation is a complex task, so we propose decomposing the problem into concrete and straightforward tasks.  We consider that scene understanding is an essential aspect in image analysis for the robot navigation problem. Then, the proposal is to build a framework that obtains perceptual information using low-level primitives and low-level features of the image. The idea is to attack the first stages of scene understanding and object recognition tasks: detecting and identifying objects.  
+
+In this chapter of the thesis, we focus on studying the the intensity information in an image and their properties. We review some concepts of human perception, such as Helmholtz's principle, and we interpret and apply them to the contours extracted from the intensity information.  More specifically, we use the non-accidentalness (\textit{a contrario} approach) of the image contours to avoid modeling the possible objects to detect. Instead, we detect objects as a deviation of the normality represented by a random configuration model. This approach is inspired by postulates of works from the beginning of the 20th century that we strive to formalize mathematically. We use this algorithm for the autonomous drone landing task. Therefore, the objects to be identified are a series of numbered landing targets specifically designed for this problem.
+
+The main contributions of this chapter are:
+
+\begin{enumerate}
+	\item Study and comparison of different classical approaches to image contours detection.
+	\item A new methodology for searching and interpreting perceptual information using the a contrario method and Gestalt theory.
+	\item A non-parametric framework for fully unsupervised landing target detection robust to the image degradations present in the autonomous landing task.
+	\item An algorithm coding information into landing targets.
+
+\end{enumerate}
+
+\subsection{Landing Target Detection Problems and State-of-the-Art}
 Nowadays, the target detection for UAVs' autonomous landing is a recurring subject in the industrial sector. This task is crucial so that applications such as air parcel delivery can be developed. Some strategies to address this problem are creating landing stations; infrastructures that could harbor extra elements, such as GPS, infrared markers, or telecommunication sensors, which serve to locate and differentiate the landing zone from other areas. This option may be feasible for small-scale applications; however, in applications that require multiple landing points, this becomes impractical.
 
 Instead, we propose a monocular vision-based system for the detection and identification of custom landing targets. For this, we imagine the situation when a drone is ready to land as follows: first, the drone reaches a certain horizontal/vertical distance from a possible landing target, then it activates the visual system and analyzes the scene where there may be a target; if the drone recognizes a pattern as a landing target and the ID is correct, the drone lands. The figure \ref{fig:visionbased_landing_problem_sketch} represents the actions that a drone must perform to land at the correct point. The use of vision systems for target detection provides advantages such as the independence of special onboard sensors, such as IR cameras to detect infrared markers and the continuous operation in areas with low or no GPS coverage.
@@ -140,7 +155,7 @@ The Gestalt theory \citep{Wertheimer:Psycologische:1923} states that we can buil
     \caption{Graphic representation of the grouping Gestalt laws.}\label{fig:gestalt_laws}
 \end{figure}
 
-In this work, we explore the above ideas and propose a novel approach to detect a landing target in the same way humans do, imitating the human perception process. To achieve the detection, we use the image contours retrieved at different scales. We obtain the most perceptual contours from this set of contours: those not generated by chance using an a contrario approach. After this procedure, we take advantage of the predefined form of the targets to propose some measures representing the grouping laws of similarity and proximity of the Gestalt. Finally, we do the decoding and correction of target identification errors using Hamming's code. The diagram shown in figure \ref{fig:target_detection_pipeline} groups the stages of our method for the perceptual detection of landing targets.
+In this work, we explore the above ideas and propose a novel approach to detect a landing target in the same way humans do, imitating the human perception process. To achieve the detection, we use the intensity image contours retrieved at different scales. We obtain the most perceptual contours from this set of contours: those not generated by chance using an a contrario approach. After this procedure, we take advantage of the predefined form of the targets to propose some measures representing the grouping laws of similarity and proximity of the Gestalt. Finally, we do the decoding and correction of target identification errors using Hamming's code. The diagram shown in figure \ref{fig:target_detection_pipeline} groups the stages of our method for the perceptual detection of landing targets.
 
 \begin{figure}[!ht]
     \centering
@@ -407,7 +422,7 @@ Although the experiments use the highest target deformation values, they do not 
 
 The F1-score bar plots (figure \ref{fig:degradations_graphs}) and figure \ref{fig:thresholding_comp} show that given the conditions in which we can find a landing target, no threshold-based method was robust to the set of perturbations. It is necessary to adjust parameters according to the condition to have acceptable results. Besides, we aim to recognize the landing targets in natural images where none, one, or more landing targets can be present, and the degradations are not isolated.
 
-\section{Unsupervised Perception Model}\label{sec:unsupervised_perception_model}
+\section{Unsupervised Perception Model for UAV Autonomous Landing Task}\label{sec:unsupervised_perception_model}
 %
 \subsection{Non-accidentalness Estimation}\label{subsec:Helmholtz}
 

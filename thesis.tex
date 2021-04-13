@@ -20,44 +20,39 @@
 \specialty{Morphologie \thickspace Mathématique}
 \date{JJ mois 2021}
 
-\jurymember{1}{Prénom NOM}{Titre, établissement}{Président}
-\jurymember{2}{Prénom NOM}{Titre, établissement}{Rapporteur}
+\jurymember{1}{Nicolas PASSAT}{Titre, établissement}{Président}
+\jurymember{2}{Thierry GÉRAUD}{Titre, établissement}{Rapporteur}
 \jurymember{3}{Prénom NOM}{Titre, établissement}{Rapporteur}
-\jurymember{4}{Prénom NOM}{Titre, établissement}{Examinateur}
+\jurymember{4}{Gerado FLORES}{Titre, CIO}{Examinateur}
 \jurymember{5}{Prénom NOM}{Titre, établissement}{Examinateur}
-\jurymember{6}{Prénom NOM}{Titre, établissement}{Examinateur}
-\jurymember{7}{Petr Dokládal}{Titre, établissement}{Directeur de thèse}
-\jurymember{8}{Eva Dokládalová}{Titre, établissement}{Directrice de thèse}
+\jurymember{7}{Petr DOKLÁDAL}{Titre, établissement}{Directeur de thèse}
+\jurymember{8}{Eva DOKLÁDALOVÁ}{Titre, établissement}{Directrice de thèse}
 
 \frabstract{
-  Ce travail de thèse traite de l'extraction de caractéristiques dans les images à partir de primitives de bas niveau pour la compréhension de scènes à partir de la détection et de la segmentation d'objets. Ce travail est divisé en trois parties.
-  
-  La première partie explore l'utilisation des contours d'image en combinaison avec certains concepts de la perception humaine tels que le principe de Helmholtz et les lois de la Gestalt. Ces méthodes sont ensuite appliquées à la tâche de détection des cibles pour l'atterrissage des drones. Nous présentons un cadre non supervisé robuste aux perturbations les plus courantes présentes dans les tâches de ce type.
-  
-  La deuxième partie explore les informations globales de couleur et de texture contenues dans les images. Nous présentons une analyse quantitative des différentes mesures de similarité existantes pour la mesure des distributions de couleur et d'énergie (signatures de texture) des images. Nous validons ces concepts dans un système de recherche d'images basé sur la similarité.
-  
-  La troisième et dernière partie de cette thèse aborde la relation entre les informations locales de couleur et la texture d'une image. Nous introduisons un cadre non supervisé pour obtenir des limites perceptuelles d'objets à partir de la décomposition spectrale d'une image. De plus, nous montrons une série de méthodes de segmentation à partir du groupe de caractéristiques calculées dans cet espace perceptif de couleur et de texture.
+ Ce travail de thèse traite de l'extraction de caractéristiques et de primitives de bas niveau à partir d'informations d'image perceptives pour comprendre des scènes. Motivés par les besoins et les problèmes de la navigation visuelle des véhicules aériens sans pilote (UAV), nous proposons des méthodes innovantes axées sur les étapes avant de comprendre les scènes: détection, identification, classification et segmentation des objets. De même, ce travail explore trois informations principales dans une image: l'intensité, la couleur et la texture.
+
+ Dans un premier temps, nous travaillons avec les informations d'intensité à travers les contours de l'image. Nous combinons ces informations avec des concepts de perception humaine, tels que le principe de Helmholtz et les lois de la Gestalt, pour proposer un cadre non supervisé pour la détection et l'identification d'objets. Nous appliquons cette méthodologie dans une application spécifique au drone, la tâche de détection de cible d'atterrissage.
+
+ Dans un second temps, nous explorons les informations de couleur et de texture contenues dans les images. Dans la première phase, nous présentons une analyse de la couleur et de la texture en tant que distributions globales d'une image. Cette approche nous amène à étudier la théorie du transport optimal et ses propriétés comme une véritable métrique pour la comparaison des distributions de couleurs et de textures. Nous passons en revue et comparons les mesures de similarité les plus populaires entre les distributions pour montrer l'importance d'une métrique appropriée. Nous validons ces concepts dans deux systèmes de récupération d'images basés sur la similitude de la distribution des couleurs et de la distribution de l'énergie des textures. Dans la deuxième phase, nous construisons un espace de fonctionnalités qui exploite la relation entre la couleur et la texture dans une image. L'espace des caractéristiques est obtenu à partir de la décomposition spectrale de l'image à l'aide d'une famille de filtres de Gabor optimisés sur l'image représentée dans un espace colorimétrique complexe. Nous présentons en détail les propriétés et l'optimisation de l'espace de Gabor ainsi que les espaces colorimétriques complexes. Enfin, nous présentons une série de méthodes de segmentation et de détection des limites basées sur l'espace des caractéristiques perceptuelles calculé.
 }
 
 \enabstract{
-  This thesis work deals with the extraction of features in images from low-level primitives for the understanding of scenes through the detection and segmentation of objects. Likewise, this work is divided into three parts.
-  
-  The first part explores the use of image contours in combination with some concepts of human perception such as the Helmholtz principle and the laws of Gestalt. These methods are then applied to the task of detecting targets for landing drones. We present an unsupervised framework robust to the most common disturbances present in tasks of this type.
-  
-  The second part explores the global color and texture information contained in the images. We present a quantitative analysis of the different existing similarity measures for the measurement of color and energy distributions (texture signatures) of images. We validate these concepts in a similarity-based image retrieval system.
-  
-  The third and last part of this thesis addresses the relationship between the local information of color and texture of an image. We introduce an unsupervised framework for obtaining perceptual boundaries of objects from the spectral decomposition of an image. In addition, we show a series of segmentation methods from the group of features calculated in this perceptual space of color and texture.
+ This thesis work deals with extracting features and low-level primitives from perceptual image information to understand scenes. Motivated by the needs and problems in Unmanned Aerial Vehicles (UAVs) visual-based navigation, we propose novel methods focusing on stages before understanding scenes: detection, identification, classification, and segmentation of objects. Likewise, this work explores three main pieces of information in an image: intensity, color, and texture.
+
+ In the first moment, we work with the intensity information through image contours. We combine this information with human perception concepts, such as the Helmholtz principle and the Gestalt laws, to propose an unsupervised framework for object detection and identification. We apply this methodology in a drone-specific application, the landing target detection task.
+
+ In a second moment, we explore the color and texture information contained in the images. In the first phase, we present an analysis of color and texture as global distributions of an image. This approach leads us to study the Optimal Transport theory and its properties as a true metric for color and texture distributions comparison. We review and compare the most popular similarity measures between distributions to show the importance of a proper metric. We validate such concepts in two image retrieval systems based on the similarity of color distribution and texture energy distribution. In the second phase, we build a feature space that exploits the relationship between color and texture in an image. The feature space is obtained from the image's spectral decomposition using a family of optimized Gabor filters on the image represented in a complex color space. We present in detail the properties and optimization of Gabor's space as well as complex color spaces. Finally, we present a series of segmentation and boundary detection methods based on the computed perceptual feature space.
   
 }
 
-\frkeywords{Traitement d'image, Primitives de bas niveau, Détection, Segmentation, Compréhension de Scène, Apprentissage Automatique, Drone.}
-\enkeywords{Image Processing, Low-level Primitives, Detection, Segmentation, Scene Understanding, Machine Learning, UAV.}
+\frkeywords{Traitement d'Image, Primitives de Bas Niveau, Détection, Segmentation, Méthodes Non Supervisées, Compréhension de Scène, Apprentissage Automatique, Drone.}
+\enkeywords{Image Processing, Low-level Primitives, Human Perception, Detection, Segmentation, Unsupervised Methods, Scene Understanding, Machine Learning, UAV.}
 
 % Change this variable if you add or remove chapters
-\newcommand*{\NumOfChapters}{7}
+\newcommand*{\NumOfChapters}{6}
 
 % Change this variable if you add or remove appendices
-\newcommand*{\NumOfAppendices}{4}
+\newcommand*{\NumOfAppendices}{1}
 
 % PDF metadata
 \hypersetup{
@@ -111,21 +106,19 @@
 	\cleardoublepage	
 	\input{chapters/chapter6.tex}
 	\cleardoublepage
-	\input{chapters/chapter7.tex}
-	\cleardoublepage				
+	\input{chapters/conclusions.tex}
+	\cleardoublepage		
+	
+	\addcontentsline{toc}{chapter}{References}
+	\bibliography{biblio}
+    \cleardoublepage    
+	\input{chapters/publications.tex}
+	\cleardoublepage			
 
 	\appendix
 	\input{appendices/appendix1.tex}
 	\cleardoublepage	
-%	\input{appendices/appendix2.tex}
-%	\cleardoublepage	
-%	\input{appendices/appendix3.tex}
-%	\cleardoublepage	
-	\input{appendices/appendix4.tex}
-	\cleardoublepage
-	\input{appendices/appendix5.tex}
-	\cleardoublepage	
-
+	
 %%% Compile thesis' chapters and appendices in loop 
 
 %%% Chapters
@@ -136,17 +129,20 @@
 %%        \includefrom{chapters/\i/}{chapter\i}
 %        \cleardoublepage
 %    }
+%	\input{chapters/conclusions.tex}
+%	\cleardoublepage		
+%	
+%	\addcontentsline{toc}{chapter}{References}
+%	\bibliography{biblio}
+%    \cleardoublepage    
+%	\input{chapters/publications.tex}
+%	\cleardoublepage			
+%
+%	\appendix
+%	\input{appendices/appendix1.tex}
+%	\cleardoublepage
 
-%%% Appendices
-%    \appendix
-%    \foreach \i in {1,2,...,\NumOfAppendices}{
-%        \input{appendices/appendix\i.tex}
-%%        \includefrom{appendices/\i/}{appendix\i}
-%        \cleardoublepage
-%    }
-%    
-    \bibliography{biblio}
-    \pagebreak
+
     
     
    	

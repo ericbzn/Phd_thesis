@@ -1,9 +1,43 @@
 % created on 28/07/2020
 % @author : ebazan
-\part{Color and Texture Information}\label{part:color_texture}%Image Global Color and Texture
+%\part{Color and Texture Information}\label{part:color_texture}%Image Global Color and Texture
+%
+%\section*{Introduction}
+%In part \ref{part:image_contours}, we show that low-level features, such as image contours, provide useful perceptual information that can be used to solve complex problems. We presented a framework that uses human perception concepts and contours information for the unsupervised detection of landing targets. This framework can identify the marker under degraded operating conditions using only exogenous features from the contours identified on gray-level images. We can improve the framework by adding other features that provide perceptual information of a scene.
+%
+%In this part of the thesis, we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans, and their study can be pervasive. This part explores the image color and texture features for their future integration into a general framework for object detection. For this purpose, the chapter that opens this part seeks to recall the definition of color and texture in the field of computer vision. Moreover, it reviews different approaches to color representation as well as different strategies for characterizing texture features. Then, we study the color features in two different frameworks.
+%
+%First, we are interested in the global distribution of color and texture information of an image. Therefore in chapter \ref{ch:similarity_measures}, we take an interest in comparing distributions, particularly in the study of the Optimal Transport (OT) as a metric for the measurement of similarity between distributions and their application in the field of computer vision.
+%
+%In the second stage of the study of color and texture, we use the color and texture information united in a single feature space. We deepen in the study of Gabor filters, and we explore the spectral decomposition of an image in a complex color space. With this strategy, we recover the objects' local texture information in an image, taking into account the scene's luminance and chrominance information. With the use of classic vision methods and the feature space developed, we recover the perceptual contours of the objects in an image and, consequently, their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is fully unsupervised, we show that it is also helpful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
+%
+%Throughout the chapters in this part, we address an extensive study of color and texture properties of an image using different kinds of images containing the information of interest to test our methods' robustness. In the first stage, we carry out the analysis of the color and the texture separately using images, in the case of color, containing low color variation and, in the case of texture, using grayscale images with homogeneous textures. For the second stage of the analysis, we mainly use natural color images. 
+%
+%The main contributions of this part are:
+%\begin{enumerate}
+%	\item Review of the state of the art of global color representations and texture characterizations.
+%	\item Review of the state of the art of similarity measures, particularly the interpretation of the OT in computer vision: the Earth Mover's Distance (EMD).
+%	\item A qualitative and quantitative study between the most popular measures in the comparison of distributions and the EMD. 
+%	\item An unsupervised image retrieval system based on global color/texture information.
+%	\item Extensive analysis of Gabor filters and their properties in the space-frequency domains.
+%	\item Interactive tool for custom generation of 2D Gabor filters.
+%	\item Generation of a feature space that includes the color and texture information of an image.
+%	\item Unsupervised framework for natural image segmentation.
+%	\item A tool for the interactive segmentation of images considering the information of color and texture.
+%\end{enumerate}
 
-\section*{Introduction}
-In part \ref{part:image_contours}, we show that low-level features, such as image contours, provide useful perceptual information that can be used to solve complex problems. We presented a framework that uses human perception concepts and contours information for the unsupervised detection of landing targets. This framework can identify the marker under degraded operating conditions using only exogenous features from the contours identified on gray-level images. We can improve the framework by adding other features that provide perceptual information of a scene.
+
+\chapter{Global Representations of Color and Texture } \label{ch:color_texure_representations}
+
+\section*{Résumé}
+\noindent 
+Ce chapitre présente une compilation des différentes manières de représenter les informations de couleur et de texture présentes dans une image. En ce qui concerne les informations de couleur, nous présentons certains des espaces colorimétriques les plus utilisés, leurs origines et leur relation avec la perception humaine. Par ailleurs, nous présentons quelques techniques pour synthétiser ces informations. Dans le cas de la texture, nous présentons les différentes méthodologies pour son étude, en mettant en évidence les avantages et les inconvénients de chaque méthode.
+\section*{Abstract}
+\noindent 
+This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used and their origins and relationship to human perception. Besides, we present some techniques to synthesize this information. In the case of texture, we present different methodologies for its study, highlighting each method's advantages and disadvantages.
+
+\section{Introduction}
+In part \ref{ch:landing_target_detection}, we show that low-level features, such as intensity image contours, provide useful perceptual information that can be used to solve complex problems. We presented a framework that uses human perception concepts and contours information for the unsupervised detection of landing targets. This framework can identify the marker under degraded operating conditions using only exogenous features from the contours identified on gray-level images. We can improve the framework by adding other features that provide perceptual information of a scene.
 
 In this part of the thesis, we review two more low-level image features: color and texture. Both features are widely involved in the perceptual process of humans, and their study can be pervasive. This part explores the image color and texture features for their future integration into a general framework for object detection. For this purpose, the chapter that opens this part seeks to recall the definition of color and texture in the field of computer vision. Moreover, it reviews different approaches to color representation as well as different strategies for characterizing texture features. Then, we study the color features in two different frameworks.
 
@@ -11,7 +45,7 @@ First, we are interested in the global distribution of color and texture informa
 
 In the second stage of the study of color and texture, we use the color and texture information united in a single feature space. We deepen in the study of Gabor filters, and we explore the spectral decomposition of an image in a complex color space. With this strategy, we recover the objects' local texture information in an image, taking into account the scene's luminance and chrominance information. With the use of classic vision methods and the feature space developed, we recover the perceptual contours of the objects in an image and, consequently, their segmentation. We show the versatility of this space using different techniques for object segmentation. While this framework is fully unsupervised, we show that it is also helpful in identifying the importance of color and texture in human-made segmentations. Finally, we show that it is possible to obtain high-level features from this spectral decomposition.
 
-Throughout the chapters in this part, we address an extensive study of color and texture properties of an image using different kinds of images containing the information of interest to test our methods' robustness. In the first stage, we carry out the analysis of the color and the texture separately using images, in the case of color, containing low color variation and, in the case of texture, using grayscale images with homogeneous textures. For the second stage of the analysis, we mainly use natural color images. 
+Throughout the following chapters, we address an extensive study of color and texture properties of an image using different kinds of images containing the information of interest to test our methods' robustness. In the first stage, we carry out the analysis of the color and the texture separately using images, in the case of color, containing low color variation and, in the case of texture, using grayscale images with homogeneous textures. For the second stage of the analysis, we mainly use natural color images. 
 
 The main contributions of this part are:
 \begin{enumerate}
@@ -26,17 +60,6 @@ The main contributions of this part are:
 	\item A tool for the interactive segmentation of images considering the information of color and texture.
 \end{enumerate}
 
-
-\chapter{Global Representations of Color and Texture } \label{ch:color_texure_representations}
-
-\section*{Résumé}
-\noindent 
-Ce chapitre présente une compilation des différentes manières de représenter les informations de couleur et de texture présentes dans une image. En ce qui concerne les informations de couleur, nous présentons certains des espaces colorimétriques les plus utilisés, leurs origines et leur relation avec la perception humaine. Par ailleurs, nous présentons quelques techniques pour synthétiser ces informations. Dans le cas de la texture, nous présentons les différentes méthodologies pour son étude, en mettant en évidence les avantages et les inconvénients de chaque méthode.
-\section*{Abstract}
-\noindent 
-This chapter presents a compilation of the different ways of representing the color and texture information present in an image. When it comes to color information, we present some of the most popular color spaces used and their origins and relationship to human perception. Besides, we present some techniques to synthesize this information. In the case of texture, we present different methodologies for its study, highlighting each method's advantages and disadvantages.
-
-\section{Introduction}
 
 The overall distribution of color in an image is a helpful clue that contributes to describing a natural image's content. If we look around us, we can see that many of the environment's materials and objects only exist with specific colors. For example, the clouds are primarily white; the grass is green; the ocean is blue, etc. Performing the same experience, but this time with textures, we realize that we are surrounded by them everywhere. We find textures, for example, at textiles, buildings, tilings, and on skins or objects surfaces. The color and texture of an image is valuable information; it helps to characterize images that contain landscapes with mountains, jungles, urban environments, deserts, or other scenes with different elements by their color and texture distributions. Therefore, the perception of such information is a powerful tool for classifying and recognizing particular objects and materials.
 
@@ -85,13 +108,13 @@ The figure \ref{fig:color_images} shows different examples of color images. Spec
 \end{figure}
 
 
-\subsubsection{Color theory}
+\subsection{Color Theory}
 Historically, there have been several attempts to explain the HVS and interpret its function in color vision. Two of the most popular theories of the mechanism of color vision are the trichromatic theory and the opponent-colors theory \citep{Fairchild:Book:2005}. The first of these, proposed by Maxwell, Young, and Helmholtz \citep{Young:PTRSL:1802, VonHelmholtz:Book:1867}, is based on the fact that we have three types of receptors (L-M-S cones). They assume that the receptors are roughly sensitive to the red, green, and blue wavelengths. Consequently, this theory suggests that each receptor generates an image weighted by the brain to sort out the color appearances.
 
 The second theory is based on Hering's subjective observations \citep{Hering:Book:1878}. In his experiments, he noted that certain hues were never perceived to occur together. For example, the color perception was never described as reddish-green or yellowish-blue. This response suggested that the red–green and yellow–blue color pairs had something fundamental that caused them to behave like opponent colors. 
 This theory gained strength in the mid-20th century, where, supported by quantitative data, the stage theory emerged. This modern theory suggests that color perception is done in two stages. The first stage coincides with the trichromatic theory, so the LMS cones generate three color-separation images; however, in the second stage, the retina neurons encoded the colors into opposing signals \citep{Fairchild:Book:2005}. 
 
-\subsection{Color representations}
+\subsection{Color Representations}
 Human color perception depends on the amount and wavelength of light captured by the eyes. Therefore, perceived colors can vary due to several factors, such as the type of surfaces (or objects) where the light is reflected, the environment, and even the observer's eyes. However, it is definite that the perception of color is an entirely arbitrary creation of our nervous system, and it is not contained in wavelengths or light-reflecting objects and materials \citep{Goldstein:Book:2009}. In other words, the interpretation of this information is entirely subjective. A clear example of this is the naming of colors. When an incident spectrum contains all frequencies in the range of visible wavelengths, humans perceive objects that reflect all frequencies as clear, luminous, or \textit{white}. In the opposite case, when the material absorbs and does not reflect the visible frequencies, it is perceived as dark, opaque, or \textit{black}. Some works in this regard state that the naming of colors varies according to culture and language \citep{Berlin.Kay:Book:1991}. However, it is possible to find a correlation between languages and identify eleven basic color terms in the English language that seem to be anchored across the different languages as points in a particular color representation \citep{Kay.Regier:PNAS:2003}.% Add diagram images of color theory models???
 
 At first glance, the tasks and experiments mentioned above appear to be simple and straightforward for a human being; however, replicating this in a machine is quite challenging. Therefore, the definition of a coherent method of describing color is essential to represent it and for its use in digital image processing.
@@ -356,7 +379,7 @@ Figure \ref{fig:images_color_complex_space} shows the transformation of a natura
 %We obtain a complex representation of chrominance content of the image whose spectrum is interesting to analyze in order to characterize the spatial variations of the chromatic part of the image. 
 
 
-\subsection{Compact color representations for image processing}
+\subsection{Compact Color Representations for Image Processing}
 
 Color spaces serve as links between color theories and representation for better visualization and mathematical interpretation of colors. However, for color information processing, it is often necessary to represent the color pixel values more compactly. This property benefits the development of faster and more performant algorithms; the challenge is to maintain the input information's consistency and not lose the primary characteristics of the color distribution. In the following subsections, we will show some of the representations commonly used to represent color information compactly.
 
@@ -635,7 +658,7 @@ We show some examples of natural textures in the figure \ref{fig:texture_images}
 \end{figure}
 
 
-\section{Texture characterization}
+\section{Texture Characterization}
 The perception of textures is a key property of human vision. Although there is still no generalized definition, we can define texture using measures of coarseness, contrast, directionality, line similarity, regularity, and roughness. Therefore, the features that characterize texture attempt to capture the granularity and repetition of perceptually similar patterns of surfaces within a region of the image, such that a human observer perceives the region as homogeneous. Unlike color, texture information is not a purely pixel-level property. Texture implies the notion of spatial extent, that is, that the spatial variation of intensities of a group of pixels generates textures in the images.
 
 There are numerous studies that review, compare and organize the work of texture analysis in different ways  \citep{Materka.Strzelecki:Report:1998}, \citep{Zhang.Tan:PR:2002}, \citep{Bharati.Liu.ea:CILS:2004},\citep{Lukashevich.Sadykhov:ICPCI:2012}, \citep{Humeau-Heurtier:IEEEAccess:2019}. One possible organization is based on its operating principle, which classifies the texture characterization techniques into
@@ -689,5 +712,10 @@ Other approaches to obtaining textons are based on discriminative modeling. In t
 
 Models based on deep learning use Convolutional Neural Networks (CNN) to extract and represent image features. CNN methods consist of multiple locally connected layers which convolve kernels over the entire image. These approaches analyze the information of a group of images to generate a model \citep{Lin.Maji:CVPR:2016}. The characteristics of the learned model are a function of the input images, which in the case of texture information, is expected to generalize the properties, such as granularity, frequency, and orientation of patterns in the training dataset.
 
-%\section{Conclusions}
+\section{Conclusion}
 
+This chapter has reviewed some key concepts for managing color and texture information in an image. Regarding color, we have seen the origin and function of models and color spaces. This information allows us to enter the complex color space that we will use throughout the following chapters to explore the relationship between color and texture. Besides, we show some of the possible representations to organize and work with color information: histograms (one-dimensional or 3-d) and color signatures.
+
+We have briefed the different strategies to characterize the texture in an image regarding texture. This compilation tries to show the advantages and disadvantages of each of the approaches.
+
+Considering this review of color and texture techniques used in image processing, we will focus on the study of Gabor filters as a tool for texture analysis. Firstly, because of its relationship with human perception, and secondly, it is not limited to analyzing homogeneous textures as other approaches.
