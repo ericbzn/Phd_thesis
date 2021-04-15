@@ -410,9 +410,6 @@ This Gabor function representation allows generating filter banks normalized by 
 
 Figure \ref{fig:1d_filterbank_spacing} shows three examples of filter banks in the frequency domain.  Particulary, figure \ref{fig:filterbnk_octave_spacing} shows a bank without the relationship between the effective width and the central frequency of the filter, whereas the figures \ref{fig:filterbnk_half_crossingpoint} and \ref{fig:filterbnk_new_crossingpoint} show the interdependence between $\alpha$, $B_F$, $f$ and $c_1$ and the behavior of the bank with a different crossing point.
 
-
-
-
 \subsection{2-d Gabor Filters}
 The generalization of the Gabor function's theory from 1-d to 2-d is straightforward. First, we replace the time variable $t$ with the pair of spatial coordinates $(x, y)$ and the frequency variable $f$ with the pair of frequency variables $(u, v)$. Then, as for the 1-d case, the 2-d Gabor functions follows the Heisenberg principle where the uncertainty measures for the spatial and spatial-frequency domains are expressed in terms of $\Delta x$, $\Delta y$, $\Delta u$, and $\Delta v$, for which it holds that
 
@@ -462,9 +459,13 @@ The sharpness of the Gaussian function, unlike the 1-d case, now includes two va
 
 The analysis of the frequency separation between adjacent filters of a bank viewed in the section \ref{subsec:frequency_filter_spacing} is also valid in the 2-d case. Thus, the full bandwidth of half the frequency response, $B_F$, represents the separation between the center frequencies; the interval $\Delta f$ represents the distance between the points where $G(u, v)$ begins to decrease and; the full frequency bandwidth through the ratio $\gamma$ and the crossing point $c_1$ allows adapting the size of the major axis of the envelope $\alpha$ depending on the center frequency $f$.
 
-We can do a similar analysis for the minor axis of Gabor's envelope. First, notice that insertion of the orientation variable $\theta$ in the 2-d case implies the existence of an angular separation $B_{\Theta}$ between the centers of the filters in a bank (see Fig. \ref{fig:2d_filterbank_octave_spacing}). This angular bandwidth can be defined by the total number of orientations $N$ in a filter bank such that
+We can do a similar analysis for the minor axis of Gabor's envelope. First, notice that insertion of the orientation variable $\theta$ in the 2-d case implies the existence of an angular separation $B_{\theta}$ between the centers of the filters in a bank (see Fig. \ref{fig:2d_filterbank_octave_spacing}). This angular bandwidth can be defined by the total number of orientations $N$ in a filter bank such that
 \begin{equation}\label{eq:angular_bandwidth}
     B_{\theta} = \frac{\pi}{N}
+\end{equation}
+and threfore, we can obtain the the filter bank's orientation angles as 
+\begin{equation}\label{eq:filterbank_angles}
+    \theta_n = n \frac{\pi}{N} \textrm{,} \quad n = \{0, \cdots, N-1\}
 \end{equation}
 
 We propose to vary the length of $\beta$ as a function of the central frequency and the angular bandwidth through an angular interval $\Delta \theta$, which is the distance along $\beta$ where $G(u, v)$ begins to decrease.
@@ -473,7 +474,14 @@ We propose to vary the length of $\beta$ as a function of the central frequency 
     \frac{\Delta \theta}{2} = \frac{\beta}{\pi}\sqrt{\ln \left(\frac{1}{c_2}\right)}
 \end{equation}
 
-We know that for a filter whose center frequency is $f$ and whose cut-off angular interval is $\Delta \theta$, the full orientation bandwidth $B_\Theta$ expressed in radians is defined as \citep{Daugman:JOSA:1985a}.
+\begin{figure}[!ht]
+\centering
+    \subcaptionbox{\label{fig:2d_filterbank_octave_spacing}}{\includegraphics[width=0.49\textwidth]{GaborFilterbank_freq_2d_octave_spacing.pdf}}
+    \subcaptionbox{\label{fig:2d_filterbank_half_crossingpoint}}{\includegraphics[width=0.49\textwidth]{GaborFilterbank_freq_2d_half_crossingpoint.pdf}}    
+\caption{Filter spacing and crossing point effect represented on a 2-d filter bank in the frequency domain: \captext{(a)} Filters separation without crossing points between adjacent filters $[B_F=1, B_{\theta} = 45^{\circ}, \alpha=\beta=0.1, c_1=c_2=-]$, \captext{(b)} Filters separation with crossing points between adjacent filters $[B_F=1, B_{\theta} = 45^{\circ}, \alpha=f/\gamma, \beta=f/\eta, c_1=c_2=0.9]$. High and low cut-off frequency points given by $\Delta f$ and $\Delta \theta$ .}\label{fig:2d_filterbank_spacing}
+\end{figure}
+
+We know that for a filter whose center frequency is $f$ and whose cut-off angular interval is $\Delta \theta$, the full orientation bandwidth $B_\theta$ expressed in radians is defined as \citep{Daugman:JOSA:1985a}.
 \begin{equation}\label{eq:orientation_bandwidth_interval}
     B_{\theta} = 2 \tan^{-1} \left( \frac{\Delta \theta}{2f} \right)
 \end{equation}
@@ -494,13 +502,6 @@ Taking the above relationships permits to write the 2-d GEF to use it into a ban
 where now the length $\alpha$ of each filter in the bank will be determined based on the ratio $\gamma = \frac{f}{\alpha}$ and crossing point between adjacent filters $c_1$; and the length $\beta$ will be determined based on the ratio $\eta = \frac{f}{\beta}$ and crossing point between adjacent filters $c_2$.
 
 Figure \ref{fig:2d_filterbank_spacing} shows the octave spacing and the orientation bandwidth for a bank of filters in the frequency domain. Particulary, figure \ref{fig:2d_filterbank_octave_spacing} shows a bank without the relationship between the effective width and the central frequency of the filter, whereas figure \ref{fig:2d_filterbank_half_crossingpoint} show the interdependence between $\alpha$, $\beta$, $B_F$, $B_{\theta}$, $f$ and the crossing points $c_1$, $c_2$.
-
-\begin{figure}[!ht]
-\centering
-    \subcaptionbox{\label{fig:2d_filterbank_octave_spacing}}{\includegraphics[width=0.49\textwidth]{GaborFilterbank_freq_2d_octave_spacing.pdf}}
-    \subcaptionbox{\label{fig:2d_filterbank_half_crossingpoint}}{\includegraphics[width=0.49\textwidth]{GaborFilterbank_freq_2d_half_crossingpoint.pdf}}    
-\caption{Filter spacing and crossing point effect represented on a bank of filters in the frequency domain: \captext{(a)} Separation of 2-d filters without crossing points between adjacent filters $[B_F=1, B_{\theta} = 45^{\circ}, \alpha=\beta=0.1, c_1=c_2=-]$, \captext{(b)} High and low cut-off frequency points given by $\Delta f$ and $\Delta \theta$ $[B_F=1, B_{\theta} = 45^{\circ}, \alpha=f/\gamma, \beta=f/\eta, c_1=c_2=0.5]$.}\label{fig:2d_filterbank_spacing}
-\end{figure}
 
 \begin{figure}[!ht]
 	\centering
