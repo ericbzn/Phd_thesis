@@ -186,19 +186,38 @@
 \fancyhead[LE]{\textsc{\leftmark}}
 \fancyhead[RO]{\nouppercase{\rightmark}}
 	
-\usepackage[Sonny]{fncychap}
-
-\makeatletter
-\ChNameVar{\centering\Large\it}
-\ChNumVar{\huge\it} 
-\ChNameAsIs
-\ChTitleVar{\vspace*{-20pt} \centering\Huge\rm\bfseries}
+%\usepackage[Sonny]{fncychap}
+%
+%\makeatletter
+%\ChNameVar{\centering\Large\it}
+%\ChNumVar{\huge\it} 
+%\ChNameAsIs
+%%\ChTitleVar{\vspace*{-20pt} \centering\Huge\rm\bfseries}
 %\ChTitleVar{\centering\Huge\rm\bfseries}
-\ChRuleWidth{1pt}
+%\ChRuleWidth{1pt}
+%
+%%\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
+%%\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
+%\patchcmd{\DOTI}{\vskip 40\p@}{\vskip 20\p@}{}{}
+%\patchcmd{\DOTIS}{\vskip 40\p@}{\vskip 20\p@}{}{}
+%\makeatother
 
-\patchcmd{\DOTI}{\vskip 40\p@}{\vskip 40\p@}{}{}
-\patchcmd{\DOTIS}{\vskip 40\p@}{\vskip 40\p@}{}{}
-\makeatother
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\centering\it}
+{{\Large\chaptertitlename} {\huge\thechapter}}
+{50pt}
+{\titlerule[1pt]\vspace{1ex} \centering\Huge\rm\bfseries}[\vspace{1ex}{\titlerule[1pt]}]
+
+\titleformat{name=\chapter,numberless}[display]
+{}
+{}
+{0pt}
+{\titlerule[1pt]\vspace{1ex} \centering\Huge\rm\bfseries}[\vspace{1ex}{\titlerule[1pt]}]
+
+\titlespacing*{\chapter} {0pt}{60pt}{60pt}   %% adjust these numbers
+\titlespacing*{name=\chapter,numberless} {0pt}{110pt}{60pt}   %% adjust these numbers
+
 
 %\usepackage[acronym,xindy,toc,numberedsection,ucmark]{glossaries}
 %	\newglossary[nlg]{notation}{not}{ntn}{Notation} % Création d'un type de glossaire 'notation'
