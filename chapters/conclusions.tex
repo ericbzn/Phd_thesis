@@ -8,17 +8,31 @@
 
 \addcontentsline{toc}{section}{Summary of our Main Contributions}
 
-We mention the list of contributions of this thesis below.
+This thesis deals with the study of low-level image information concerning human perception for scene understanding. In particular, we study intensity, color, and texture primitives. We validate our methodology on applications that present similar characteristics to the conditions encountered in drone vision-based tasks.
+
+The algorithms proposed in this thesis managed to overcome some of the difficulties present in today's most widely used methods for image segmentation and object detection. Our algorithms do not need to rely on an a priori model, which is reflected in the independence of parameter definition and annotated databases. This methodology benefits the stages of a scene understanding system, which can be integrated into UAVs to develop vision-based tasks.
+
+Throughout this thesis, we encounter different challenges linked to the nature of the application problems we seek to address. Specifically, one of the problems of vision-based application areas is real-time implementation. We did not explore this functionality in more detail; however, the proposed algorithms have elements that we can optimize; for example, the image convolution with filter bank using parallel computation or the calculation of optimal transport metric using a regularization technique. 
+
+We further develop the conclusions of this work in the following list.
 
 \begin{itemize}
-	\item We present a framework for landing target detection. The algorithm for detection operates in an unsupervised manner, reducing the number of correct operation parameters in different complex scenarios, one of the main characteristics of visual tasks with drones. In particular, our framework exploits the information at different scales of the contours of the image in a perceptual approach, taking into account the Helmholtz principle and the laws of organization of the Gestalt.
+	\item We present a framework for landing target detection, one of the main characteristics of visual tasks with drones. This detector uses the intensity information to obtain contours at different scales. The algorithm for detection operates in an unsupervised manner, reducing the number of correct operation parameters in different complex scenarios. In particular, our framework exploits the multi-scale image contours in a perceptual approach, taking into account the Helmholtz principle and the laws of organization of the Gestalt.
+	
 	\item We present a complete study of the color and texture properties present in images, and we evaluated the different options for representation and characterization of color and texture during the analysis of this information.
+	
 	\item We present two image retrieval systems, one based on color information and the other based on texture information. These systems served to test some concepts such as the optimal transport as a metric of similarity between distributions, the spectral analysis properties to represent an image's textures, and the importance of the color spaces.
-	\item Motivated by the lack of a general analysis of the Gabor function optimized for the study of textures in images, we delved into the concepts of signal theory to propose a framework for the generation of optimized and efficient Gabor filters for the study of textures.
-	\item We present the complex multispectral decomposition of a natural image to analyze color, texture, and the relationship between them in natural images. This decomposition results from a space-frequency study of Gabor filters and the study of color spaces of an image through its luminance and chrominance. Such research results in the Gabor complex color feature space that captures the interaction of perceptual color and texture information of an image.
-	\item We present Gabor's Complex Color (GCC) feature space's utility, characteristics, and potential by implementing various unsupervised algorithms for natural image segmentation. Through the BSDS image segmentation and contour detection benchmark, we show (quantitatively and quantitatively) that our methodology gives competitive results with state-of-the-art methods.
+	
+	\item Motivated by the lack of a general analysis of the Gabor function optimized for the study of textures in images, we delved into the concepts of signal theory to propose a framework for the generation of a smooth Gabor filter bank: using Parseval's identity we obtained a transfer function that is closest to one almost everywhere (in 1-d - frequency, and in 2-d - frequency and angle). That allows us measuring accurately the energetic density spectrum and use a true metric to measure distance between two textures. Previous works on wavelet texture analysis are only approximative, either greyscale, or approximative color, and not a true distance (e.g., most often KL)	
+	
+	\item We present the complex multispectral decomposition of a natural image to analyze color, texture, and the relationship between this information in natural images. This decomposition results from a space-frequency study of Gabor filters and the study of color spaces of an image through its luminance and chrominance. Such research results in the Gabor-filter-based Complex Color (GCC) feature space that captures the interaction of perceptual color and texture information of an image.
+	
+	\item We present Gabor-filter-based Complex Color (GCC) feature space's utility, characteristics, and potential by implementing various unsupervised algorithms for natural image segmentation such as clustering algorithms (k-means, Gaussian Mixture, and Birch) and graph-based algortihms (Spectral clustering, MST threshold and Normalized cuts). Furthermore, we showed that our methodology allows to obtain the boundaries of the image in a perceptual way. We show that our methodology outperforms the BSDS benchmark score of state-of-the-art unsupervised methods for contour detection (Pb, Canny, Mean-shift, Felz-Hutt).
+	
 	\item All the frameworks presented in this document were implemented using open-access libraries in order to make them public. The algorithms presented were coded in python to use the different libraries and frameworks (OpenCV, NumPy, pandas, scikit-learn, scipy, etc.) existing in this language to work with images and public facts. This part of the thesis represents a significant programming effort hidden behind the results shown throughout this document.
-	\item Finally, this thesis adds to the works that maintain traditional computer vision methods as a base. Although nowadays it is possible to segment images with an accuracy close to that of a human using supervised algorithms and convolutional neural networks, we believe that it is possible to increase the performance, reliability, and explanation of such methods by combining them with systems based on physical phenomena of the vision. We believe that today AI offers solutions but no answers, and we need both, especially in complex applications such as drone vision tasks.
+	
+	\item Finally, this thesis is part of the group of work that maintains traditional computer vision methods as the basis. Although nowadays it is possible to segment images with an accuracy close to that of a human using supervised algorithms and convolutional neural networks, we believe that it is possible to increase the performance, reliability, and explanation of such methods by combining them with systems based on physical phenomena of the vision. We believe that today AI offers solutions but no answers, and we need both, especially in complex applications such as drone vision tasks.	
+	
 \end{itemize}
 
 
@@ -28,11 +42,20 @@ We mention the list of contributions of this thesis below.
 We can think of several promising perspectives both in terms of methodology and applications.
 
 \begin{itemize}
-	\item In chapter \ref{ch:landing_target_detection}, for the target detection system, there are different ways to improve the system. On the part of the methodology, it is possible to add more features of the image, such as the information of the color and the texture developed in part two of the thesis; This would make the system more robust, providing the possibility of creating markers with specific color and texture patterns. On the implementation side, this system can achieve the analysis and detection of targets in real-time by migrating the python code to some programming language, such as C ++, that allows the effective parallelization of functions.
-	 \item As for the image search systems of chapter \ref{ch:similarity_measures}it is possible to integrate both features (color and texture) in a single system that allows the search for natural color images. In terms of implementation, it is possible to speed up the calculation time of the EMD by implementing a regularization of the measure.
+	\item In chapter \ref{ch:landing_target_detection}, for the target detection system, there are different ways to improve the system. On the part of the methodology, it is possible to add more features of the image, such as the information of the color and the texture developed in part two of the thesis; This would make the system more robust, providing the possibility of creating markers with specific color and texture patterns. On the implementation side, this system can achieve the analysis and detection of targets in real-time by migrating the python code to some programming language, such as C ++, that allows the efficient parallelization of functions.
+	
+	 \item As for the image search systems presented in chapter \ref{ch:similarity_measures} it is possible to integrate both features (color and texture) in a single system that allows the search for natural color images. Moreove, in terms of implementation, it is possible to speed up the calculation time of the EMD by implementing a regularization of the measure.
+	 
 	 \item Regarding Gabor spectral analysis for texture analysis, a clue to follow is the logarithmic Gabor function (log-Gabor) recognized for solving the antialiasing problem naturally.
+	 
 	 \item Looking at the SLIC superpixel method reviewed in chapter \ref{ch:perceptual_object_boundaries_detection}, we can think of a possible extension of this algorithm to generate superpixels using the texture information from the Gabor filter responses space.
+	 
 	 \item In chapter \ref{ch:perceptual_object_boundaries_detection} we obtain the graph gradients for the luminance and chrominance channels of the complex color space. We can use these gradients in conjunction with the ground truth of the BSDS to learn (in a supervised manner) the weight of each color channel and see its perceptual importance in the segmentation task.
-	 \item Using the hierarchical segmentation by watershed from the perceptual controls obtained from the EMD graph-gradients, we can generate a tool for the interactive segmentation of natural images.
+	 
+	 \item Regarding the AI techniques for segmentation, we obtained results below the scores obtained with DL techniques, nevertheless we do not use any model. A possibility is to use the proposed Gabor filter bank at the input of a DL network, and obtain a model that will use perceptually relevant features. This network could be smaller, better regularized and less greedy (trainable with less data).
+	 
+	 \item Using the feature space generated from the smooth filter bank over the complex color space and the optimal transport, we can use most of the morphological algorithms transparently on images containing color and texture. For example a controlled watershed or MST on natural images. This track has been explored on a superpixel basis, however, because of the computational time the implementation on a pixel basis was not achieved. After an optimization of the code it might be possible to perform it on a pixel basis.
+
+	 \item Finally, we consider that is possible to generate a computationl tool for the interactive segmentation of natural images. We can do it using the hierarchical watershed segmentation given by the perceptual boundaries obtained with the GCC detector.
 \end{itemize}
 
