@@ -149,7 +149,7 @@ With the standard primaries, it is possible to quantify an object's colors using
 \begin{eqnarray} 
  c(\lambda) = (X,Y,Z) \label{eq:XYZ_color}
 \end{eqnarray}
-The primary $Y$ is chosen such that its color-matching function exactly matches the luminous-efficiency function for the human eye, i.e., $Y$ measuring the luminance of a color \citep{Wright:BookCh2:2007}. Therefore, to define a color in the  XYZ color space, we need to provide the weights for the $X$, $Y$m and $Z$ primaries, for example, $c =xX + yY + zZ$, where 
+The primary $Y$ is chosen such that its color-matching function exactly matches the luminous-efficiency function for the human eye, i.e., $Y$ measuring the luminance of a color \citep{Wright:BookCh2:2007}. Therefore, to define a color in the  XYZ color space, we need to provide the weights for the $X$, $Y$, and $Z$ primaries, for example, $c =xX + yY + zZ$, where 
 \begin{gather} 
 	x = \frac{X}{X+Y+Z} \nonumber \\ 
 	y = \frac{Y}{X+Y+Z} \label{eq:xyz_color_coords} \\ 
@@ -165,7 +165,7 @@ The \textbf{RGB color model} is one of the most popular models in computer visio
 
 Contrary to the XYZ model, the RGB color space is a device-dependent space; that is, different devices may reproduce or detect the same RGB value differently since the color elements and their response to the individual R, G, and B levels vary according to the manufacturer.
 
-The RGB color space is the most popular color space based on the RGB color model. We can geometrically represent the set of colors of this color space as a cube that maps the red, blue, and green dimensions onto the $x$, $y$, $z$ axes of the 3-d Cartesian coordinate system in a Euclidean space. The non-negative values of the $RGB$ triplet $(r,g,b)$ are in the range $[0,1]$, where the origin at the vertex $(0,0,0)$ encodes the color black, and the vertex $(1,1,1)$ encodes the color white. 
+The RGB color space is the most popular color space based on the RGB color model. We can geometrically represent the set of colors of this color space as a cube (see Subfig.\ \ref{fig:rgb_cube}) that maps the red, blue, and green dimensions onto the $x$, $y$, $z$ axes of the 3-d Cartesian coordinate system in a Euclidean space. The non-negative values of the $RGB$ triplet $(r,g,b)$ are in the range $[0,1]$, where the origin at the vertex $(0,0,0)$ encodes the color black, and the vertex $(1,1,1)$ encodes the color white. 
 
 The \textbf{HSV color model} and the \textbf{HSL color model} are cylindrical color models that remap the RGB primary colors into dimensions that are easier for humans to understand. The HSV and HSL color models share two of their three dimensions, the hue and the saturation. The third dimension of the HSV model is the value, while the HSL model has a lightness dimension. Below is a more detailed description of these dimensions.
 
@@ -176,9 +176,38 @@ The \textbf{HSV color model} and the \textbf{HSL color model} are cylindrical co
 	\item Lightness controls the luminosity of the color. This dimension is different from the HSV value dimension in that the purest color is positioned midway between the black and white ends of the scale. A color with 0\% lightness is black, 50\% is the purest color possible, and 100\% is white.
 \end{itemize}
 
+\begin{figure}[!ht] 
+	\centering
+	\begin{subfigure}[b]{0.32\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{rgb_cube}
+		\caption{RGB cube}	
+		\label{fig:rgb_cube}
+	\end{subfigure}
+	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.32\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hsv_cone}
+		\caption{HSV cone}	
+		\label{fig:hsv_cone}
+	\end{subfigure}
+	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.32\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{hls_bicone}
+		\caption{HSL bicone}	
+		\label{fig:hls_bicone}
+	\end{subfigure}
+	
+	\caption{Geometrical representation of colors in the RGB, HSV and HSL color models.}
+	\label{fig:cube_cone_bicone}
+\end{figure}
+
 It is important to note that the three dimensions of the HSV/HSL color models are interdependent. If the value/lightness dimension of color is set to 0\%, the amount of hue and saturation does not matter as the color will be black. Likewise, if the saturation of a color is set to 0\%, the hue does not matter as there is no color used.
 
-Unlike the RGB color space, we can not represent the HSV/HSL triplet values $(h,s,v)$/$(h,s,l)$ in a 3-d Euclidean space. The hue's circular nature forces the first dimension to be in an angular space between $0^\circ$ and $360^\circ$, while the remaining two dimensions inhabit a linear space with values between 0 and 1. Consequently, the HSV color space is best visualized as a 3-d cone and the HSL color space as a 3-d bicone.
+Unlike the RGB color space, we can not represent the HSV/HSL triplet values $(h,s,v)$/$(h,s,l)$ in a 3-d Euclidean space. The hue's circular nature forces the first dimension to be in an angular space between $0^\circ$ and $360^\circ$, while the remaining two dimensions inhabit a linear space with values between 0 and 1. Consequently, the HSV color space is best visualized as a 3-d cone and the HSL color space as a 3-d bicone (see Subfigs.\ \ref{fig:hsv_cone} and \ref{fig:hls_bicone} respectively).
 
 The \textbf{LAB color model} (also referred to as CIEL*a*b* or CIELAB) results from the opponent-process theory of human perception. In it, we also express the color with three values. Channel L represents the perceptual luminance, whereas channel A represents the scale from red to green and channel B from yellow to blue. The arrangement above is consistent with the two opponent color pairs that humans cannot perceive simultaneously.
 
@@ -261,7 +290,7 @@ Figure \ref{fig:images_color_space} shows the three channels of the different co
 
 \subsubsection{Luminance-chrominance color spaces}%Two-channel complex image representation
 
-Color spaces mostly map the perception of color as a three-dimensional property. However, these dimensions can be encompassed in only two aspects; therefore, we can classify them into luminance-chromaticity and luminance-chrominance color spaces. In both cases, luminance is the property that describes the brightness of the light; however, both categories have different ways of defining color. Chromaticity-based spaces define color independently of luminance (or the luminance equivalent in a particular color space). In a chrominance-based space, the chrominance values of the image change as the light intensity varies.
+Color spaces mostly map the perception of color as a three-dimensional property \citep{Douglas.Kerr:Online:2005}. However, these dimensions can be encompassed in only two aspects; therefore, we can classify them into luminance-chromaticity and luminance-chrominance color spaces \citep{Kerr:Online:2003}. In both cases, luminance is the property that describes the brightness of the light; however, both categories have different ways of defining color. Chromaticity-based spaces define color independently of luminance (or the luminance equivalent in a particular color space). In a chrominance-based space, the chrominance values of the image change as the light intensity varies.
   
 We can obtain a color space based on chromaticity from the classic trichromatic models described in the previous section. The chromaticity of these models consists mainly of two independent parameters. For example, the $xyY$ color space, from which we obtain the CIE chromaticity chart (see figure \ref{fig:chrom_diagram}), uses the X and Y dimensions to calculate chromaticity. In RGB space, it is possible to obtain a space based on chromaticity following the same principle, using only the R and G channels for its calculation. For cylindrical color spaces (HSV, HSL), the independent parameters that describe the chromaticity are hue and colorfulness (saturation) dimensions.
 
@@ -290,13 +319,13 @@ We can obtain a color space based on chromaticity from the classic trichromatic 
 		\label{fig:hsv_complex_color}
 	\end{subfigure}
 	
-	\caption{Graphic display of tree alternatives to obtain the complex color representation of an image: \captext{(a)} form LAB color space, \captext{(b)} from form HSL color space, and \captext{(c)} from HSV color space.}
+	\caption{Graphic display of tree alternatives to obtain the complex color representation of an image: \captext{(a)} from LAB color space, \captext{(b)} from form HSL color space, and \captext{(c)} from HSV color space.}
 	\label{fig:complex_color_spaces}
 \end{figure}
 
 The chromaticity-based models are reputed for their use in image editing and color correction. However, the chrominance-based spaces are helpful if we are looking for a uniform distribution of the color information in an image. Some examples of color spaces in this category are CIELAB and CIELUV. In them, the colorfulness information of an image is found in channels A and B (resp. U and V), and the final color is defined by the brightness of the light defined by the luminance L.
 
-The use of spaces based on luminance-chrominance reduces the dimensionality of the color to two channels $L$ and $C$.To make this two-channel color representation possible, we combine the values of channels A and B with the chrominance function.
+The use of spaces based on luminance-chrominance reduces the dimensionality of the color to two channels $L$ and $C$. To make this two-channel color representation possible, we combine the values of channels A and B with the chrominance function.
 \begin{equation}\label{eq:chrominance_lab}
     C = A + \mathsf{i}B
 \end{equation}
@@ -395,7 +424,7 @@ We can represent the global color distribution of an image employing a color ima
       0 \quad \textrm{elsewhere}        
    	 \end{cases} 
 \end{equation}
-as indicator function. The $n$ pixels of the single-channel image are arranged in a one-dimensional vector $\{x_1, x_2, \cdots, x_n\}$; the set of possible color values is split into $k$ intervals, so $h_i$ is the number of pixels in an image that have a color value in the interval $[t_i, t_{i+1})$ denoted by $B_i$ with $0 < i leq k$.
+as indicator function. The $n$ pixels of the single-channel image are arranged in a one-dimensional vector $\{x_1, x_2, \cdots, x_n\}$; the set of possible color values is split into $k$ intervals, so $h_i$ is the number of pixels in an image that have a color value in the interval $[t_i, t_{i+1})$ denoted by $B_i$ with $0 < i \leq k$.
 
 \begin{figure}[!ht]
 
@@ -417,13 +446,13 @@ as indicator function. The $n$ pixels of the single-channel image are arranged i
     \caption{1-d image color representation. 1-d pixel distribution and 10 bins 1-d pixel histogram.}\label{fig:single_channel_histogram}    
 \end{figure}
 
-Figure \ref{fig:single_channel_histogram} shows the one-dimensional representations of the color information of a natural image. In it, we first plot the distribution of each channel of the image (RGB in this case), and then we show the color distribution of the pixels compressed using a 1-d histogram. We obtain the distributions by setting the number of bins equal to the maximum number of color values of an 8-bit image, that is, $b = 256$. The single-channel histograms split the color space into $k=10$ bins. In both plots, the $x$-axis represents the channel color value, whereas the $y$-axis represents the number of pixels (density) normalized between 0 and 1. Lastly, the color of the plots corresponds to the color channel of the RGB space.
+Fig.\ \ref{fig:single_channel_histogram} shows the one-dimensional representations of the color information of a natural image. In it, we first plot the distribution of each channel of the image (RGB in this case), and then we show the color distribution of the pixels compressed using a 1-d histogram. We obtain the distributions by setting the number of bins equal to the maximum number of color values of an 8-bit image, that is, $b = 256$. The single-channel histograms split the color space into $k=10$ bins. In both plots, the $x$-axis represents the channel color value, whereas the $y$-axis represents the number of pixels (density) normalized between 0 and 1. Lastly, the color of the plots corresponds to the color channel of the RGB space.
 
 This representation's advantages are that it is invariant to the rotation or translation of the image and, to a lesser extent, it is also invariant to changes of point of view and scale changes. Besides, we can compact as much as we need the image color information by reducing the count intervals, that is, by selecting a small number of bins $k$. Despite the advantages offered by the color representation in simple channel histograms, analyzing the color channels individually does not provide a global idea of the color distribution. This effect occurs because only the blend of the three-channel values gives the final color of a pixel in RGB space. A better way to analyze color information is to consider all channels at the same time.
 %For example, looking only at the blue channel through its 1-d histogram, we could deduce that the input image is mostly dark blue, this being false.
 
 \subsubsection{3-d Color Histogram}
-The 3-d color histogram copes with the drawback of the color representation in single-channel color histograms. Mainly, this representation is an extension of the single-channel histogram to three dimensions. The discrete function $h_{i, j, k}$ maps the 3-d integer vector of pixel color values $x_{i, j, k}$ into a Euclidean cube where each axis corresponds to a color dimension divided into $k$ intervals. We count the number of pixels whose values fall into the bin $B_{i,j,k}$ with the indicator function as in Eq. \eqref{eq:single_channel_histogram}.
+The 3-d color histogram copes with the drawback of the color representation in single-channel color histograms. Mainly, this representation is an extension of the single-channel histogram to three dimensions. The discrete function $h_{i, j, k}$ maps the 3-d integer vector of pixel color values $x_{i, j, k}$ into a Euclidean cube where each axis corresponds to a color dimension divided into $k$ intervals. We count the number of pixels whose values fall into the bin $B_{i,j,k}$ with the indicator function as in Eq.\ \eqref{eq:single_channel_histogram}.
 
 \begin{figure}[!ht]
     \centering
@@ -444,9 +473,9 @@ The 3-d color histogram copes with the drawback of the color representation in s
     \caption{3-d image color representation. 3-d pixel distribution and ten bins 3-d pixel histogram.}\label{fig:3d_color_representation}    
 \end{figure}
 
-We can see the 3-d distribution of the color of the pixels in a color image and its histogram of $k=10$ bins in figure \ref{fig:3d_color_representation}. In the figure, we can notice how the colors most present in the image stand out in the histogram, generating larger spheres in the 3-d cube. Also, the shape of the pixel distribution is maintained. A reflection we can make about the number of bits required to encode the image color as a 3-d distribution is that, when representing the colors in a histogram with a low number of bins, the information to manipulate is significantly less. 
+We can see the 3-d distribution of the color of the pixels in a color image and its histogram of $k=10$ bins in Fig.\ \ref{fig:3d_color_representation}. In the figure, we can notice how the colors most present in the image stand out in the histogram, generating larger spheres in the 3-d cube. Also, the shape of the pixel distribution is maintained. A reflection we can make about the number of bits required to encode the image color as a 3-d distribution is that, when representing the colors in a histogram with a low number of bins, the information to manipulate is significantly less. 
 
-On the other hand, 3-d color histograms suffer from some drawbacks. Because histograms are fixed-size structures, they cannot achieve a good balance between expressiveness and efficiency. For example, applying a coarsely quantized histogram on images containing a large amount of color information would lead to losing this information. In the opposite case, for images that contain a small amount of color information, a finely quantized histogram is highly inefficient. In the example of the parrots' image (figure \ref{fig:3d_color_representation}), we see that the 10-bin histogram is severe with the blue color of the feathers, causing it to almost disappear from the 3-d representation.
+On the other hand, 3-d color histograms suffer from some drawbacks. Because histograms are fixed-size structures, they cannot achieve a good balance between expressiveness and efficiency. For example, applying a coarsely quantized histogram on images containing a large amount of color information would lead to losing this information. In the opposite case, for images that contain a small amount of color information, a finely quantized histogram is highly inefficient. In the example of the parrots' image (Fig.\ \ref{fig:3d_color_representation}), we see that the 10-bin histogram is severe with the blue color of the feathers, causing it to almost disappear from the 3-d representation.
 
 \subsubsection{Color Signature}
 
@@ -476,12 +505,12 @@ A signature $\{s_j = (m_j, w_{m_j})$ denotes a set of feature clusters. Each clu
     \caption{Image color signature and the 3-d visualization of signature clusters.}\label{fig:color_signature}    
 \end{figure}
 
-In figure \ref{fig:color_signature}, we depict the color signature of the parrot image and a rendering of the input image using the signature colors. Likewise, we plot the centroids of the $k = 10$ clusters obtained with the k-means algorithm in a 3-d space. The spheres' size in the 3-d plot represents the fraction of pixels $w_{m_j}$ that belong to each cluster. Compared to the 3-d color histogram, the color signature better represents the original color information of the image, maintaining the high information compression rate without losing some colors of the original distribution, as is the case of the 3-d histogram with blue feathers mentioned above.
+In Fig.\ \ref{fig:color_signature}, we depict the color signature of the parrot image and a rendering of the input image using the signature colors. Likewise, we plot the centroids of the $k = 10$ clusters obtained with the k-means algorithm in a 3-d space. The spheres' size in the 3-d plot represents the fraction of pixels $w_{m_j}$ that belong to each cluster. Compared to the 3-d color histogram, the color signature better represents the original color information of the image, maintaining the high information compression rate without losing some colors of the original distribution, as is the case of the 3-d histogram with blue feathers mentioned above.
 
 \begin{figure}[!ht]
     \centering
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(a)}}} }%
+    	\makebox[20pt]{\raisebox{40pt}{\captext{(a)}} }% 
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -490,10 +519,9 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain}
     \end{subfigure}\vspace{5pt}
-    
-    
+        
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(b}}} }%
+    	\makebox[20pt]{\raisebox{40pt}{\captext{(b)}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_single_distribution}
     \end{subfigure}~     
     \begin{subfigure}[b]{0.32\textwidth}
@@ -501,11 +529,10 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_single_distribution}
-    \end{subfigure}%\vspace{10pt}
-    
+    \end{subfigure}%\vspace{10pt} 
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(c)}}} }%
+    	\makebox[20pt]{\raisebox{40pt}{\captext{(c)}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_single_histogram}
     \end{subfigure}~     
     \begin{subfigure}[b]{0.32\textwidth}
@@ -513,11 +540,10 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_single_histogram}
-    \end{subfigure}%\vspace{10pt}
-    
-    
+    \end{subfigure}%\vspace{10pt}  
+      
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(d)}}} }%
+    	\makebox[20pt]{\raisebox{40pt}{\captext{(d)}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_distribution}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -525,11 +551,10 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_3d_distribution}
-    \end{subfigure}%\vspace{10pt}
-    
-    
+    \end{subfigure}%\vspace{10pt}  
+      
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(e)}}} }%
+    	\makebox[20pt]{\raisebox{40pt}{\captext{(e)}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_histogram}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -537,11 +562,10 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_3d_histogram}
-    \end{subfigure}%\vspace{10pt}
-    
-    
+    \end{subfigure}%\vspace{10pt}  
+      
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(f)}}} }%
+    	\makebox[20pt]{\raisebox{40pt}{\captext{(f)}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_3d_signature}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -549,11 +573,10 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_3d_signature}
-    \end{subfigure}\vspace{2pt}
-    
+    \end{subfigure}\vspace{2pt}    
     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{40pt} \small{\textsf{\textbf{(g)}}} }%
+    	\makebox[20pt]{\raisebox{40pt}{\captext{(g)}} }%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_color_clusters}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -561,10 +584,10 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
     \end{subfigure}~
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{mountain_color_clusters}
-    \end{subfigure}\vspace{-10pt}
-    
+    \end{subfigure}\vspace{-10pt}   
+     
     \begin{subfigure}[t]{\dimexpr0.32\textwidth+20pt\relax}
-    	\makebox[20pt]{\raisebox{25pt}{}}%
+    	\makebox[20pt]{\raisebox{0pt}{}}%
     	\includegraphics[width=\dimexpr\linewidth-20pt\relax]{tempo_bar_signature}
     \end{subfigure}~ 
     \begin{subfigure}[b]{0.32\textwidth}
@@ -577,7 +600,7 @@ In figure \ref{fig:color_signature}, we depict the color signature of the parrot
 	\caption{Compact representations of color information: \captext{(a)} Input color image, \captext{(b)} Single-channel color distribution, \captext{(c)} Single-channel color histogram, \captext{(d)} 3-d color distribution, \captext{(e)} 3-d color histogram, \captext{(f)} 3-d color signature, \captext{(g)} Color signature clusters.}\label{fig:color_image_representations}    
 \end{figure}
 
-Finally, we show more examples of the different techniques to compact the color information reviewed in this section in figure \ref{fig:color_image_representations}. These examples include the images of figure \ref{fig:color_images}, where we show three natural and one synthetic image. To calculate the histograms (single-channel and 3-d) and the color signature, we set the number of bins (and clusters in the case of the signatures) at ten for visual comparison purposes.
+Finally, we show more examples of the different techniques to compact the color information reviewed in this section in Fig.\ \ref{fig:color_image_representations}. These examples include the images of Fig.\ \ref{fig:color_images}, where we show three natural and one synthetic image. To calculate the histograms (single-channel and 3-d) and the color signature, we set the number of bins (and clusters in the case of the signatures) at ten for visual comparison purposes.
 
 We obtain some interesting observations from the analysis of the different compact representations of color. For example, with the synthetic image plots (first column of the figure), we find that a medium-fine 3-d histogram with ten bins is inefficient since many half-empty bins could be removed. On the other hand, the color signatures do a good job of compression, mainly respecting the shape and density of the original color distribution, for example, in the clownfish image (central column of the figure). However, there is a problem related to the global analysis and compression of color information. When there are objects in the image with a low number of pixels, and yet they are perceptually visible, there is no rendering technique that can preserve them. We can see this effect in the snow mountains' image; although the yellow and red color of the cable cars are perceptive, neither the 3-d histogram nor the color signature makes the colors appear.
 
@@ -586,7 +609,7 @@ There is a disagreement in the definition of texture in the field of computer vi
 
 The definition that we prefer in this work is based on an experimental finding: a texture is a field of the image that appears as a coherent and homogeneous domain; that is, it forms a whole for an observer. In fact, the texture coherence property placed in the context of being perceived as a homogeneous whole for the human eye is most often sought for image processing, either to isolate textures, segment and recognize regions.
 
-We show some examples of natural textures in the figure \ref{fig:texture_images}. These images come from the reference work Brodatz and show the possible variety of textures commonly used to test different algorithms and methods of vision. Generally, we can classify such textures according to their origin as natural or artificial, the latter being those created by man. We can also classify them by the regularity of the pattern they display as real or stochastic. Finally, we can classify them according to the image proportion they cover into homogeneous, weakly-homogeneous, or inhomogeneous.
+We show some examples of natural textures in the Fig.\ \ref{fig:texture_images}. These images come from the reference work Brodatz and show the possible variety of textures commonly used to test different algorithms and methods of vision. Generally, we can classify such textures according to their origin as natural or artificial, the latter being those created by man. We can also classify them by the regularity of the pattern they display as real or stochastic. Finally, we can classify them according to the image proportion they cover into homogeneous, weakly-homogeneous, or inhomogeneous.
 
 %\begin{itemize}
 %	\item Natural and artificial 
@@ -654,7 +677,7 @@ We show some examples of natural textures in the figure \ref{fig:texture_images}
         \caption{}
     \end{subfigure}    
                   
-    \caption{Examples of texture images and its classification: [\captext{(a) (b) (e) (h)}] Nautural textures, [\captext{(c) (d) (f) (g) (i) (j)}] Human-made textures, [\captext{(c) (d)}] Regular textures, [\captext{(g) (h)}] Stochastic textures, [\captext{(c) (d)}] homogeneous, [\captext{(a) (b) (f) (g) (h)}] weakly-homogeneous, [\captext{(i) (j)}] inhomogeneous.}\label{fig:texture_images}    
+    \caption{Examples of texture images and its classification: [\captext{(a) (b) (e) (h)}] Natural textures, [\captext{(c) (d) (f) (g) (i) (j)}] Human-made textures, [\captext{(c) (d)}] Regular textures, [\captext{(g) (h)}] Stochastic textures, [\captext{(c) (d)}] homogeneous, [\captext{(a) (b) (f) (g) (h)}] weakly-homogeneous, [\captext{(i) (j)}] inhomogeneous.}\label{fig:texture_images}    
 \end{figure}
 
 
@@ -683,9 +706,9 @@ Local Binary Patterns (LBP) \citep{Ojala.Pietikainen.ea:PR:1996} are another tec
 
 
 \subsection{Structural Methods}
-The structural methods are based on the decomposition of the image in basic units, i.e., in elements, low-level primitives, o texels. Such units can be points, lines, regions, or shapes. The basic units and their spatial arrangement in the image are used to characterize the textures. These approaches consider that textures are patterns formed by replication, more or less regular, of a basic unit. The arrangement of the primitives allows obtaining geometric relationships and subsequently statistical properties that serve to characterize textures. Structural techniques aim to determine the textual primitive and define the location rules \citep{Humeau-Heurtier:ACCESS:2019}.
+The structural methods are based on the decomposition of the image in basic units, i.e., in elements, low-level primitives, or texels. Such units can be points, lines, regions, or shapes. The basic units and their spatial arrangement in the image are used to characterize the textures. These approaches consider that textures are patterns formed by replication, more or less regular, of a basic unit. The arrangement of the primitives allows obtaining geometric relationships and subsequently statistical properties that serve to characterize textures. Structural techniques aim to determine the texture primitives and define the location rules \citep{Humeau-Heurtier:ACCESS:2019}.
 
-Depending on the application, structural techniques differ according to the choice of primitives. Some of the commonly considered primitives are pixels \citep{Lu.Fu:CGIP:1978}, regions of uniform intensity \citep{Tuceryan.Jain:WS:1993}, line segments \citep{Carlucci:PR:1972}, or peaks in the gray level distribution \citep{Ehrich.Foith:CGIP:1978}. For the recovery of these primitives, highly known approaches are generally used, such as the SIFT (Scale Invariant Feature Transform) operator for points characterization and the contour detectors, such as Sobel Canny, for line and edge recovery. On the other hand, the primitive's measurements and statistics most commonly used are intensity, orientation, elongation, curvature, and compactness.
+Depending on the application, structural techniques differ according to the choice of primitives. Some of the commonly considered primitives are pixels \citep{Lu.Fu:CGIP:1978}, regions of uniform intensity \citep{Tuceryan.Jain:WS:1993}, line segments \citep{Carlucci:PR:1972}, or peaks in the gray level distribution \citep{Ehrich.Foith:CGIP:1978}. For the recovery of these primitives, highly known approaches are generally used, such as the SIFT (Scale Invariant Feature Transform) operator for points characterization and the contour detectors, such as Sobel or Canny, for line and edge recovery. On the other hand, the primitive's measurements and statistics most commonly used are intensity, orientation, elongation, curvature, and compactness.
 
 \subsection{Model-based Methods}
 This group of methods stipulates that some mathematical models can describe the textures. We can subdivide this category mainly into two approaches: stochastics and fractals.
