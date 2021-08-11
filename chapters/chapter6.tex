@@ -175,7 +175,7 @@ where $D$ is the degree matrix and $A$ is the affinity matrix of the graph.
 
 \subsubsection{Pixel-based graph representation}
 
-Considering a digital image as a 2-d grid of pixels, where the intensity (or color) values are mapped to the spatial coordinates $(x, y)$, we can use the graph theory to represent all the pixels as a dense graph. In the graph notation $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, each node $\mathsf{v}_i \in \mathsf{V}$ corresponds to a pixel in the image, and the edges $\mathsf{e} \in \mathsf{E}$ correspond to the junctions between adjacent pixels. .
+Considering a digital image as a 2-d grid of pixels, where the intensity (or color) values are mapped to the spatial coordinates $(x, y)$, we can use the graph theory to represent all the pixels as a dense graph. In the graph notation $\mathcal{G}=(\mathsf{V}, \mathsf{E})$, each node $\mathsf{v}_i \in \mathsf{V}$ corresponds to a pixel in the image, and the edges $\mathsf{e} \in \mathsf{E}$ correspond to the junctions between adjacent pixels.
 
 There are several strategies to join the nodes of a graph. The types of graphs that we can form are a function of such linking strategies. For example, the complete graph connects each pair of different nodes with a single edge. The epsilon-graph connects a pair of nodes if they are within an epsilon distance. The k-nearest neighbors' graph (knn-graph) connects a central node to another node only if the distance between them is among the k smallest distances from the central node to other nodes. Lastly, the adjacency graph connects only a pair of nodes if they are neighbors or adjacent. At a pixel level, this last graph is referred to as a  \textit{Pixel Adjacency Graph} (PAG).
 

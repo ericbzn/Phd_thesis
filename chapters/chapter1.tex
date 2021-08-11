@@ -595,11 +595,11 @@ Let $\varnothing=\left( \diameter_{1}, \diameter_{2},\ldots,\diameter_{n}\right)
 \end{equation}
 and obtain a binary message  $W=[w_{1}, \dots,w_{n}]$. The message $W$ is protected from errors by error-correction Hamming code  \citep{Hamming:BSTJ:1950}. It provides a set of different codewords $W= D\times M$ of size $n=k+m$, where $D$ is useful data, $ M=[I_{k}\mid 1-I_{k}]$ the generator matrix, and $I_{k}$ is the $k\times k$ the identity matrix. The data vector $D$ comes from the decimal to binary conversion of the landing target ID number. For the experiments showed in chapter \ref{ch:landing_target_detection}, we create landing targets with $n=8$ coding circles allowing to have four rings and $8$ contours $\diameter_{1}, \ldots, \diameter_{8}$. This design allows us to use the extended $[n,k]$ Hamming code with $k=4$ data bits and $m=4$ parity bits to generate $2^{4}=16$ landing targets. We can see the set of landing targets generated using this configuration in figure \ref{fig:landing_target_database}.
 
-\subsection{Landing Target ID Decoding.}
+\subsection{Landing Target ID Decoding}
 After the clustering stage of section \ref{subsec:clustering}, we rank by size the ellipses' major axes $\alpha_i$ by size and normalize them w.r.t. the largest value $\alpha_{10}$ to obtain %$A=(\alpha_{1}, \ldots, \alpha_{10})$  \raisebox{1mm}{$\diameter_{10}$}$/$\raisebox{-1mm}{$\alpha_{10}$}.
 $\vec{\alpha}=  \frac{\diameter_{10}}{\alpha_{10}} (\alpha_{1}, \ldots, \alpha_{10})$
 
-We compare the received and normalized axis $\vec{\alpha}$ with the nominal diameters of the coding circles $\varnothing$ and transform them into a binary vector $\widehat{W}$;
+We compare the received and normalized axis $\vec{\alpha}$ with the nominal diameters of the coding circles $\varnothing$ and transform them into a binary vector $\widehat{W}$.
 \begin{equation}
 \widehat{W}=
 \begin{cases}

@@ -211,7 +211,7 @@ HSV/HSL color spaces encode chrominance values as points in polar coordinates
 \begin{equation}\label{eq:chrominance_hsv2}
     C = S \mathsf{e}^{\mathsf{i}H},
 \end{equation}
-where channel $H$ values are the angle expressed radians and channel $S$ values are the distance from the origin to the color points.
+where channel $H$ values are the angle expressed in radians and channel $S$ values are the distance from the origin to the color points.
 
 Considering these two chrominance configurations, the one defined by hue and saturation provides a more straightforward geometric interpretation of chrominance. Originally hue is a cylindrical dimension representing the color tints in the chromatic circle as angles, while saturation, which represents the purity of color, places achromatic tints in the center of the circle and pure colors on the circular edge of the disk. In figure \ref{fig:color_complex_plane}, we show the synthetic image color distribution plot using the HS dimensions in the 2-d chrominance complex plane. The hue $H$ is expressed in degrees, and saturation $S$ is normalized between $0$ and $255$. This representation complements the description of our synthetic test image Fig.\ \ref{fig:synthetic_color_texture_image}, showing the variation between colors that generate textures. We can notice in the chroma circle of figure \ref{fig:color_complex_plane} the transition between the red-green-blue primary colors at $0^\circ$, $120^\circ$ and $240^\circ$ respectively; the transition between purple and lime green on the imaginary axis with a hue of $90^\circ$ and $270^\circ$ respectively; the transition between red at $0^\circ$ and cyan at $180^\circ$ passing through the real axis of the plane and finally; the yellow color with a hue value of $60^\circ$.
 
@@ -347,6 +347,8 @@ From the analysis of Gabor filters presented in chapter \ref{ch:gabor_filter_des
     \caption{Gabor responses after morphological openning and Gaussian smoothing of the synthetic image. \captext{(a)} luminance channel responses, \captext{(b)} real part of chrominance channel responses, \captext{(c)} imaginary part of chrominance channel responses.}\label{fig:synthetic_img_gresponses_opn_smth}    
 \end{figure}
 
+
+Recapitulating, Figs.\ \ref{fig:synthetic_img_gresponses}, \ref{fig:synthetic_img_gresponses_opn}  , and \ref{fig:synthetic_img_gresponses_opn_smth}  show the Power Spectral Density (PSD) decomposition of the synthetic image Fig.\ \ref{fig:synthetic_color_texture_image}. In particular, Fig.\ \ref{fig:synthetic_img_gresponses} shows the raw filter responses; Fig.\ \ref{fig:synthetic_img_gresponses_opn} shows the filter bank responses after Gaussian smoothing, and finally, Fig.\ \ref{fig:synthetic_img_gresponses_opn_smth} shows the array of responses after performing morphological opening. The bright areas indicate the place in the image space containing perceptual information (color or texture) in these three figures. The intensity level of the zones in the response images indicates the energy recovered by the Gabor filter at a specific orientation and frequency. 
 
 
 %Taking for example the Gabor filter at frequency $f = 1/4$ (highest frequency on the image textures) and orientation $\theta = 0^\circ$ (vertical textures), the Gabor enrgy Eq.\ \eqref{eq:gabor_energy} obtained when applying the filter on the channels of the synthetic image is depicted by Fig.\ \ref{fig:synthetic_img_gresponse_00}. The result of convolution shows 
