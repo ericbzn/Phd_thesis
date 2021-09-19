@@ -34,7 +34,9 @@
   \gdef\@doctoralschoolname{#1}%
   \gdef\@doctoralschoolnumber{#2}
 }
+\newcommand*{\titlefr}[1]{\gdef\@titlefr{#1}}
 %% default values
+\newcommand*{\@titlefr}{Titre en francais}
 \newcommand*{\@institute}{MINES ParisTech}
 \newcommand*{\@specialty}{Sp\'{e}cialit\'{e} de l'ED}
 \newcommand*{\@doctoralschoolname}{Nom de l'ED}
@@ -200,6 +202,9 @@
           \centering
           \fontsize{18}{22}\selectfont
           \textbf{\@title{}}\unskip\strut\par
+          \vspace{5mm}
+          {\fontsize{14}{16}\selectfont
+          \@titlefr{}\unskip\strut\par}
         \end{minipage}
       };
       \fi
